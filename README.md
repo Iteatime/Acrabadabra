@@ -1,23 +1,26 @@
 # ACRABADABRA
 
-Ce dépôt contient toutes les ressources pour l'application ici je te présente comment démarrer rapidement.
+This repo contains the sources of the app, netlify functions and configuration files.
+
+Here I show you how to install this project to start dev:
 
 
-## Pour commancer à dev il te faut :
+## How To start :
 
-### 1 Prérequis :
+### 1 Requirement :
 
-* Node.js version 10.x : [dernière version](https://nodejs.org/en/download/current/)
-* Angular CLI : [méthode d'installation](https://angular.io/guide/quickstart#npm-package-manager)
+* Node.js version 10.x: [latest](https://nodejs.org/en/download/current/)
+* Angular CLI: [how to install](https://angular.io/guide/quickstart#npm-package-manager)
     
-### 2 installer :
+### 2 install :
 
-* A partir d'ici il faut avoir cloné le répo. Pour terminer l'installation il te faut run: `npm install`
+* Here you have to clone this repo then run: 
+`npm install`
     
 ### 3 Server :
 
-* Pour gagner du temps la CLI fait appel au Dev Server de Node.js et compile toutes les ressources modifier à chaque fois que tu save tes modifications. Pour le lancer run:
+* To save time the CLI use the Node.js Development Web Server and provide you ‘auto compile’ feature via:
     `ng serve`
 
-* Si cela ne fonctionne pas utilise :
+* If not working try:
     `npm start`
