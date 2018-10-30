@@ -10,7 +10,7 @@
   base    = "./"
   publish = "./dist/acrabadabra/"
   command = "ng build acrabadabra"
-  functions = ".netlify/functions/"
+  functions = "./functions/"
 
 # Production context: All deploys to the main
 # repository branch will inherit these settings.
