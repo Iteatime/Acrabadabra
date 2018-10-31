@@ -29,6 +29,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+src/karma.conf.js
 
 # System Files
 .DS_Store
