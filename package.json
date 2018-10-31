@@ -7,7 +7,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "back": "netlify-lambda serve src/functions",
+    "dev": "concurrently --kill-others \"npm run start\" \"npm run back\""
   },
   "private": true,
   "dependencies": {
@@ -35,6 +37,7 @@
     "@types/node": "~8.9.4",
     "babel-loader": "^8.0.4",
     "codelyzer": "~4.5.0",
+    "concurrently": "^4.0.1",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~3.0.0",

@@ -14,22 +14,12 @@ This repo contains the sources of the app, netlify functions and configuration f
 * Here you have to clone this repo then run: 
     `npm install`
     
-### 3 Serve Front locally :
+### 3 Dev Server :
 
-* To save time the CLI uses the Node.js Development Web Server and provides you with ‘auto compile’ feature via:
-    `ng serve`
-
-* If not working try:
-    `npm start`
+* To test your code you can run:
+    `npm run dev`
    
-by default, it run on localhost:4200/
-    
-### 4 Serve Lambda locally :
-
-* In our dependences we have `netlify-lambda` which is a CLI that enable you to test in your local dev environment your lambda. To do so you should run:
-    `netlify-lambda serve src/functions`
-    
-by default, it run on localhost:9000/
+by default, the front run on `localhost:4200/`, and the lambda on `localhost:9000/`.
 
 
 ## How the deployment is achieved :
