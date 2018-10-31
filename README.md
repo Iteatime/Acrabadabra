@@ -34,14 +34,4 @@ by default, it run on localhost:9000/
 
 ## How the deployment is achieved :
 
-### When pushing master
-
-When you push `master`, Netlify trigger 'prod' deploy and publish feature, which make the sever clone the repo branch master and build angular using prod argument. After a successful building the new version become the live version and replace the last one on the default URL.
-
-### When pushing any other branch
-
-When you push a branch, Netlify trigger deploy feature, which make the sever clone the repo branch and build angular using default arguments. After a successful building netlify assign to this branch a URL based on the site name prefixed with the branch name.
-
-### When pushing staging
-
-When you push `staging`, Netlify trigger deploy feature, which make the sever clone the repo branch and build angular using staging argument. After a successful building your branch is served on the staging URL which is made like any other branch.
+When a branch is pushed to this repo that trigger a deploy process on Netlify and, depending on it's name, this task is achieved following difrents way defined on the netlify.toml file. After a successful building, netlify assign a URL based on the site name prefixed with the branch name, exept `master` which recive the prod URL.
