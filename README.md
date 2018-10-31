@@ -19,7 +19,7 @@ This repo contains the sources of the app, netlify functions and configuration f
 * To test your code you can run:
     `npm run dev`
    
-by default, the front run on `localhost:4200/`, and the lambda on `localhost:9000/`.
+ By default, the front runs on `localhost:4200/`, and the back on `localhost:9000/`.
 
 
 ## How the deployment is achieved :
