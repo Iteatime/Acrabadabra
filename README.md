@@ -16,12 +16,16 @@ This repo contains the sources of the app, netlify functions and configuration f
     
 ### 3 Dev Server :
 
-* To test your code you can run:
+* To test your code you can run :
     `npm run dev`
    
  By default, the front runs on `localhost:4200/`, and the back on `localhost:9000/`.
 
 
-## How the deployment is achieved :
+## Continous deployment :
 
-When a branch is pushed to this repo that trigger a deploy process on Netlify and, depending on it's name, this task is achieved following difrents way defined on the netlify.toml file. After a successful building, netlify assign a URL based on the site name prefixed with the branch name, exept `master` which recive the prod URL.
+The code pushed on this repo is continously deployed to [Netlify](https://www.netlify.com/).
+
+`master` is the production branch. What you push there is built and sent live [here](https://acrabadabra.netlify.com/).
+
+Any other branch or pull request will be automatically deployed too. Check out [Netlify documentation](https://www.netlify.com/docs/continuous-deployment/) to learn more.
