@@ -19,7 +19,21 @@ This repo contains the sources of the app, netlify functions and configuration f
 * To test your code you can run:
     `npm run dev`
    
- By default, the front runs on `localhost:4200/`, and the back on `localhost:9000/`.
+ By default, the front runs on `localhost:4200/`, and the back on `localhost:4200/.netlify/functions/`.
+ 
+ ### 4 Unit Test :
+
+ To perform unit tests you have to run:
+    `npm run test`
+
+You can eventually want to change the configuration such as the [browser](https://karma-runner.github.io/3.0/config/browsers.html) used, this is done in [this file](https://github.com/Iteatime/Acrabadabra/blob/master/src/karma.conf.js).
+ 
+ ### 4 End to end Test :
+
+ To perform end to end test you have to run:
+    `npm run e2e`
+
+You can eventually want to change the configuration such as the [browser](https://github.com/angular/protractor/blob/master/docs/browser-setup.md) used, this is done in [this file](https://github.com/Iteatime/Acrabadabra/blob/master/e2e/protractor.conf.js).
 
 
 ## Continous deployment:
