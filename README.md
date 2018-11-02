@@ -2,27 +2,27 @@
 
 This repo contains the sources of the app, netlify functions and configuration files.
 
-## How To start :
+## How To start:
 
-### 1 Requirements :
+### 1 Requirements:
 
 * Node.js version 10.x: [latest](https://nodejs.org/en/download/current/)
 * Angular CLI: [how to install](https://angular.io/guide/quickstart#npm-package-manager)
     
-### 2 Installation :
+### 2 Installation:
 
 * Here you have to clone this repo then run: 
     `npm install`
     
-### 3 Dev Server :
+### 3 Dev Server:
 
-* To test your code you can run :
+* To test your code you can run:
     `npm run dev`
    
  By default, the front runs on `localhost:4200/`, and the back on `localhost:9000/`.
 
 
-## Continous deployment :
+## Continous deployment:
 
 The code pushed on this repo is continously deployed to [Netlify](https://www.netlify.com/).
 
