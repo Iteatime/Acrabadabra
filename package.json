@@ -3,13 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "back": "netlify-lambda serve src/functions",
-    "dev": "concurrently --kill-others \"npm run start\" \"npm run back\""
+    "watch:front": "ng serve",
+    "watch:back": "netlify-lambda serve src/functions",
+    "dev": "concurrently --names \"FRONT,BACK\" --prefix-colors \"reset.bgBlue.bold,reset.bgRed.bold\"  \"npm:watch:front\" \"npm:watch:back\""
   },
   "private": true,
   "dependencies": {
@@ -43,8 +43,10 @@
     "karma": "~3.0.0",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~2.0.1",
+    "karma-firefox-launcher": "^1.1.0",
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "lambda-tester": "^3.5.0",
     "netlify-lambda": "^1.0.2",
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",

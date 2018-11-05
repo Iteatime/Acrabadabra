@@ -15,21 +15,37 @@ This repo contains the sources of the app, netlify functions and configuration f
 * Here you have to clone this repo then run: 
     `npm install`
     
-### 3 Dev Server:
+### 3 Dev server:
 
 * To test your code you can run:
     `npm run dev`
    
- By default, the front runs on `localhost:4200/`, and the back on `localhost:9000/`.
+ By default, the front runs on `localhost:4200/`.
 
 #### 3.1 Lambda usage
 
-To call a lambda, you can call this endpoint : 
+To call a lambda, you can call this endpoint:
 - `<root>/.netlify/functions/{function_name}`
 
-Ex: A get on this root `localhost:9000/.netlify/functions/status` will return a 200
+Ex: A get on this root `localhost:4200/.netlify/functions/status` will return a 200
 
-> Here is a [documentation](https://www.netlify.com/docs/functions/#javascript-lambda-functions) to know more about `netlify lambda function` 
+> Here is a [documentation](https://www.netlify.com/docs/functions/#javascript-lambda-functions) to know more about `netlify lambda function`
+
+### 4 Unit tests:
+
+ To perform unit tests run:
+    `npm run test`
+
+Edit [this file](https://github.com/Iteatime/Acrabadabra/blob/master/src/karma.conf.js) to change the configuration
+(ex the [browser](https://karma-runner.github.io/3.0/config/browsers.html)).
+
+### 5 End to end tests:
+
+ To perform end to end tests run:
+    `npm run e2e`
+
+Edit [this file](https://github.com/Iteatime/Acrabadabra/blob/master/e2e/protractor.conf.js) to change the configuration
+(ex the [browser](https://github.com/angular/protractor/blob/master/docs/browser-setup.md)).
 
 ## Continous deployment:
 
