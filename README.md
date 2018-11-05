@@ -7,7 +7,8 @@ This repo contains the sources of the app, netlify functions and configuration f
 ### 1 Requirements:
 
 * Node.js version 10.x: [latest](https://nodejs.org/en/download/current/)
-* Angular CLI: [how to install](https://angular.io/guide/quickstart#npm-package-manager)
+* Angular CLI: `npm install -g @angular/cli`
+* Netlify lambda CLI : `npm install netlify-lambda`
     
 ### 2 Installation:
 
@@ -35,6 +36,14 @@ You can eventually want to change the configuration such as the [browser](https:
 
 You can eventually want to change the configuration such as the [browser](https://github.com/angular/protractor/blob/master/docs/browser-setup.md) used, this is done in [this file](https://github.com/Iteatime/Acrabadabra/blob/master/e2e/protractor.conf.js).
 
+#### 3.1 Lambda usage
+
+To call a lambda, you can call this endpoint : 
+- `<root>/.netlify/functions/{function_name}`
+
+Ex: A get on this root `localhost:9000/.netlify/functions/status` will return a 200
+
+> Here is a [documentation](https://www.netlify.com/docs/functions/#javascript-lambda-functions) to know more about `netlify lambda function` 
 
 ## Continous deployment:
 
