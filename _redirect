@@ -1,0 +1,6 @@
+# Redirect settings applied to the whole site.
+#
+# more informations on : https://www.netlify.com/docs/redirects/
+
+# Single page app rewrite
+/*    /index.html   200
