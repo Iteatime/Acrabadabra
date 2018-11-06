@@ -1,0 +1,114 @@
+<div class="row justify-content-center">
+  <div class="text-center">
+      <h2>{{ title[mode] }} une mission</h2>
+  </div>
+</div>
+
+<hr>
+
+<div class="row mt-5 justify-content-center">
+
+  <form class="col-12">
+
+    <div class="offset-1 col-10 mt-5">
+
+      <h4>Consultant</h4>
+
+      <hr align="left" width="70%">
+
+      <div class="form-group row justify-content-between">
+        <label for="consultantNameInput" class="col-2 col-form-label">Nom</label>
+        <div class="col-6">
+          <input
+            type="text"
+            name="consultantNameInput"
+            class="form-control"
+            id="consultantNameInput"
+            aria-describedby="consultantNameHelp"
+            [(ngModel)]="cra.consultant.name"
+            [disabled]="mode === 2"
+          >
+        </div>
+      </div>
+
+      <div class="form-group row justify-content-between mt-2">
+        <label for="consultantEmailInput" class="col-2 col-form-label">Email</label>
+        <div class="col-6">
+          <input
+            type="email"
+            name="consultantEmailInput"
+            class="form-control"
+            id="consultantEmailInput"
+            aria-describedby="consultantEmailHelp"
+            [(ngModel)]="cra.consultant.email"
+            [disabled]="mode === 2"
+          >
+        </div>
+      </div>
+
+    </div>
+
+    <div class="offset-1 col-10 mt-5">
+
+      <h4>Mission</h4>
+
+      <hr align="left" width="70%">
+
+      <div class="form-group row justify-content-between">
+        <label for="missionTitle" class="col-2 col-form-label">Intitulé</label>
+        <div class="col-6">
+          <input
+            type="text"
+            name="missionTitle"
+            class="form-control"
+            id="missionTitle"
+            aria-describedby="missionNameHelp"
+            [(ngModel)]="cra.mission.title"
+            [disabled]="mode === 2"
+          >
+        </div>
+      </div>
+
+      <div class="form-group row justify-content-between mt-2">
+        <label for="missionFinalClient" class="col-2 col-form-label">Client final</label>
+        <div class="col-6">
+            <input
+              type="text"
+              name="missionFinalClient"
+              class="form-control"
+              id="missionFinalClient"
+              aria-describedby="missionClientHelp"
+              [(ngModel)]="cra.mission.client"
+              [disabled]="mode === 2"
+            >
+
+        </div>
+      </div>
+
+    </div>
+
+  </form>
+
+  <div class="col-12 row mt-5 justify-content-center">
+    <button
+      *ngIf="mode !== 2"
+      class="btn btn-primary col-5"
+      (click)="onSubmitCRA()"
+    >
+      Enregistrer
+    </button>
+
+    <div class="col-8" *ngIf="saved">
+      <ul>
+        <li>
+          <a [href]="rootUrl + '/edit?cra=' + craToken">Lien de modification</a>
+        </li>
+        <li>
+          <a [href]="rootUrl + '/review?cra=' + craToken">Lien de visualisation</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>
+
