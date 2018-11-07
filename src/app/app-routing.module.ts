@@ -11,9 +11,7 @@ const routes: Routes = [
     component: CrasComponent,
     children:
     [
-      { path: 'add', component: EditCraComponent, },
       { path: 'edit', component: EditCraComponent, },
-      { path: 'review', component: EditCraComponent, },
     ],
   }
 ];

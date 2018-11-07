@@ -2,20 +2,10 @@ import { Injectable } from '@angular/core';
 
 import { Base64 } from 'js-base64';
 
-import { Cra } from './cra.model';
-import { Mission } from './mission.model';
-import { Consultant } from './consultant.model';
-
 @Injectable({
   providedIn: 'root'
 })
 export class SerializerService {
-
-  objects = {
-    'Consultant': Consultant,
-    'Cra': Cra,
-    'Mission': Mission,
-  };
 
   constructor() {}
 

@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params, UrlSegment } from '@angular/router';
 
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-import { SerializerService } from 'src/app/shared/serializer.service';
+import { SerializerService } from 'src/app/shared/serialization/serializer.service';
 import { Cra } from 'src/app/shared/cra.model';
 
 @Component({
@@ -13,23 +11,22 @@ import { Cra } from 'src/app/shared/cra.model';
 })
 export class EditCraComponent implements OnInit {
 
-
   cra = new Cra();
+  editToken: string;
+  reviewToken: string;
 
-  rootUrl: string;
-  craToken: string;
   saved = false;
+  showModal = false;
 
-  title: string[] = [
-    'Créer',
-    'Editer',
-    'Vérifier'
-  ];
+  title = {
+    add: 'Créer',
+    edit: 'Editer',
+    review: 'Consulter',
+  };
 
-  mode = 0;
+  mode: string;
 
   constructor(
-    private modalService: NgbModal,
     private route: ActivatedRoute,
     private router: Router,
     private serializer: SerializerService
@@ -37,49 +34,55 @@ export class EditCraComponent implements OnInit {
 
   ngOnInit() {
 
-    const baseUrlArray: string[] = location.toString().split('/');
-          baseUrlArray.pop();
-
-    this.rootUrl = baseUrlArray.join('/');
-
-    this.route.url.subscribe(
-      (url: UrlSegment[]) => {
-        switch (url[0].path) {
-          case 'add':
-            this.mode = 0;
-            break;
-          case 'edit':
-            this.mode = 1;
-            break;
-          case 'review':
-            this.mode = 2;
-            break;
-        }
-
-      }
-    );
-
     this.route.queryParams.subscribe(
       (parms: Params) => {
-        if (parms.hasOwnProperty('cra') && this.mode !== 0) {
-          this.cra = <Cra>this.serializer.deserialize(parms['cra']);
-        } else if (this.mode === 0) {
-          this.router.navigate(['cra', 'add']);
+        if (parms.hasOwnProperty('data')) {
+          const datas = <{mode: string, cra: Cra}>this.serializer.deserialize(parms['data']);
+          this.mode = datas.mode;
+          this.cra = <Cra>datas.cra;
         } else {
-          this.router.navigate(['']);
+          this.mode = 'add';
         }
       }
     );
   }
 
   /**
-   * @description Generate the links to edit and review this cra
+   * @description Generate the links token to edit and review this cra
    *
    * @memberof EditCraComponent
    */
   onSubmitCRA() {
-    const serialized = this.serializer.serialize(this.cra);
-    this.craToken = serialized;
+
+    const editData = {
+      mode: 'edit',
+      cra: this.cra,
+    };
+    const reviewData = {
+      mode: 'review',
+      cra: this.cra,
+    };
+
     this.saved = true;
+    this.showModal = true;
+
+    this.editToken = this.serializer.serialize(editData);
+    this.reviewToken = this.serializer.serialize(reviewData);
+  }
+
+  /**
+   * @description Called when the modal close
+   *
+   * @memberof EditCraComponent
+   */
+  onModalClose() {
+
+    this.showModal = false;
+    setTimeout(
+      () => {
+        this.saved = false;
+      },
+      2000
+    );
   }
 }

@@ -5,7 +5,10 @@ export class Cra {
 
   consultant: Consultant;
   mission: Mission;
-  hours: number;
+
+  mounth: number;
+  days: {};
+
 
   constructor(
     consultantEmail: string = '',
@@ -14,11 +17,10 @@ export class Cra {
     missionClient: string = '',
     missionTitle: string = '',
     mission?: Mission,
-    hour: number = 1,
   ) {
     this.consultant = new Consultant(consultantEmail, consultantName) || consultant;
     this.mission = new Mission(missionClient, missionTitle) || mission;
-    this.hours = hour;
   }
+
 
 }

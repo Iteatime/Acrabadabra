@@ -12,12 +12,15 @@ import { EditCraComponent } from './cras/edit-cra/edit-cra.component';
 
 import { HomeComponent } from './home/home.component';
 
+import { ModalDirective } from './shared/style/modal.directive';
+
 @NgModule({
   declarations: [
     AppComponent,
     CrasComponent,
     EditCraComponent,
     HomeComponent,
+    ModalDirective,
   ],
   imports: [
     BrowserModule,

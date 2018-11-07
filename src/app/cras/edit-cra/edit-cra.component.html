@@ -1,12 +1,48 @@
 <div class="row justify-content-center">
   <div class="text-center">
-      <h2>{{ title[mode] }} une mission</h2>
+      <h2>{{ title[mode] }} un CRA</h2>
   </div>
 </div>
 
 <hr>
 
 <div class="row mt-5 justify-content-center">
+
+  <div
+    class="modal show"
+    tabindex="-1"
+    role="dialog"
+    style="cursor: pointer;"
+    aria-label="Close"
+    [toggled]="showModal"
+    (close)="onModalClose()"
+  >
+    <div class="modal-dialog" role="document" style="cursor: initial;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-success">Votre CRA a bien été enregistré.</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>
+            Conversez
+            <a target="_blank" [routerLink]="[ '/cra/edit' ]" [queryParams]="{'data': editToken}">ce</a>
+            lien suivant pour le modifier ultérieurement.
+          </p>
+          <p>
+            Envoyez
+            <a target="_blank" [routerLink]="[ '/cra/edit' ]" [queryParams]="{'data': reviewToken}">ce</a>
+            lien de consultation à votre client
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <form class="col-12">
 
@@ -26,7 +62,7 @@
             id="consultantNameInput"
             aria-describedby="consultantNameHelp"
             [(ngModel)]="cra.consultant.name"
-            [disabled]="mode === 2"
+            [disabled]="mode === 'review'"
           >
         </div>
       </div>
@@ -41,7 +77,7 @@
             id="consultantEmailInput"
             aria-describedby="consultantEmailHelp"
             [(ngModel)]="cra.consultant.email"
-            [disabled]="mode === 2"
+            [disabled]="mode === 'review'"
           >
         </div>
       </div>
@@ -64,7 +100,7 @@
             id="missionTitle"
             aria-describedby="missionNameHelp"
             [(ngModel)]="cra.mission.title"
-            [disabled]="mode === 2"
+            [disabled]="mode === 'review'"
           >
         </div>
       </div>
@@ -79,33 +115,26 @@
               id="missionFinalClient"
               aria-describedby="missionClientHelp"
               [(ngModel)]="cra.mission.client"
-              [disabled]="mode === 2"
+              [disabled]="mode === 'review'"
             >
 
         </div>
       </div>
-
     </div>
 
   </form>
 
-  <div class="col-12 row mt-5 justify-content-center">
+  <div class="col-12 mt-5 row justify-content-end">
     <button
-      *ngIf="mode !== 2"
-      class="btn btn-primary col-5"
+      *ngIf="mode !== 'review'"
+      class="btn btn-primary col-4"
       (click)="onSubmitCRA()"
     >
       Enregistrer
     </button>
 
-    <div class="col-8" *ngIf="saved">
-      <ul>
-        <li>
-          <a [href]="rootUrl + '/edit?cra=' + craToken">Lien de modification</a>
-        </li>
-        <li>
-          <a [href]="rootUrl + '/review?cra=' + craToken">Lien de visualisation</a></li>
-      </ul>
+    <div class="col-4">
+      <p class="text-success" *ngIf="saved">Sauvegarde éffectué !</p>
     </div>
 
   </div>
