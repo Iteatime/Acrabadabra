@@ -12,12 +12,11 @@
     class="modal show"
     tabindex="-1"
     role="dialog"
-    style="cursor: pointer;"
     aria-label="Close"
     [toggled]="showModal"
     (close)="onModalClose()"
   >
-    <div class="modal-dialog" role="document" style="cursor: initial;">
+    <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title text-success">Votre CRA a bien été enregistré.</h5>
@@ -27,14 +26,14 @@
         </div>
         <div class="modal-body">
           <p>
-            Conversez
-            <a target="_blank" [routerLink]="[ '/cra/edit' ]" [queryParams]="{'data': editToken}">ce</a>
-            lien suivant pour le modifier ultérieurement.
+            Conservez
+            <a target="_blank" [routerLink]="['/cra/edit']" [queryParams]="{ data: editToken }">ce lien</a>
+            suivant pour le modifier ultérieurement.
           </p>
           <p>
             Envoyez
-            <a target="_blank" [routerLink]="[ '/cra/edit' ]" [queryParams]="{'data': reviewToken}">ce</a>
-            lien de consultation à votre client
+            <a target="_blank" [routerLink]="['/cra/edit']" [queryParams]="{ data: reviewToken }">ce lien</a>
+            de consultation à votre client
           </p>
         </div>
         <div class="modal-footer">
@@ -134,7 +133,7 @@
     </button>
 
     <div class="col-4">
-      <p class="text-success" *ngIf="saved">Sauvegarde éffectué !</p>
+      <p class="text-success" *ngIf="saved">Sauvegarde éffectuée !</p>
     </div>
 
   </div>

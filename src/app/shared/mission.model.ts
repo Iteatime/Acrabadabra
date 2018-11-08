@@ -3,10 +3,10 @@ export class Mission {
   client: string;
   title: string;
 
-  constructor(pClient: string, pTitle: string) {
+  constructor(missionClient: string, missionTitle: string) {
 
-    this.client = pClient;
-    this.title = pTitle;
+    this.client = missionClient;
+    this.title = missionTitle;
   }
 
 }

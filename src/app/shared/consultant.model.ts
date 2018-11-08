@@ -3,10 +3,10 @@ export class Consultant {
   email: string;
   name: string;
 
-  constructor(pEmail: string, pName: string) {
+  constructor(consultantEmail: string, consultantName: string) {
 
-    this.email = pEmail;
-    this.name = pName;
+    this.email = consultantEmail;
+    this.name = consultantName;
 
   }
 

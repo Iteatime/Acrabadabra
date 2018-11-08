@@ -19,11 +19,9 @@ export class ModalDirective implements OnInit {
 
     const target = <HTMLElement>event.target;
 
-    if (target.hasAttribute('aria-label')) {
-      if (target.attributes['aria-label'].nodeValue === 'Close') {
-        this.toggled = false;
-        this.close.emit({'closer': target});
-      }
+    if (target.hasAttribute('aria-label') && target.attributes['aria-label'].nodeValue === 'Close') {
+      this.toggled = false;
+      this.close.emit({ closer: target });
     }
   }
 

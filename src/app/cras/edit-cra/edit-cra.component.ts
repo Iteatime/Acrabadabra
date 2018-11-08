@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, Params, UrlSegment } from '@angular/router';
 
 import { SerializerService } from 'src/app/shared/serialization/serializer.service';
 import { Cra } from 'src/app/shared/cra.model';
+import { formData } from 'src/app/@types/formData';
 
 @Component({
   selector: 'app-edit-cra',
@@ -27,19 +28,18 @@ export class EditCraComponent implements OnInit {
   mode: string;
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
+    public route: ActivatedRoute,
     private serializer: SerializerService
   ) {}
 
   ngOnInit() {
 
     this.route.queryParams.subscribe(
-      (parms: Params) => {
-        if (parms.hasOwnProperty('data')) {
-          const datas = <{mode: string, cra: Cra}>this.serializer.deserialize(parms['data']);
+      (params: Params) => {
+        if (params.hasOwnProperty('data')) {
+          const datas: formData = this.serializer.deserialize(params['data']);
           this.mode = datas.mode;
-          this.cra = <Cra>datas.cra;
+          this.cra = datas.cra;
         } else {
           this.mode = 'add';
         }
@@ -54,20 +54,19 @@ export class EditCraComponent implements OnInit {
    */
   onSubmitCRA() {
 
-    const editData = {
+    const data: formData = {
       mode: 'edit',
-      cra: this.cra,
-    };
-    const reviewData = {
-      mode: 'review',
       cra: this.cra,
     };
 
     this.saved = true;
     this.showModal = true;
 
-    this.editToken = this.serializer.serialize(editData);
-    this.reviewToken = this.serializer.serialize(reviewData);
+    this.editToken = this.serializer.serialize(data);
+
+    data.mode = 'review',
+
+    this.reviewToken = this.serializer.serialize(data);
   }
 
   /**

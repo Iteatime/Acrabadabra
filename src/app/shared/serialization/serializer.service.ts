@@ -13,17 +13,17 @@ export class SerializerService {
    * @description Return the given object serilized
    *
    * @remark
-   * The given object is serialized using JSON and Base64,
+   * The given content is serialized using JSON and Base64,
    * it can be transfered usng the URL without encodeURI()
    * and can't be human readed.
    *
-   * @param {object} objectInsatnce
+   * @param {any} serilizableContent
    * @returns {string}
    * @memberof SerializerService
    */
-  serialize(objectInsatnce: object): string {
+  serialize(serilizableContent: any): string {
 
-    const serialized = Base64.encode(JSON.stringify(objectInsatnce));
+    const serialized = Base64.encode(JSON.stringify(serilizableContent));
 
     return serialized;
   }
@@ -35,7 +35,7 @@ export class SerializerService {
    * @returns {object}
    * @memberof SerializerService
    */
-  deserialize(serializedObject: string): object {
+  deserialize(serializedObject: string): any {
 
     const decodedValue: string = Base64.decode(serializedObject);
     const deserializedObject: object = JSON.parse(decodedValue);
