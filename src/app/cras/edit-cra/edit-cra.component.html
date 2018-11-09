@@ -21,14 +21,14 @@
         <div class="modal-header">
           <h5 class="modal-title text-success">Votre CRA a bien été enregistré.</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true" aria-label="Close">&times;</span>
           </button>
         </div>
         <div class="modal-body">
           <p>
             Conservez
             <a target="_blank" [routerLink]="['/cra/edit']" [queryParams]="{ data: editToken }">ce lien</a>
-            suivant pour le modifier ultérieurement.
+            pour le modifier ultérieurement.
           </p>
           <p>
             Envoyez
@@ -37,7 +37,7 @@
           </p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">Close</button>
+          <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">Fermer</button>
         </div>
       </div>
     </div>
@@ -119,6 +119,16 @@
 
         </div>
       </div>
+    </div>
+
+    <div class="offset-1 col-10 mt-5">
+
+      <h4>Journées d'intervention</h4>
+
+      <hr align="left" width="70%">
+
+      <app-calendar></app-calendar>
+
     </div>
 
   </form>
