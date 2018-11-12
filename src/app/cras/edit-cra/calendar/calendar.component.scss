@@ -1,8 +1,42 @@
+.fill-height {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+}
+
 .cal-disabled {
   background-color: #eee;
   pointer-events: none;
+
 }
 
 .cal-disabled .cal-day-number {
   opacity: 0.1;
+
+}
+
+.cal-day-input {
+  background-color: transparent;
+  border: none;
+  width: 40%;
+  margin-left: 8%;
+  margin-top: 15%;
+
+}
+
+.cal-day-input-disabled {
+  display: none;
+
+}
+
+.cal-day-button {
+  width: 20%;
+  border: none;
+  background-color: rgba(8, 255, 20, 0.54);
+  color: green;
+  border-radius: 50%;
+  padding-right: 17%;
+
 }

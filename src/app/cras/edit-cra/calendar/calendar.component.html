@@ -45,6 +45,45 @@
     </div>
 </div>
 <br>
+<context-menu #basicMenu>
+  <ng-template [visible]="dayNotExist" contextMenuItem (execute)="addDay($event.item)">
+    Ajout
+  </ng-template>
+  <ng-template [visible]="dayExist" contextMenuItem (execute)="dayToEdit = $event.item">
+    Edition
+  </ng-template>
+  <ng-template [visible]="dayExist" contextMenuItem (execute)="deleteDay($event.item)">
+    Suppression
+  </ng-template>
+</context-menu>
+<ng-template #customCellTemplate let-day="day" let-locale="locale">
+  <div
+    class="fill-height"
+    [contextMenu]="basicMenu"
+    [contextMenuSubject]="day.date"
+  >
+    <div class="cal-cell-top">
+      <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
+      <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+      <div
+        [ngClass]="{'cal-day-input-disabled': !testDay(dayToEdit, day.date)}"
+      >
+        <input
+          #timeInput
+          class="cal-day-input"
+          type="number"
+          value="0.5"
+        >
+        <input
+          type="button"
+          class="cal-day-button"
+          value="V"
+          (click)="editDay(day.date, timeInput.value)"
+        >
+      </div>
+    </div>
+  </div>
+</ng-template>
 <mwl-calendar-month-view
   [viewDate]="viewDate"
   [events]="events"
@@ -52,6 +91,7 @@
   [locale]="locale"
   [weekStartsOn]="weekStartsOn"
   [weekendDays]="weekendDays"
+  [cellTemplate]="customCellTemplate"
   (dayClicked)="dayClicked($event.day.date)"
   (beforeViewRender)="beforeMonthViewRender($event)">
 </mwl-calendar-month-view>
