@@ -14,7 +14,7 @@ describe('ModalDirective', () => {
   let directive: ModalDirective;
   let component: TestModalDirectiveComponent;
   let fixture: ComponentFixture<TestModalDirectiveComponent>;
-  let modalEl: DebugElement;
+  let modalElement: DebugElement;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -23,8 +23,8 @@ describe('ModalDirective', () => {
     fixture = TestBed.createComponent(TestModalDirectiveComponent);
     component = fixture.componentInstance;
 
-    modalEl = fixture.debugElement.query(By.css('.modal'));
-    directive = new ModalDirective(modalEl);
+    modalElement = fixture.debugElement.query(By.css('.modal'));
+    directive = new ModalDirective(modalElement);
   });
 
   it('should create an instance', () => {

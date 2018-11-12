@@ -4,15 +4,19 @@
 
 .modal {
   cursor: pointer;
+
 }
 
 .modal.show {
   background-color: rgba(5, 5, 5, 0.4);
+
 }
 .modal.open {
   display: block;
+
 }
 
 .modal-dialog {
   cursor: initial;
+
 }

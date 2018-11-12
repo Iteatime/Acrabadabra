@@ -1,4 +1,5 @@
-<div class="row text-center">
+<div class="row justify-content-center">
+<!--
   <div class="col-md-4">
     <div class="btn-group">
       <div
@@ -12,9 +13,11 @@
       </div>
     </div>
   </div>
-  <div class="col-md-4">
-    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+-->
+  <div class="offset-4 col-md-4">
+    <h3>{{ viewDate | calendarDate:('month' + 'ViewTitle'): locale}}</h3>
   </div>
+<!--
   <div class="col-md-4">
     <div class="btn-group">
       <div
@@ -28,19 +31,27 @@
       </div>
     </div>
   </div>
+-->
+  <div class="col-md-4">
+      <div class="btn-group">
+        <div
+          class="btn btn-primary"
+          [ngStyle]="{'display': picking ? '' : 'none'}"
+          (click)="selctAll()"
+        >
+          Tout sélectionner
+        </div>
+      </div>
+    </div>
 </div>
 <br>
-<div [ngSwitch]="view">
-  <mwl-calendar-month-view
-    *ngSwitchCase="CalendarView.Month"
-    [viewDate]="viewDate"
-    [events]="events"
-    [refresh]="refresh"
-    [locale]="locale"
-    [weekStartsOn]="weekStartsOn"
-    [weekendDays]="weekendDays"
-    (dayClicked)="dayClicked($event.day)"
-    (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)">
-  </mwl-calendar-month-view>
-</div>
+<mwl-calendar-month-view
+  [viewDate]="viewDate"
+  [events]="events"
+  [refresh]="refresh"
+  [locale]="locale"
+  [weekStartsOn]="weekStartsOn"
+  [weekendDays]="weekendDays"
+  (dayClicked)="dayClicked($event.day.date)"
+  (beforeViewRender)="beforeMonthViewRender($event)">
+</mwl-calendar-month-view>

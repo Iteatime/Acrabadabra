@@ -4,7 +4,6 @@ import { Directive, OnInit, ElementRef, Input, HostBinding, HostListener, Output
   selector: '.modal',
 })
 export class ModalDirective implements OnInit {
-
   @HostBinding('class.open') get open() { return this.toggled; }
   @Input() toggled: boolean;
   @Output() close = new EventEmitter<any>();

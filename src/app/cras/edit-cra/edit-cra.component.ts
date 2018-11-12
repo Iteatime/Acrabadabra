@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params, UrlSegment } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import { SerializerService } from 'src/app/shared/serialization/serializer.service';
 import { Cra } from 'src/app/shared/cra.model';
 import { formData } from 'src/app/@types/formData';
+
+import { CalendarEvent } from 'calendar-utils';
+import { CalendarComponent } from './calendar/calendar.component';
 
 @Component({
   selector: 'app-edit-cra',
@@ -11,6 +14,7 @@ import { formData } from 'src/app/@types/formData';
   styleUrls: ['./edit-cra.component.scss']
 })
 export class EditCraComponent implements OnInit {
+  @ViewChild (CalendarComponent) timesheetPicker;
 
   cra = new Cra();
   editToken: string;
@@ -53,6 +57,7 @@ export class EditCraComponent implements OnInit {
    * @memberof EditCraComponent
    */
   onSubmitCRA() {
+    this.cra.timesheet = this.timesheetPicker.events;
 
     const data: formData = {
       mode: 'edit',

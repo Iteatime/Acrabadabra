@@ -6,41 +6,38 @@ import { Base64 } from 'js-base64';
   providedIn: 'root'
 })
 export class SerializerService {
-
-  constructor() {}
-
   /**
-   * @description Return the given object serilized
+   * @description Return the given content serilized
    *
    * @remark
    * The given content is serialized using JSON and Base64,
    * it can be transfered usng the URL without encodeURI()
    * and can't be human readed.
    *
-   * @param {any} serilizableContent
+   * @param {any} serializableContent
    * @returns {string}
    * @memberof SerializerService
    */
-  serialize(serilizableContent: any): string {
+  serialize(serializableContent: any): string {
 
-    const serialized = Base64.encode(JSON.stringify(serilizableContent));
+    const serialized = Base64.encode(JSON.stringify(serializableContent));
 
     return serialized;
   }
 
   /**
-   * @description Return an instance of the given serialized object
+   * @description Deserialize the given content
    *
    * @param {string} serializedObject
    * @returns {object}
    * @memberof SerializerService
    */
-  deserialize(serializedObject: string): any {
+  deserialize(serializedContent: string): any {
 
-    const decodedValue: string = Base64.decode(serializedObject);
-    const deserializedObject: object = JSON.parse(decodedValue);
+    const decodedValue: string = Base64.decode(serializedContent);
+    const deserializedContent: any = JSON.parse(decodedValue);
 
-    return deserializedObject;
+    return deserializedContent;
   }
 
 }

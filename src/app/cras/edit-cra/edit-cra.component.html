@@ -127,7 +127,9 @@
 
       <hr align="left" width="70%">
 
-      <app-calendar></app-calendar>
+      <app-calendar
+        [events]="cra.timesheet"
+        [picking]="mode !== 'review'"></app-calendar>
 
     </div>
 
@@ -143,7 +145,7 @@
     </button>
 
     <div class="col-4">
-      <p class="text-success" *ngIf="saved">Sauvegarde éffectuée !</p>
+      <p class="text-success" *ngIf="saved">Sauvegarde éffectué !</p>
     </div>
 
   </div>

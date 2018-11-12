@@ -1,12 +1,12 @@
-import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Output, Input, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { Subject } from 'rxjs';
 
-import { startOfDay, isSameMonth, addHours } from 'date-fns';
+import { startOfDay, isSameMonth, isSameDay, endOfDay, startOfMonth, endOfMonth, setDate } from 'date-fns';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { CalendarEvent, CalendarView, DAYS_OF_WEEK } from 'angular-calendar';
+import { CalendarEvent, CalendarMonthViewDay, DAYS_OF_WEEK } from 'angular-calendar';
 
 const colors: any = {
   red: {
@@ -27,59 +27,89 @@ const colors: any = {
   selector: 'app-calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss']
+  styleUrls: ['./calendar.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
-export class CalendarComponent {
-  @ViewChild('modalContent')
-  modalContent: TemplateRef<any>;
+export class CalendarComponent implements OnInit {
+  @Input() picking: boolean;
 
-  view: CalendarView = CalendarView.Month;
-
-  CalendarView = CalendarView;
-
-  viewDate: Date = new Date();
-
-  modalData: {
-    action: string;
-    event: CalendarEvent;
-  };
-
+  @Input() events: CalendarEvent[];
   refresh: Subject<any> = new Subject();
 
-  events: CalendarEvent[] = [];
-
   locale = 'fr';
-
   weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
-
-  weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
+  weekendDays: number[] = [DAYS_OF_WEEK.SATURDAY, DAYS_OF_WEEK.SUNDAY];
+  viewDate: Date = new Date();
 
   constructor(private modal: NgbModal) {}
 
-  addEvent(date: Date): void {
+  ngOnInit(): void {
+    this.events.forEach((aDay) => {
+      aDay.start = new Date(aDay.start);
+      aDay.end = new Date(aDay.end);
+    }
+  );
+  }
+
+  addDay(date: Date, end: Date = endOfDay(date)): void {
     this.events.push({
       title: '',
       start: startOfDay(date),
+      end: end,
       color: colors.red,
-      draggable: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      }
+      draggable: false,
     });
     this.refresh.next();
   }
 
-  deleteEvent(event: CalendarEvent): void {
-    this.events = this.events.filter(iEvent => iEvent !== event);
+  deleteDay(day: Date): void  {
+    this.events = this.events.filter(
+      (iEvent) => !isSameDay(day, iEvent.start)
+    );
   }
 
-  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    if (isSameMonth(date, this.viewDate) && events.length === 0) {
-      this.addEvent(date);
+  dayExist(day: Date): boolean {
+    let dayExist = false;
+
+    this.events.forEach((aDay) => {
+        if (isSameDay(aDay.start, day)) {
+          dayExist = true;
+          return true;
+        }
+      }
+    );
+    return dayExist;
+  }
+
+  dayClicked(date): void {
+    if (isSameMonth(date, this.viewDate) && !this.dayExist(date)) {
+      this.addDay(date);
     } else {
-      this.deleteEvent(events[0]);
+      this.deleteDay(date);
     }
   }
 
+  selctAll(): void {
+    const monthStart = startOfMonth(this.viewDate).getDate();
+    const monthEnd = endOfMonth(this.viewDate).getDate();
+
+    for (
+      let date = monthStart;
+      date <= monthEnd;
+      date++
+    ) {
+      const aDay = setDate(this.viewDate, date);
+      if (!this.dayExist(aDay)) {
+        this.addDay(aDay);
+      }
+    }
+  }
+
+  beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
+    body.forEach(day => {
+      if (!this.picking) {
+        day.cssClass = 'cal-disabled';
+      }
+    });
+  }
 }

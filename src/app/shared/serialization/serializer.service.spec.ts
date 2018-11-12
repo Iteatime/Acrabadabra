@@ -24,23 +24,13 @@ describe('SerializerService', () => {
 
   it('should serialize the given data', () => {
     const spy = spyOn(Base64, 'encode')
-      .and.callFake(
-        (data) => {
-          expect(data).toBe(jsonData);
-        }
-      )
       .and.returnValue(encodedTestData);
-    expect(service.serialize(testData)).toBe(encodedTestData);
+    expect(service.serialize(testData)).toEqual(encodedTestData);
   });
 
   it('should deserialize the given data', () => {
     const spy = spyOn(Base64, 'decode')
-      .and.callFake(
-        (data) => {
-          expect(data).toBe(encodedTestData);
-        }
-      )
       .and.returnValue(jsonData);
-    expect(service.deserialize(encodedTestData)).toBe(testData);
+    expect(service.deserialize(encodedTestData)).toEqual(testData);
   });
 });
