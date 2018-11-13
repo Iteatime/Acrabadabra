@@ -10,9 +10,9 @@ export class Cra {
   constructor(
     consultantEmail: string = '',
     consultantName: string = '',
-    consultant?: Consultant,
     missionClient: string = '',
     missionTitle: string = '',
+    consultant?: Consultant,
     mission?: Mission,
   ) {
     this.consultant = new Consultant(consultantEmail, consultantName) || consultant;

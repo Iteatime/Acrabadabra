@@ -43,7 +43,34 @@
     </div>
   </div>
 
-  <form class="col-12">
+  <div
+    class="modal show"
+    tabindex="-1"
+    role="dialog"
+    aria-label="Close"
+    [toggled]="showErrorMessage"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-danger">Champs incorrectes !</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" aria-label="Close">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p class="text-danger">
+            Tous les champ n'ont pas été remplis correctement !
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">Fermer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form class="col-12" [formGroup]="form">
 
     <div class="offset-1 col-10 mt-5">
 
@@ -56,16 +83,24 @@
         <div class="col-6">
           <input
             type="text"
-            name="consultantNameInput"
             class="form-control"
-            id="consultantNameInput"
-            aria-describedby="consultantNameHelp"
-            [(ngModel)]="cra.consultant.name"
+            name="consultantNameInput"
+            formControlName="consultantNameInput"
             [disabled]="mode === 'review'"
           >
+          <div
+            *ngIf="consultantNameInput.invalid && (consultantNameInput.dirty || consultantNameInput.touched)"
+            class="alert alert-danger"
+          >
+            <div *ngIf="consultantNameInput.errors.required">
+              Champ obligatoire !
+            </div>
+            <div *ngIf="consultantNameInput.errors.minlength">
+              Longueur minimale : 4 caractères !
+            </div>
+          </div>
         </div>
       </div>
-
       <div class="form-group row justify-content-between mt-2">
         <label for="consultantEmailInput" class="col-2 col-form-label">Email</label>
         <div class="col-6">
@@ -73,11 +108,20 @@
             type="email"
             name="consultantEmailInput"
             class="form-control"
-            id="consultantEmailInput"
-            aria-describedby="consultantEmailHelp"
-            [(ngModel)]="cra.consultant.email"
+            formControlName="consultantEmailInput"
             [disabled]="mode === 'review'"
           >
+          <div
+            *ngIf="consultantEmailInput.invalid && (consultantEmailInput.dirty || consultantEmailInput.touched)"
+            class="alert alert-danger"
+          >
+            <div *ngIf="consultantEmailInput.errors.required">
+              Champ obligatoire !
+            </div>
+            <div *ngIf="consultantEmailInput.errors.email">
+              Cet email n'est pas valide !
+            </div>
+          </div>
         </div>
       </div>
 
@@ -96,11 +140,20 @@
             type="text"
             name="missionTitle"
             class="form-control"
-            id="missionTitle"
-            aria-describedby="missionNameHelp"
-            [(ngModel)]="cra.mission.title"
+            formControlName="missionTitle"
             [disabled]="mode === 'review'"
           >
+          <div
+            *ngIf="missionTitle.invalid && (missionTitle.dirty || missionTitle.touched)"
+            class="alert alert-danger"
+          >
+            <div *ngIf="missionTitle.errors.required">
+              Champ obligatoire !
+            </div>
+            <div *ngIf="missionTitle.errors.minlength">
+              Longueur minimale : 4 caractères !
+            </div>
+          </div>
         </div>
       </div>
 
@@ -111,12 +164,20 @@
               type="text"
               name="missionFinalClient"
               class="form-control"
-              id="missionFinalClient"
-              aria-describedby="missionClientHelp"
-              [(ngModel)]="cra.mission.client"
+              formControlName="missionFinalClient"
               [disabled]="mode === 'review'"
             >
-
+            <div
+              *ngIf="missionFinalClient.invalid && (missionFinalClient.dirty || missionFinalClient.touched)"
+              class="alert alert-danger"
+            >
+              <div *ngIf="missionFinalClient.errors.required">
+                Champ obligatoire !
+              </div>
+              <div *ngIf="missionFinalClient.errors.minlength">
+                Longueur minimale : 4 caractères !
+              </div>
+            </div>
         </div>
       </div>
     </div>
@@ -128,8 +189,10 @@
       <hr align="left" width="70%">
 
       <app-calendar
-        [events]="cra.timesheet"
-        [picking]="mode !== 'review'"></app-calendar>
+        [miniTimesheet]="cra.timesheet"
+        [picking]="mode !== 'review'"
+      >
+      </app-calendar>
 
     </div>
 

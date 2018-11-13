@@ -1,37 +1,22 @@
 <div class="row justify-content-center">
-<!--
-  <div class="col-md-4">
-    <div class="btn-group">
-      <div
-        class="btn btn-primary"
-        mwlCalendarPreviousView
-        [view]="view"
-        [(viewDate)]="viewDate"
-        (viewDateChange)="activeDayIsOpen = false"
+  <div class="offset-4 col-md-4 row" #f>
+    <select
+      class="col-7"
+      name="monthSelector"
+      [compareWith]="testMonths"
+      [disabled]="!picking"
+      (change)="emptyDays()"
+      [(ngModel)]="viewDate"
+    >
+      <option
+        *ngFor="let month of getMonths()"
+        [ngValue]="month"
       >
-        &#60;
-      </div>
-    </div>
+        {{ month.toLocaleString(locale, { month: 'long' }) }}
+      </option>
+    </select>
+    <h3 class="col">{{ getYear(viewDate) }}</h3>
   </div>
--->
-  <div class="offset-4 col-md-4">
-    <h3>{{ viewDate | calendarDate:('month' + 'ViewTitle'): locale}}</h3>
-  </div>
-<!--
-  <div class="col-md-4">
-    <div class="btn-group">
-      <div
-        class="btn btn-primary"
-        mwlCalendarNextView
-        [view]="view"
-        [(viewDate)]="viewDate"
-        (viewDateChange)="activeDayIsOpen = false"
-      >
-        &#62;
-      </div>
-    </div>
-  </div>
--->
   <div class="col-md-4">
       <div class="btn-group">
         <div
@@ -66,7 +51,7 @@
       <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
       <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
       <div
-        [ngClass]="{'cal-day-input-disabled': !testDay(dayToEdit, day.date)}"
+        [ngClass]="{'cal-day-input-disabled': !testDays(dayToEdit, day.date)}"
       >
         <input
           #timeInput
@@ -86,7 +71,7 @@
 </ng-template>
 <mwl-calendar-month-view
   [viewDate]="viewDate"
-  [events]="events"
+  [events]="timesheet"
   [refresh]="refresh"
   [locale]="locale"
   [weekStartsOn]="weekStartsOn"
