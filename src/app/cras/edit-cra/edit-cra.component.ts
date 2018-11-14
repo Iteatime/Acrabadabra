@@ -8,7 +8,7 @@ import { formData } from 'src/app/@types/formData';
 import { CalendarComponent } from './calendar/calendar.component';
 import { CalendarEvent } from 'calendar-utils';
 
-import { getMonth, getDate, differenceInMinutes, getYear } from 'date-fns';
+import { getMonth, getDate, differenceInMinutes, getYear, endOfMonth, lastDayOfMonth } from 'date-fns';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -49,7 +49,6 @@ export class EditCraComponent implements OnInit {
           this.cra.consultant.name,
           [
             Validators.required,
-            Validators.minLength(4),
           ]
         ),
         'consultantEmailInput' : new FormControl(
@@ -63,14 +62,12 @@ export class EditCraComponent implements OnInit {
           this.cra.mission.title,
           [
             Validators.required,
-            Validators.minLength(4),
           ]
         ),
         'missionFinalClient' : new FormControl(
           this.cra.mission.client,
           [
             Validators.required,
-            Validators.minLength(4),
           ]
         ),
       }
@@ -88,10 +85,18 @@ export class EditCraComponent implements OnInit {
           const datas: formData = this.serializer.deserialize(params['data']);
           this.mode = datas.mode;
           this.cra = datas.cra;
+
           this.consultantNameInput.setValue(this.cra.consultant.name);
           this.consultantEmailInput.setValue(this.cra.consultant.email);
           this.missionTitle.setValue(this.cra.mission.title);
           this.missionFinalClient.setValue(this.cra.mission.client);
+
+          if (this.mode === 'review') {
+            this.consultantNameInput.disable();
+            this.consultantEmailInput.disable();
+            this.missionTitle.disable();
+            this.missionFinalClient.disable();
+          }
         } else {
           this.mode = 'add';
         }
@@ -99,10 +104,21 @@ export class EditCraComponent implements OnInit {
     );
   }
 
-  get consultantNameInput() { return this.form.get('consultantNameInput'); }
-  get consultantEmailInput() { return this.form.get('consultantEmailInput'); }
-  get missionTitle() { return this.form.get('missionTitle'); }
-  get missionFinalClient() { return this.form.get('missionFinalClient'); }
+  get consultantNameInput() {
+    return this.form.get('consultantNameInput');
+  }
+
+  get consultantEmailInput() {
+    return this.form.get('consultantEmailInput');
+  }
+
+  get missionTitle() {
+    return this.form.get('missionTitle');
+  }
+
+  get missionFinalClient() {
+    return this.form.get('missionFinalClient');
+  }
 
   /**
    * @description Generate the links token to edit and review this cra
@@ -150,15 +166,23 @@ export class EditCraComponent implements OnInit {
     const year = getYear(timesheet[0].start);
     const minitimesheet = {};
           minitimesheet[month + '.' + year] = new Array();
+    const monthLength = getDate(lastDayOfMonth(timesheet[0].start));
 
-    timesheet.forEach(
-      (day) => {
-        const date = getDate(day.start);
-        const time = differenceInMinutes(day.end, day.start) / 60 / 8;
+    for (let date = 1; date <= monthLength; date++) {
+      let time = 0;
+      let day: Date;
 
-        minitimesheet[month + '.' + year][date] = time;
-      }
-    );
+      timesheet.forEach(
+        (aDay) => {
+          if (date === getDate(aDay.start)) {
+            day = aDay.start;
+            time = differenceInMinutes(aDay.end, aDay.start) / 60 / 8;
+            return;
+          }
+        }
+      );
+      minitimesheet[month + '.' + year][date] = time;
+    }
 
     return minitimesheet;
   }
@@ -167,9 +191,9 @@ export class EditCraComponent implements OnInit {
    * @description Called when the modal close
    *
    */
-  onModalClose() {
+  onModalClose(toggle: string) {
 
-    this.showModal = false;
+    this[toggle] = false;
     setTimeout(
       () => {
         this.saved = false;

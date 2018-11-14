@@ -14,7 +14,7 @@
     role="dialog"
     aria-label="Close"
     [toggled]="showModal"
-    (close)="onModalClose()"
+    (close)="onModalClose('showModal')"
   >
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -49,6 +49,7 @@
     role="dialog"
     aria-label="Close"
     [toggled]="showErrorMessage"
+    (close)="onModalClose('showErrorMessage')"
   >
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -86,7 +87,6 @@
             class="form-control"
             name="consultantNameInput"
             formControlName="consultantNameInput"
-            [disabled]="mode === 'review'"
           >
           <div
             *ngIf="consultantNameInput.invalid && (consultantNameInput.dirty || consultantNameInput.touched)"
@@ -94,9 +94,6 @@
           >
             <div *ngIf="consultantNameInput.errors.required">
               Champ obligatoire !
-            </div>
-            <div *ngIf="consultantNameInput.errors.minlength">
-              Longueur minimale : 4 caractères !
             </div>
           </div>
         </div>
@@ -109,7 +106,6 @@
             name="consultantEmailInput"
             class="form-control"
             formControlName="consultantEmailInput"
-            [disabled]="mode === 'review'"
           >
           <div
             *ngIf="consultantEmailInput.invalid && (consultantEmailInput.dirty || consultantEmailInput.touched)"
@@ -141,7 +137,6 @@
             name="missionTitle"
             class="form-control"
             formControlName="missionTitle"
-            [disabled]="mode === 'review'"
           >
           <div
             *ngIf="missionTitle.invalid && (missionTitle.dirty || missionTitle.touched)"
@@ -149,9 +144,6 @@
           >
             <div *ngIf="missionTitle.errors.required">
               Champ obligatoire !
-            </div>
-            <div *ngIf="missionTitle.errors.minlength">
-              Longueur minimale : 4 caractères !
             </div>
           </div>
         </div>
@@ -165,7 +157,6 @@
               name="missionFinalClient"
               class="form-control"
               formControlName="missionFinalClient"
-              [disabled]="mode === 'review'"
             >
             <div
               *ngIf="missionFinalClient.invalid && (missionFinalClient.dirty || missionFinalClient.touched)"
@@ -173,9 +164,6 @@
             >
               <div *ngIf="missionFinalClient.errors.required">
                 Champ obligatoire !
-              </div>
-              <div *ngIf="missionFinalClient.errors.minlength">
-                Longueur minimale : 4 caractères !
               </div>
             </div>
         </div>
@@ -198,7 +186,7 @@
 
   </form>
 
-  <div class="col-12 mt-5 row justify-content-end">
+  <div class="col-12 my-5 row justify-content-end">
     <button
       *ngIf="mode !== 'review'"
       class="btn btn-primary col-4"

@@ -8,14 +8,17 @@ import {
   addMonths,
   differenceInMinutes,
   endOfMonth,
-  getYear,
   isSameDay,
   isSameMonth,
   setDate,
   startOfDay,
   startOfMonth,
-  getMonth,
+  getDay,
+  setMonth,
   subMonths,
+  compareAsc,
+  getMonth,
+  setYear,
 } from 'date-fns';
 
 import { CalendarEvent, CalendarMonthViewDay, DAYS_OF_WEEK } from 'angular-calendar';
@@ -57,6 +60,7 @@ export class CalendarComponent implements OnInit {
   weekendDays: number[] = [DAYS_OF_WEEK.SATURDAY, DAYS_OF_WEEK.SUNDAY];
   today =  new Date();
   viewDate: Date = new Date(this.today);
+  months: Date[];
 
   dayToEdit: Date;
 
@@ -77,19 +81,24 @@ export class CalendarComponent implements OnInit {
     this.controls.push(this.monthSelector);
 
     if (key !== undefined) {
-      const monthNummber = key.split('.')[0];
+      const monthNumber = key.split('.')[0];
       const year = key.split('.')[1];
+
+      this.viewDate = setMonth(setYear(this.viewDate, +year), +monthNumber);
+
       const month = this.miniTimesheet[key];
 
       for (let date = 1; date < month.length; date++) {
-        const day = new Date(+year, +monthNummber, date);
+        const day = new Date(+year, +monthNumber, date);
 
-        if (month[date] !== undefined) {
+        if (month[date] !== undefined && month[date] !== 0) {
           this.addDay(day, addMinutes(day, month[date] * 60 * 8));
         }
 
       }
     }
+
+    this.months = this.getMonths();
   }
 
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
@@ -165,7 +174,7 @@ export class CalendarComponent implements OnInit {
       date++
     ) {
       const aDay = setDate(this.viewDate, date);
-      if (!this.dayExist(aDay)) {
+      if (!this.dayExist(aDay) && this.weekendDays.indexOf(getDay(aDay)) === -1) {
         this.addDay(aDay);
       }
     }
@@ -214,40 +223,66 @@ export class CalendarComponent implements OnInit {
   }
 
   getMonths(): Date[] {
-    const months: Date[] = [];
+    const months: Date[] = [],
+          monthNumber = getMonth(this.viewDate);
 
-    for (let month = -11; month < 1; month++) {
+    for (let month = 0; month < 12; month++) {
       months.push(
-        startOfMonth(
-          subMonths(this.today, -month)
-        )
+        setMonth(startOfMonth(this.viewDate), month)
       );
     }
-
-    months.sort(
-      (date: Date, date2: Date): number => {
-        if (getMonth(date) > getMonth(date2)) {
-          return 1;
-        } else if (getMonth(date) > getMonth(date2)) {
-          return -1;
-        }
-      }
-    );
 
     return months;
   }
 
-  getYear(date: Date): string {
-    return getYear(date).toString();
+  nextMonth(date: string): void {
+    const nextMonth = addMonths(this[date], 1);
+
+    if (!this.monthExist(nextMonth)) {
+      this.months.push(nextMonth);
+    }
+    this.sortMonth();
+    this[date] = nextMonth;
+    this.emptyDays();
+  }
+
+  previousMonth(date: string): void {
+    const lastMonth = subMonths(this[date], 1);
+
+    if (!this.monthExist(lastMonth)) {
+      this.months.push(lastMonth);
+    }
+    this.sortMonth();
+    this[date] = lastMonth;
+    this.emptyDays();
+  }
+
+  sortMonth(): void {
+    this.months.sort(
+      (a: Date, b: Date): number => {
+        return compareAsc(a, b);
+      }
+    );
+  }
+
+  monthExist(month: Date): boolean {
+    let result = false;
+
+    this.months.forEach(
+      (aMonth: Date) => {
+        if (isSameMonth(aMonth, month)) {
+          result = true;
+          return;
+        }
+      }
+    );
+
+    return result;
   }
 
   emptyDays(): void {
     this.timesheet = [];
 
     this.refresh.next();
-  }
-
-  log(any: any) {
-    console.log(any);
   }
 }
