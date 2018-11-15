@@ -1,3 +1,8 @@
+<div class="row justify-content-start">
+  <div class="col">
+    <p>Nombre total de journées : {{ totalTime }}</p>
+  </div>
+</div>
 <div class="row justify-content-center">
   <div class="col-1">
     <div class="btn-group">
@@ -10,22 +15,7 @@
       </div>
     </div>
   </div>
-
-  <select
-    class="offset-2 col-3"
-    name="monthSelector"
-    [compareWith]="testMonths"
-    [disabled]="!picking"
-    (change)="emptyDays()"
-    [(ngModel)]="viewDate"
-  >
-    <option
-      *ngFor="let month of months"
-      [ngValue]="month"
-    >
-      {{ month.toLocaleString(locale, { month: 'long', year: 'numeric' }) }}
-    </option>
-  </select>
+  <h3 class="offset-2 col-4">{{ viewDate.toLocaleString(locale, { month: 'long', year: 'numeric' }) }}</h3>
   <div class="col-3">
     <div class="btn-group">
       <div
@@ -33,12 +23,12 @@
         [ngStyle]="{'display': picking ? '' : 'none'}"
         (click)="selctAll()"
       >
-        Tout sélectionner
+        Sélectionner les jours ouvrés
       </div>
     </div>
   </div>
 
-  <div class="offset-2 col-1">
+  <div class="offset-1 col-1">
       <div class="btn-group">
         <div
           class="btn btn-primary"
@@ -51,42 +41,11 @@
     </div>
 </div>
 <br>
-<context-menu #basicMenu>
-  <ng-template [visible]="dayNotExist" contextMenuItem (execute)="addDay($event.item)">
-    Ajout
-  </ng-template>
-  <ng-template [visible]="dayExist" contextMenuItem (execute)="dayToEdit = $event.item">
-    Edition
-  </ng-template>
-  <ng-template [visible]="dayExist" contextMenuItem (execute)="deleteDay($event.item)">
-    Suppression
-  </ng-template>
-</context-menu>
 <ng-template #customCellTemplate let-day="day" let-locale="locale">
-  <div
-    class="fill-height"
-    [contextMenu]="basicMenu"
-    [contextMenuSubject]="day.date"
-  >
+  <div class="fill-height">
     <div class="cal-cell-top">
       <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
       <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
-      <div
-        [ngClass]="{'cal-day-input-disabled': !testDays(dayToEdit, day.date)}"
-      >
-        <input
-          #timeInput
-          class="cal-day-input"
-          type="number"
-          value="0.5"
-        >
-        <input
-          type="button"
-          class="cal-day-button"
-          value="V"
-          (click)="editDay(day.date, timeInput.value)"
-        >
-      </div>
     </div>
   </div>
 </ng-template>

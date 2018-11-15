@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { SerializerService } from 'src/app/shared/serialization/serializer.service';
@@ -8,13 +8,14 @@ import { formData } from 'src/app/@types/formData';
 import { CalendarComponent } from './calendar/calendar.component';
 import { CalendarEvent } from 'calendar-utils';
 
-import { getMonth, getDate, differenceInMinutes, getYear, endOfMonth, lastDayOfMonth } from 'date-fns';
+import { getMonth, getDate, differenceInMinutes, getYear, lastDayOfMonth } from 'date-fns';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-cra',
   templateUrl: './edit-cra.component.html',
-  styleUrls: ['./edit-cra.component.scss']
+  styleUrls: ['./edit-cra.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class EditCraComponent implements OnInit {
   @ViewChild (CalendarComponent) timesheetPicker;
@@ -23,12 +24,11 @@ export class EditCraComponent implements OnInit {
   editToken: string;
   reviewToken: string;
 
-  saved = false;
   showModal = false;
   showErrorMessage = false;
 
   title = {
-    add: 'Créer',
+    add: 'Saisir',
     edit: 'Editer',
     review: 'Consulter',
   };
@@ -70,12 +70,6 @@ export class EditCraComponent implements OnInit {
             Validators.required,
           ]
         ),
-      }
-    );
-
-    this.timesheetPicker.controls.forEach(
-      (control: FormControl) => {
-        control.setParent(this.form);
       }
     );
 
@@ -121,7 +115,7 @@ export class EditCraComponent implements OnInit {
   }
 
   /**
-   * @description Generate the links token to edit and review this cra
+   * @description Generate the links token to edit and review this cra and toggle modal opened
    *
    */
   onSubmitCRA() {
@@ -137,7 +131,6 @@ export class EditCraComponent implements OnInit {
       );
 
       const timesheet = this.timesheetPicker.timesheet;
-
       if (timesheet[0] !== undefined) {
         this.cra.timesheet = this.minifyTimesheet(timesheet);
       } else {
@@ -148,13 +141,8 @@ export class EditCraComponent implements OnInit {
         mode: 'edit',
         cra: this.cra,
       };
-
-      this.saved = true;
-
       this.editToken = this.serializer.serialize(data);
-
       data.mode = 'review',
-
       this.reviewToken = this.serializer.serialize(data);
 
       this.showModal = true;
@@ -170,12 +158,10 @@ export class EditCraComponent implements OnInit {
 
     for (let date = 1; date <= monthLength; date++) {
       let time = 0;
-      let day: Date;
 
       timesheet.forEach(
         (aDay) => {
           if (date === getDate(aDay.start)) {
-            day = aDay.start;
             time = differenceInMinutes(aDay.end, aDay.start) / 60 / 8;
             return;
           }
@@ -188,17 +174,10 @@ export class EditCraComponent implements OnInit {
   }
 
   /**
-   * @description Called when the modal close
+   * @description Swiche the given modal toggle to false
    *
    */
   onModalClose(toggle: string) {
-
     this[toggle] = false;
-    setTimeout(
-      () => {
-        this.saved = false;
-      },
-      2000
-    );
   }
 }

@@ -16,8 +16,6 @@ import {
   getDay,
   setMonth,
   subMonths,
-  compareAsc,
-  getMonth,
   setYear,
 } from 'date-fns';
 
@@ -60,33 +58,19 @@ export class CalendarComponent implements OnInit {
   weekendDays: number[] = [DAYS_OF_WEEK.SATURDAY, DAYS_OF_WEEK.SUNDAY];
   today =  new Date();
   viewDate: Date = new Date(this.today);
-  months: Date[];
-
-  dayToEdit: Date;
-
-  monthSelector: FormControl;
-  controls: FormControl[] = [];
+  totalTime: number;
 
   constructor() {}
 
   ngOnInit(): void {
     const key = Object.keys(this.miniTimesheet)[0];
 
-    this.monthSelector = new FormControl(
-      {
-        value: this.viewDate,
-        disabled: true,
-      }
-    );
-    this.controls.push(this.monthSelector);
-
     if (key !== undefined) {
       const monthNumber = key.split('.')[0];
       const year = key.split('.')[1];
+      const month = this.miniTimesheet[key];
 
       this.viewDate = setMonth(setYear(this.viewDate, +year), +monthNumber);
-
-      const month = this.miniTimesheet[key];
 
       for (let date = 1; date < month.length; date++) {
         const day = new Date(+year, +monthNumber, date);
@@ -97,17 +81,19 @@ export class CalendarComponent implements OnInit {
 
       }
     }
-
-    this.months = this.getMonths();
   }
 
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
+    this.totalTime = 0;
+
     body.forEach(day => {
       if (!this.picking) {
         day.cssClass = 'cal-disabled';
       }
       day.events.forEach((event) => {
-        day.badgeTotal = differenceInMinutes(event.end, event.start) / 60 / 8;
+        const dayTime = differenceInMinutes(event.end, event.start) / 60 / 8;
+        day.badgeTotal = dayTime;
+        this.totalTime += dayTime;
       });
     });
   }
@@ -141,27 +127,16 @@ export class CalendarComponent implements OnInit {
     this.refresh.next();
   }
 
-  editDay(date: Date, inputTime: number) {
-    if (inputTime <= 1) {
-      const day = this.getDay(date);
-      const endDate = addMinutes(day.start, inputTime * 60 * 8);
-      day.end = endDate;
-    }
-
-    setTimeout(() => this.dayToEdit = null, 50);
-
-  }
-
   dayClicked(date: Date): void {
     if (isSameMonth(date, this.viewDate)) {
       if (!this.dayExist(date)) {
         this.addDay(date);
-      } else if (!isSameDay(date, this.dayToEdit)) {
+      } else {
         this.deleteDay(date);
       }
     }
 
-    setTimeout(() => this.refresh.next(), 50);
+    this.refresh.next();
   }
 
   selctAll(): void {
@@ -180,8 +155,7 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  getDay(date: Date): CalendarEvent {
-
+  getWorkTime(date: Date): CalendarEvent {
     let day: CalendarEvent;
 
     this.timesheet.forEach(
@@ -192,16 +166,7 @@ export class CalendarComponent implements OnInit {
         }
       }
     );
-
     return day;
-  }
-
-  testDays(date: Date, date2: Date): boolean {
-    return isSameDay(date, date2);
-  }
-
-  testMonths(month: Date, month2: Date): boolean {
-    return isSameMonth(month, month2);
   }
 
   dayExist = (day: Date): boolean => {
@@ -218,30 +183,9 @@ export class CalendarComponent implements OnInit {
     return dayExist;
   }
 
-  dayNotExist = (day: Date): boolean => {
-    return !this.dayExist(day) && isSameMonth(day, this.viewDate);
-  }
-
-  getMonths(): Date[] {
-    const months: Date[] = [],
-          monthNumber = getMonth(this.viewDate);
-
-    for (let month = 0; month < 12; month++) {
-      months.push(
-        setMonth(startOfMonth(this.viewDate), month)
-      );
-    }
-
-    return months;
-  }
-
   nextMonth(date: string): void {
     const nextMonth = addMonths(this[date], 1);
 
-    if (!this.monthExist(nextMonth)) {
-      this.months.push(nextMonth);
-    }
-    this.sortMonth();
     this[date] = nextMonth;
     this.emptyDays();
   }
@@ -249,40 +193,12 @@ export class CalendarComponent implements OnInit {
   previousMonth(date: string): void {
     const lastMonth = subMonths(this[date], 1);
 
-    if (!this.monthExist(lastMonth)) {
-      this.months.push(lastMonth);
-    }
-    this.sortMonth();
     this[date] = lastMonth;
     this.emptyDays();
   }
 
-  sortMonth(): void {
-    this.months.sort(
-      (a: Date, b: Date): number => {
-        return compareAsc(a, b);
-      }
-    );
-  }
-
-  monthExist(month: Date): boolean {
-    let result = false;
-
-    this.months.forEach(
-      (aMonth: Date) => {
-        if (isSameMonth(aMonth, month)) {
-          result = true;
-          return;
-        }
-      }
-    );
-
-    return result;
-  }
-
   emptyDays(): void {
     this.timesheet = [];
-
     this.refresh.next();
   }
 }
