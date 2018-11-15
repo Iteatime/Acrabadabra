@@ -1,21 +1,18 @@
-<div class="home-content">
-  <div class="row justify-content-center">
-    <div class="text-center">
-        <h1>{{ title }}</h1>
-
-        <h3>Une solution en ligne pour les SSII</h3>
+<div id="homepage" class="homepage">
+  <div class="homepage__header">
+    <div class="homepage__header__container">
+      <img class="homepage__header__container__logo" src="assets/images/logo.white.svg" alt="logo {{ title }}" onerror="this.removeAttribute('onerror'); this.src='//assets/images/logo.white.png'">
     </div>
   </div>
 
-  <p></p>
+  <div class="homepage__main">
+    <div class="homepage__main__title">
+      <span class="brand_name">{{ title }} </span>
+      <h1>Une solution en ligne pour les SSII</h1>
+    </div>
 
-  <div class="row justify-content-center">
-    <button
-      type="button"
-      class="btn btn-primary"
-      [routerLink]="['/cra/edit']"
-    >
-      Saisir un CRA
+    <button type="button" class="homepage__main__btncreate" data-text="Saisir un CRA" [routerLink]="['/cra/edit']">
+      <span>Saisir un CRA</span>
     </button>
   </div>
 </div>
