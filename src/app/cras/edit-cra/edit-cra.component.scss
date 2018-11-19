@@ -1,7 +1,128 @@
+@import '../../style/vars';
+@import '../../style/mixins';
+
 .ng-invalid:not(form)  {
   border-left: 5px solid #a94442; /* red */
 }
 
 .ng-valid[required], .ng-valid.required  {
   border-left: 5px solid #42A948; /* green */
+}
+
+.edit-cra {
+    background: $grey_light;
+
+    &__header {
+        background: $main_blue;
+        padding: 10px 0;
+		height: 80px;
+        box-shadow: 0 2px 3px rgba($black, .4);
+
+		&__container {
+            position: relative;
+			height: 100%;
+
+			&__logo {
+				display: block;
+				position: absolute;
+                left: 20px;
+				height: 100%;
+			}
+		}
+	}
+
+    &__wrapper {
+        @include container;
+
+        @media (min-width: $screen-sm-min) {
+            padding: 40px;
+        }
+
+        margin-top: 30px;
+        background: $white;
+        padding: 20px;
+        box-shadow: 0 0 5px rgba($black, .3);
+
+        &__title {
+            font-size: 22px;
+            color: $grey_mine_shaft;
+
+            & > h2 {
+                font-weight: 700;
+            }
+        }
+
+        &__form {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 45px;
+
+            &__consultant,
+            &__mission {
+                @media (min-width: $screen-sm-min) {
+                    width: calc(50% - 20px);
+                }
+
+                width: 100%;
+
+                &__title {
+                    @include header-form;
+                }
+
+                &__input-wrapper {
+                    border: 1px solid $grey_mid;
+                    border-top: 0;
+                    background: $grey_light;
+                    padding: 10px;
+                }
+            }
+
+            &__consultant {
+                @media (min-width: $screen-sm-min) {
+                    margin-right: 20px;
+                }
+            }
+
+            &__mission {
+                @media (min-width: $screen-sm-min) {
+                    margin-top: 0;
+                    margin-left: 20px;
+                }
+
+                margin-top: 20px;
+            }
+
+            &__calendar {
+                margin-top: 30px;
+                width: 100%;
+
+                &__title {
+                    @include header-form;
+                }
+            }
+
+            &__submit {
+                margin-top: 40px;
+                width: 100%;
+                text-align: center;
+
+                &__button {
+                    @include hoveranim_glow($darker_blue);
+
+                    border: none;
+        			display: inline-block;
+                    background: $dark_blue;
+                    padding: 0;
+        			cursor: pointer;
+        			width: 40%;
+                    height: 60px;
+                    min-width: 220px;
+        			line-height: 60px;
+                    color: $white;
+        			font-size: 20px;
+        			font-weight: 700;
+                }
+            }
+        }
+    }
 }

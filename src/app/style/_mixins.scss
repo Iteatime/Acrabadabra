@@ -67,3 +67,13 @@
 		}
 	}
 }
+
+@mixin header-form {
+	margin: 0;
+	background: $main_red;
+	padding: 10px;
+	text-align: center;
+	color: $white;
+	font-size: 20px;
+	font-weight: 700;
+}
