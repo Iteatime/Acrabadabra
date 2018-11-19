@@ -17,10 +17,10 @@ import {
   setMonth,
   subMonths,
   setYear,
+  getDate,
 } from 'date-fns';
 
 import { CalendarEvent, CalendarMonthViewDay, DAYS_OF_WEEK } from 'angular-calendar';
-import { FormControl } from '@angular/forms';
 
 
 const colors: any = {
@@ -72,8 +72,8 @@ export class CalendarComponent implements OnInit {
 
       this.viewDate = setMonth(setYear(this.viewDate, +year), +monthNumber);
 
-      for (let date = 1; date < month.length; date++) {
-        const day = new Date(+year, +monthNumber, date);
+      for (let date = 0; date < month.length; date++) {
+        const day = new Date(+year, +monthNumber, date + 1);
 
         if (month[date] !== undefined && month[date] !== 0) {
           this.addDay(day, addMinutes(day, month[date] * 60 * 8));
@@ -137,6 +137,20 @@ export class CalendarComponent implements OnInit {
     }
 
     this.refresh.next();
+  }
+
+  dayEdited(event: Event, date: Date, time: number): void {
+    event.stopPropagation();
+
+    const day = this.getWorkTime(date),
+          end = addMinutes(day.start, 8 * 60 * time);
+
+    if (time !== 0 && end) {
+      day.end = end;
+      this.refresh.next();
+    } else {
+      this.deleteDay(date);
+    }
   }
 
   selctAll(): void {

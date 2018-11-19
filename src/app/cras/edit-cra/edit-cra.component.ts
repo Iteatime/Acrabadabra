@@ -150,18 +150,18 @@ export class EditCraComponent implements OnInit {
   }
 
   minifyTimesheet(timesheet: CalendarEvent[]): any {
-    const month = getMonth(timesheet[0].start);
-    const year = getYear(timesheet[0].start);
-    const minitimesheet = {};
+    const month = getMonth(timesheet[0].start),
+          year = getYear(timesheet[0].start),
+          monthLength = getDate(lastDayOfMonth(timesheet[0].start)),
+          minitimesheet = {};
           minitimesheet[month + '.' + year] = new Array();
-    const monthLength = getDate(lastDayOfMonth(timesheet[0].start));
 
-    for (let date = 1; date <= monthLength; date++) {
+    for (let date = 0; date < monthLength; date++) {
       let time = 0;
 
       timesheet.forEach(
         (aDay) => {
-          if (date === getDate(aDay.start)) {
+          if (date + 1 === getDate(aDay.start)) {
             time = differenceInMinutes(aDay.end, aDay.start) / 60 / 8;
             return;
           }
