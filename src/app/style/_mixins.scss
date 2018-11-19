@@ -1,7 +1,7 @@
 // Mixins
 
 @mixin container {
-	width: calc(100% - 30px);
+	width: 100%;
 	margin: 0 auto;
 
 	@media (min-width : $screen_sm_min) {

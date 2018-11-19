@@ -1,13 +1,15 @@
 <div class="edit-cra">
     <div class="edit-cra__header">
         <div class="edit-cra__header__container">
-            <img class="edit-cra__header__container__logo" src="assets/images/logo.white.svg" alt="logo {{ title }}" onerror="this.removeAttribute('onerror'); this.src='//assets/images/logo.white.png'">
+            <a href="./" title="Retour à l'accueil">
+                <img class="edit-cra__header__container__logo" src="assets/images/logo.white.svg" alt="logo {{ title }}" onerror="this.removeAttribute('onerror'); this.src='//assets/images/logo.white.png'">
+            </a>
         </div>
     </div>
 
     <div class="edit-cra__wrapper">
         <div class="edit-cra__wrapper__title">
-            <h2>{{ title[mode] }} un CRA</h2>
+            <h2>{{ title[mode] }} un compte rendu d'activité</h2>
         </div>
 
         <div class="edit-cra__wrapper__modals">
@@ -44,7 +46,7 @@
                         </div>
                         <div class="edit-cra__wrapper__modals__modal__dialog__content__footer modal-footer">
                             <button data-text="Fermer" type="button" class="edit-cra__wrapper__modals__modal__dialog__content__footer__button" data-dismiss="modal" aria-label="Close">
-                                <span>Fermer</span>
+                                Fermer
                             </button>
                         </div>
                     </div>
@@ -74,7 +76,7 @@
                         </div>
                         <div data-text="Fermer" class="edit-cra__wrapper__modals__modal__dialog__content__footer modal-footer">
                             <button type="button" class="edit-cra__wrapper__modals__modal__dialog__content__footer__button" data-dismiss="modal" aria-label="Close">
-                                <span>Fermer</span>
+                                Fermer
                             </button>
                         </div>
                     </div>
@@ -83,12 +85,12 @@
         </div>
 
         <form class="edit-cra__wrapper__form" [formGroup]="form">
-            <div class="edit-cra__wrapper__form__consultant">
-                <h4 class="edit-cra__wrapper__form__consultant__title">Prestataire</h4>
-                <div class="edit-cra__wrapper__form__consultant__input-wrapper">
-                    <div class="edit-cra__wrapper__form__consultant__input-wrapper__name form-group">
-                        <label for="consultantNameInput" class="edit-cra__wrapper__form__consultant__input-wrapper__name__label">Nom</label>
-                        <div class="edit-cra__wrapper__form__consultant__input-wrapper__name__input">
+            <div id="prestataire" class="edit-cra__wrapper__form__block">
+                <h4 class="edit-cra__wrapper__form__block__title">Prestataire</h4>
+                <div class="edit-cra__wrapper__form__block__input-wrapper">
+                    <div class="edit-cra__wrapper__form__block__input-wrapper__item form-group">
+                        <label for="consultantNameInput" class="edit-cra__wrapper__form__block__input-wrapper__item__label">Nom</label>
+                        <div class="edit-cra__wrapper__form__block__input-wrapper__item__input">
                             <input
                             type="text"
                             class="form-control"
@@ -105,9 +107,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="edit-cra__wrapper__form__consultant__input-wrapper__email form-group">
-                        <label for="consultantEmailInput" class="edit-cra__wrapper__form__consultant__input-wrapper__email__label">Email</label>
-                        <div class="edit-cra__wrapper__form__consultant__input-wrapper__email__input">
+                    <div class="edit-cra__wrapper__form__block__input-wrapper__item form-group">
+                        <label for="consultantEmailInput" class="edit-cra__wrapper__form__block__input-wrapper__item__label">Email</label>
+                        <div class="edit-cra__wrapper__form__block__input-wrapper__item__input">
                             <input
                             type="email"
                             name="consultantEmailInput"
@@ -130,12 +132,12 @@
                 </div>
             </div>
 
-            <div class="edit-cra__wrapper__form__mission">
-                <h4 class="edit-cra__wrapper__form__mission__title">Mission</h4>
-                <div class="edit-cra__wrapper__form__mission__input-wrapper">
-                    <div class="edit-cra__wrapper__form__mission__input-wrapper__name form-group">
-                        <label for="missionTitle" class="edit-cra__wrapper__form__mission__input-wrapper__name__label">Intitulé</label>
-                        <div class="edit-cra__wrapper__form__mission__input-wrapper__name__input">
+            <div id="mission" class="edit-cra__wrapper__form__block">
+                <h4 class="edit-cra__wrapper__form__block__title">Mission</h4>
+                <div class="edit-cra__wrapper__form__block__input-wrapper">
+                    <div class="edit-cra__wrapper__form__block__input-wrapper__item form-group">
+                        <label for="missionTitle" class="edit-cra__wrapper__form__block__input-wrapper__item__label">Intitulé</label>
+                        <div class="edit-cra__wrapper__form__block__input-wrapper__item__input">
                             <input
                             type="text"
                             name="missionTitle"
@@ -153,9 +155,9 @@
                         </div>
                     </div>
 
-                    <div class="edit-cra__wrapper__form__mission__input-wrapper__client form-group">
-                        <label for="missionFinalClient" class="edit-cra__wrapper__form__mission__input-wrapper__client__label">Client final</label>
-                        <div class="edit-cra__wrapper__form__mission__input-wrapper__client__input">
+                    <div class="edit-cra__wrapper__form__block__input-wrapper__item form-group">
+                        <label for="missionFinalClient" class="edit-cra__wrapper__form__block__input-wrapper__item__label">Client final</label>
+                        <div class="edit-cra__wrapper__form__block__input-wrapper__item__input">
                             <input
                             type="text"
                             name="missionFinalClient"
@@ -177,7 +179,7 @@
             </div>
 
             <div class="edit-cra__wrapper__form__calendar">
-                <h4 class="edit-cra__wrapper__form__calendar__title">Compte rendue d'activité</h4>
+                <h4 class="edit-cra__wrapper__form__calendar__title">Compte rendu d'activité</h4>
                 <app-calendar
                 [miniTimesheet]="cra.timesheet"
                 [picking]="mode !== 'review'"

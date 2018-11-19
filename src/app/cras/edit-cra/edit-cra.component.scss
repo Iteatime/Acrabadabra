@@ -13,10 +13,13 @@
     background: $grey_light;
 
     &__header {
+        @media (min-width: $screen-sm-min) {
+            height: 80px;
+        }
         background: $main_blue;
         padding: 10px 0;
-		height: 80px;
-        box-shadow: 0 2px 3px rgba($black, .4);
+		height: 60px;
+        box-shadow: 0 0 8px rgba($black, .8);
 
 		&__container {
             position: relative;
@@ -41,14 +44,19 @@
         margin-top: 30px;
         background: $white;
         padding: 20px;
-        box-shadow: 0 0 5px rgba($black, .3);
+        box-shadow: 0 0 8px rgba($black, .2);
 
         &__title {
             font-size: 22px;
             color: $grey_mine_shaft;
 
             & > h2 {
+                @media (min-width: $screen-sm-min) {
+                    font-size: 28px;
+                }
+
                 font-weight: 700;
+                font-size: 20px;
             }
         }
 
@@ -96,12 +104,15 @@
         }
 
         &__form {
+            @media (min-width: $screen-sm-min) {
+                margin-top: 45px;
+            }
+
             display: flex;
             flex-wrap: wrap;
-            margin-top: 45px;
+            margin-top: 25px;
 
-            &__consultant,
-            &__mission {
+            &__block {
                 @media (min-width: $screen-sm-min) {
                     width: calc(50% - 20px);
                 }
@@ -113,27 +124,86 @@
                 }
 
                 &__input-wrapper {
-                    border: 1px solid $grey_mid;
+                    border: 1px solid $grey_border_dark;
                     border-top: 0;
                     background: $grey_light;
-                    padding: 10px;
+                    padding: 18px;
+
+                    &__item {
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                        &__input {
+                            position: relative;
+
+                            & input {
+                                border-radius: 0;
+                                border: 1px solid $grey_border;
+                            }
+
+                            & .ng-invalid:not(form) {
+                                border-color: $grey_border;
+                            }
+
+                            & .form-control:focus {
+                                box-shadow: none;
+                                border-color: $main_blue;
+                            }
+
+                            & .alert {
+                                position: absolute;
+                                top: -5px;
+                                right: 0;
+                                transform: translateY(-100%);
+                                margin: 0;
+                                padding: 6px 10px;
+                                font-size: 13px;
+                                color: $white;
+                                background: $red_error;
+                                font-weight: 700;
+                                border: 0;
+
+                                &::before {
+                                    content: '';
+                                    height: 0;
+                                    width: 0;
+                                    display: block;
+                                    position: absolute;
+                                    left: 10px;
+                                    bottom: -4px;
+                                    border-color: $red_error transparent transparent transparent;
+                                    border-width: 5px 4px 0 4px;
+                                    border-style: solid;
+                                }
+                            }
+                        }
+
+                        &__label {
+                            font-size: 14px;
+                            color: $grey_mine_shaft;
+                            font-weight: 700;
+                        }
+                    }
                 }
+
+                &#prestataire {
+                    @media (min-width: $screen-sm-min) {
+                        margin-right: 20px;
+                    }
+                }
+
+                &#mission {
+                    @media (min-width: $screen-sm-min) {
+                        margin-top: 0;
+                        margin-left: 20px;
+                    }
+
+                    margin-top: 20px;
+                }
+
             }
 
-            &__consultant {
-                @media (min-width: $screen-sm-min) {
-                    margin-right: 20px;
-                }
-            }
-
-            &__mission {
-                @media (min-width: $screen-sm-min) {
-                    margin-top: 0;
-                    margin-left: 20px;
-                }
-
-                margin-top: 20px;
-            }
+            
 
             &__calendar {
                 margin-top: 30px;

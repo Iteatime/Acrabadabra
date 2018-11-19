@@ -1,3 +1,296 @@
+@import '../../../style/vars';
+@import '../../../style/mixins';
+
+.calendar {
+  &__header {
+    @media (min-width: $screen_xs_min) {
+      height: 50px;
+    }
+
+    padding: 0;
+    height: 100px;
+    border-bottom: 1px solid $grey_border;
+    line-height: 50px;
+    margin-bottom: 20px;
+  
+    &__daycount {
+      @media (min-width: $screen_xs_min) {
+        float: left;
+        width: 50%;
+        text-align: left;
+      }
+
+      font-weight: 700;
+      font-size: 14px;
+      width: 100%;
+      text-align: center;
+
+      & > span {
+        @include centeralign;
+      }
+
+      & .highlight {
+        font-size: 2em;
+        color: $main_blue;
+      }
+    }
+
+    &__monthchoice {
+      @media (min-width: $screen_xs_min) {
+        float: left;
+        width: 50%;
+        text-align: right;
+      }
+
+      width: 100%;
+      text-align: center;
+
+      &__btn {
+        @include centeralign;
+
+        width: 30px;
+        height: 30px;
+        border-radius: 15px;
+        text-align: center;
+        line-height: 30px;
+        background: $dark_blue;
+        color: $white;
+        cursor: pointer;
+        transition: background .2s ease-in-out;
+
+        &:hover {
+          background: $darker_blue;
+        }
+      }
+
+      &__detail {
+        @include centeralign;
+        
+        font-weight: 700;
+        font-size: 18px;
+        background: none;
+        min-width : 160px;
+        text-align: center;
+      }
+    }
+  }
+
+  &__content {
+    &__tools {
+      @media (min-width: $screen_xs_min) {
+        text-align: right;
+      }
+
+      text-align: center;
+
+      &__selectall {
+        display: inline-block;
+        height: 24px;
+        line-height: 12px;
+        padding: 5px 8px;
+        border-radius: 15px;
+        background: $dark_blue;
+        color: $white;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background .2s ease-in-out;
+
+        &:hover {
+          background: $darker_blue;
+        }
+      }
+    }
+
+    &__dayselect {
+      margin-top: 20px;
+
+      & .cal-header,
+      & .cal-out-month {
+        @media (min-width: $screen_sm_min) {
+          display: flex;
+        }
+
+        display: none;
+      }
+
+      & .cal-cell-row {
+        @media (min-width: $screen_sm_min) {
+          flex-direction: row;
+        }
+
+        flex-direction: column;
+      }
+
+      &__dayitem {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+
+        &__cell {
+          position: relative;
+          height: 100%;
+
+          &__changer {
+            @media (min-width: $screen_sm_min) {
+              width: 30px;
+              height: 30px;
+              line-height: 26px;
+              bottom: 10px;
+              left: 25px;
+            }
+
+            width: 40px;
+            height: 40px;
+            line-height: 36px;
+            text-align: center;
+            border-radius: 25px;
+            margin: 0;
+            position: absolute;
+            bottom: 20px;
+            left: 40px;
+            overflow: hidden;
+            background: $main_blue;
+            transform: translateX(-50%);
+            transition: all .3s ease-in-out;
+
+            &__options {
+              @media (min-width: $screen_sm_min) {
+                line-height: 26px;
+                width: 80px;
+              }
+
+              opacity: 0;
+              visibility: hidden;
+              position : absolute;
+              top: 0;
+              left: 50%;
+              width: 80px;
+              margin-left: -40px;
+              height: 100%;
+              line-height: 36px;
+              white-space: nowrap;
+              color: $white;
+              transform: translateY(200%);
+              transition: opacity 0.3s ease 0s, transform 0.5s ease 0s;
+
+              &__item {
+                @include centeralign;
+
+                @media (min-width: $screen_sm_min) {
+                  width: 24px;
+                  height: 24px;
+                  line-height: 24px;
+                }
+
+                font-weight: 700;
+                font-size: 14px;
+                width: 28px;
+                height: 28px;
+                border-radius: 24px;
+                line-height: 28px;
+                transition: all .2s ease-in-out;
+
+                &.selected {
+                  background: $white;
+                  color: $main_blue;
+                }
+              }
+            }
+
+            &__maintext {
+              @include centeralign;
+
+              color: $white;
+              font-weight: 700;
+              font-size: 14px;
+              transform: translateY(0);
+              transition: opacity 0.3s ease 0s, transform 0.5s ease 0s;
+            }
+
+            &:hover {
+              @media (min-width: $screen_sm_min) {
+                width: 80px;
+              }
+              width: 100px;
+            }
+
+            &:hover & {
+              &__options {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0%);
+              }
+
+              &__maintext {
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-200%);
+              }
+            }
+          }
+        }
+      }
+
+      & .cal-weekend.cal-day-cell,
+      & .cal-month-view .cal-cell-row .cal-cell.cal-weekend.cal-out-month:hover {
+        background: rgba($black, .02);
+      }
+
+      & .cal-month-view .cal-day-cell {
+        @media (min-width: $screen_sm_min) {
+          min-height: 100px;
+        }
+
+        min-height: 80px;
+      }
+
+      & .cal-month-view .cal-day-cell.cal-today {
+        background: none;
+        box-shadow: inset 0px 0px 0px 1px $main_blue;
+      }
+
+      & .cal-month-view .cal-cell-row:hover,
+      & .cal-month-view .cal-cell-row.cal-header .cal-cell:hover,
+      & .cal-month-view .cal-cell.cal-has-events.cal-open {
+        background: none;
+      }
+
+      & .cal-month-view .cal-cell-row .cal-cell {
+        transition: background .2s ease-in-out
+      }
+
+      & .cal-month-view .cal-cell-row .cal-cell:hover {
+        background: none;
+      }
+
+      & .cal-month-view .cal-cell-row:not(.cal-header) .cal-cell:not(.cal-out-month):hover {
+        background: $grey_light;
+      }
+
+      & .cal-month-view .cal-day-cell:not(:last-child) {
+        @media (min-width: $screen_sm_min) {
+          border-right: 1px solid $grey_border;
+          border-bottom: 0;
+        }
+
+        border-right: 0;
+        border-bottom: 1px solid $grey_border;
+      }
+
+      & .cal-month-view .cal-days {
+        @media (min-width: $screen_sm_min) {
+          border-bottom: 1px solid $grey_border;
+        }
+
+        border:1px solid $grey_border;
+        border-bottom: 0;
+      }
+    }
+  }
+}
+
 .fill-height {
   flex: 1;
   display: flex;
@@ -18,27 +311,6 @@
 
 .cal-has-events.cal-disabled .cal-day-number {
   filter: opacity(100%);
-}
-
-a.cal-day-badge-selector.selected,
-a.cal-day-badge-selector.selected:hover {
-  color: black;
-}
-
-.cal-day-badge>.cal-day-badge-selector {
-  display: none;
-  color: white;
-  opacity: 0;
-}
-
-.cal-day-badge:hover {
-  .cal-day-badge-content {
-    display: none;
-  }
-  .cal-day-badge-selector {
-    display: inline;
-    opacity: 1;
-  }
 }
 
 .disabled-element {
