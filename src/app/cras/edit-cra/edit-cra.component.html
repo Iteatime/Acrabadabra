@@ -12,22 +12,22 @@
 
         <div class="edit-cra__wrapper__modals">
             <div
-            class="modal show"
+            class="edit-cra__wrapper__modals__modal modal show"
             tabindex="-1"
             role="dialog"
             aria-label="Close"
             [toggled]="showModal"
             (close)="onModalClose('showModal')"
             >
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title text-success">Votre CRA a bien été créé</h5>
+                <div class="edit-cra__wrapper__modals__modal__dialog modal-dialog" role="document">
+                    <div class="edit-cra__wrapper__modals__modal__dialog__content modal-content">
+                        <div class="edit-cra__wrapper__modals__modal__dialog__content__header modal-header">
+                            <h5 class="modal-title">Votre CRA a bien été créé</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true" aria-label="Close">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">
+                        <div class="edit-cra__wrapper__modals__modal__dialog__content__body modal-body">
                             <p>
                                 Conservez
                                 <a target="_blank" [routerLink]="['/cra/edit']" [queryParams]="{ data: editToken }">ce lien</a>
@@ -42,36 +42,40 @@
                                 Si vous modifiez le CRA, vous devrez le valider à nouveau et utiliser le nouveau lien de partage.
                             </u>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">Fermer</button>
+                        <div class="edit-cra__wrapper__modals__modal__dialog__content__footer modal-footer">
+                            <button data-text="Fermer" type="button" class="edit-cra__wrapper__modals__modal__dialog__content__footer__button" data-dismiss="modal" aria-label="Close">
+                                <span>Fermer</span>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div
-            class="modal show"
+            class="edit-cra__wrapper__modals__modal modal show"
             tabindex="-1"
             role="dialog"
             aria-label="Close"
             [toggled]="showErrorMessage"
             (close)="onModalClose('showErrorMessage')"
             >
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title text-warning">Validation impossible</h5>
+                <div class="edit-cra__wrapper__modals__modal__dialog modal-dialog" role="document">
+                    <div class="edit-cra__wrapper__modals__modal__dialog__content modal-content">
+                        <div class="edit-cra__wrapper__modals__modal__dialog__content__header modal-header">
+                            <h5 class="modal-title">Validation impossible</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true" aria-label="Close">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">
+                        <div class="edit-cra__wrapper__modals__modal__dialog__content__body modal-body">
                             <p class="">
                                 Veuillez vérifier votre saisie.
                             </p>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Close">Fermer</button>
+                        <div data-text="Fermer" class="edit-cra__wrapper__modals__modal__dialog__content__footer modal-footer">
+                            <button type="button" class="edit-cra__wrapper__modals__modal__dialog__content__footer__button" data-dismiss="modal" aria-label="Close">
+                                <span>Fermer</span>
+                            </button>
                         </div>
                     </div>
                 </div>

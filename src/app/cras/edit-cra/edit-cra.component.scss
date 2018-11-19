@@ -52,6 +52,49 @@
             }
         }
 
+        &__modals {
+            &__modal {
+                &__dialog {
+                    &__content {
+                        border: 0;
+                        border-radius: 0;
+
+                        &__header {
+                            @include header-form;
+
+                            border: 0;
+                            border-radius: 0;
+
+                            & > h5 {
+                                font-weight: 700;
+                            }
+
+                            & > .close {
+                                color: $white;
+
+                                &:not(:disabled):not(.disabled):hover {
+                                    color: $white;
+                                }
+                            }
+                        }
+
+                        &__footer {
+                            justify-content: center;
+
+                            & > button {
+                                border: 0;
+                                background: $dark_blue;
+                                padding: 10px 20px;
+                                cursor: pointer;
+                                color: $white;
+                                font-weight: 700;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         &__form {
             display: flex;
             flex-wrap: wrap;
