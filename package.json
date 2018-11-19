@@ -59,6 +59,7 @@
     "karma-firefox-launcher": "^1.1.0",
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "netlify-identity-widget": "^1.4.14",
     "lambda-tester": "^3.5.0",
     "netlify-lambda": "^1.3.0",
     "npx": "^10.2.0",
