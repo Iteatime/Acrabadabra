@@ -5,7 +5,7 @@
     </div>
     <div class="calendar__header__monthchoice">
 
-      <div class="calendar__header__monthchoice__btn" (click)="previousMonth('viewDate')" >
+      <div [ngClass]="picking ? 'calendar__header__monthchoice__btn' : 'disabled-element'" (click)="previousMonth('viewDate')" >
         &#60;
       </div>
 
@@ -13,7 +13,7 @@
         {{ viewDate.toLocaleString(locale, { month: 'long', year: 'numeric' }) }}
       </div>
 
-      <div  class="calendar__header__monthchoice__btn"  (click)="nextMonth('viewDate')" >
+      <div [ngClass]="picking ? 'calendar__header__monthchoice__btn' : 'disabled-element'" (click)="nextMonth('viewDate')" >
         &#62;
       </div>
     </div>
@@ -21,7 +21,7 @@
 
   <div class="calendar__content">
     <div class="calendar__content__tools">
-      <div class="calendar__content__tools__selectall" (click)="selctAll()">
+      <div [ngClass]="picking ? 'calendar__content__tools__selectall' : 'disabled-element'" (click)="selctAll()">
         Sélectionner les jours ouvrés
       </div>
     </div>
