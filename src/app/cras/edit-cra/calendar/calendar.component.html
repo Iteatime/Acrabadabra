@@ -30,6 +30,7 @@
       <ng-template #customCellTemplate let-day="day" let-locale="locale">
         <div class="calendar__content__dayselect__dayitem">
           <div class="calendar__content__dayselect__dayitem__cell">
+            <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
             <div class="calendar__content__dayselect__dayitem__cell__changer" *ngIf="day.badgeTotal > 0">
               <div class="calendar__content__dayselect__dayitem__cell__changer__options">
                 <span class="calendar__content__dayselect__dayitem__cell__changer__options__item cal-day-badge-selector"  (click)="dayEdited($event, day.date, 0)">
@@ -42,9 +43,8 @@
                   1
                 </span>
               </div>
-              <span class="calendar__content__dayselect__dayitem__cell__changer__maintext">{{ day.badgeTotal.toLocaleString(locale) }}</span>
+              <span class="calendar__content__dayselect__dayitem__cell__changer__maintext">{{ day.badgeTotal.toLocaleString(locale) }} jour</span>
             </div>
-            <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
           </div>
         </div>
       </ng-template>

@@ -134,14 +134,13 @@
 
           &__changer {
             @media (min-width: $screen_sm_min) {
-              width: 30px;
               height: 30px;
               line-height: 26px;
-              bottom: 10px;
-              left: 25px;
+              bottom: 8px;
+              left: 36px;
             }
 
-            width: 40px;
+            padding: 0px 5px;
             height: 40px;
             line-height: 36px;
             text-align: center;
@@ -212,8 +211,14 @@
             &:hover {
               @media (min-width: $screen_sm_min) {
                 width: 80px;
+                position: relative;
+                top: 62px;
+                left: 50px;
               }
               width: 100px;
+              position: relative;
+              top: 62px;
+              left: 50px;
             }
 
             &:hover & {
@@ -240,6 +245,7 @@
 
       & .cal-month-view .cal-day-cell {
         @media (min-width: $screen_sm_min) {
+          height: 80px;
           min-height: 100px;
         }
 
