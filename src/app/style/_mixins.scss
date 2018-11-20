@@ -1,0 +1,79 @@
+// Mixins
+
+@mixin container {
+	width: 100%;
+	margin: 0 auto;
+
+	@media (min-width : $screen_sm_min) {
+		width: $container_sm_width;
+	}
+	@media (min-width : $screen_md_min) {
+		width: $container_md_width;
+	}
+	@media (min-width : $screen_lg_min) {
+		width: $container_lg_width;
+	}
+}
+
+@mixin centeralign {
+	display: inline-block;
+	line-height: 1.1;
+	vertical-align: middle;
+}
+
+@mixin hoveranim_glow($hov_bg) {
+	position: relative;
+	overflow: hidden;
+	padding: 0;
+	transition: background-color 0.24s ease-in-out;;
+
+	& > span {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+		transition: transform 0.3s, opacity 0.3s;
+		transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+	}
+
+	&::after {
+		content: attr(data-text);
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		opacity: 0;
+		color: $white;
+		transform: translate3d(0, 25%, 0);
+		transition: transform 0.3s, opacity 0.3s;
+		transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+	}
+
+	&:hover {
+		background: $hov_bg;
+
+		& > span {
+			opacity: 0;
+			transform: translate3d(0, -25%, 0);
+		}
+
+		&::after {
+			opacity: 1;
+			transform: translate3d(0, 0, 0);
+		}
+	}
+}
+
+@mixin header-form {
+	margin: 0;
+	background: $main_red;
+	padding: 10px;
+	text-align: center;
+	color: $white;
+	font-size: 20px;
+	font-weight: 700;
+}

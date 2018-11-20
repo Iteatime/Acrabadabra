@@ -1,0 +1,40 @@
+//-----------------------------------
+// Colors
+//-----------------------------------
+$main_color: #0cd6e5;
+$main_blue: #0cd6e5;
+$main_red: #e13264;
+$dark_blue: #1a5458;
+$darker_blue: #193638;
+$grey_light: #f4f4f4;
+$grey_mid: #d2d2d2;
+$grey_mine_shaft: #3d3d3d;
+$grey_border: #e8e7e7;
+$grey_border_dark: #d2d2d2;
+$white: #ffffff;
+$black: #000000;
+
+$red_error: #931b3d;
+$green_valid: #8ac13a;
+
+//-----------------------------------
+// Fonts
+//-----------------------------------
+$main_font: 'Open sans', sans-serif;
+$second_font: 'Open sans', sans-serif; ;
+
+//-----------------------------------
+// Responsive rules
+//-----------------------------------
+
+// Breakpoints
+$screen_xxs_min: 450px;
+$screen_xs_min: 600px;
+$screen_sm_min: 768px;
+$screen_md_min: 960px;
+$screen_lg_min: 1280px;
+
+//Container width
+$container_sm_width: 100%;
+$container_md_width: 920px;
+$container_lg_width: 1140px;

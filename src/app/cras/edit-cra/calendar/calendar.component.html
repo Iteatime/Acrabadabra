@@ -1,0 +1,65 @@
+<div class="calendar">
+  <div class="calendar__header">
+    <div class="calendar__header__daycount">
+      <span>Nombre total de journées :&nbsp;</span><span class="highlight">{{ totalTime.toLocaleString(locale) }}</span>
+    </div>
+    <div class="calendar__header__monthchoice">
+
+      <div [ngClass]="picking ? 'calendar__header__monthchoice__btn' : 'disabled-element'" (click)="previousMonth('viewDate')" >
+        &#60;
+      </div>
+
+      <div class="calendar__header__monthchoice__detail">
+        {{ viewDate.toLocaleString(locale, { month: 'long', year: 'numeric' }) }}
+      </div>
+
+      <div [ngClass]="picking ? 'calendar__header__monthchoice__btn' : 'disabled-element'" (click)="nextMonth('viewDate')" >
+        &#62;
+      </div>
+    </div>
+  </div>
+
+  <div class="calendar__content">
+    <div class="calendar__content__tools">
+      <div [ngClass]="picking ? 'calendar__content__tools__selectall' : 'disabled-element'" (click)="selctAll()">
+        Sélectionner les jours ouvrés
+      </div>
+    </div>
+
+    <div class="calendar__content__dayselect">
+      <ng-template #customCellTemplate let-day="day" let-locale="locale">
+        <div class="calendar__content__dayselect__dayitem">
+          <div class="calendar__content__dayselect__dayitem__cell">
+            <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+            <div class="calendar__content__dayselect__dayitem__cell__changer" *ngIf="day.badgeTotal > 0">
+              <div class="calendar__content__dayselect__dayitem__cell__changer__options">
+                <span class="calendar__content__dayselect__dayitem__cell__changer__options__item cal-day-badge-selector"  (click)="dayEdited($event, day.date, 0)">
+                  0
+                </span>
+                <span class="calendar__content__dayselect__dayitem__cell__changer__options__item cal-day-badge-selector" [ngClass]="{'selected': day.badgeTotal === 0.5}" (click)="dayEdited($event, day.date, 0.5)">
+                  0,5
+                </span>
+                <span class="calendar__content__dayselect__dayitem__cell__changer__options__item cal-day-badge-selector" [ngClass]="{'selected': day.badgeTotal === 1}" (click)="dayEdited($event, day.date, 1)">
+                  1
+                </span>
+              </div>
+              <span class="calendar__content__dayselect__dayitem__cell__changer__maintext">{{ day.badgeTotal.toLocaleString(locale) }} jour</span>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <mwl-calendar-month-view
+        [viewDate]="viewDate"
+        [events]="timesheet"
+        [refresh]="refresh"
+        [locale]="locale"
+        [weekStartsOn]="weekStartsOn"
+        [weekendDays]="weekendDays"
+        [cellTemplate]="customCellTemplate"
+        (dayClicked)="dayClicked($event.day.date)"
+        (beforeViewRender)="beforeMonthViewRender($event)">
+      </mwl-calendar-month-view>
+    </div>
+  </div>
+</div>
+
