@@ -10,6 +10,7 @@ import { CalendarEvent } from 'calendar-utils';
 
 import { getMonth, getDate, differenceInMinutes, getYear, lastDayOfMonth } from 'date-fns';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-edit-cra',
@@ -39,7 +40,8 @@ export class EditCraComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private serializer: SerializerService
+    private serializer: SerializerService,
+    private titleService: Title
   ) {}
 
   ngOnInit() {
@@ -96,6 +98,8 @@ export class EditCraComponent implements OnInit {
         }
       }
     );
+
+    this.setTitle(this.title[this.mode] + ' un compte rendu d\'activité');
   }
 
   get consultantNameInput() {
@@ -112,6 +116,10 @@ export class EditCraComponent implements OnInit {
 
   get missionFinalClient() {
     return this.form.get('missionFinalClient');
+  }
+
+  setTitle(newTitle: string) {
+    this.titleService.setTitle(this.titleService.getTitle() + ' - ' + newTitle);
   }
 
   /**

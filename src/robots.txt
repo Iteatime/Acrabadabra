@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://www.acrabadabra.com/sitemap.xml
