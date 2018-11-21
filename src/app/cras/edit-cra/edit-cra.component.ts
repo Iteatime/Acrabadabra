@@ -121,6 +121,10 @@ export class EditCraComponent implements OnInit {
   onSubmitCRA() {
 
     if (this.form.invalid) {
+      Object.keys(this.form.controls).forEach(field => {
+        const control = this.form.get(field);
+        control.markAsTouched({ onlySelf: true });
+      });
       this.showErrorMessage = true;
     } else {
       this.cra = new Cra(
