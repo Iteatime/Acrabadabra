@@ -10,6 +10,7 @@ import { CalendarEvent } from 'calendar-utils';
 
 import { getMonth, getDate, differenceInMinutes, getYear, lastDayOfMonth } from 'date-fns';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-edit-cra',
@@ -39,7 +40,8 @@ export class EditCraComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private serializer: SerializerService
+    private serializer: SerializerService,
+    private titleService: Title
   ) {}
 
   ngOnInit() {
@@ -96,6 +98,8 @@ export class EditCraComponent implements OnInit {
         }
       }
     );
+
+    this.setTitle(this.title[this.mode] + ' un compte rendu d\'activité');
   }
 
   get consultantNameInput() {
@@ -114,6 +118,10 @@ export class EditCraComponent implements OnInit {
     return this.form.get('missionFinalClient');
   }
 
+  setTitle(newTitle: string) {
+    this.titleService.setTitle(this.titleService.getTitle() + ' - ' + newTitle);
+  }
+
   /**
    * @description Generate the links token to edit and review this cra and toggle modal opened
    *
@@ -121,6 +129,10 @@ export class EditCraComponent implements OnInit {
   onSubmitCRA() {
 
     if (this.form.invalid) {
+      Object.keys(this.form.controls).forEach(field => {
+        const control = this.form.get(field);
+        control.markAsTouched({ onlySelf: true });
+      });
       this.showErrorMessage = true;
     } else {
       this.cra = new Cra(
