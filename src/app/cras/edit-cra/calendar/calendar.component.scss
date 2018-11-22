@@ -320,7 +320,5 @@
 }
 
 .disabled-element {
-  position: absolute;
-  display: none;
-  top: 200%;
+  visibility: hidden;
 }
