@@ -50,13 +50,13 @@ export class EditCraComponent implements OnInit {
         Validators.email,
       ]
     ),
-    'missionTitle' : new FormControl(
+    'missionTitleInput' : new FormControl(
       this.cra.mission.title,
       [
         Validators.required,
       ]
     ),
-    'missionFinalClient' : new FormControl(
+    'missionFinalClientInput' : new FormControl(
       this.cra.mission.client,
       [
         Validators.required,
@@ -79,7 +79,7 @@ export class EditCraComponent implements OnInit {
       }
     );
 
-    this.setTitle(this.title[this.mode] + ' un compte rendu d\'activité');
+    this.setPageTitle(this.title[this.mode] + ' un compte rendu d\'activité');
   }
 
   get consultantNameInput(): AbstractControl  {
@@ -90,15 +90,15 @@ export class EditCraComponent implements OnInit {
     return this.form.get('consultantEmailInput');
   }
 
-  get missionTitle(): AbstractControl  {
-    return this.form.get('missionTitle');
+  get missionTitleInput(): AbstractControl  {
+    return this.form.get('missionTitleInput');
   }
 
-  get missionFinalClient(): AbstractControl {
-    return this.form.get('missionFinalClient');
+  get missionFinalClientInput(): AbstractControl {
+    return this.form.get('missionFinalClientInput');
   }
 
-  setTitle(newTitle: string) {
+  setPageTitle(newTitle: string) {
     this.titleService.setTitle(this.titleService.getTitle() + ' - ' + newTitle);
   }
 
@@ -120,15 +120,15 @@ export class EditCraComponent implements OnInit {
   disableInputs(): void {
     this.consultantNameInput.disable();
     this.consultantEmailInput.disable();
-    this.missionTitle.disable();
-    this.missionFinalClient.disable();
+    this.missionTitleInput.disable();
+    this.missionFinalClientInput.disable();
   }
 
   setInputsValue(cra: Cra): void {
     this.consultantNameInput.setValue(cra.consultant.name);
     this.consultantEmailInput.setValue(cra.consultant.email);
-    this.missionTitle.setValue(cra.mission.title);
-    this.missionFinalClient.setValue(cra.mission.client);
+    this.missionTitleInput.setValue(cra.mission.title);
+    this.missionFinalClientInput.setValue(cra.mission.client);
   }
 
   onModalClose(toggle: string) {
@@ -157,8 +157,8 @@ export class EditCraComponent implements OnInit {
     this.cra = new Cra(
       this.consultantEmailInput.value,
       this.consultantNameInput.value,
-      this.missionFinalClient.value,
-      this.missionTitle.value,
+      this.missionFinalClientInput.value,
+      this.missionTitleInput.value,
     );
 
     const timesheet = this.timesheetPicker.timesheet;
