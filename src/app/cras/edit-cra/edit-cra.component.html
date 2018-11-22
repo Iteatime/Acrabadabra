@@ -112,8 +112,8 @@
                       <div class="edit-cra__wrapper__form__block__input-wrapper__item__input">
                           <input
                           type="email"
-                          name="consultantEmailInput"
                           class="form-control"
+                          name="consultantEmailInput"
                           formControlName="consultantEmailInput"
                           >
                           <div
@@ -136,19 +136,19 @@
               <h4 class="edit-cra__wrapper__form__block__title">Mission</h4>
               <div class="edit-cra__wrapper__form__block__input-wrapper">
                   <div class="edit-cra__wrapper__form__block__input-wrapper__item form-group">
-                      <label for="missionTitle" class="edit-cra__wrapper__form__block__input-wrapper__item__label">Intitulé</label>
+                      <label for="missionTitleInput" class="edit-cra__wrapper__form__block__input-wrapper__item__label">Intitulé</label>
                       <div class="edit-cra__wrapper__form__block__input-wrapper__item__input">
                           <input
                           type="text"
-                          name="missionTitle"
                           class="form-control"
-                          formControlName="missionTitle"
+                          name="missionTitleInput"
+                          formControlName="missionTitleInput"
                           >
                           <div
-                          *ngIf="missionTitle.invalid && (missionTitle.dirty || missionTitle.touched)"
+                          *ngIf="missionTitleInput.invalid && (missionTitleInput.dirty || missionTitleInput.touched)"
                           class="alert alert-danger"
                           >
-                              <div *ngIf="missionTitle.errors['required']">
+                              <div *ngIf="missionTitleInput.errors['required']">
                                   Ce champ est obligatoire
                               </div>
                           </div>
@@ -160,16 +160,16 @@
                       <div class="edit-cra__wrapper__form__block__input-wrapper__item__input">
                           <input
                           type="text"
-                          name="missionFinalClient"
                           class="form-control"
-                          formControlName="missionFinalClient"
+                          name="missionFinalClientInput"
+                          formControlName="missionFinalClientInput"
                           autocomplete="companyName"
                           >
                           <div
-                          *ngIf="missionFinalClient.invalid && (missionFinalClient.dirty || missionFinalClient.touched)"
+                          *ngIf="missionFinalClientInput.invalid && (missionFinalClientInput.dirty || missionFinalClientInput.touched)"
                           class="alert alert-danger"
                           >
-                              <div *ngIf="missionFinalClient.errors['required']">
+                              <div *ngIf="missionFinalClientInput.errors['required']">
                                   Ce champ est obligatoire
                               </div>
                           </div>
