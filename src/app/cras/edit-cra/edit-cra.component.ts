@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { SerializerService } from 'src/app/shared/serialization/serializer.service';
@@ -9,7 +11,6 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { CalendarEvent } from 'calendar-utils';
 
 import { getMonth, getDate, differenceInMinutes, getYear, lastDayOfMonth } from 'date-fns';
-import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-cra',
@@ -66,7 +67,8 @@ export class EditCraComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private serializer: SerializerService
+    private serializer: SerializerService,
+    private titleService: Title
   ) {}
 
   ngOnInit(): void {
@@ -76,6 +78,8 @@ export class EditCraComponent implements OnInit {
         this.getDataFromUrlParams(params);
       }
     );
+
+    this.setTitle(this.title[this.mode] + ' un compte rendu d\'activité');
   }
 
   get consultantNameInput(): AbstractControl  {
@@ -92,6 +96,10 @@ export class EditCraComponent implements OnInit {
 
   get missionFinalClient(): AbstractControl {
     return this.form.get('missionFinalClient');
+  }
+
+  setTitle(newTitle: string) {
+    this.titleService.setTitle(this.titleService.getTitle() + ' - ' + newTitle);
   }
 
   getDataFromUrlParams(params: Params): void {
