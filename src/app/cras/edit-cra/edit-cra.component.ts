@@ -99,7 +99,7 @@ export class EditCraComponent implements OnInit {
   }
 
   setPageTitle(newTitle: string) {
-    this.titleService.setTitle(this.titleService.getTitle() + ' - ' + newTitle);
+    this.titleService.setTitle('Acrabadabra - ' + newTitle);
   }
 
   getDataFromUrlParams(params: Params): void {
@@ -129,10 +129,6 @@ export class EditCraComponent implements OnInit {
     this.consultantEmailInput.setValue(cra.consultant.email);
     this.missionTitleInput.setValue(cra.mission.title);
     this.missionFinalClientInput.setValue(cra.mission.client);
-  }
-
-  onModalClose(toggle: string) {
-    this[toggle] = false;
   }
 
   onSubmitCRA(): void {
@@ -199,5 +195,9 @@ export class EditCraComponent implements OnInit {
     }
 
     return minitimesheet;
+  }
+
+  onModalClose(toggle: string) {
+    this[toggle] = false;
   }
 }
