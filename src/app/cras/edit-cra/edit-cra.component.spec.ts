@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Directive, Input} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Title, By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
@@ -20,7 +19,7 @@ import { formData } from 'src/app/@types/formData';
 import { CalendarEvent } from 'calendar-utils';
 
 
-describe('EditCraComponent', () => {
+describe('EditCraComponent - ', () => {
   let fixture: ComponentFixture<EditCraComponent>;
   let component: EditCraComponent;
   let compiled: any;
@@ -31,23 +30,25 @@ describe('EditCraComponent', () => {
 
   const testData: formData = {
           'mode': 'add',
-          'cra': new Cra('tester@test.com', 'tester', 'Test.com',  'Testing'),
-        },
-        miniTimesheet = {
-          '0.1900': [0.5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          cra: new Cra('tester@test.com', 'tester', 'Test.com', 'Testing')
         },
         timesheet: CalendarEvent[] = [
           { title: '', start: new Date(1900, 0, 1, 0, 0, 0, 0), end: new Date(1900, 0, 1, 4, 0, 0, 0)},
           { title: '', start: new Date(1900, 0, 2, 0, 0, 0, 0), end: new Date(1900, 0, 2, 8, 0, 0, 0)},
-        ];
-
-  const testEditToken = 'eyJtb2RlIjoiZWRpdCIsImNyYSI6eyJjb25zdWx0YW50Ijp7ImVtYWlsIjoidGVzdGVy' +
-                        'QHRlc3QuY29tIiwibmFtZSI6InRlc3RlciJ9LCJtaXNzaW9uIjp7ImNsaWVudCI6IlRl' +
-                        'c3QuY29tIiwidGl0bGUiOiJUZXN0aW5nIn19fQ==';
-
-  const testReviewToken = 'eyJtb2RlIjoicmV2aWV3IiwiY3JhIjp7ImNvbnN1bHRhbnQiOnsiZW1haWwiOiJ0ZXN0' +
-                          'ZXJAdGVzdC5jb20iLCJuYW1lIjoidGVzdGVyIn0sIm1pc3Npb24iOnsiY2xpZW50Ijoi' +
-                          'VGVzdC5jb20iLCJ0aXRsZSI6IlRlc3RpbmcifX19';
+        ],
+        testEditToken = 'eyJtb2RlIjoiZWRpdCIsImNyYSI6eyJjb25zdWx0YW50Ijp7ImVtYWlsIjoidGVzdGVyQH' +
+                        'Rlc3QuY29tIiwibmFtZSI6IlRlc3RlciJ9LCJtaXNzaW9uIjp7ImNsaWVudCI6IlRlc3Qu' +
+                        'Y29tIiwidGl0bGUiOiJUZXN0aW5nIn0sInRpbWVzaGVldCI6eyIwLjE5MDAiOlswLjUsMS' +
+                        'wwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAs' +
+                        'MCwwLDBdfX19',
+        testReviewToken = 'eyJtb2RlIjoicmV2aWV3IiwiY3JhIjp7ImNvbnN1bHRhbnQiOnsiZW1haWwiOiJ0ZXN0ZX' +
+                          'JAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIn0sIm1pc3Npb24iOnsiY2xpZW50IjoiVGVz' +
+                          'dC5jb20iLCJ0aXRsZSI6IlRlc3RpbmcifSwidGltZXNoZWV0Ijp7IjAuMTkwMCI6WzAuNS' +
+                          'wxLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAs' +
+                          'MCwwLDAsMF19fX0';
+  testData.cra.timesheet = {
+    '0.1900': [0.5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  };
 
   beforeEach(async(() => {
 
@@ -90,198 +91,206 @@ describe('EditCraComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should init the component', () => {
-    const spyGetDataFromUrlParams = spyOn(component, 'getDataFromUrlParams'),
-          spySetTitle = spyOn(component, 'setPageTitle');
+  describe('reading queryparams', () => {
+    describe('when called in add mode:', () => {
+      it('should set Acrabadabra - Saisir un compte rendu d\'activité as page title', () => {
+        route.queryParams = of({});
 
-    component.ngOnInit();
-    fixture.detectChanges();
+        const spySetTitle = spyOn(titleService, 'setTitle');
 
-    expect(component.form).not.toBeUndefined();
-    expect(spyGetDataFromUrlParams).toHaveBeenCalled();
-    expect(spySetTitle).toHaveBeenCalled();
-  });
+        fixture.detectChanges();
+        component.ngOnInit();
 
-  it('should set page title', () => {
-    testData.mode = 'add';
+        expect(spySetTitle).toHaveBeenCalledWith('Acrabadabra - Saisir un compte rendu d\'activité');
+      });
 
-    const testTitle = 'test',
-          spySetTitle = spyOn(titleService, 'setTitle')
-            .and.callFake((titleString: string) => {
-              expect(titleString).toBe('Acrabadabra - ' + testTitle);
-            });
+      it('should init empty', () => {
+        fixture.detectChanges();
+        component.ngOnInit();
 
-    component.setPageTitle(testTitle);
-
-    expect(spySetTitle).toHaveBeenCalled();
-  });
-
-  it('should switch to add mode whene no QueryParams provided', async(() => {
-    fixture.detectChanges();
-    component.getDataFromUrlParams({});
-
-    fixture.whenStable().then(() => {
-      expect(component.mode).toBe(testData.mode);
-      expect(component.cra).toEqual(new Cra());
+        expect(component.consultantNameInput.value).toBe('');
+        expect(component.consultantEmailInput.value).toBe('');
+        expect(component.missionTitleInput.value).toBe('');
+        expect(component.missionFinalClientInput.value).toBe('');
+        expect(component.mode).toBe(testData.mode);
+        expect(component.cra).toEqual(new Cra());
+      });
     });
-  }));
 
-  it('should switch mode when edit QueryParams provided', async(() => {
-    testData.mode = 'edit';
+    describe('when called in edit/review mode', () => {
+      it('should init filled with token data', async(() => {
+        testData.mode = 'edit';
+        route.queryParams = of({ data: testEditToken });
 
-    const spyDeserialize = spyOn(serializer, 'deserialize')
-            .and.returnValue(testData),
-          spySetInputsValue = spyOn(component, 'setInputsValue');
+        const spyDeserialize = spyOn(serializer, 'deserialize')
+                .and.returnValue(testData);
 
-    fixture.detectChanges();
-    component.getDataFromUrlParams({ data: testEditToken });
+        fixture.detectChanges();
+        component.ngOnInit();
 
-    fixture.whenStable().then(() => {
-      expect(component.mode).toBe(testData.mode);
-      expect(component.cra).toBe(testData.cra);
-      expect(spyDeserialize).toHaveBeenCalled();
-      expect(spySetInputsValue).toHaveBeenCalled();
+        fixture.whenStable().then(() => {
+          expect(component.cra).toBe(testData.cra);
+          expect(component.consultantNameInput.value).toBe(testData.cra.consultant.name);
+          expect(component.consultantEmailInput.value).toBe(testData.cra.consultant.email);
+          expect(component.missionTitleInput.value).toBe(testData.cra.mission.title);
+          expect(component.missionFinalClientInput.value).toBe(testData.cra.mission.client);
+          expect(spyDeserialize).toHaveBeenCalledWith(testEditToken);
+        });
+      }));
     });
-  }));
 
-  it('should switch mode when review QueryParams provided', async(() => {
-    testData.mode = 'review';
+    describe('when called in edit mode', () => {
+      it('should set mode to edit', () => {
+        testData.mode = 'edit';
+        route.queryParams = of({ data: testEditToken });
 
-    const spyDeserialize = spyOn(serializer, 'deserialize')
-            .and.returnValue(testData),
-          spyDisableInputs = spyOn(component, 'disableInputs'),
-          spySetInputsValue = spyOn(component, 'setInputsValue');
+        const spyDeserialize = spyOn(serializer, 'deserialize')
+                .and.returnValue(testData);
 
-    route.queryParams = of({ data: testReviewToken });
-    fixture.detectChanges();
-    component.ngOnInit();
+        fixture.detectChanges();
+        component.ngOnInit();
 
-    fixture.whenStable().then(() => {
-      expect(component.mode).toBe(testData.mode);
-      expect(component.cra).toBe(testData.cra);
-      expect(spyDeserialize).toHaveBeenCalled();
-      expect(spyDisableInputs).toHaveBeenCalled();
-      expect(spySetInputsValue).toHaveBeenCalled();
+        expect(component.mode).toBe('edit');
+        expect(spyDeserialize).toHaveBeenCalledWith(testEditToken);
+      });
+
+      it('should set Acrabadabra - Editer un compte rendu d\'activité as page title', () => {
+        testData.mode = 'edit';
+        route.queryParams = of({ data: testEditToken });
+
+        const spySetTitle = spyOn(titleService, 'setTitle'),
+              spyDeserialize = spyOn(serializer, 'deserialize')
+                .and.returnValue(testData);
+
+        fixture.detectChanges();
+        component.ngOnInit();
+
+        expect(spySetTitle).toHaveBeenCalledWith('Acrabadabra - Editer un compte rendu d\'activité');
+        expect(spyDeserialize).toHaveBeenCalledWith(testEditToken);
+      });
     });
-  }));
 
-  it('should disable inputs', () => {
-    component.disableInputs();
+    describe('when called in review mode', () => {
+      it('should set mode to review', () => {
+        testData.mode = 'review';
+        route.queryParams = of({ data: testReviewToken });
 
-    expect(component.consultantNameInput.disabled).toBeTruthy();
-    expect(component.consultantEmailInput.disabled).toBeTruthy();
-    expect(component.missionTitleInput.disabled).toBeTruthy();
-    expect(component.missionFinalClientInput.disabled).toBeTruthy();
-  });
+        const spyDeserialize = spyOn(serializer, 'deserialize')
+                .and.returnValue(testData);
 
-  it('should set inputs value', () => {
-    component.setInputsValue(testData.cra);
+        fixture.detectChanges();
+        component.ngOnInit();
 
-    expect(component.consultantNameInput.value).toBe(testData.cra.consultant.name);
-    expect(component.consultantEmailInput.value).toBe(testData.cra.consultant.email);
-    expect(component.missionTitleInput.value).toBe(testData.cra.mission.title);
-    expect(component.missionFinalClientInput.value).toBe(testData.cra.mission.client);
-  });
+        expect(component.mode).toBe(testData.mode);
+        expect(spyDeserialize).toHaveBeenCalledWith(testReviewToken);
+      });
 
-  it('should render inputs value', () => {
-    component.setInputsValue(testData.cra);
-    fixture.detectChanges();
+      it('should set Acrabadabra - Consulter un compte rendu d\'activité as page title', () => {
+        testData.mode = 'review';
+        route.queryParams = of({ data: testReviewToken });
 
-    const consultantNameInputValue = compiled.querySelector('input[name="consultantNameInput"]').value,
-          consultantEmailInputValue = compiled.querySelector('input[name="consultantEmailInput"]').value,
-          missionTitleInputValue = compiled.querySelector('input[name="missionTitleInput"]').value,
-          missionFinalClientInputValue = compiled.querySelector('input[name="missionFinalClientInput"]').value;
+        const spySetTitle = spyOn(titleService, 'setTitle'),
+              spyDeserialize = spyOn(serializer, 'deserialize')
+                .and.returnValue(testData);
 
-    expect(consultantNameInputValue).toBe(testData.cra.consultant.name);
-    expect(consultantEmailInputValue).toBe(testData.cra.consultant.email);
-    expect(missionTitleInputValue).toBe(testData.cra.mission.title);
-    expect(missionFinalClientInputValue).toBe(testData.cra.mission.client);
-  });
+        fixture.detectChanges();
+        component.ngOnInit();
 
-  it('should enable modal on submit if the form is valid', () => {
-    const spyCreateCRA = spyOn(component, 'createCRA'),
-          spyCreatTokens = spyOn(component, 'creatTokens');
+        expect(spySetTitle).toHaveBeenCalledWith('Acrabadabra - Consulter un compte rendu d\'activité');
+        expect(spyDeserialize).toHaveBeenCalledWith(testReviewToken);
+      });
 
-    component.setInputsValue(testData.cra);
-    fixture.detectChanges();
-    component.onSubmitCRA();
+      it('should disable form inputs', () => {
+        testData.mode = 'review';
+        route.queryParams = of({ data: testReviewToken });
 
-    expect(component.showModal).toBeTruthy();
-    expect(component.showErrorModal).not.toBeTruthy();
-    expect(spyCreateCRA).toHaveBeenCalled();
-    expect(spyCreatTokens).toHaveBeenCalled();
-  });
+        const spyDeserialize = spyOn(serializer, 'deserialize')
+                .and.returnValue(testData);
 
-  it('should enable error modal on submit if the form is not valid', () => {
-    const spyShowValidationMessages = spyOn(component, 'showValidationMessages');
+        fixture.detectChanges();
+        component.ngOnInit();
 
-    component.setInputsValue(new Cra());
-    fixture.detectChanges();
-    component.onSubmitCRA();
-
-    expect(component.showModal).not.toBeTruthy();
-    expect(component.showErrorModal).toBeTruthy();
-    expect(spyShowValidationMessages).toHaveBeenCalled();
-  });
-
-  it('should show validation messages', () => {
-    const consultantNameInputValidationDiv = compiled.querySelector('input[name="consultantNameInput"]').nextSibling,
-          consultantEmailInputValidationDiv = compiled.querySelector('input[name="consultantEmailInput"]').nextSibling,
-          missionTitleInputValidationDiv = compiled.querySelector('input[name="missionTitleInput"]').nextSibling,
-          missionFinalClientInputValidationDiv = compiled.querySelector('input[name="missionFinalClientInput"]').nextSibling;
-
-    component.setInputsValue(new Cra());
-    fixture.detectChanges();
-    component.showValidationMessages();
-
-    expect(component.consultantNameInput.errors).not.toEqual([]);
-    expect(consultantNameInputValidationDiv.nodeName).not.toBe('div');
-    expect(consultantEmailInputValidationDiv.nodeName).not.toBe('div');
-    expect(missionTitleInputValidationDiv.nodeName).not.toBe('div');
-    expect(missionFinalClientInputValidationDiv.nodeName).not.toBe('div');
-  });
-
-  it('should create the cra from the form value', () => {
-    testData.cra.timesheet = miniTimesheet;
-    component.setInputsValue(testData.cra);
-
-    const spyMinifyTimesheet = spyOn(component, 'minifyTimesheet')
-            .and.returnValue(miniTimesheet);
-
-    fixture.detectChanges();
-    component.createCRA();
-
-    expect(component.cra).toEqual(testData.cra);
-    expect(spyMinifyTimesheet).toHaveBeenCalled();
-  });
-
-  it('should create the token', async(() => {
-    component.cra = testData.cra;
-
-    const spySerialize = spyOn(serializer, 'serialize')
-            .and.returnValue(testEditToken);
-
-    component.creatTokens();
-
-    fixture.whenStable().then(() => {
-      expect(component.editToken).toBe(testEditToken);
-      expect(spySerialize).toHaveBeenCalled();
+        expect(component.consultantNameInput.disabled).toBeTruthy();
+        expect(component.consultantEmailInput.disabled).toBeTruthy();
+        expect(component.missionTitleInput.disabled).toBeTruthy();
+        expect(component.missionFinalClientInput.disabled).toBeTruthy();
+        expect(spyDeserialize).toHaveBeenCalledWith(testReviewToken);
+      });
     });
-  }));
-
-  it('should minify the timesheet', () => {
-    const minifiedTimesheet = component.minifyTimesheet(timesheet);
-
-    expect(minifiedTimesheet).toEqual(miniTimesheet);
   });
 
-  it('should reset the toggle of the modal that has just been closed', () => {
-    component.showModal = true;
+  describe('when submiting', () => {
+    describe('and the form is valid', () => {
+      it('should enable modal', () => {
+        component.setInputsValue(testData.cra);
+        fixture.detectChanges();
+        component.onSubmitCRA();
 
-    fixture.detectChanges();
-    component.onModalClose('showModal');
+        expect(component.showModal).toBeTruthy();
+        expect(component.showErrorModal).not.toBeTruthy();
+      });
+      it('should create edit and review tokens', () => {
+        component.setInputsValue(testData.cra);
+        component.cra = testData.cra;
 
-    expect(component.showModal).toBeFalsy();
+        const spySerialize = spyOn(serializer, 'serialize')
+                .and.returnValue(testEditToken);
+
+        fixture.detectChanges();
+        component.onSubmitCRA();
+
+        expect(component.cra.consultant.name).toBe(testData.cra.consultant.name);
+        expect(component.cra.consultant.email).toBe(testData.cra.consultant.email);
+        expect(component.cra.mission.title).toBe(testData.cra.mission.title);
+        expect(component.cra.mission.client).toBe(testData.cra.mission.client);
+        component.cra.timesheet['0.1900'].forEach(element => {
+          expect(component.cra.timesheet['0.1900'][element]).toBe(testData.cra.timesheet['0.1900'][element]);
+        });
+        expect(component.editToken).toBe(testEditToken);
+        expect(spySerialize).toHaveBeenCalled();
+      });
+    });
+
+    describe('and the form is not valid', () => {
+      it('should enable error modal', () => {
+        const spyShowValidationMessages = spyOn(component, 'showValidationMessages');
+
+        component.setInputsValue(new Cra());
+        fixture.detectChanges();
+        component.onSubmitCRA();
+
+        expect(component.showModal).not.toBeTruthy();
+        expect(component.showErrorModal).toBeTruthy();
+        expect(spyShowValidationMessages).toHaveBeenCalled();
+      });
+
+      it('should show validation messages', () => {
+        const consultantNameInputValidationDiv = compiled.querySelector('input[name="consultantNameInput"]').nextSibling,
+              consultantEmailInputValidationDiv = compiled.querySelector('input[name="consultantEmailInput"]').nextSibling,
+              missionTitleInputValidationDiv = compiled.querySelector('input[name="missionTitleInput"]').nextSibling,
+              missionFinalClientInputValidationDiv = compiled.querySelector('input[name="missionFinalClientInput"]').nextSibling;
+
+        component.setInputsValue(new Cra());
+        fixture.detectChanges();
+        component.showValidationMessages();
+
+        expect(component.consultantNameInput.errors).not.toEqual([]);
+        expect(consultantNameInputValidationDiv.nodeName).not.toBe('div');
+        expect(consultantEmailInputValidationDiv.nodeName).not.toBe('div');
+        expect(missionTitleInputValidationDiv.nodeName).not.toBe('div');
+        expect(missionFinalClientInputValidationDiv.nodeName).not.toBe('div');
+      });
+    });
   });
 
+  describe('when closing a modal', () => {
+    it('should reset it\'s toggle', () => {
+      component.showModal = true;
+
+      fixture.detectChanges();
+      component.onModalClose('showModal');
+
+      expect(component.showModal).toBeFalsy();
+    });
+  });
 });
