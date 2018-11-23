@@ -34,11 +34,11 @@ describe('EditCraComponent', () => {
           'cra': new Cra('tester@test.com', 'tester', 'Test.com',  'Testing'),
         },
         miniTimesheet = {
-          '01.1900': [0, 1],
+          '0.1900': [0.5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         },
         timesheet: CalendarEvent[] = [
-          { title: '', start: new Date(1900, 0, 1, 0, 0, 0, 0), end: new Date(1900, 0, 1, 0, 0, 0, 0)},
-          { title: '', start: new Date(1900, 0, 1, 0, 0, 0, 0), end: new Date(1900, 0, 1, 8, 0, 0, 0)},
+          { title: '', start: new Date(1900, 0, 1, 0, 0, 0, 0), end: new Date(1900, 0, 1, 4, 0, 0, 0)},
+          { title: '', start: new Date(1900, 0, 2, 0, 0, 0, 0), end: new Date(1900, 0, 2, 8, 0, 0, 0)},
         ];
 
   const testEditToken = 'eyJtb2RlIjoiZWRpdCIsImNyYSI6eyJjb25zdWx0YW50Ijp7ImVtYWlsIjoidGVzdGVy' +
@@ -77,7 +77,6 @@ describe('EditCraComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EditCraComponent);
     component = fixture.componentInstance;
-    testData.cra.timesheet = timesheet;
     fixture.detectChanges();
     compiled = fixture.debugElement.nativeElement;
     serializer = fixture.debugElement.injector.get(SerializerService);
@@ -103,7 +102,21 @@ describe('EditCraComponent', () => {
     expect(spySetTitle).toHaveBeenCalled();
   });
 
-  it('should get data from URL params', async(() => {
+  it('should set page title', () => {
+    testData.mode = 'add';
+
+    const testTitle = 'test',
+          spySetTitle = spyOn(titleService, 'setTitle')
+            .and.callFake((titleString: string) => {
+              expect(titleString).toBe('Acrabadabra - ' + testTitle);
+            });
+
+    component.setPageTitle(testTitle);
+
+    expect(spySetTitle).toHaveBeenCalled();
+  });
+
+  it('should switch to add mode whene no QueryParams provided', async(() => {
     fixture.detectChanges();
     component.getDataFromUrlParams({});
 
@@ -118,21 +131,15 @@ describe('EditCraComponent', () => {
 
     const spyDeserialize = spyOn(serializer, 'deserialize')
             .and.returnValue(testData),
-          spySetTitle = spyOn(component, 'setPageTitle')
-            .and.callFake((titleString: string) => {
-              expect(titleString).toBe(component.title[testData.mode] + ' un compte rendu d\'activité');
-            }),
           spySetInputsValue = spyOn(component, 'setInputsValue');
 
-    route.queryParams = of({ data: testEditToken });
     fixture.detectChanges();
-    component.ngOnInit();
+    component.getDataFromUrlParams({ data: testEditToken });
 
     fixture.whenStable().then(() => {
       expect(component.mode).toBe(testData.mode);
       expect(component.cra).toBe(testData.cra);
       expect(spyDeserialize).toHaveBeenCalled();
-      expect(spySetTitle).toHaveBeenCalled();
       expect(spySetInputsValue).toHaveBeenCalled();
     });
   }));
@@ -142,10 +149,6 @@ describe('EditCraComponent', () => {
 
     const spyDeserialize = spyOn(serializer, 'deserialize')
             .and.returnValue(testData),
-          spySetTitle = spyOn(component, 'setPageTitle')
-            .and.callFake((titleString: string) => {
-              expect(titleString).toBe(component.title[testData.mode] + ' un compte rendu d\'activité');
-            }),
           spyDisableInputs = spyOn(component, 'disableInputs'),
           spySetInputsValue = spyOn(component, 'setInputsValue');
 
@@ -158,31 +161,22 @@ describe('EditCraComponent', () => {
       expect(component.cra).toBe(testData.cra);
       expect(spyDeserialize).toHaveBeenCalled();
       expect(spyDisableInputs).toHaveBeenCalled();
-      expect(spySetTitle).toHaveBeenCalled();
       expect(spySetInputsValue).toHaveBeenCalled();
     });
   }));
 
-  it('should set page title', () => {
-    testData.mode = 'add';
+  it('should disable inputs', () => {
+    component.disableInputs();
 
-    const testTitle = 'test',
-          appTitle = 'Acrabadabra',
-          spySetTitle = spyOn(titleService, 'setTitle')
-            .and.callFake((titleString: string) => {
-              expect(titleString).toBe(appTitle + ' - ' + testTitle);
-            }),
-          spyGetTitle = spyOn(titleService, 'getTitle')
-            .and.returnValue(appTitle);
-
-    component.setPageTitle(testTitle);
-
-    expect(spySetTitle).toHaveBeenCalled();
-    expect(spyGetTitle).toHaveBeenCalled();
+    expect(component.consultantNameInput.disabled).toBeTruthy();
+    expect(component.consultantEmailInput.disabled).toBeTruthy();
+    expect(component.missionTitleInput.disabled).toBeTruthy();
+    expect(component.missionFinalClientInput.disabled).toBeTruthy();
   });
 
   it('should set inputs value', () => {
     component.setInputsValue(testData.cra);
+
     expect(component.consultantNameInput.value).toBe(testData.cra.consultant.name);
     expect(component.consultantEmailInput.value).toBe(testData.cra.consultant.email);
     expect(component.missionTitleInput.value).toBe(testData.cra.mission.title);
@@ -204,38 +198,68 @@ describe('EditCraComponent', () => {
     expect(missionFinalClientInputValue).toBe(testData.cra.mission.client);
   });
 
-  it('should disable inputs', () => {
-    component.disableInputs();
-    expect(component.consultantNameInput.disabled).toBeTruthy();
-    expect(component.consultantEmailInput.disabled).toBeTruthy();
-    expect(component.missionTitleInput.disabled).toBeTruthy();
-    expect(component.missionFinalClientInput.disabled).toBeTruthy();
-  });
-
   it('should enable modal on submit if the form is valid', () => {
+    const spyCreateCRA = spyOn(component, 'createCRA'),
+          spyCreatTokens = spyOn(component, 'creatTokens');
+
     component.setInputsValue(testData.cra);
     fixture.detectChanges();
     component.onSubmitCRA();
 
     expect(component.showModal).toBeTruthy();
     expect(component.showErrorModal).not.toBeTruthy();
+    expect(spyCreateCRA).toHaveBeenCalled();
+    expect(spyCreatTokens).toHaveBeenCalled();
   });
 
   it('should enable error modal on submit if the form is not valid', () => {
-    testData.cra.consultant.name = '';
-    component.setInputsValue(testData.cra);
+    const spyShowValidationMessages = spyOn(component, 'showValidationMessages');
+
+    component.setInputsValue(new Cra());
     fixture.detectChanges();
     component.onSubmitCRA();
 
     expect(component.showModal).not.toBeTruthy();
     expect(component.showErrorModal).toBeTruthy();
+    expect(spyShowValidationMessages).toHaveBeenCalled();
+  });
+
+  it('should show validation messages', () => {
+    const consultantNameInputValidationDiv = compiled.querySelector('input[name="consultantNameInput"]').nextSibling,
+          consultantEmailInputValidationDiv = compiled.querySelector('input[name="consultantEmailInput"]').nextSibling,
+          missionTitleInputValidationDiv = compiled.querySelector('input[name="missionTitleInput"]').nextSibling,
+          missionFinalClientInputValidationDiv = compiled.querySelector('input[name="missionFinalClientInput"]').nextSibling;
+
+    component.setInputsValue(new Cra());
+    fixture.detectChanges();
+    component.showValidationMessages();
+
+    expect(component.consultantNameInput.errors).not.toEqual([]);
+    expect(consultantNameInputValidationDiv.nodeName).not.toBe('div');
+    expect(consultantEmailInputValidationDiv.nodeName).not.toBe('div');
+    expect(missionTitleInputValidationDiv.nodeName).not.toBe('div');
+    expect(missionFinalClientInputValidationDiv.nodeName).not.toBe('div');
+  });
+
+  it('should create the cra from the form value', () => {
+    testData.cra.timesheet = miniTimesheet;
+    component.setInputsValue(testData.cra);
+
+    const spyMinifyTimesheet = spyOn(component, 'minifyTimesheet')
+            .and.returnValue(miniTimesheet);
+
+    fixture.detectChanges();
+    component.createCRA();
+
+    expect(component.cra).toEqual(testData.cra);
+    expect(spyMinifyTimesheet).toHaveBeenCalled();
   });
 
   it('should create the token', async(() => {
     component.cra = testData.cra;
 
     const spySerialize = spyOn(serializer, 'serialize')
-      .and.returnValue(testEditToken);
+            .and.returnValue(testEditToken);
 
     component.creatTokens();
 
@@ -244,4 +268,20 @@ describe('EditCraComponent', () => {
       expect(spySerialize).toHaveBeenCalled();
     });
   }));
+
+  it('should minify the timesheet', () => {
+    const minifiedTimesheet = component.minifyTimesheet(timesheet);
+
+    expect(minifiedTimesheet).toEqual(miniTimesheet);
+  });
+
+  it('should reset the toggle of the modal that has just been closed', () => {
+    component.showModal = true;
+
+    fixture.detectChanges();
+    component.onModalClose('showModal');
+
+    expect(component.showModal).toBeFalsy();
+  });
+
 });
