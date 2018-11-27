@@ -177,15 +177,15 @@
                   </div>
               </div>
           </div>
-
-          <div class="edit-cra__wrapper__form__calendar">
-              <h4 class="edit-cra__wrapper__form__calendar__title">Compte rendu d'activité</h4>
-              <app-calendar
-              [miniTimesheet]="cra.timesheet"
-              [picking]="mode !== 'review'"
-              >
-              </app-calendar>
-          </div>
+  
+            <div class="edit-cra__wrapper__form__calendar">
+                <h4 class="edit-cra__wrapper__form__calendar__title">Compte rendu d'activité</h4>
+                <app-calendar
+                [minifiedTimesheet]="cra.timesheet"
+                [picking]="mode !== 'review'"
+                >
+                </app-calendar>
+            </div>
 
           <div class="edit-cra__wrapper__form__submit">
               <button
