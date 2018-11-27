@@ -75,7 +75,15 @@ export class EditCraComponent implements OnInit {
     this.form = this.formBuilder.group(this.formControls);
     this.route.queryParams.subscribe(
       (params: Params) => {
-        this.getDataFromUrlParams(params);
+        if (params.hasOwnProperty('data')) {
+          this.initDataFromUrlParams(params);
+
+          if (this.mode === 'review') {
+            this.disableInputs();
+          }
+        } else {
+          this.mode = 'add';
+        }
       }
     );
 
@@ -102,19 +110,11 @@ export class EditCraComponent implements OnInit {
     this.titleService.setTitle('Acrabadabra - ' + newTitle);
   }
 
-  getDataFromUrlParams(params: Params): void {
-    if (params.hasOwnProperty('data')) {
-      const datas: formData = this.serializer.deserialize(params['data']);
-      this.mode = datas.mode;
-      this.cra = datas.cra;
-      this.setInputsValue(this.cra);
-
-      if (this.mode === 'review') {
-        this.disableInputs();
-      }
-    } else {
-      this.mode = 'add';
-    }
+  initDataFromUrlParams(params: Params): void {
+    const datas: formData = this.serializer.deserialize(params['data']);
+    this.mode = datas.mode;
+    this.cra = datas.cra;
+    this.setInputsValue(this.cra);
   }
 
   disableInputs(): void {
@@ -137,7 +137,7 @@ export class EditCraComponent implements OnInit {
       this.showErrorModal = true;
     } else {
       this.createCRA();
-      this.creatTokens();
+      this.createTokens();
       this.showModal = true;
     }
   }
@@ -165,14 +165,13 @@ export class EditCraComponent implements OnInit {
     }
   }
 
-  creatTokens(): void {
+  createTokens(): void {
     const data: formData = {
-      mode: 'edit',
       cra: this.cra,
+      mode: '',
     };
-    this.editToken = this.serializer.serialize(data);
-    data.mode = 'review',
-    this.reviewToken = this.serializer.serialize(data);
+    this.editToken = this.serializer.serialize({ ...data, mode: 'edit' });
+    this.reviewToken = this.serializer.serialize({ ...data, mode: 'review' });
   }
 
   minifyTimesheet(timesheet: CalendarEvent[]): any {
