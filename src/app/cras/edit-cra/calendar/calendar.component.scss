@@ -35,7 +35,7 @@
       }
     }
 
-    &__monthchoice {
+    &__month-choice {
       @media (min-width: $screen_xs_min) {
         float: left;
         width: 50%;
@@ -332,7 +332,5 @@
 }
 
 .disabled-element {
-  position: absolute;
-  display: none;
-  top: 200%;
+  visibility: hidden;
 }
