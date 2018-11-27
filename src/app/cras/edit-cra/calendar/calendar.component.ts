@@ -31,7 +31,7 @@ import { CalendarEvent, CalendarMonthViewDay, DAYS_OF_WEEK } from 'angular-calen
 export class CalendarComponent implements OnInit {
   @Input() picking: boolean;
 
-  @Input() miniTimesheet: any;
+  @Input() minifiedTimesheet: any;
   timesheet: CalendarEvent[] = [];
   refresh: Subject<any> = new Subject();
 
@@ -44,24 +44,24 @@ export class CalendarComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.parseMinifiedTimesheet();
+    this.initTimesheet();
   }
 
-  parseMinifiedTimesheet(): void {
-    const miniTimesheetKey = Object.keys(this.miniTimesheet)[0];
+  initTimesheet(): void {
+    const timesheetDate = Object.keys(this.minifiedTimesheet)[0];
 
-    if (miniTimesheetKey !== undefined) {
-      const monthNumber = miniTimesheetKey.split('.')[0];
-      const year = miniTimesheetKey.split('.')[1];
-      const month = this.miniTimesheet[miniTimesheetKey];
+    if (timesheetDate !== undefined) {
+      const month = Number.parseInt(timesheetDate.split('.')[0], 10);
+      const year = Number.parseInt(timesheetDate.split('.')[1], 10);
+      const daysValue = this.minifiedTimesheet[timesheetDate];
 
-      this.viewDate = setMonth(setYear(this.viewDate, +year), +monthNumber);
+      this.viewDate = setMonth(setYear(this.viewDate, year), month);
+      
+      for (let date = 0; date < daysValue.length; date++) {
+        const day = new Date(+year, +month, date + 1);
 
-      for (let date = 0; date < month.length; date++) {
-        const day = new Date(+year, +monthNumber, date + 1);
-
-        if (month[date] !== undefined && month[date] !== 0) {
-          this.addDay(day, addMinutes(day, month[date] * 60 * 8));
+        if (daysValue[date] !== undefined && daysValue[date] !== 0) {
+          this.addTimesheetDay(day, addMinutes(day, daysValue[date] * 60 * 8));
         }
       }
     }
@@ -82,39 +82,23 @@ export class CalendarComponent implements OnInit {
       });
     });
   }
-
-  getADayWorkingTime(date: Date): CalendarEvent {
-    let day: CalendarEvent;
-
-    this.timesheet.forEach(
-      (aDay) => {
-        if (isSameDay(date, aDay.start)) {
-          day = aDay;
-          return;
-        }
-      }
-    );
-    return day;
+  
+  getDayWorkingTime(day: Date): CalendarEvent {
+    return this.timesheet.find((currenDay) => {
+      return isSameDay(currenDay.start, day);
+    });
   }
 
-  isADayWorked = (day: Date): boolean => {
-    let dayExist = false;
-
-    this.timesheet.forEach(
-      (aDay) => {
-        if (isSameDay(aDay.start, day)) {
-          dayExist = true;
-          return;
-        }
-      }
-    );
-    return dayExist;
+  isDayWorked(day: Date): boolean {
+    return this.timesheet.some((currentDay) => {
+      return isSameDay(currentDay.start, day);
+    });
   }
 
   dayClicked(date: Date): void {
     if (isSameMonth(date, this.viewDate)) {
-      if (!this.isADayWorked(date)) {
-        this.addDay(date);
+      if (!this.isDayWorked(date)) {
+        this.addTimesheetDay(date);
       } else {
         this.deleteDay(date);
       }
@@ -126,7 +110,7 @@ export class CalendarComponent implements OnInit {
   dayEdited(event: Event, date: Date, time: number): void {
     event.stopPropagation();
 
-    const day = this.getADayWorkingTime(date),
+    const day = this.getDayWorkingTime(date),
           end = addMinutes(day.start, 8 * 60 * time);
 
     if (time !== 0 && end) {
@@ -145,11 +129,10 @@ export class CalendarComponent implements OnInit {
     for (let date = monthStart; date <= monthEnd; date++) {
       const aDay = setDate(this.viewDate, date);
 
-      if (!this.isADayWorked(aDay) && this.weekendDays.indexOf(getDay(aDay)) === -1) {
-        this.addDay(aDay);
+      if (!this.isDayWorked(aDay) && this.weekendDays.indexOf(getDay(aDay)) === -1) {
+        this.addTimesheetDay(aDay);
       }
     }
-
     this.refresh.next();
   }
 
@@ -167,8 +150,8 @@ export class CalendarComponent implements OnInit {
     this.timesheet = [];
     this.refresh.next();
   }
-
-  addDay(date: Date, end?: Date): void {
+  
+  addTimesheetDay(date: Date, end?: Date): void {
     date = startOfDay(date);
 
     if (end === undefined) {
