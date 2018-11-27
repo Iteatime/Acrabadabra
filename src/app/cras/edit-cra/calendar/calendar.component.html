@@ -4,15 +4,12 @@
       <span>Nombre total de journées :&nbsp;</span><span class="highlight">{{ totalWorkedTime.toLocaleString(locale) }}</span>
     </div>
     <div class="calendar__header__month-choice">
-
       <div class="calendar__header__month-choice__btn" [ngClass]="picking ? '' : 'disabled-element'" (click)="previousMonth()" >
         &#60;
       </div>
-
       <div class="calendar__header__month-choice__detail">
         {{ viewDate.toLocaleString(locale, { month: 'long', year: 'numeric' }) }}
       </div>
-
       <div class="calendar__header__month-choice__btn" [ngClass]="picking ? '' : 'disabled-element'" (click)="nextMonth()" >
         &#62;
       </div>

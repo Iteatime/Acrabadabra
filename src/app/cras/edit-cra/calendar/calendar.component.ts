@@ -56,7 +56,7 @@ export class CalendarComponent implements OnInit {
       const daysValue = this.minifiedTimesheet[timesheetDate];
 
       this.viewDate = setMonth(setYear(this.viewDate, year), month);
-
+      
       for (let date = 0; date < daysValue.length; date++) {
         const day = new Date(+year, +month, date + 1);
 
@@ -82,7 +82,7 @@ export class CalendarComponent implements OnInit {
       });
     });
   }
-
+  
   getDayWorkingTime(day: Date): CalendarEvent {
     return this.timesheet.find((currenDay) => {
       return isSameDay(currenDay.start, day);
@@ -133,7 +133,6 @@ export class CalendarComponent implements OnInit {
         this.addTimesheetDay(aDay);
       }
     }
-
     this.refresh.next();
   }
 
