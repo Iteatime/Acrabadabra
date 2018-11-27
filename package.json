@@ -29,6 +29,7 @@
     "core-js": "^2.5.4",
     "date-fns": "^1.29.0",
     "js-base64": "^2.4.9",
+    "ng-mocks": "^7.1.1",
     "rxjs": "~6.3.3",
     "zone.js": "~0.8.26"
   },
@@ -39,6 +40,7 @@
     "@angular/language-service": "~7.0.0",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
+    "@types/lodash": "^4.14.118",
     "@types/node": "~8.9.4",
     "babel-loader": "^8.0.4",
     "codelyzer": "~4.5.0",

@@ -150,7 +150,7 @@ export class CalendarComponent implements OnInit {
     this.timesheet = [];
     this.refresh.next();
   }
-
+  
   addTimesheetDay(date: Date, end?: Date): void {
     date = startOfDay(date);
 

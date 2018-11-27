@@ -131,10 +131,6 @@ export class EditCraComponent implements OnInit {
     this.missionFinalClientInput.setValue(cra.mission.client);
   }
 
-  onModalClose(toggle: string) {
-    this[toggle] = false;
-  }
-
   onSubmitCRA(): void {
     if (this.form.invalid) {
       this.showValidationMessages();
@@ -198,5 +194,9 @@ export class EditCraComponent implements OnInit {
     }
 
     return minitimesheet;
+  }
+
+  onModalClose(toggle: string) {
+    this[toggle] = false;
   }
 }
