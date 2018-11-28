@@ -1,19 +1,16 @@
 <div class="calendar">
   <div class="calendar__header">
     <div class="calendar__header__daycount">
-      <span>Nombre total de journées :&nbsp;</span><span class="highlight">{{ totalTime.toLocaleString(locale) }}</span>
+      <span>Nombre total de journées :&nbsp;</span><span class="highlight">{{ totalWorkedTime.toLocaleString(locale) }}</span>
     </div>
-    <div class="calendar__header__monthchoice">
-
-      <div [ngClass]="picking ? 'calendar__header__monthchoice__btn' : 'disabled-element'" (click)="previousMonth('viewDate')" >
+    <div class="calendar__header__month-choice">
+      <div class="calendar__header__month-choice__btn" [ngClass]="picking ? '' : 'disabled-element'" (click)="previousMonth()" >
         &#60;
       </div>
-
-      <div class="calendar__header__monthchoice__detail">
+      <div class="calendar__header__month-choice__detail">
         {{ viewDate.toLocaleString(locale, { month: 'long', year: 'numeric' }) }}
       </div>
-
-      <div [ngClass]="picking ? 'calendar__header__monthchoice__btn' : 'disabled-element'" (click)="nextMonth('viewDate')" >
+      <div class="calendar__header__month-choice__btn" [ngClass]="picking ? '' : 'disabled-element'" (click)="nextMonth()" >
         &#62;
       </div>
     </div>
@@ -21,7 +18,7 @@
 
   <div class="calendar__content">
     <div class="calendar__content__tools">
-      <div [ngClass]="picking ? 'calendar__content__tools__selectall' : 'disabled-element'" (click)="selctAll()">
+      <div class="calendar__content__tools__selectall" [ngClass]="picking ? '' : 'disabled-element'" (click)="selectAllBusinessDays()">
         Sélectionner les jours ouvrés
       </div>
     </div>
@@ -43,7 +40,9 @@
                   1
                 </span>
               </div>
-              <span class="calendar__content__dayselect__dayitem__cell__changer__maintext">{{ day.badgeTotal.toLocaleString(locale) }} jour</span>
+              <span class="calendar__content__dayselect__dayitem__cell__changer__maintext">
+                {{ day.badgeTotal.toLocaleString(locale) }}<span> jour</span>
+              </span>
             </div>
           </div>
         </div>
@@ -62,4 +61,3 @@
     </div>
   </div>
 </div>
-

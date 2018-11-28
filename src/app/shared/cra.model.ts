@@ -1,11 +1,10 @@
 import { Mission } from './mission.model';
 import { Consultant } from './consultant.model';
-import { CalendarEvent } from 'calendar-utils';
 
 export class Cra {
   consultant: Consultant;
   mission: Mission;
-  timesheet: CalendarEvent[];
+  timesheet: any;
 
   constructor(
     consultantEmail: string = '',

@@ -25,6 +25,15 @@
             position: relative;
 			height: 100%;
 
+            a {
+                opacity: 1;
+                transition: opacity .15s ease-in-out;
+            }
+
+            a:hover {
+                opacity: 0.9;
+            }
+
 			&__logo {
 				display: block;
 				position: absolute;
@@ -41,7 +50,11 @@
             padding: 40px;
         }
 
-        margin-top: 30px;
+        @media (min-width: $screen-md-min) {
+            margin-top: 30px;
+        }
+
+        margin-top: 10px;
         background: $white;
         padding: 20px;
         box-shadow: 0 0 8px rgba($black, .2);

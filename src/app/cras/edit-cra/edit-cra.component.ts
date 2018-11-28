@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { SerializerService } from 'src/app/shared/serialization/serializer.service';
@@ -9,7 +11,6 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { CalendarEvent } from 'calendar-utils';
 
 import { getMonth, getDate, differenceInMinutes, getYear, lastDayOfMonth } from 'date-fns';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-cra',
@@ -25,7 +26,7 @@ export class EditCraComponent implements OnInit {
   reviewToken: string;
 
   showModal = false;
-  showErrorMessage = false;
+  showErrorModal = false;
 
   title = {
     add: 'Saisir',
@@ -35,118 +36,142 @@ export class EditCraComponent implements OnInit {
 
   mode: string;
   form: FormGroup;
+  formControls = {
+    'consultantNameInput' : new FormControl(
+      this.cra.consultant.name,
+      [
+        Validators.required,
+      ]
+    ),
+    'consultantEmailInput' : new FormControl(
+      this.cra.consultant.email,
+      [
+        Validators.required,
+        Validators.email,
+      ]
+    ),
+    'missionTitleInput' : new FormControl(
+      this.cra.mission.title,
+      [
+        Validators.required,
+      ]
+    ),
+    'missionFinalClientInput' : new FormControl(
+      this.cra.mission.client,
+      [
+        Validators.required,
+      ]
+    ),
+  };
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private serializer: SerializerService
+    private serializer: SerializerService,
+    private titleService: Title
   ) {}
 
-  ngOnInit() {
-    this.form = this.formBuilder.group(
-      {
-        'consultantNameInput' : new FormControl(
-          this.cra.consultant.name,
-          [
-            Validators.required,
-          ]
-        ),
-        'consultantEmailInput' : new FormControl(
-          this.cra.consultant.email,
-          [
-            Validators.required,
-            Validators.email,
-          ]
-        ),
-        'missionTitle' : new FormControl(
-          this.cra.mission.title,
-          [
-            Validators.required,
-          ]
-        ),
-        'missionFinalClient' : new FormControl(
-          this.cra.mission.client,
-          [
-            Validators.required,
-          ]
-        ),
-      }
-    );
-
+  ngOnInit(): void {
+    this.form = this.formBuilder.group(this.formControls);
     this.route.queryParams.subscribe(
       (params: Params) => {
         if (params.hasOwnProperty('data')) {
-          const datas: formData = this.serializer.deserialize(params['data']);
-          this.mode = datas.mode;
-          this.cra = datas.cra;
-
-          this.consultantNameInput.setValue(this.cra.consultant.name);
-          this.consultantEmailInput.setValue(this.cra.consultant.email);
-          this.missionTitle.setValue(this.cra.mission.title);
-          this.missionFinalClient.setValue(this.cra.mission.client);
+          this.initDataFromUrlParams(params);
 
           if (this.mode === 'review') {
-            this.consultantNameInput.disable();
-            this.consultantEmailInput.disable();
-            this.missionTitle.disable();
-            this.missionFinalClient.disable();
+            this.disableInputs();
           }
         } else {
           this.mode = 'add';
         }
       }
     );
+
+    this.setPageTitle(this.title[this.mode] + ' un compte rendu d\'activité');
   }
 
-  get consultantNameInput() {
+  get consultantNameInput(): AbstractControl  {
     return this.form.get('consultantNameInput');
   }
 
-  get consultantEmailInput() {
+  get consultantEmailInput(): AbstractControl  {
     return this.form.get('consultantEmailInput');
   }
 
-  get missionTitle() {
-    return this.form.get('missionTitle');
+  get missionTitleInput(): AbstractControl  {
+    return this.form.get('missionTitleInput');
   }
 
-  get missionFinalClient() {
-    return this.form.get('missionFinalClient');
+  get missionFinalClientInput(): AbstractControl {
+    return this.form.get('missionFinalClientInput');
   }
 
-  /**
-   * @description Generate the links token to edit and review this cra and toggle modal opened
-   *
-   */
-  onSubmitCRA() {
+  setPageTitle(newTitle: string) {
+    this.titleService.setTitle('Acrabadabra - ' + newTitle);
+  }
 
+  initDataFromUrlParams(params: Params): void {
+    const datas: formData = this.serializer.deserialize(params['data']);
+    this.mode = datas.mode;
+    this.cra = datas.cra;
+    this.setInputsValue(this.cra);
+  }
+
+  disableInputs(): void {
+    this.consultantNameInput.disable();
+    this.consultantEmailInput.disable();
+    this.missionTitleInput.disable();
+    this.missionFinalClientInput.disable();
+  }
+
+  setInputsValue(cra: Cra): void {
+    this.consultantNameInput.setValue(cra.consultant.name);
+    this.consultantEmailInput.setValue(cra.consultant.email);
+    this.missionTitleInput.setValue(cra.mission.title);
+    this.missionFinalClientInput.setValue(cra.mission.client);
+  }
+
+  onSubmitCRA(): void {
     if (this.form.invalid) {
-      this.showErrorMessage = true;
+      this.showValidationMessages();
+      this.showErrorModal = true;
     } else {
-      this.cra = new Cra(
-        this.consultantEmailInput.value,
-        this.consultantNameInput.value,
-        this.missionFinalClient.value,
-        this.missionTitle.value,
-      );
-
-      const timesheet = this.timesheetPicker.timesheet;
-      if (timesheet[0] !== undefined) {
-        this.cra.timesheet = this.minifyTimesheet(timesheet);
-      } else {
-        this.cra.timesheet = [];
-      }
-
-      const data: formData = {
-        mode: 'edit',
-        cra: this.cra,
-      };
-      this.editToken = this.serializer.serialize(data);
-      data.mode = 'review',
-      this.reviewToken = this.serializer.serialize(data);
-
+      this.createCRA();
+      this.createTokens();
       this.showModal = true;
     }
+  }
+
+  showValidationMessages(): void {
+    Object.keys(this.form.controls).forEach(field => {
+      const control = this.form.get(field);
+      control.markAsTouched({ onlySelf: true });
+    });
+  }
+
+  createCRA(): void {
+    this.cra = new Cra(
+      this.consultantEmailInput.value,
+      this.consultantNameInput.value,
+      this.missionFinalClientInput.value,
+      this.missionTitleInput.value,
+    );
+
+    const timesheet = this.timesheetPicker.timesheet;
+    if (timesheet[0] !== undefined) {
+      this.cra.timesheet = this.minifyTimesheet(timesheet);
+    } else {
+      this.cra.timesheet = [];
+    }
+  }
+
+  createTokens(): void {
+    const data: formData = {
+      cra: this.cra,
+      mode: '',
+    };
+    this.editToken = this.serializer.serialize({ ...data, mode: 'edit' });
+    this.reviewToken = this.serializer.serialize({ ...data, mode: 'review' });
   }
 
   minifyTimesheet(timesheet: CalendarEvent[]): any {
@@ -159,24 +184,18 @@ export class EditCraComponent implements OnInit {
     for (let date = 0; date < monthLength; date++) {
       let time = 0;
 
-      timesheet.forEach(
-        (aDay) => {
-          if (date + 1 === getDate(aDay.start)) {
-            time = differenceInMinutes(aDay.end, aDay.start) / 60 / 8;
-            return;
-          }
+      timesheet.forEach(aDay => {
+        if (date + 1 === getDate(aDay.start)) {
+          time = differenceInMinutes(aDay.end, aDay.start) / 60 / 8;
+          return;
         }
-      );
+      });
       minitimesheet[month + '.' + year][date] = time;
     }
 
     return minitimesheet;
   }
 
-  /**
-   * @description Swiche the given modal toggle to false
-   *
-   */
   onModalClose(toggle: string) {
     this[toggle] = false;
   }

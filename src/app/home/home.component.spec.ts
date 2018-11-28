@@ -31,13 +31,8 @@ describe('HomeComponent', () => {
     expect(component.title).toEqual('Acrabadabra');
   });
 
-  it('should render title in a h1 tag', () => {
-    expect(compiled.querySelector('h1').textContent).toEqual('Acrabadabra');
+  it('should output title in a span', () => {
+    expect(compiled.querySelector('span.brand_name').textContent).toContain('Acrabadabra');
   });
 
-  it('should update the rendered title after a change', () => {
-    component.title = 'Something else !';
-    fixture.detectChanges();
-    expect(compiled.querySelector('h1').textContent).not.toEqual('Acrabadabra');
-  });
 });
