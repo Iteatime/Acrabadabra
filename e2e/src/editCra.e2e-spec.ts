@@ -21,31 +21,23 @@ describe('When I input my timesheet', () => {
   });
 
   it('should be possible to enter my name', () => {
-    const name = 'Tester';
-          nameInput.sendKeys(name);
-
-    expect(nameInput.getAttribute('value')).toBe(name);
+    nameInput.sendKeys('Tester');
+    expect(nameInput.getAttribute('value')).toBe('Tester');
   });
 
   it('should be possible to enter my email', () => {
-    const email = 'tester@test.com';
-          emailInput.sendKeys(email);
-
-    expect(emailInput.getAttribute('value')).toBe(email);
+    emailInput.sendKeys('tester@test.com');
+    expect(emailInput.getAttribute('value')).toBe('tester@test.com');
   });
 
   it('should be possible to enter a mission title', () => {
-    const title = 'Testing';
-          titleInput.sendKeys(title);
-
-    expect(titleInput.getAttribute('value')).toBe(title);
+    titleInput.sendKeys('Testing');
+    expect(titleInput.getAttribute('value')).toBe('Testing');
   });
 
   it('should be possible to enter the client\'s name', () => {
-    const client = 'Test.com';
-          clientInput.sendKeys(client);
-
-    expect(clientInput.getAttribute('value')).toBe(client);
+    clientInput.sendKeys('Test.com');
+    expect(clientInput.getAttribute('value')).toBe('Test.com');
   });
 
   describe('On the calendar', () => {
