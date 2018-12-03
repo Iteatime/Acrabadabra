@@ -2,13 +2,15 @@ import { EditCraPage } from './editCra.po';
 
 import { browser, by, ElementFinder } from 'protractor';
 import { getDate, getDay, lastDayOfMonth, setDate, startOfMonth } from 'date-fns';
+import { link } from 'fs';
 
 describe('When I input my timesheet', () => {
   let editCraPage: EditCraPage,
       nameInput: ElementFinder,
       emailInput: ElementFinder,
       titleInput: ElementFinder,
-      clientInput: ElementFinder;
+      clientInput: ElementFinder,
+      selectedNumber: ElementFinder;
 
   const getBusinessDaysNumber = function(): number {
     let workingDays = 0;
@@ -31,6 +33,10 @@ describe('When I input my timesheet', () => {
     emailInput = editCraPage.getInputByLabelText('Email');
     titleInput = editCraPage.getInputByLabelText('Intitulé');
     clientInput = editCraPage.getInputByLabelText('Client final');
+
+    selectedNumber = editCraPage.getElementsByText('Nombre total de journées :')
+            .first()
+            .element(by.xpath('..//span[@class="highlight"]'));
   });
 
   it('should be possible to enter my name', () => {
@@ -54,15 +60,11 @@ describe('When I input my timesheet', () => {
   });
 
   describe('On the calendar', () => {
-    let selectedNumber: ElementFinder,
-        aDayCell: ElementFinder;
+    let aDayCell: ElementFinder;
 
     beforeEach(() => {
       aDayCell = editCraPage.getElementsByText('4').first();
       aDayCell.click();
-      selectedNumber = editCraPage.getElementsByText('Nombre total de journées :')
-              .first()
-              .element(by.xpath('..//span[@class="highlight"]'));
     });
 
     it('should be possible to select days', () => {
@@ -141,6 +143,7 @@ describe('When I input my timesheet', () => {
         emailInput.sendKeys('tester@test.com');
         titleInput.sendKeys('Testing');
         clientInput.sendKeys('Test.com');
+        editCraPage.getElementsByText('Sélectionner les jours ouvrés').first().click();
         submitButton.click();
       });
 
@@ -150,6 +153,34 @@ describe('When I input my timesheet', () => {
 
       it('should give me two links', () => {
         expect(editCraPage.getElementsByText('ce lien').count()).toBe(2);
+      });
+
+      describe('When I click on one of these links', () => {
+
+        it('should get data from the link', () => {
+          editCraPage.getElementsByText('ce lien').get(0).getAttribute('href').then((value: string) => {
+            browser.get(value);
+            expect(nameInput.getAttribute('value')).toBe('Tester');
+            expect(emailInput.getAttribute('value')).toBe('tester@test.com');
+            expect(titleInput.getAttribute('value')).toBe('Testing');
+            expect(clientInput.getAttribute('value')).toBe('Test.com');
+            expect(selectedNumber.getText()).toBe(getBusinessDaysNumber().toString());
+          });
+        });
+
+        it('should be the edit link if it was the first one', () => {
+          editCraPage.getElementsByText('ce lien').get(0).getAttribute('href').then((value: string) => {
+            browser.get(value);
+            expect(browser.getTitle()).toBe('Acrabadabra - Editer un compte rendu d\'activité');
+          });
+        });
+
+        it('should be the review link if it was the second one', () => {
+          editCraPage.getElementsByText('ce lien').get(1).getAttribute('href').then((value: string) => {
+            browser.get(value);
+            expect(browser.getTitle()).toBe('Acrabadabra - Consulter un compte rendu d\'activité');
+          });
+        });
       });
     });
   });
