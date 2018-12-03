@@ -1,6 +1,7 @@
 import { EditCraPage } from './editCra.po';
 
 import { browser, by, ElementFinder } from 'protractor';
+import { getDate, getDay, lastDayOfMonth, setDate, startOfMonth } from 'date-fns';
 
 describe('When I input my timesheet', () => {
   let editCraPage: EditCraPage,
@@ -8,6 +9,18 @@ describe('When I input my timesheet', () => {
       emailInput: ElementFinder,
       titleInput: ElementFinder,
       clientInput: ElementFinder;
+
+  const getBusinessDaysNumber = function(): number {
+    let workingDays = 0;
+    const date = startOfMonth(new Date());
+
+    for (let day = 1; day <= getDate(lastDayOfMonth(date)); day++) {
+      const weekDay = getDay(setDate(date, day));
+      workingDays += (weekDay === 0 || weekDay === 6) ? 0 : 1;
+    }
+
+    return workingDays;
+  };
 
   beforeEach(() => {
     editCraPage = new EditCraPage();
@@ -56,10 +69,9 @@ describe('When I input my timesheet', () => {
       expect(editCraPage.getADayBadge(aDayCell).getText()).toBe('1\njour');
     });
 
-    it('It should be possible to select every working day', () => {
+    it('should be possible to select every working day', () => {
       editCraPage.getElementsByText('Sélectionner les jours ouvrés').first().click();
-
-      expect(selectedNumber.getText()).toBe('21');
+      expect(selectedNumber.getText()).toBe(getBusinessDaysNumber().toString());
     });
 
     describe('', () => {
@@ -114,11 +126,11 @@ describe('When I input my timesheet', () => {
         submitButton.click();
       });
 
-      it('It should tell me via a modal', () => {
+      it('should tell me via a modal', () => {
         expect(editCraPage.getElementsByText('Validation impossible').count()).toBe(1);
       });
 
-      it('It should tell me my mistakes via validation messages', () => {
+      it('should tell me my mistakes via validation messages', () => {
         expect(editCraPage.getElementsByText('Ce champ est obligatoire').count()).toBe(4);
       });
     });
@@ -136,7 +148,7 @@ describe('When I input my timesheet', () => {
         expect(editCraPage.getElementsByText('Votre CRA a bien été créé').count()).toBe(1);
       });
 
-      it('It should give me two links', () => {
+      it('should give me two links', () => {
         expect(editCraPage.getElementsByText('ce lien').count()).toBe(2);
       });
     });
