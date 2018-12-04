@@ -27,8 +27,6 @@ export class EditCraComponent implements OnInit {
 
   showModal = false;
   showErrorModal = false;
-
-
   generateInvoice = false;
 
   title = {
@@ -65,31 +63,6 @@ export class EditCraComponent implements OnInit {
         Validators.required,
       ]
     ),
-
-    'billNumberInput' : new FormControl(),
-    'billDateInput' : new FormControl(),
-    'billClientRefInput' : new FormControl(),
-    'billDailyRate' : new FormControl(),
-
-    'billConsultantNameInput' : new FormControl(),
-    'billConsultantAddressInput' : new FormControl(),
-    'billConsultantTelephoneInput' : new FormControl(),
-    'billConsultantSIRENInput' : new FormControl(),
-    'billConsultantCityRCSInput' : new FormControl(),
-    'billConsultantVilleTVANumberInput' : new FormControl(),
-
-    'billClientNameInput' : new FormControl(),
-    'billClientAddressInput' : new FormControl(),
-    'billClientTelephoneInput' : new FormControl(),
-    'billClientSIRENInput' : new FormControl(),
-    'billClientCityRCSInput' : new FormControl(),
-    'billClientVilleTVANumberInput' : new FormControl(),
-
-    'billPaymentDateInput' : new FormControl(),
-    'billPaymentModalityInput' : new FormControl(),
-    'billBankDetailsIBANInput' : new FormControl(),
-    'billBankDetailsSWIFTInput' : new FormControl(),
-    'billBankDetailsDomiciliationInput' : new FormControl(),
   };
 
   constructor(
@@ -134,18 +107,6 @@ export class EditCraComponent implements OnInit {
     return this.form.get('missionFinalClientInput');
   }
 
-  get billConsultantCityRCSInput(): AbstractControl {
-    return this.form.get('billConsultantCityRCSInput');
-  }
-
-  get billConsultantVilleTVANumberInput(): AbstractControl {
-    return this.form.get('billConsultantVilleTVANumberInput');
-  }
-
-  get billClientCityRCSInput(): AbstractControl {
-    return this.form.get('billClientCityRCSInput');
-  }
-
   setPageTitle(newTitle: string) {
     this.titleService.setTitle('Acrabadabra - ' + newTitle);
   }
@@ -155,15 +116,6 @@ export class EditCraComponent implements OnInit {
     this.mode = datas.mode;
     this.cra = datas.cra;
     this.setInputsValue(this.cra);
-  }
-
-  toggleControl(control: AbstractControl): void {
-    if (!control.disabled) {
-      control.reset();
-      control.disable();
-    } else {
-      control.enable();
-    }
   }
 
   disableInputs(): void {

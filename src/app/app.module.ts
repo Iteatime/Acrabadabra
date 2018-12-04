@@ -17,6 +17,7 @@ import { CalendarComponent } from './cras/edit-cra/calendar/calendar.component';
 import { HomeComponent } from './home/home.component';
 
 import { ModalDirective } from './shared/style/modal.directive';
+import { BillingFormComponent } from './cras/edit-cra/billing-form/billing-form.component';
 
 registerLocaleData(localeFr);
 
@@ -31,6 +32,8 @@ registerLocaleData(localeFr);
     HomeComponent,
 
     ModalDirective,
+
+    BillingFormComponent,
   ],
   imports: [
     AppRoutingModule,

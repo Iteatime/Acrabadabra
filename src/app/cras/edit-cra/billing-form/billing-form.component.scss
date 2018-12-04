@@ -1,0 +1,117 @@
+@import '../../../style/vars';
+@import '../../../style/mixins';
+
+.billing-form {
+  width: 100%;
+  margin-top: 30px;
+
+  &__block {
+    @media (min-width: $screen-sm-min) {
+      margin: 30px 40px;
+    }
+    margin: 20px 40px;
+
+    &__title {
+      @include header-form;
+    }
+
+    &__input-wrapper {
+      @include form-input;
+      display: flex;
+
+      &__item {
+        @media (min-width: $screen-sm-min) {
+
+          &--left {
+            margin-right: 9px;
+          }
+
+          &--right {
+            margin-left: 9px;
+          }
+
+          &--middle {
+            margin: 0px 9px;
+          }
+        }
+        width: 100%;
+        margin: 0px;
+      }
+
+      &__sub-block {
+        @media (min-width: $screen-sm-min) {
+          margin: 30px 40px;
+          margin-top: 0px;
+        }
+        margin: 20px 40px;
+        margin-top: 0px;
+        width: 100%;
+
+        &__title {
+          @include header-form;
+        }
+
+        &__input-wrapper {
+          @include form-input;
+          display: flex;
+
+          &__item {
+            @media (min-width: $screen-sm-min) {
+
+              &--left {
+                margin-right: 9px;
+              }
+
+              &--right {
+                margin-left: 9px;
+              }
+
+              &--middle {
+                margin: 0px 9px;
+              }
+            }
+            width: 100%;
+            margin: 0px;
+          }
+        }
+      }
+    }
+  }
+
+  &__half-block {
+    @media (min-width: $screen-sm-min) {
+      width: calc(50% - 60px);
+      margin: 0px 0px 0px 40px;
+      padding: 0px;
+    }
+
+    width: 100%;
+    display: inline-table;
+    padding: 0px 40px;
+    margin-bottom: 20px;
+
+    &__title {
+      @include header-form;
+    }
+
+    &__input-wrapper {
+      @include form-input;
+
+      &__item {
+        &#clientTVA {
+          padding-bottom: 32px;
+        }
+
+        &__button {
+          border: none;
+          background: $dark_blue;
+          cursor: pointer;
+          width: 100%;
+          height: 38px;
+          color: $white;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}
