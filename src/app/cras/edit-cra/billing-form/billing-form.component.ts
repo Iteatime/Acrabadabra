@@ -60,8 +60,6 @@ export class BillingFormComponent implements OnInit {
 
   ngOnInit() {
     this.registerFormControls();
-    this.billConsultantCityRCSInput.disable();
-    this.billClientCityRCSInput.disable();
   }
 
   registerFormControls() {

@@ -96,10 +96,6 @@
     &__input {
       position: relative;
 
-      &__toggle {
-        margin-left: 3px;
-      }
-
       & input {
         border-radius: 0;
         border: 1px solid $grey_border;

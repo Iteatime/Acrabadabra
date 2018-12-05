@@ -6,9 +6,9 @@
 
   &__block {
     @media (min-width: $screen-sm-min) {
-      margin: 30px 40px;
+      margin: 30px 0px;
     }
-    margin: 20px 40px;
+    margin: 20px 0px;
 
     &__title {
       @include header-form;
@@ -38,11 +38,9 @@
 
       &__sub-block {
         @media (min-width: $screen-sm-min) {
-          margin: 30px 40px;
-          margin-top: 0px;
+          margin-bottom: 30px;
         }
-        margin: 20px 40px;
-        margin-top: 0px;
+        margin-bottom: 20px;
         width: 100%;
 
         &__title {
@@ -78,14 +76,15 @@
 
   &__half-block {
     @media (min-width: $screen-sm-min) {
-      width: calc(50% - 60px);
-      margin: 0px 0px 0px 40px;
-      padding: 0px;
-    }
+      width: calc(50% - 20px);
+      margin-bottom: 0px;
 
+      &--right {
+        margin-left: 40px;
+      }
+    }
     width: 100%;
     display: inline-table;
-    padding: 0px 40px;
     margin-bottom: 20px;
 
     &__title {
