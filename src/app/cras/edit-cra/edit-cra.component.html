@@ -86,7 +86,7 @@
 
       <form class="edit-cra__wrapper__form" [formGroup]="form">
           <div id="prestataire" class="edit-cra__wrapper__form__block">
-              <h4 class="edit-cra__wrapper__form__block__title">Prestataire</h4>
+              <h4 class="edit-cra__wrapper__form__block__title">Consultant</h4>
               <div class="edit-cra__wrapper__form__block__input-wrapper">
                   <div class="edit-cra__wrapper__form__block__input-wrapper__item form-group">
                       <label for="consultantNameInput" class="edit-cra__wrapper__form__block__input-wrapper__item__label">Nom</label>
@@ -192,11 +192,7 @@
                 <input name="billToggle" type="checkbox" [(ngModel)]="generateInvoice" [ngModelOptions]="{standalone: true}">
                 Générer une facture
               </label>
-
-              <div *ngIf="generateInvoice">
-                <h4 class="edit-cra__wrapper__form__component__title">Données de facturation</h4>
-                <app-billing-form></app-billing-form>
-              </div>
+              <app-billing-form *ngIf="generateInvoice"></app-billing-form>
           </div>
 
           <div class="edit-cra__wrapper__form__submit">

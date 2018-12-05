@@ -20,14 +20,18 @@ export class BillingFormComponent implements OnInit {
     'billConsultantTelephoneInput' : new FormControl(),
     'billConsultantSIRENInput' : new FormControl(),
     'billConsultantCityRCSInput' : new FormControl(),
+    'billConsultantCityRCSToggle' : new FormControl(),
     'billConsultantVilleTVANumberInput' : new FormControl(),
+    'billConsultantVilleTVANumberToggle' : new FormControl(),
 
     'billClientNameInput' : new FormControl(),
     'billClientAddressInput' : new FormControl(),
     'billClientTelephoneInput' : new FormControl(),
     'billClientSIRENInput' : new FormControl(),
     'billClientCityRCSInput' : new FormControl(),
+    'billClientCityRCSToggle' : new FormControl(),
     'billClientVilleTVANumberInput' : new FormControl(),
+    'billClientVilleTVANumberToggle' : new FormControl(),
 
     'billPaymentDateInput' : new FormControl(),
     'billPaymentModalityInput' : new FormControl(),
@@ -50,8 +54,14 @@ export class BillingFormComponent implements OnInit {
     return this.billingForm.get('billClientCityRCSInput');
   }
 
+  get billClientVilleTVANumberInput(): AbstractControl {
+    return this.billingForm.get('billClientVilleTVANumberInput');
+  }
+
   ngOnInit() {
     this.registerFormControls();
+    this.billConsultantCityRCSInput.disable();
+    this.billClientCityRCSInput.disable();
   }
 
   registerFormControls() {
