@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, AbstractControl, FormBuilder } from '@angular/forms';
+import { Bill } from 'src/app/shared/bill.model';
 
 @Component({
   selector: 'app-billing-form',
@@ -8,62 +9,66 @@ import { FormControl, FormGroup, AbstractControl, FormBuilder } from '@angular/f
 })
 export class BillingFormComponent implements OnInit {
 
+  bill: Bill = new Bill();
   billingForm: FormGroup;
-  billingControls = {
-    'billNumberInput' : new FormControl(),
-    'billDateInput' : new FormControl(),
-    'billClientRefInput' : new FormControl(),
-    'billDailyRate' : new FormControl(),
+  controlsBindings = {
+    'billNumberInput' : { parent: this.bill, value: 'number'},
+    'billDateInput' : { parent: this, value: 'billdate'},
+    'billClientRefInput' : { parent: this.bill, value: 'clientRef'},
+    'billDailyRateInput' : { parent: this.bill, value: 'dailyRate'},
 
-    'billConsultantNameInput' : new FormControl(),
-    'billConsultantAddressInput' : new FormControl(),
-    'billConsultantTelephoneInput' : new FormControl(),
-    'billConsultantSIRENInput' : new FormControl(),
-    'billConsultantCityRCSInput' : new FormControl(),
-    'billConsultantCityRCSToggle' : new FormControl(),
-    'billConsultantVilleTVANumberInput' : new FormControl(),
-    'billConsultantVilleTVANumberToggle' : new FormControl(),
+    'billConsultantNameInput' : { parent: this.bill.consultant, value: 'name'},
+    'billConsultantAddressInput' : { parent: this.bill.consultant, value: 'address'},
+    'billConsultantTelephoneInput' : { parent: this.bill.consultant, value: 'telephone'},
+    'billConsultantSIRENInput' : { parent: this.bill.consultant, value: 'siren'},
+    'billConsultantTradeAndCompaniesRegisterCityInput' : { parent: this.bill.consultant, value: 'tradeAndCompaniesRegisterCity'},
+    'billConsultantTradeAndCompaniesRegisterToggle' : { parent: this.bill.consultant, value: 'tradeAndCompaniesRegisterExemption'},
+    'billConsultantVATNumberInput' : { parent: this.bill.consultant, value: 'vatNumber'},
+    'billConsultantVATToggle' : { parent: this.bill.consultant, value: 'vatExemption'},
 
-    'billClientNameInput' : new FormControl(),
-    'billClientAddressInput' : new FormControl(),
-    'billClientTelephoneInput' : new FormControl(),
-    'billClientSIRENInput' : new FormControl(),
-    'billClientCityRCSInput' : new FormControl(),
-    'billClientCityRCSToggle' : new FormControl(),
-    'billClientVilleTVANumberInput' : new FormControl(),
-    'billClientVilleTVANumberToggle' : new FormControl(),
+    'billClientNameInput' : { parent: this.bill.client, value: 'name'},
+    'billClientAddressInput' : { parent: this.bill.client, value: 'address'},
+    'billClientTelephoneInput' : { parent: this.bill.client, value: 'telephone'},
+    'billClientSIRENInput' : { parent: this.bill.client, value: 'siren'},
+    'billClientTradeAndCompaniesRegisterCityInput' : { parent: this.bill.client, value: 'tradeAndCompaniesRegisterCity'},
+    'billClientTradeAndCompaniesRegisterToggle' : { parent: this.bill.client, value: 'tradeAndCompaniesRegisterExemption'},
+    'billClientVATNumberInput' : { parent: this.bill.client, value: 'vatNumber'},
+    'billClientVATToggle' : { parent: this.bill.client, value: 'vatExemption'},
 
-    'billPaymentDateInput' : new FormControl(),
-    'billPaymentModalityInput' : new FormControl(),
-    'billBankDetailsIBANInput' : new FormControl(),
-    'billBankDetailsSWIFTInput' : new FormControl(),
-    'billBankDetailsDomiciliationInput' : new FormControl(),
+    'billPaymentDateInput' : { parent: this.bill, value: 'paymentDate'},
+    'billPaymentModalityInput' : { parent: this.bill, value: 'paymentModality'},
+    'billPaymentLatePenaltyToggle' : { parent: this.bill, value: 'billPaymentLatePenalty'},
+    'billBankDetailsIBANInput' : { parent: this.bill, value: 'bankIBAN'},
+    'billBankDetailsSWIFTInput' : { parent: this.bill, value: 'bankSWIFT'},
+    'billBankDetailsDomiciliationInput' : { parent: this.bill, value: 'bankingDomiciliation'},
   };
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder) {}
 
-  get billConsultantCityRCSInput(): AbstractControl {
-    return this.billingForm.get('billConsultantCityRCSInput');
-  }
-
-  get billConsultantVilleTVANumberInput(): AbstractControl {
-    return this.billingForm.get('billConsultantVilleTVANumberInput');
-  }
-
-  get billClientCityRCSInput(): AbstractControl {
-    return this.billingForm.get('billClientCityRCSInput');
-  }
-
-  get billClientVilleTVANumberInput(): AbstractControl {
-    return this.billingForm.get('billClientVilleTVANumberInput');
-  }
 
   ngOnInit() {
     this.registerFormControls();
   }
 
   registerFormControls() {
-    this.billingForm = this.formBuilder.group(this.billingControls);
+    const controls = {};
+
+    Object.keys(this.controlsBindings).forEach(control => {
+
+      const controlBinding = this.controlsBindings[control];
+
+      controls[control] = new FormControl(controlBinding.parent[controlBinding.value]);
+
+      Object.defineProperty(this, control, {
+        get: () => this.billingForm.get(control),
+      });
+
+      controls[control].valueChanges.subscribe((value: string) => {
+        controlBinding.parent[controlBinding.value] = value;
+      });
+    });
+
+    return this.billingForm = this.formBuilder.group(controls);
   }
 
   toggleControl(control: AbstractControl): void {

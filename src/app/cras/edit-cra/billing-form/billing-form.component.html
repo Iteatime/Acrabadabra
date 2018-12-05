@@ -36,13 +36,13 @@
           </div>
       </div>
       <div class="billing-form__block__input-wrapper__item billing-form__block__input-wrapper__item--right form-group" >
-          <label for="billDailyRate" class="billing-form__block__input-wrapper__item__label">Taux journalier (HT)</label>
+          <label for="billDailyRateInput" class="billing-form__block__input-wrapper__item__label">Taux journalier (HT)</label>
           <div class="billing-form__block__input-wrapper__item__input">
               <input
               type="text"
               class="form-control"
-              name="billDailyRate"
-              formControlName="billDailyRate"
+              name="billDailyRateInput"
+              formControlName="billDailyRateInput"
               >
           </div>
       </div>
@@ -96,40 +96,40 @@
         </div>
       </div>
       <div class="billing-form__half-block__input-wrapper__item form-group" >
-        <label for="billConsultantCityRCSInput" class="billing-form__half-block__input-wrapper__item__label">Ville d'immatriculation au RCS</label>
+        <label for="billConsultantTradeAndCompaniesRegisterCityInput" class="billing-form__half-block__input-wrapper__item__label">Ville d'immatriculation au RCS</label>
         <div class="billing-form__half-block__input-wrapper__item__input">
           <input
           type="text"
           class="form-control"
-          name="billConsultantCityRCSInput"
-          formControlName="billConsultantCityRCSInput"
+          name="billConsultantTradeAndCompaniesRegisterCityInput"
+          formControlName="billConsultantTradeAndCompaniesRegisterCityInput"
           >
           <label class="billing-form__half-block__input-wrapper__item__input__toggle">
             <input
-            name="billConsultantCityRCSToggle"
             type="checkbox"
-            formControlName="billConsultantCityRCSToggle"
-            (change)="toggleControl(billConsultantCityRCSInput)"
+            name="billConsultantTradeAndCompaniesRegisterToggle"
+            formControlName="billConsultantTradeAndCompaniesRegisterToggle"
+            (change)="toggleControl(billConsultantTradeAndCompaniesRegisterCityInput)"
             >
             Dispensé d'immatriculation au RCS et au RM
           </label>
         </div>
       </div>
       <div class="billing-form__half-block__input-wrapper__item form-group" >
-        <label for="billConsultantVilleTVANumberInput" class="billing-form__half-block__input-wrapper__item__label">Numéro de TVA intra-communautaire</label>
+        <label for="billConsultantVATNumberInput" class="billing-form__half-block__input-wrapper__item__label">Numéro de TVA intra-communautaire</label>
         <div class="billing-form__half-block__input-wrapper__item__input">
           <input
           type="text"
           class="form-control"
-          name="billConsultantVilleTVANumberInput"
-          formControlName="billConsultantVilleTVANumberInput"
+          name="billConsultantVATNumberInput"
+          formControlName="billConsultantVATNumberInput"
           >
           <label class="billing-form__half-block__input-wrapper__item__input__toggle">
             <input
-            name="billConsultantVilleTVANumberToggle"
             type="checkbox"
-            formControlName="billConsultantVilleTVANumberToggle"
-            (change)="toggleControl(billConsultantVilleTVANumberInput)"
+            name="billConsultantVATToggle"
+            formControlName="billConsultantVATToggle"
+            (change)="toggleControl(billConsultantVATNumberInput)"
             >
             Franchise TVA
           </label>
@@ -190,40 +190,40 @@
         </div>
       </div>
       <div class="billing-form__half-block__input-wrapper__item form-group" >
-        <label for="billClientCityRCSInput" class="billing-form__half-block__input-wrapper__item__label">Ville d'immatriculation au RCS</label>
+        <label for="billClientTradeAndCompaniesRegisterCityInput" class="billing-form__half-block__input-wrapper__item__label">Ville d'immatriculation au RCS</label>
         <div class="billing-form__half-block__input-wrapper__item__input">
           <input
           type="text"
           class="form-control"
-          name="billClientCityRCSInput"
-          formControlName="billClientCityRCSInput"
+          name="billClientTradeAndCompaniesRegisterCityInput"
+          formControlName="billClientTradeAndCompaniesRegisterCityInput"
           >
           <label class="billing-form__half-block__input-wrapper__item__input__toggle">
             <input
-            name="billClientCityRCSToggle"
             type="checkbox"
-            formControlName="billClientCityRCSToggle"
-            (change)="toggleControl(billClientCityRCSInput)"
+            name="billClientTradeAndCompaniesRegisterToggle"
+            formControlName="billClientTradeAndCompaniesRegisterToggle"
+            (change)="toggleControl(billClientTradeAndCompaniesRegisterCityInput)"
             >
             Dispensé d'immatriculation au RCS et au RM
           </label>
         </div>
       </div>
       <div class="billing-form__half-block__input-wrapper__item form-group" >
-        <label for="billClientVilleTVANumberInput" class="billing-form__half-block__input-wrapper__item__label">Numéro de TVA intra-communautaire</label>
+        <label for="billClientVATNumberInput" class="billing-form__half-block__input-wrapper__item__label">Numéro de TVA intra-communautaire</label>
         <div class="billing-form__half-block__input-wrapper__item__input">
           <input
           type="text"
           class="form-control"
-          name="billClientVilleTVANumberInput"
-          formControlName="billClientVilleTVANumberInput"
+          name="billClientVATNumberInput"
+          formControlName="billClientVATNumberInput"
           >
           <label class="billing-form__half-block__input-wrapper__item__input__toggle">
             <input
-            name="billClientVilleTVANumberToggle"
             type="checkbox"
-            formControlName="billClientVilleTVANumberToggle"
-            (change)="toggleControl(billClientVilleTVANumberInput)"
+            name="billClientVATToggle"
+            formControlName="billClientVATToggle"
+            (change)="toggleControl(billClientVATNumberInput)"
             >
             Franchise TVA
           </label>
@@ -265,9 +265,9 @@
     <div class="billing-form__block__input-wrapper billing-form__block__input-wrapper--has-next-line">
       <label class="billing-form__block__input-wrapper__item__input__toggle">
         <input
-        name="billPaymentLatePenalty"
         type="checkbox"
-        formControlName="billPaymentLatePenalty"
+        name="billPaymentLatePenaltyToggle"
+        formControlName="billPaymentLatePenaltyToggle"
         >
         Pénalités de retard légales (40€ par facture + 10% par an)
       </label>

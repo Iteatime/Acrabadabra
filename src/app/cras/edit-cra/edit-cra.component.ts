@@ -11,6 +11,8 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { CalendarEvent } from 'calendar-utils';
 
 import { getMonth, getDate, differenceInMinutes, getYear, lastDayOfMonth } from 'date-fns';
+import { Bill } from 'src/app/@types/bill';
+import { BillingFormComponent } from './billing-form/billing-form.component';
 
 @Component({
   selector: 'app-edit-cra',
@@ -20,10 +22,12 @@ import { getMonth, getDate, differenceInMinutes, getYear, lastDayOfMonth } from 
 })
 export class EditCraComponent implements OnInit {
   @ViewChild (CalendarComponent) timesheetPicker;
+  @ViewChild (BillingFormComponent) billingForm;
 
   cra = new Cra();
   editToken: string;
   reviewToken: string;
+  billLink: string;
 
   showModal = false;
   showErrorModal = false;
@@ -139,6 +143,7 @@ export class EditCraComponent implements OnInit {
     } else {
       this.createCRA();
       this.createTokens();
+      if (this.generateInvoice) { this.billLink = this.createBillLink(); }
       this.showModal = true;
     }
   }
@@ -174,6 +179,9 @@ export class EditCraComponent implements OnInit {
     this.editToken = this.serializer.serialize({ ...data, mode: 'edit' });
     this.reviewToken = this.serializer.serialize({ ...data, mode: 'review' });
   }
+  createBillLink(): string {
+    return '/.netlify/functions/billing?data=' + this.serializer.serialize(this.billingForm.bill);
+  }
 
   minifyTimesheet(timesheet: CalendarEvent[]): any {
     const month = getMonth(timesheet[0].start),
@@ -201,3 +209,4 @@ export class EditCraComponent implements OnInit {
     this[toggle] = false;
   }
 }
+
