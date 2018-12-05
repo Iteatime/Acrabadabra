@@ -179,8 +179,15 @@ export class EditCraComponent implements OnInit {
     this.editToken = this.serializer.serialize({ ...data, mode: 'edit' });
     this.reviewToken = this.serializer.serialize({ ...data, mode: 'review' });
   }
+
   createBillLink(): string {
-    return '/.netlify/functions/billing?data=' + this.serializer.serialize(this.billingForm.bill);
+    const data = {
+      consultant: this.cra.consultant,
+      mission: this.cra.mission,
+      time: this.timesheetPicker.totalWorkedTime,
+      bill: this.billingForm.bill,
+    };
+    return '/.netlify/functions/billing?data=' + this.serializer.serialize(data);
   }
 
   minifyTimesheet(timesheet: CalendarEvent[]): any {
