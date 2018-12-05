@@ -4,7 +4,7 @@
     <div class="billing-form__block__input-wrapper">
       <div class="billing-form__block__input-wrapper__item billing-form__block__input-wrapper__item--left form-group" >
           <label for="billNumberInputInput" class="billing-form__block__input-wrapper__item__label">Numéro de facture</label>
-          <div class="billing-form__input-wrapper__item__input">
+          <div class="billing-form__block__input-wrapper__item__input">
               <input
               type="text"
               class="form-control"
@@ -13,7 +13,7 @@
               >
           </div>
       </div>
-      <div class="billing-form__block__input-wrapper__item edit-billing-form__block__input-wrapper__item--middle form-group" >
+      <div class="billing-form__block__input-wrapper__item billing-form__block__input-wrapper__item--middle form-group" >
           <label for="billDateInput" class="billing-form__block__input-wrapper__item__label">Date</label>
           <div class="billing-form__block__input-wrapper__item__input">
               <input
@@ -263,8 +263,12 @@
       </div>
     </div>
     <div class="billing-form__block__input-wrapper billing-form__block__input-wrapper--has-next-line">
-      <label class="billing-form__half-block__input-wrapper__item__input__toggle">
-        <input name="billClientCityRCSToggle" type="checkbox">
+      <label class="billing-form__block__input-wrapper__item__input__toggle">
+        <input
+        name="billPaymentLatePenalty"
+        type="checkbox"
+        formControlName="billPaymentLatePenalty"
+        >
         Pénalités de retard légales (40€ par facture + 10% par an)
       </label>
     </div>

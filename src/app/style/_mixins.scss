@@ -79,7 +79,6 @@
 }
 
 @mixin form-input {
-
   &--has-next-line {
     border-bottom: 0;
   }
@@ -91,24 +90,29 @@
 
   &__item {
     &:last-child {
-        margin-bottom: 0;
+      margin-bottom: 0;
     }
 
     &__input {
       position: relative;
 
+      &__toggle {
+        margin-left: 3px;
+      }
+
       & input {
-          border-radius: 0;
-          border: 1px solid $grey_border;
+        border-radius: 0;
+        border: 1px solid $grey_border;
+
       }
 
       & .ng-invalid:not(form) {
-          border-color: $grey_border;
+        border-color: $grey_border;
       }
 
       & .form-control:focus {
-          box-shadow: none;
-          border-color: $main_blue;
+        box-shadow: none;
+        border-color: $main_blue;
       }
 
       & .alert {
@@ -140,9 +144,9 @@
     }
 
     &__label {
-        font-size: 14px;
-        color: $grey_mine_shaft;
-        font-weight: 700;
+      font-size: 14px;
+      color: $grey_mine_shaft;
+      font-weight: 700;
     }
   }
 }
