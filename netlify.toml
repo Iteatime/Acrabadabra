@@ -85,8 +85,8 @@
 # The following redirect is intended for use with most SPAs that handle
 # routing internally.
 [[redirects]]
-  from = "/bill/*"
-  to = "/assets/F201707-15.pdf?data=:splat"
+  from = "/invoice/*"
+  to = "/.netlify/functions/invoice?data=:splat"
   status = 200
 [[redirects]]
   from = "/*"

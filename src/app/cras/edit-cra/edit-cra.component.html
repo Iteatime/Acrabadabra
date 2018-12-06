@@ -40,9 +40,9 @@
                             <a target="_blank" [routerLink]="['/cra/edit']" [queryParams]="{ data: reviewToken }">ce lien</a>
                             pour le partager en lecture seule.
                           </p>
-                          <p *ngIf="generateBill">
+                          <p *ngIf="generateInvoice">
                             Utiliser
-                            <a target="_blank" [routerLink]="['/bill/' + billToken]">ce lien</a>
+                            <a target="_blank" [routerLink]="['/invoice/' + billToken]">ce lien</a>
                             pour obtenir votre facture.
                           </p>
                           <u>
@@ -197,12 +197,12 @@
                 <input
                 name="billToggle"
                 type="checkbox"
-                [(ngModel)]="generateBill"
+                [(ngModel)]="generateInvoice"
                 [ngModelOptions]="{standalone: true}"
                 >
                 Générer une facture
               </label>
-              <app-billing-form *ngIf="generateBill"></app-billing-form>
+              <app-billing-form *ngIf="generateInvoice"></app-billing-form>
           </div>
 
           <div class="edit-cra__wrapper__form__submit">

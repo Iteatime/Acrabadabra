@@ -5,10 +5,10 @@
       "^/\\.netlify/functions": ""
     }
   },
-  "/bill/*": {
-    "target": "http://localhost:4200/assets/F201707-15.pdf",
+  "/invoice/*": {
+    "target": "http://localhost:9000",
     "pathRewrite": {
-      "^/bill/": "?data="
+      "^/invoice/": "invoice?data="
     }
   }
 }
