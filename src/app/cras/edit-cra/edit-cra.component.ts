@@ -11,7 +11,7 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { CalendarEvent } from 'calendar-utils';
 
 import { getMonth, getDate, differenceInMinutes, getYear, lastDayOfMonth } from 'date-fns';
-import { Bill } from 'src/app/@types/bill';
+
 import { BillingFormComponent } from './billing-form/billing-form.component';
 
 @Component({
@@ -31,7 +31,7 @@ export class EditCraComponent implements OnInit {
 
   showModal = false;
   showErrorModal = false;
-  generateInvoice = false;
+  generateBill = false;
 
   title = {
     add: 'Saisir',
@@ -143,7 +143,7 @@ export class EditCraComponent implements OnInit {
     } else {
       this.createCRA();
       this.createTokens();
-      if (this.generateInvoice) { this.billToken = this.createBillToken(); }
+      if (this.generateBill) { this.billToken = this.createBillToken(); }
       this.showModal = true;
     }
   }
@@ -173,7 +173,7 @@ export class EditCraComponent implements OnInit {
 
   createTokens(): void {
     let bill;
-    if (this.generateInvoice) { bill = this.billingForm.bill; }
+    if (this.generateBill) { bill = this.billingForm.bill; }
     const data: formData = {
       cra: this.cra,
       bill: bill,

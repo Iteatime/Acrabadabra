@@ -4,5 +4,11 @@
     "pathRewrite": {
       "^/\\.netlify/functions": ""
     }
+  },
+  "/bill/*": {
+    "target": "http://localhost:4200/assets/F201707-15.pdf",
+    "pathRewrite": {
+      "^/bill/": "?data="
+    }
   }
 }
