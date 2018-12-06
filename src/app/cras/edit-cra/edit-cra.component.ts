@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -12,7 +12,7 @@ import { CalendarEvent } from 'calendar-utils';
 
 import { getMonth, getDate, differenceInMinutes, getYear, lastDayOfMonth } from 'date-fns';
 
-import { BillingFormComponent } from './billing-form/billing-form.component';
+import { BillingDataService } from 'src/app/shared/billing/billingData.service';
 
 @Component({
   selector: 'app-edit-cra',
@@ -22,7 +22,6 @@ import { BillingFormComponent } from './billing-form/billing-form.component';
 })
 export class EditCraComponent implements OnInit {
   @ViewChild (CalendarComponent) timesheetPicker;
-  @ViewChild (BillingFormComponent) billingForm;
 
   cra = new Cra();
   editToken: string;
@@ -31,7 +30,7 @@ export class EditCraComponent implements OnInit {
 
   showModal = false;
   showErrorModal = false;
-  generateBill = false;
+  generateInvoice = false;
 
   title = {
     add: 'Saisir',
@@ -73,7 +72,8 @@ export class EditCraComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private serializer: SerializerService,
-    private titleService: Title
+    private titleService: Title,
+    private billingDataService: BillingDataService
   ) {}
 
   ngOnInit(): void {
@@ -120,6 +120,10 @@ export class EditCraComponent implements OnInit {
     this.mode = datas.mode;
     this.cra = datas.cra;
     this.setInputsValue(this.cra);
+    if (datas.hasOwnProperty('bill')) {
+      this.generateInvoice = true;
+      setTimeout(() => this.billingDataService.setBillingData(datas.bill), 0);
+    }
   }
 
   disableInputs(): void {
@@ -143,7 +147,7 @@ export class EditCraComponent implements OnInit {
     } else {
       this.createCRA();
       this.createTokens();
-      if (this.generateBill) { this.billToken = this.createBillToken(); }
+      if (this.generateInvoice) { this.billToken = this.createBillToken(); }
       this.showModal = true;
     }
   }
@@ -173,7 +177,7 @@ export class EditCraComponent implements OnInit {
 
   createTokens(): void {
     let bill;
-    if (this.generateBill) { bill = this.billingForm.bill; }
+    if (this.generateInvoice) { bill = this.billingDataService.getBillingData(); }
     const data: formData = {
       cra: this.cra,
       bill: bill,
@@ -188,7 +192,7 @@ export class EditCraComponent implements OnInit {
       consultant: this.cra.consultant,
       mission: this.cra.mission,
       time: this.timesheetPicker.totalWorkedTime,
-      bill: this.billingForm.bill,
+      bill: this.billingDataService.getBillingData(),
     };
     return this.serializer.serialize(data);
   }
