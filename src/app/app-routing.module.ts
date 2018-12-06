@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { EditCraComponent } from './cras/edit-cra/edit-cra.component';
 import { CrasComponent } from './cras/cras.component';
+import { BillComponent } from './bill/bill.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, },
@@ -13,7 +14,8 @@ const routes: Routes = [
     [
       { path: 'edit', component: EditCraComponent, },
     ],
-  }
+  },
+  { path: 'bill/:token', component: BillComponent, },
 ];
 
 @NgModule({

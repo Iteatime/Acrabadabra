@@ -10,6 +10,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { BillComponent } from './bill/bill.component';
+
 import { CrasComponent } from './cras/cras.component';
 import { EditCraComponent } from './cras/edit-cra/edit-cra.component';
 import { CalendarComponent } from './cras/edit-cra/calendar/calendar.component';
@@ -25,6 +27,8 @@ registerLocaleData(localeFr);
   declarations: [
     AppComponent,
 
+    BillComponent,
+
     CrasComponent,
     EditCraComponent,
     CalendarComponent,
@@ -34,6 +38,7 @@ registerLocaleData(localeFr);
     ModalDirective,
 
     BillingFormComponent,
+
   ],
   imports: [
     AppRoutingModule,

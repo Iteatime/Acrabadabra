@@ -27,7 +27,7 @@ export class EditCraComponent implements OnInit {
   cra = new Cra();
   editToken: string;
   reviewToken: string;
-  billLink: string;
+  billToken: string;
 
   showModal = false;
   showErrorModal = false;
@@ -143,7 +143,7 @@ export class EditCraComponent implements OnInit {
     } else {
       this.createCRA();
       this.createTokens();
-      if (this.generateInvoice) { this.billLink = this.createBillLink(); }
+      if (this.generateInvoice) { this.billToken = this.createBillToken(); }
       this.showModal = true;
     }
   }
@@ -172,22 +172,25 @@ export class EditCraComponent implements OnInit {
   }
 
   createTokens(): void {
+    let bill;
+    if (this.generateInvoice) { bill = this.billingForm.bill; }
     const data: formData = {
       cra: this.cra,
+      bill: bill,
       mode: '',
     };
     this.editToken = this.serializer.serialize({ ...data, mode: 'edit' });
     this.reviewToken = this.serializer.serialize({ ...data, mode: 'review' });
   }
 
-  createBillLink(): string {
+  createBillToken(): string {
     const data = {
       consultant: this.cra.consultant,
       mission: this.cra.mission,
       time: this.timesheetPicker.totalWorkedTime,
       bill: this.billingForm.bill,
     };
-    return '/.netlify/functions/billing?data=' + this.serializer.serialize(data);
+    return this.serializer.serialize(data);
   }
 
   minifyTimesheet(timesheet: CalendarEvent[]): any {
