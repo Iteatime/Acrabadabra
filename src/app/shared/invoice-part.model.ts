@@ -1,5 +1,5 @@
 
-export class BillPart {
+export class InvoicePart {
   name: string;
   address: string;
   telephone: string;
@@ -30,6 +30,6 @@ export class BillPart {
   }
 
   addProperty(name: string, value: any) {
-    this[name] = value;
+    Object.defineProperty(this, name, value);
   }
 }

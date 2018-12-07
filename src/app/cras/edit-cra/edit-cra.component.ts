@@ -3,16 +3,16 @@ import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl } from
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { SerializerService } from 'src/app/shared/serialization/serializer.service';
 import { Cra } from 'src/app/shared/cra.model';
 import { formData } from 'src/app/@types/formData';
+import { InvoiceDataService } from 'src/app/shared/invoice/invoice-data.service';
+import { SerializerService } from 'src/app/shared/serialization/serializer.service';
 
 import { CalendarComponent } from './calendar/calendar.component';
 import { CalendarEvent } from 'calendar-utils';
 
 import { getMonth, getDate, differenceInMinutes, getYear, lastDayOfMonth } from 'date-fns';
 
-import { BillingDataService } from 'src/app/shared/billing/billingData.service';
 
 @Component({
   selector: 'app-edit-cra',
@@ -26,7 +26,7 @@ export class EditCraComponent implements OnInit {
   cra = new Cra();
   editToken: string;
   reviewToken: string;
-  billToken: string;
+  invoiceToken: string;
 
   showModal = false;
   showErrorModal = false;
@@ -73,7 +73,7 @@ export class EditCraComponent implements OnInit {
     private route: ActivatedRoute,
     private serializer: SerializerService,
     private titleService: Title,
-    private billingDataService: BillingDataService
+    private invoiceDataService: InvoiceDataService
   ) {}
 
   ngOnInit(): void {
@@ -120,9 +120,9 @@ export class EditCraComponent implements OnInit {
     this.mode = datas.mode;
     this.cra = datas.cra;
     this.setInputsValue(this.cra);
-    if (datas.hasOwnProperty('bill')) {
+    if (datas.hasOwnProperty('invoice')) {
       this.generateInvoice = true;
-      setTimeout(() => this.billingDataService.setBillingData(datas.bill), 0);
+      setTimeout(() => this.invoiceDataService.setInvoice(datas.invoice, true), 0);
     }
   }
 
@@ -147,7 +147,7 @@ export class EditCraComponent implements OnInit {
     } else {
       this.createCRA();
       this.createTokens();
-      if (this.generateInvoice) { this.billToken = this.createBillToken(); }
+      if (this.generateInvoice) { this.invoiceToken = this.createInvoiceToken(); }
       this.showModal = true;
     }
   }
@@ -176,23 +176,23 @@ export class EditCraComponent implements OnInit {
   }
 
   createTokens(): void {
-    let bill;
-    if (this.generateInvoice) { bill = this.billingDataService.getBillingData(); }
+    let invoice;
+    if (this.generateInvoice) { invoice = this.invoiceDataService.getInvoice(); }
     const data: formData = {
       cra: this.cra,
-      bill: bill,
+      invoice: invoice,
       mode: '',
     };
     this.editToken = this.serializer.serialize({ ...data, mode: 'edit' });
     this.reviewToken = this.serializer.serialize({ ...data, mode: 'review' });
   }
 
-  createBillToken(): string {
+  createInvoiceToken(): string {
     const data = {
       consultant: this.cra.consultant,
       mission: this.cra.mission,
       time: this.timesheetPicker.totalWorkedTime,
-      bill: this.billingDataService.getBillingData(),
+      invoice: this.invoiceDataService.getInvoice(),
     };
     return this.serializer.serialize(data);
   }

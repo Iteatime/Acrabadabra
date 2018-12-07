@@ -1,8 +1,8 @@
 import { Cra } from './cra';
-import { Bill } from './bill';
+import { Invoice } from '../shared/invoice.model';
 
 export type formData = {
   mode: string;
   cra: Cra;
-  bill: Bill;
+  invoice: Invoice;
 };

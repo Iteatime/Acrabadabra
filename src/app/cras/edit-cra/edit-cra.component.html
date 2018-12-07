@@ -42,7 +42,7 @@
                           </p>
                           <p *ngIf="generateInvoice">
                             Utiliser
-                            <a target="_blank" [routerLink]="['/invoice/' + billToken]">ce lien</a>
+                            <a target="_blank" [routerLink]="['/invoice/' + invoiceToken]">ce lien</a>
                             pour obtenir votre facture.
                           </p>
                           <u>
@@ -195,14 +195,14 @@
           <div class="edit-cra__wrapper__form__component">
               <label class="edit-cra__wrapper__form__component__toggle">
                 <input
-                name="billToggle"
+                name="invoiceToggle"
                 type="checkbox"
                 [(ngModel)]="generateInvoice"
                 [ngModelOptions]="{standalone: true}"
                 >
                 Générer une facture
               </label>
-              <app-billing-form *ngIf="generateInvoice"></app-billing-form>
+              <app-invoice-form *ngIf="generateInvoice"></app-invoice-form>
           </div>
 
           <div class="edit-cra__wrapper__form__submit">

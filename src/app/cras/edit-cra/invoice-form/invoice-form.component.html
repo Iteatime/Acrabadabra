@@ -1,0 +1,314 @@
+<div class="invoice-form"  [formGroup]="invoiceForm">
+  <div class="invoice-form__block">
+    <h4 class="invoice-form__block__title">Facture</h4>
+    <div class="invoice-form__block__input-wrapper">
+      <div class="invoice-form__block__input-wrapper__item invoice-form__block__input-wrapper__item--left form-group" >
+          <label for="invoiceNumberInputInput" class="invoice-form__block__input-wrapper__item__label">Numéro de facture</label>
+          <div class="invoice-form__block__input-wrapper__item__input">
+              <input
+              type="text"
+              class="form-control"
+              name="invoiceNumber"
+              formControlName="invoiceNumberInput"
+              >
+          </div>
+      </div>
+      <div class="invoice-form__block__input-wrapper__item invoice-form__block__input-wrapper__item--middle form-group" >
+          <label for="invoiceDateInput" class="invoice-form__block__input-wrapper__item__label">Date</label>
+          <div class="invoice-form__block__input-wrapper__item__input">
+              <input
+              type="date"
+              class="form-control"
+              name="invoiceDateInput"
+              formControlName="invoiceDateInput"
+              >
+          </div>
+      </div>
+      <div class="invoice-form__block__input-wrapper__item invoice-form__block__input-wrapper__item--middle form-group" >
+          <label for="invoiceClientRefInput" class="invoice-form__block__input-wrapper__item__label">Référence client (BDC)</label>
+          <div class="invoice-form__block__input-wrapper__item__input">
+              <input
+              type="text"
+              class="form-control"
+              name="invoiceClientRefInput"
+              formControlName="invoiceClientRefInput"
+              >
+          </div>
+      </div>
+      <div class="invoice-form__block__input-wrapper__item invoice-form__block__input-wrapper__item--right form-group" >
+          <label for="invoiceDailyRateInput" class="invoice-form__block__input-wrapper__item__label">Taux journalier (HT)</label>
+          <div class="invoice-form__block__input-wrapper__item__input">
+              <input
+              type="text"
+              class="form-control"
+              name="invoiceDailyRateInput"
+              formControlName="invoiceDailyRateInput"
+              >
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="invoice-form__half-block">
+    <h4 class="invoice-form__half-block__title">Prestataire</h4>
+    <div class="invoice-form__half-block__input-wrapper">
+      <div class="invoice-form__half-block__input-wrapper__item form-group" >
+        <label for="invoiceConsultantNameInput" class="invoice-form__half-block__input-wrapper__item__label">Dénomination</label>
+        <div class="invoice-form__half-block__input-wrapper__item__input">
+          <input
+          type="text"
+          class="form-control"
+          name="invoiceConsultantNameInput"
+          formControlName="invoiceConsultantNameInput"
+          >
+        </div>
+      </div>
+      <div class="invoice-form__half-block__input-wrapper__item form-group" >
+        <label for="invoiceConsultantAddressInput" class="invoice-form__half-block__input-wrapper__item__label">Adresse</label>
+        <div class="invoice-form__half-block__input-wrapper__item__input">
+          <input
+          type="text"
+          class="form-control"
+          name="invoiceConsultantAddressInput"
+          formControlName="invoiceConsultantAddressInput"
+          >
+        </div>
+      </div>
+      <div class="invoice-form__half-block__input-wrapper__item form-group" >
+        <label for="invoiceConsultantTelephoneInput" class="invoice-form__half-block__input-wrapper__item__label">Téléphone</label>
+        <div class="invoice-form__half-block__input-wrapper__item__input">
+          <input
+          type="tel"
+          class="form-control"
+          name="invoiceConsultantTelephoneInput"
+          formControlName="invoiceConsultantTelephoneInput"
+          >
+        </div>
+      </div>
+      <div class="invoice-form__half-block__input-wrapper__item form-group" >
+        <label for="invoiceConsultantSIRENInput" class="invoice-form__half-block__input-wrapper__item__label">Numéro de SIREN</label>
+        <div class="invoice-form__half-block__input-wrapper__item__input">
+          <input
+          type="text"
+          class="form-control"
+          name="invoiceConsultantSIRENInput"
+          formControlName="invoiceConsultantSIRENInput"
+          >
+        </div>
+      </div>
+      <div class="invoice-form__half-block__input-wrapper__item form-group" >
+        <label for="invoiceConsultantTradeAndCompaniesRegisterCityInput" class="invoice-form__half-block__input-wrapper__item__label">Ville d'immatriculation au RCS</label>
+        <div class="invoice-form__half-block__input-wrapper__item__input">
+          <input
+          type="text"
+          class="form-control"
+          name="invoiceConsultantTradeAndCompaniesRegisterCityInput"
+          formControlName="invoiceConsultantTradeAndCompaniesRegisterCityInput"
+          >
+          <label class="invoice-form__half-block__input-wrapper__item__input__toggle">
+            <input
+            type="checkbox"
+            name="invoiceConsultantTradeAndCompaniesRegisterToggle"
+            formControlName="invoiceConsultantTradeAndCompaniesRegisterToggle"
+            >
+            Dispensé d'immatriculation au RCS et au RM
+          </label>
+        </div>
+      </div>
+      <div class="invoice-form__half-block__input-wrapper__item form-group" >
+        <label for="invoiceConsultantVATNumberInput" class="invoice-form__half-block__input-wrapper__item__label">Numéro de TVA intra-communautaire</label>
+        <div class="invoice-form__half-block__input-wrapper__item__input">
+          <input
+          type="text"
+          class="form-control"
+          name="invoiceConsultantVATNumberInput"
+          formControlName="invoiceConsultantVATNumberInput"
+          >
+          <label class="invoice-form__half-block__input-wrapper__item__input__toggle">
+            <input
+            type="checkbox"
+            name="invoiceConsultantVATToggle"
+            formControlName="invoiceConsultantVATToggle"
+            >
+            Franchise TVA
+          </label>
+        </div>
+      </div>
+      <div class="invoice-form__half-block__input-wrapper__item form-group" >
+        <button class="invoice-form__half-block__input-wrapper__item__button">
+          <span>+</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="invoice-form__half-block invoice-form__half-block--right">
+    <h4 class="invoice-form__half-block__title">Client</h4>
+    <div class="invoice-form__half-block__input-wrapper">
+      <div class="invoice-form__half-block__input-wrapper__item form-group" >
+        <label for="invoiceClientNameInput" class="invoice-form__half-block__input-wrapper__item__label">Dénomination</label>
+        <div class="invoice-form__half-block__input-wrapper__item__input">
+          <input
+          type="text"
+          class="form-control"
+          name="invoiceClientNameInput"
+          formControlName="invoiceClientNameInput"
+          >
+        </div>
+      </div>
+      <div class="invoice-form__half-block__input-wrapper__item form-group" >
+        <label for="invoiceClientAddressInput" class="invoice-form__half-block__input-wrapper__item__label">Adresse</label>
+        <div class="invoice-form__half-block__input-wrapper__item__input">
+          <input
+          type="text"
+          class="form-control"
+          name="invoiceClientAddressInput"
+          formControlName="invoiceClientAddressInput"
+          >
+        </div>
+      </div>
+      <div class="invoice-form__half-block__input-wrapper__item form-group" >
+        <label for="invoiceClientTelephoneInput" class="invoice-form__half-block__input-wrapper__item__label">Téléphone</label>
+        <div class="invoice-form__half-block__input-wrapper__item__input">
+          <input
+          type="tel"
+          class="form-control"
+          name="invoiceClientTelephoneInput"
+          formControlName="invoiceClientTelephoneInput"
+          >
+        </div>
+      </div>
+      <div class="invoice-form__half-block__input-wrapper__item form-group" >
+        <label for="invoiceClientSIRENInput" class="invoice-form__half-block__input-wrapper__item__label">Numéro de SIREN</label>
+        <div class="invoice-form__half-block__input-wrapper__item__input">
+          <input
+          type="text"
+          class="form-control"
+          name="invoiceClientSIRENInput"
+          formControlName="invoiceClientSIRENInput"
+          >
+        </div>
+      </div>
+      <div class="invoice-form__half-block__input-wrapper__item form-group" >
+        <label for="invoiceClientTradeAndCompaniesRegisterCityInput" class="invoice-form__half-block__input-wrapper__item__label">Ville d'immatriculation au RCS</label>
+        <div class="invoice-form__half-block__input-wrapper__item__input">
+          <input
+          type="text"
+          class="form-control"
+          name="invoiceClientTradeAndCompaniesRegisterCityInput"
+          formControlName="invoiceClientTradeAndCompaniesRegisterCityInput"
+          >
+          <label class="invoice-form__half-block__input-wrapper__item__input__toggle">
+            <input
+            type="checkbox"
+            name="invoiceClientTradeAndCompaniesRegisterToggle"
+            formControlName="invoiceClientTradeAndCompaniesRegisterToggle"
+            >
+            Dispensé d'immatriculation au RCS et au RM
+          </label>
+        </div>
+      </div>
+      <div class="invoice-form__half-block__input-wrapper__item form-group" >
+        <label for="invoiceClientVATNumberInput" class="invoice-form__half-block__input-wrapper__item__label">Numéro de TVA intra-communautaire</label>
+        <div class="invoice-form__half-block__input-wrapper__item__input">
+          <input
+          type="text"
+          class="form-control"
+          name="invoiceClientVATNumberInput"
+          formControlName="invoiceClientVATNumberInput"
+          >
+          <label class="invoice-form__half-block__input-wrapper__item__input__toggle">
+            <input
+            type="checkbox"
+            name="invoiceClientVATToggle"
+            formControlName="invoiceClientVATToggle"
+            >
+            Franchise TVA
+          </label>
+        </div>
+      </div>
+      <div class="invoice-form__half-block__input-wrapper__item form-group" >
+        <button class="invoice-form__half-block__input-wrapper__item__button">
+          <span>+</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="invoice-form__block">
+    <h4 class="invoice-form__block__title">Règlement</h4>
+    <div class="invoice-form__block__input-wrapper  invoice-form__block__input-wrapper--has-next-line">
+      <div class="invoice-form__block__input-wrapper__item invoice-form__block__input-wrapper__item--left form-group" >
+          <label for="invoicePaymentDateInput" class="invoice-form__block__input-wrapper__item__label">Date de règlement</label>
+          <div class="invoice-form__block__input-wrapper__item__input">
+              <input
+              type="date"
+              class="form-control"
+              name="invoicePaymentDateInput"
+              formControlName="invoicePaymentDateInput"
+              >
+          </div>
+      </div>
+      <div class="invoice-form__block__input-wrapper__item invoice-form__block__input-wrapper__item--right form-group" >
+          <label for="invoicePaymentModalityInput" class="invoice-form__block__input-wrapper__item__label">Modalités de paiement</label>
+          <div class="invoice-form__block__input-wrapper__item__input">
+              <input
+              type="text"
+              class="form-control"
+              name="invoicePaymentModalityInput"
+              formControlName="invoicePaymentModalityInput"
+              >
+          </div>
+      </div>
+    </div>
+    <div class="invoice-form__block__input-wrapper invoice-form__block__input-wrapper--has-next-line">
+      <label class="invoice-form__block__input-wrapper__item__input__toggle">
+        <input
+        type="checkbox"
+        name="invoicePaymentLatePenaltyToggle"
+        formControlName="invoicePaymentLatePenaltyToggle"
+        >
+        Pénalités de retard légales (40€ par facture + 10% par an)
+      </label>
+    </div>
+    <div class="invoice-form__block__input-wrapper">
+        <div class="invoice-form__block__input-wrapper__sub-block">
+          <h4 class="invoice-form__block__input-wrapper__sub-block__title">Coordonnées bancaires</h4>
+          <div class="invoice-form__block__input-wrapper__sub-block__input-wrapper invoice-form__block__input-wrapper__sub-block__input-wrapper--has-next-line">
+            <div class="invoice-form__block__input-wrapper__sub-block__input-wrapper__item form-group">
+                <label for="invoiceBankDetailsIBANInput" class="invoice-form__block__input-wrapper__sub-block__input-wrapper__item__label">IBAN</label>
+                <div class="invoice-form__block__input-wrapper__sub-block__input-wrapper__item__input">
+                    <input
+                    type="text"
+                    class="form-control"
+                    name="invoiceBankDetailsIBANInput"
+                    formControlName="invoiceBankDetailsIBANInput"
+                    >
+                </div>
+            </div>
+          </div>
+          <div class="invoice-form__block__input-wrapper__sub-block__input-wrapper">
+              <div class="invoice-form__block__input-wrapper__item invoice-form__block__input-wrapper__item--left form-group" >
+                  <label for="invoiceBankDetailsSWIFTInput" class="invoice-form__block__input-wrapper__item__label">SWIFT</label>
+                  <div class="invoice-form__block__input-wrapper__item__input">
+                      <input
+                      type="text"
+                      class="form-control"
+                      name="invoiceBankDetailsSWIFTInput"
+                      formControlName="invoiceBankDetailsSWIFTInput"
+                      >
+                  </div>
+              </div>
+              <div class="invoice-form__block__input-wrapper__item invoice-form__block__input-wrapper__item--right form-group" >
+                  <label for="invoiceBankDetailsDomiciliationInput" class="invoice-form__block__input-wrapper__item__label">Domiciliation</label>
+                  <div class="invoice-form__block__input-wrapper__item__input">
+                      <input
+                      type="text"
+                      class="form-control"
+                      name="invoiceBankDetailsDomiciliationInput"
+                      formControlName="invoiceBankDetailsDomiciliationInput"
+                      >
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>

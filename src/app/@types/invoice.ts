@@ -1,16 +1,16 @@
-import { BillPart } from '../shared/billPart.model';
+import { InvoicePart } from '../shared/invoice-part.model';
 
-export type Bill = {
+export type Invoice = {
   number: number;
   date: string;
   clientRef: string;
   dailyRate: number;
-  consultant: BillPart;
-  client: BillPart;
+  consultant: InvoicePart;
+  client: InvoicePart;
 
   paymentDate: string;
   paymentModality: string;
-  billPaymentLatePenalty: boolean;
+  invoicePaymentLatePenalty: boolean;
   bankIBAN: string;
   bankSWIFT: string;
   bankingDomiciliation: string;

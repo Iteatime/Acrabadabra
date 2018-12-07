@@ -1,16 +1,16 @@
-import { BillPart } from './billPart.model';
+import { InvoicePart } from './invoice-part.model';
 
-export class Bill {
+export class Invoice {
   number: number;
   date: string;
   clientRef: string;
   dailyRate: number;
-  consultant: BillPart;
-  client: BillPart;
+  consultant: InvoicePart;
+  client: InvoicePart;
 
   paymentDate: string;
   paymentModality: string;
-  billPaymentLatePenalty: boolean;
+  invoicePaymentLatePenalty: boolean;
   bankIBAN: string;
   bankSWIFT: string;
   bankingDomiciliation: string;
@@ -20,12 +20,12 @@ export class Bill {
     date?: string,
     clientRef?: string,
     dailyRate?: number,
-    consultant?: BillPart,
-    client?: BillPart,
+    consultant?: InvoicePart,
+    client?: InvoicePart,
 
     paymentDate?: string,
     paymentModality?: string,
-    billPaymentLatePenalty?: boolean,
+    invoicePaymentLatePenalty?: boolean,
     bankIBAN?: string,
     bankSWIFT?: string,
     bankingDomiciliation?: string,
@@ -34,12 +34,12 @@ export class Bill {
     this.date = date || '';
     this.clientRef = clientRef || '';
     this.dailyRate = dailyRate || null;
-    this.consultant = consultant || new BillPart();
-    this.client = client || new BillPart();
+    this.consultant = consultant || new InvoicePart();
+    this.client = client || new InvoicePart();
 
     this.paymentDate = paymentDate || '';
     this.paymentModality = paymentModality || '';
-    this.billPaymentLatePenalty = billPaymentLatePenalty || false;
+    this.invoicePaymentLatePenalty = invoicePaymentLatePenalty || false;
     this.bankIBAN = bankIBAN || '';
     this.bankSWIFT = bankSWIFT || '';
     this.bankingDomiciliation = bankingDomiciliation || '';

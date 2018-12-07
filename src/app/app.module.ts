@@ -16,8 +16,9 @@ import { CalendarComponent } from './cras/edit-cra/calendar/calendar.component';
 
 import { HomeComponent } from './home/home.component';
 
+import { InvoiceFormComponent } from './cras/edit-cra/invoice-form/invoice-form.component';
+
 import { ModalDirective } from './shared/style/modal.directive';
-import { BillingFormComponent } from './cras/edit-cra/billing-form/billing-form.component';
 
 registerLocaleData(localeFr);
 
@@ -31,9 +32,9 @@ registerLocaleData(localeFr);
 
     HomeComponent,
 
-    ModalDirective,
+    InvoiceFormComponent,
 
-    BillingFormComponent,
+    ModalDirective,
 
   ],
   imports: [
