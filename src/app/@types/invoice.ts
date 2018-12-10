@@ -1,16 +1,16 @@
-import { InvoicePart } from '../shared/invoice-part.model';
+import { Company } from '../shared/company.model';
 
 export type Invoice = {
   number: number;
   date: string;
   clientRef: string;
   dailyRate: number;
-  consultant: InvoicePart;
-  client: InvoicePart;
+  provider: Company;
+  client: Company;
 
   paymentDate: string;
   paymentModality: string;
-  invoicePaymentLatePenalty: boolean;
+  paymentLatePenalty: boolean;
   bankIBAN: string;
   bankSWIFT: string;
   bankingDomiciliation: string;

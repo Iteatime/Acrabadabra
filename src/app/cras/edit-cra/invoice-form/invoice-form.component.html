@@ -1,4 +1,4 @@
-<div class="invoice-form"  [formGroup]="invoiceForm">
+<div class="invoice-form">
   <div class="invoice-form__block">
     <h4 class="invoice-form__block__title">Facture</h4>
     <div class="invoice-form__block__input-wrapper">
@@ -7,10 +7,19 @@
           <div class="invoice-form__block__input-wrapper__item__input">
               <input
               type="text"
+              required
               class="form-control"
               name="invoiceNumber"
-              formControlName="invoiceNumberInput"
+              [(ngModel)]="invoice.number"
+              #number="ngModel"
               >
+              <div *ngIf="number.invalid && (number.dirty || number.touched)"
+                  class="alert alert-danger">
+
+                <div *ngIf="number.errors['required']">
+                  Ce champ est obligatoire.
+                </div>
+              </div>
           </div>
       </div>
       <div class="invoice-form__block__input-wrapper__item invoice-form__block__input-wrapper__item--middle form-group" >
@@ -18,10 +27,23 @@
           <div class="invoice-form__block__input-wrapper__item__input">
               <input
               type="date"
+              required
+              pattern="\d{4}-\d{2}-\d{2}"
               class="form-control"
               name="invoiceDateInput"
-              formControlName="invoiceDateInput"
+              [(ngModel)]="invoice.date"
+              #date="ngModel"
               >
+              <div *ngIf="date.invalid && (date.dirty || date.touched)" class="alert alert-danger">
+
+                <div *ngIf="date.errors['required']">
+                  Ce champ est obligatoire.
+                </div>
+
+                <div *ngIf="date.errors['pattern']">
+                  La date devrait respecter aaaa-mm-jj.
+                </div>
+              </div>
           </div>
       </div>
       <div class="invoice-form__block__input-wrapper__item invoice-form__block__input-wrapper__item--middle form-group" >
@@ -29,10 +51,18 @@
           <div class="invoice-form__block__input-wrapper__item__input">
               <input
               type="text"
+              required
               class="form-control"
               name="invoiceClientRefInput"
-              formControlName="invoiceClientRefInput"
+              [(ngModel)]="invoice.clientRef"
+              #clientRef="ngModel"
               >
+              <div *ngIf="clientRef.invalid && (clientRef.dirty || clientRef.touched)" class="alert alert-danger">
+
+                <div *ngIf="clientRef.errors['required']">
+                  Ce champ est obligatoire.
+                </div>
+              </div>
           </div>
       </div>
       <div class="invoice-form__block__input-wrapper__item invoice-form__block__input-wrapper__item--right form-group" >
@@ -40,10 +70,19 @@
           <div class="invoice-form__block__input-wrapper__item__input">
               <input
               type="text"
+              required
               class="form-control"
               name="invoiceDailyRateInput"
-              formControlName="invoiceDailyRateInput"
+              [(ngModel)]="invoice.dailyRate"
+              #dailyRate="ngModel"
               >
+              <div *ngIf="dailyRate.invalid && (dailyRate.dirty || dailyRate.touched)"
+                  class="alert alert-danger">
+
+                <div *ngIf="dailyRate.errors['required']">
+                  Ce champ est obligatoire.
+                </div>
+              </div>
           </div>
       </div>
     </div>
@@ -52,82 +91,122 @@
     <h4 class="invoice-form__half-block__title">Prestataire</h4>
     <div class="invoice-form__half-block__input-wrapper">
       <div class="invoice-form__half-block__input-wrapper__item form-group" >
-        <label for="invoiceConsultantNameInput" class="invoice-form__half-block__input-wrapper__item__label">Dénomination</label>
+        <label for="invoiceProviderNameInput" class="invoice-form__half-block__input-wrapper__item__label">Dénomination</label>
         <div class="invoice-form__half-block__input-wrapper__item__input">
           <input
           type="text"
+          required
           class="form-control"
-          name="invoiceConsultantNameInput"
-          formControlName="invoiceConsultantNameInput"
+          name="invoiceProviderNameInput"
+          [(ngModel)]="invoice.provider.name"
+          #providerName="ngModel"
           >
+          <div *ngIf="providerName.invalid && (providerName.dirty || providerName.touched)"
+              class="alert alert-danger">
+
+            <div *ngIf="providerName.errors['required']">
+              Ce champ est obligatoire.
+            </div>
+          </div>
         </div>
       </div>
       <div class="invoice-form__half-block__input-wrapper__item form-group" >
-        <label for="invoiceConsultantAddressInput" class="invoice-form__half-block__input-wrapper__item__label">Adresse</label>
+        <label for="invoiceProviderAddressInput" class="invoice-form__half-block__input-wrapper__item__label">Adresse</label>
         <div class="invoice-form__half-block__input-wrapper__item__input">
           <input
           type="text"
+          required
           class="form-control"
-          name="invoiceConsultantAddressInput"
-          formControlName="invoiceConsultantAddressInput"
+          name="invoiceProviderAddressInput"
+          [(ngModel)]="invoice.provider.address"
+          #providerAddress="ngModel"
           >
+          <div *ngIf="providerAddress.invalid && (providerAddress.dirty || providerAddress.touched)"
+              class="alert alert-danger">
+
+            <div *ngIf="providerAddress.errors['required']">
+              Ce champ est obligatoire.
+            </div>
+          </div>
         </div>
       </div>
       <div class="invoice-form__half-block__input-wrapper__item form-group" >
-        <label for="invoiceConsultantTelephoneInput" class="invoice-form__half-block__input-wrapper__item__label">Téléphone</label>
+        <label for="invoiceProviderTelephoneInput" class="invoice-form__half-block__input-wrapper__item__label">Téléphone</label>
         <div class="invoice-form__half-block__input-wrapper__item__input">
           <input
           type="tel"
+          required
           class="form-control"
-          name="invoiceConsultantTelephoneInput"
-          formControlName="invoiceConsultantTelephoneInput"
+          name="invoiceProviderTelephoneInput"
+          [(ngModel)]="invoice.provider.telephone"
+          #providerTelephone="ngModel"
           >
+          <div *ngIf="providerTelephone.invalid && (providerTelephone.dirty || providerTelephone.touched)"
+              class="alert alert-danger">
+
+            <div *ngIf="providerTelephone.errors['required']">
+              Ce champ est obligatoire.
+            </div>
+          </div>
         </div>
       </div>
       <div class="invoice-form__half-block__input-wrapper__item form-group" >
-        <label for="invoiceConsultantSIRENInput" class="invoice-form__half-block__input-wrapper__item__label">Numéro de SIREN</label>
+        <label for="invoiceProviderSIRENInput" class="invoice-form__half-block__input-wrapper__item__label">Numéro de SIREN</label>
+        <div class="invoice-form__half-block__input-wrapper__item__input">
+          <input
+          type="text"
+          required
+          class="form-control"
+          name="invoiceProviderSIRENInput"
+          [(ngModel)]="invoice.provider.siren"
+          #providerSIREN="ngModel"
+          >
+          <div *ngIf="providerSIREN.invalid && (providerSIREN.dirty || providerSIREN.touched)"
+              class="alert alert-danger">
+
+            <div *ngIf="providerSIREN.errors['required']">
+              Ce champ est obligatoire.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="invoice-form__half-block__input-wrapper__item form-group" >
+        <label for="invoiceProviderTradeAndCompaniesRegisterCityInput" class="invoice-form__half-block__input-wrapper__item__label">Ville d'immatriculation au RCS</label>
         <div class="invoice-form__half-block__input-wrapper__item__input">
           <input
           type="text"
           class="form-control"
-          name="invoiceConsultantSIRENInput"
-          formControlName="invoiceConsultantSIRENInput"
-          >
-        </div>
-      </div>
-      <div class="invoice-form__half-block__input-wrapper__item form-group" >
-        <label for="invoiceConsultantTradeAndCompaniesRegisterCityInput" class="invoice-form__half-block__input-wrapper__item__label">Ville d'immatriculation au RCS</label>
-        <div class="invoice-form__half-block__input-wrapper__item__input">
-          <input
-          type="text"
-          class="form-control"
-          name="invoiceConsultantTradeAndCompaniesRegisterCityInput"
-          formControlName="invoiceConsultantTradeAndCompaniesRegisterCityInput"
+          name="invoiceProviderTradeAndCompaniesRegisterCityInput"
+          [(ngModel)]="invoice.provider.tradeAndCompaniesRegisterCity"
+          #providerTradeAndCompaniesRegisterCity="ngModel"
           >
           <label class="invoice-form__half-block__input-wrapper__item__input__toggle">
             <input
             type="checkbox"
-            name="invoiceConsultantTradeAndCompaniesRegisterToggle"
-            formControlName="invoiceConsultantTradeAndCompaniesRegisterToggle"
+            name="invoiceProviderTradeAndCompaniesRegisterToggle"
+            [(ngModel)]="invoice.provider.tradeAndCompaniesRegisterExemption"
+            #providertradeAndCompaniesRegisterExemption="ngModel"
             >
             Dispensé d'immatriculation au RCS et au RM
           </label>
         </div>
       </div>
       <div class="invoice-form__half-block__input-wrapper__item form-group" >
-        <label for="invoiceConsultantVATNumberInput" class="invoice-form__half-block__input-wrapper__item__label">Numéro de TVA intra-communautaire</label>
+        <label for="invoiceProviderVATNumberInput" class="invoice-form__half-block__input-wrapper__item__label">Numéro de TVA intra-communautaire</label>
         <div class="invoice-form__half-block__input-wrapper__item__input">
           <input
           type="text"
           class="form-control"
-          name="invoiceConsultantVATNumberInput"
-          formControlName="invoiceConsultantVATNumberInput"
+          name="invoiceProviderVATNumberInput"
+          [(ngModel)]="invoice.provider.vatNumber"
+          #providerVATNumber="ngModel"
           >
           <label class="invoice-form__half-block__input-wrapper__item__input__toggle">
             <input
             type="checkbox"
-            name="invoiceConsultantVATToggle"
-            formControlName="invoiceConsultantVATToggle"
+            name="invoiceProviderVATToggle"
+            [(ngModel)]="invoice.provider.vatExemption"
+            #providerVatExemption="ngModel"
             >
             Franchise TVA
           </label>
@@ -148,10 +227,19 @@
         <div class="invoice-form__half-block__input-wrapper__item__input">
           <input
           type="text"
+          required
           class="form-control"
           name="invoiceClientNameInput"
-          formControlName="invoiceClientNameInput"
+          [(ngModel)]="invoice.client.name"
+          #clientName="ngModel"
           >
+          <div *ngIf="clientName.invalid && (clientName.dirty || clientName.touched)"
+              class="alert alert-danger">
+
+            <div *ngIf="clientName.errors['required']">
+              Ce champ est obligatoire.
+            </div>
+          </div>
         </div>
       </div>
       <div class="invoice-form__half-block__input-wrapper__item form-group" >
@@ -159,10 +247,19 @@
         <div class="invoice-form__half-block__input-wrapper__item__input">
           <input
           type="text"
+          required
           class="form-control"
           name="invoiceClientAddressInput"
-          formControlName="invoiceClientAddressInput"
+          [(ngModel)]="invoice.client.address"
+          #clientAddress="ngModel"
           >
+          <div *ngIf="clientAddress.invalid && (clientAddress.dirty || clientAddress.touched)"
+              class="alert alert-danger">
+
+            <div *ngIf="clientAddress.errors['required']">
+              Ce champ est obligatoire.
+            </div>
+          </div>
         </div>
       </div>
       <div class="invoice-form__half-block__input-wrapper__item form-group" >
@@ -172,8 +269,16 @@
           type="tel"
           class="form-control"
           name="invoiceClientTelephoneInput"
-          formControlName="invoiceClientTelephoneInput"
+          [(ngModel)]="invoice.client.telephone"
+          #clientTelephone="ngModel"
           >
+          <div *ngIf="clientTelephone.invalid && (clientTelephone.dirty || clientTelephone.touched)"
+              class="alert alert-danger">
+
+            <div *ngIf="clientTelephone.errors['required']">
+              Ce champ est obligatoire.
+            </div>
+          </div>
         </div>
       </div>
       <div class="invoice-form__half-block__input-wrapper__item form-group" >
@@ -181,10 +286,19 @@
         <div class="invoice-form__half-block__input-wrapper__item__input">
           <input
           type="text"
+          required
           class="form-control"
           name="invoiceClientSIRENInput"
-          formControlName="invoiceClientSIRENInput"
+          [(ngModel)]="invoice.client.siren"
+          #clientSIREN="ngModel"
           >
+          <div *ngIf="clientSIREN.invalid && (clientSIREN.dirty || clientSIREN.touched)"
+              class="alert alert-danger">
+
+            <div *ngIf="clientSIREN.errors['required']">
+              Ce champ est obligatoire.
+            </div>
+          </div>
         </div>
       </div>
       <div class="invoice-form__half-block__input-wrapper__item form-group" >
@@ -194,13 +308,15 @@
           type="text"
           class="form-control"
           name="invoiceClientTradeAndCompaniesRegisterCityInput"
-          formControlName="invoiceClientTradeAndCompaniesRegisterCityInput"
+          [(ngModel)]="invoice.client.tradeAndCompaniesRegisterCity"
+          #clientTradeAndCompaniesRegisterCity="ngModel"
           >
           <label class="invoice-form__half-block__input-wrapper__item__input__toggle">
             <input
             type="checkbox"
             name="invoiceClientTradeAndCompaniesRegisterToggle"
-            formControlName="invoiceClientTradeAndCompaniesRegisterToggle"
+            [(ngModel)]="invoice.client.tradeAndCompaniesRegisterExemption"
+            #clientTradeAndCompaniesRegisterExemption="ngModel"
             >
             Dispensé d'immatriculation au RCS et au RM
           </label>
@@ -213,13 +329,15 @@
           type="text"
           class="form-control"
           name="invoiceClientVATNumberInput"
-          formControlName="invoiceClientVATNumberInput"
+          [(ngModel)]="invoice.client.vatNumber"
+          #clientVATNumber="ngModel"
           >
           <label class="invoice-form__half-block__input-wrapper__item__input__toggle">
             <input
             type="checkbox"
             name="invoiceClientVATToggle"
-            formControlName="invoiceClientVATToggle"
+            [(ngModel)]="invoice.client.vatExemption"
+            #clientVATExemption="ngModel"
             >
             Franchise TVA
           </label>
@@ -240,10 +358,19 @@
           <div class="invoice-form__block__input-wrapper__item__input">
               <input
               type="date"
+              required
               class="form-control"
               name="invoicePaymentDateInput"
-              formControlName="invoicePaymentDateInput"
+              [(ngModel)]="invoice.paymentDate"
+              #paymentDate="ngModel"
               >
+              <div *ngIf="paymentDate.invalid && (paymentDate.dirty || paymentDate.touched)"
+                  class="alert alert-danger">
+
+                <div *ngIf="paymentDate.errors['required']">
+                  Ce champ est obligatoire.
+                </div>
+              </div>
           </div>
       </div>
       <div class="invoice-form__block__input-wrapper__item invoice-form__block__input-wrapper__item--right form-group" >
@@ -251,10 +378,19 @@
           <div class="invoice-form__block__input-wrapper__item__input">
               <input
               type="text"
+              required
               class="form-control"
               name="invoicePaymentModalityInput"
-              formControlName="invoicePaymentModalityInput"
+              [(ngModel)]="invoice.paymentModality"
+              #paymentModality="ngModel"
               >
+              <div *ngIf="paymentModality.invalid && (paymentModality.dirty || paymentModality.touched)"
+                  class="alert alert-danger">
+
+                <div *ngIf="paymentModality.errors['required']">
+                  Ce champ est obligatoire.
+                </div>
+              </div>
           </div>
       </div>
     </div>
@@ -263,7 +399,8 @@
         <input
         type="checkbox"
         name="invoicePaymentLatePenaltyToggle"
-        formControlName="invoicePaymentLatePenaltyToggle"
+        [(ngModel)]="invoice.paymentLatePenalty"
+        #clientSIREN="ngModel"
         >
         Pénalités de retard légales (40€ par facture + 10% par an)
       </label>
@@ -276,11 +413,20 @@
                 <label for="invoiceBankDetailsIBANInput" class="invoice-form__block__input-wrapper__sub-block__input-wrapper__item__label">IBAN</label>
                 <div class="invoice-form__block__input-wrapper__sub-block__input-wrapper__item__input">
                     <input
-                    type="text"
+                    type="number"
+                    required
                     class="form-control"
                     name="invoiceBankDetailsIBANInput"
-                    formControlName="invoiceBankDetailsIBANInput"
+                    [(ngModel)]="invoice.bankIBAN"
+                    #bankIBAN="ngModel"
                     >
+                    <div *ngIf="bankIBAN.invalid && (bankIBAN.dirty || bankIBAN.touched)"
+                        class="alert alert-danger">
+
+                      <div *ngIf="bankIBAN.errors['required']">
+                        Ce champ est obligatoire.
+                      </div>
+                    </div>
                 </div>
             </div>
           </div>
@@ -290,10 +436,19 @@
                   <div class="invoice-form__block__input-wrapper__item__input">
                       <input
                       type="text"
+                      required
                       class="form-control"
                       name="invoiceBankDetailsSWIFTInput"
-                      formControlName="invoiceBankDetailsSWIFTInput"
+                      [(ngModel)]="invoice.bankSWIFT"
+                      #bankSWIFT="ngModel"
                       >
+                      <div *ngIf="bankSWIFT.invalid && (bankSWIFT.dirty || bankSWIFT.touched)"
+                          class="alert alert-danger">
+
+                        <div *ngIf="bankSWIFT.errors['required']">
+                          Ce champ est obligatoire.
+                        </div>
+                      </div>
                   </div>
               </div>
               <div class="invoice-form__block__input-wrapper__item invoice-form__block__input-wrapper__item--right form-group" >
@@ -301,10 +456,19 @@
                   <div class="invoice-form__block__input-wrapper__item__input">
                       <input
                       type="text"
+                      required
                       class="form-control"
                       name="invoiceBankDetailsDomiciliationInput"
-                      formControlName="invoiceBankDetailsDomiciliationInput"
+                      [(ngModel)]="invoice.bankingDomiciliation"
+                      #bankingDomiciliation="ngModel"
                       >
+                      <div *ngIf="bankingDomiciliation.invalid && (bankingDomiciliation.dirty || bankingDomiciliation.touched)"
+                          class="alert alert-danger">
+
+                        <div *ngIf="bankingDomiciliation.errors['required']">
+                          Ce champ est obligatoire.
+                        </div>
+                      </div>
                   </div>
               </div>
           </div>

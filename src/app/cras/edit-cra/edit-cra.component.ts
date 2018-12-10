@@ -1,17 +1,17 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { Cra } from 'src/app/shared/cra.model';
 import { formData } from 'src/app/@types/formData';
-import { InvoiceDataService } from 'src/app/shared/invoice/invoice-data.service';
 import { SerializerService } from 'src/app/shared/serialization/serializer.service';
 
 import { CalendarComponent } from './calendar/calendar.component';
 import { CalendarEvent } from 'calendar-utils';
 
 import { getMonth, getDate, differenceInMinutes, getYear, lastDayOfMonth } from 'date-fns';
+import { InvoiceFormComponent } from './invoice-form/invoice-form.component';
 
 
 @Component({
@@ -22,6 +22,7 @@ import { getMonth, getDate, differenceInMinutes, getYear, lastDayOfMonth } from 
 })
 export class EditCraComponent implements OnInit {
   @ViewChild (CalendarComponent) timesheetPicker;
+  @ViewChild (InvoiceFormComponent) invoiceForm;
 
   cra = new Cra();
   editToken: string;
@@ -73,7 +74,6 @@ export class EditCraComponent implements OnInit {
     private route: ActivatedRoute,
     private serializer: SerializerService,
     private titleService: Title,
-    private invoiceDataService: InvoiceDataService
   ) {}
 
   ngOnInit(): void {
@@ -85,6 +85,7 @@ export class EditCraComponent implements OnInit {
 
           if (this.mode === 'review') {
             this.disableInputs();
+            this.generateInvoice = false;
           }
         } else {
           this.mode = 'add';
@@ -122,7 +123,8 @@ export class EditCraComponent implements OnInit {
     this.setInputsValue(this.cra);
     if (datas.hasOwnProperty('invoice')) {
       this.generateInvoice = true;
-      setTimeout(() => this.invoiceDataService.setInvoice(datas.invoice, true), 0);
+      setTimeout(() => { this.invoiceForm.invoice = datas.invoice; }, 0);
+
     }
   }
 
@@ -177,7 +179,8 @@ export class EditCraComponent implements OnInit {
 
   createTokens(): void {
     let invoice;
-    if (this.generateInvoice) { invoice = this.invoiceDataService.getInvoice(); }
+    // if (this.generateInvoice) { invoice = this.invoiceDataService.getInvoice(); }
+    if (this.generateInvoice) { invoice = this.invoiceForm.invoice; }
     const data: formData = {
       cra: this.cra,
       invoice: invoice,
@@ -192,7 +195,7 @@ export class EditCraComponent implements OnInit {
       consultant: this.cra.consultant,
       mission: this.cra.mission,
       time: this.timesheetPicker.totalWorkedTime,
-      invoice: this.invoiceDataService.getInvoice(),
+      invoice: this.invoiceForm.invoice,
     };
     return this.serializer.serialize(data);
   }

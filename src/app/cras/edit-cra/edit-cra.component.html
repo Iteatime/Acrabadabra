@@ -192,7 +192,7 @@
               </app-calendar>
           </div>
 
-          <div class="edit-cra__wrapper__form__component">
+          <div class="edit-cra__wrapper__form__component" *ngIf="mode !== 'review'">
               <label class="edit-cra__wrapper__form__component__toggle">
                 <input
                 name="invoiceToggle"

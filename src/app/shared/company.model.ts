@@ -1,5 +1,5 @@
 
-export class InvoicePart {
+export class Company {
   name: string;
   address: string;
   telephone: string;
