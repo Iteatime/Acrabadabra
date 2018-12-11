@@ -52,18 +52,9 @@
             <div class="invoice-form__block__input-wrapper__item__input">
                 <input
                 type="text"
-                required
                 class="form-control"
                 name="invoiceClientRefInput"
-                [(ngModel)]="invoice.clientRef"
-                #clientRef="ngModel"
                 >
-                <div *ngIf="clientRef.invalid && (clientRef.dirty || clientRef.touched)" class="alert alert-danger">
-
-                  <div *ngIf="clientRef.errors['required']">
-                    Ce champ est obligatoire.
-                  </div>
-                </div>
             </div>
         </div>
         <div class="invoice-form__block__input-wrapper__item invoice-form__block__input-wrapper__item--right form-group" >
@@ -350,19 +341,10 @@
             <div class="invoice-form__block__input-wrapper__item__input">
                 <input
                 type="date"
-                required
                 class="form-control"
                 name="invoicePaymentDateInput"
                 [(ngModel)]="invoice.paymentDate"
-                #paymentDate="ngModel"
                 >
-                <div *ngIf="paymentDate.invalid && (paymentDate.dirty || paymentDate.touched)"
-                    class="alert alert-danger">
-
-                  <div *ngIf="paymentDate.errors['required']">
-                    Ce champ est obligatoire.
-                  </div>
-                </div>
             </div>
         </div>
         <div class="invoice-form__block__input-wrapper__item invoice-form__block__input-wrapper__item--right form-group" >
@@ -370,19 +352,10 @@
             <div class="invoice-form__block__input-wrapper__item__input">
                 <input
                 type="text"
-                required
                 class="form-control"
                 name="invoicePaymentModalityInput"
                 [(ngModel)]="invoice.paymentModality"
-                #paymentModality="ngModel"
                 >
-                <div *ngIf="paymentModality.invalid && (paymentModality.dirty || paymentModality.touched)"
-                    class="alert alert-danger">
-
-                  <div *ngIf="paymentModality.errors['required']">
-                    Ce champ est obligatoire.
-                  </div>
-                </div>
             </div>
         </div>
       </div>
@@ -404,20 +377,11 @@
                   <label for="invoiceBankDetailsIBANInput" class="invoice-form__block__input-wrapper__sub-block__input-wrapper__item__label">IBAN</label>
                   <div class="invoice-form__block__input-wrapper__sub-block__input-wrapper__item__input">
                       <input
-                      type="number"
-                      required
+                      type="text"
                       class="form-control"
                       name="invoiceBankDetailsIBANInput"
                       [(ngModel)]="invoice.bankIBAN"
-                      #bankIBAN="ngModel"
                       >
-                      <div *ngIf="bankIBAN.invalid && (bankIBAN.dirty || bankIBAN.touched)"
-                          class="alert alert-danger">
-
-                        <div *ngIf="bankIBAN.errors['required']">
-                          Ce champ est obligatoire.
-                        </div>
-                      </div>
                   </div>
               </div>
             </div>
@@ -427,19 +391,10 @@
                     <div class="invoice-form__block__input-wrapper__item__input">
                         <input
                         type="text"
-                        required
                         class="form-control"
                         name="invoiceBankDetailsSWIFTInput"
                         [(ngModel)]="invoice.bankSWIFT"
-                        #bankSWIFT="ngModel"
                         >
-                        <div *ngIf="bankSWIFT.invalid && (bankSWIFT.dirty || bankSWIFT.touched)"
-                            class="alert alert-danger">
-
-                          <div *ngIf="bankSWIFT.errors['required']">
-                            Ce champ est obligatoire.
-                          </div>
-                        </div>
                     </div>
                 </div>
                 <div class="invoice-form__block__input-wrapper__item invoice-form__block__input-wrapper__item--right form-group" >
@@ -447,19 +402,10 @@
                     <div class="invoice-form__block__input-wrapper__item__input">
                         <input
                         type="text"
-                        required
                         class="form-control"
                         name="invoiceBankDetailsDomiciliationInput"
                         [(ngModel)]="invoice.bankingDomiciliation"
-                        #bankingDomiciliation="ngModel"
                         >
-                        <div *ngIf="bankingDomiciliation.invalid && (bankingDomiciliation.dirty || bankingDomiciliation.touched)"
-                            class="alert alert-danger">
-
-                          <div *ngIf="bankingDomiciliation.errors['required']">
-                            Ce champ est obligatoire.
-                          </div>
-                        </div>
                     </div>
                 </div>
             </div>

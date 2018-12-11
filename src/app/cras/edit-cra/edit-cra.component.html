@@ -213,7 +213,7 @@
           </div>
 
           <div *ngIf="showLinks" class="edit-cra__wrapper__form__icons">
-            <div *ngIf="generateInvoice" class="edit-cra__wrapper__form__icons__item">
+            <div *ngIf="generateInvoice || mode === 'review'" class="edit-cra__wrapper__form__icons__item">
               <a target="_blank" [routerLink]="['/invoice/' + invoiceToken]">
                 <img>
                 <p>Télécharger la Facture</p>

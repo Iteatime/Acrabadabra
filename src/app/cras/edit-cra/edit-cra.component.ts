@@ -12,6 +12,7 @@ import { CalendarEvent } from 'calendar-utils';
 
 import { getMonth, getDate, differenceInMinutes, getYear, lastDayOfMonth } from 'date-fns';
 import { InvoiceFormComponent } from './invoice-form/invoice-form.component';
+import { Invoice } from 'src/app/@types/invoice';
 
 
 @Component({
@@ -79,29 +80,36 @@ export class EditCraComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group(this.formControls);
-    this.form.valueChanges.subscribe(() => {
-      this.showLinks = false;
-    });
-
-    this.timesheetPicker.refresh.subscribe(() => {
-      this.showLinks = false;
-    });
 
     this.route.queryParams.subscribe(
       (params: Params) => {
         if (params.hasOwnProperty('data')) {
           this.initDataFromUrlParams(params);
+          this.showLinks = true;
 
           if (this.mode === 'review') {
             this.disableInputs();
             this.generateInvoice = false;
-            this.showLinks = true;
           }
         } else {
           this.mode = 'add';
         }
       }
     );
+
+    this.form.valueChanges.subscribe(() => {
+      this.showLinks = false;
+    });
+    this.timesheetPicker.refresh.subscribe(() => {
+      this.showLinks = false;
+    });
+    if (this.generateInvoice === true && this.mode !== 'review') {
+      setTimeout(() => {
+        this.invoiceForm.form.valueChanges.subscribe(() => {
+          this.showLinks = false;
+        });
+      }, 0);
+    }
 
     this.setPageTitle(this.title[this.mode] + ' un compte rendu d\'activité');
   }
@@ -132,13 +140,14 @@ export class EditCraComponent implements OnInit {
     this.cra = datas.cra;
     this.setInputsValue(this.cra);
     if (datas.hasOwnProperty('invoice')) {
-      this.generateInvoice = true;
-      setTimeout(() => {
-        this.invoiceForm.invoice = datas.invoice;
-        this.invoiceForm.form.valueChanges.subscribe(() => {
-          this.showLinks = false;
-        });
-      }, 0);
+      if (this.mode !== 'review') {
+        this.generateInvoice = true;
+        setTimeout(() => {
+          this.invoiceForm.invoice = datas.invoice;
+        }, 0);
+      } else {
+        this.invoiceToken = this.createInvoiceToken(datas.invoice);
+      }
     }
   }
 
@@ -217,12 +226,12 @@ export class EditCraComponent implements OnInit {
     this.reviewToken = this.serializer.serialize({ ...data, mode: 'review' });
   }
 
-  createInvoiceToken(): string {
+  createInvoiceToken(invoice?: Invoice): string {
     const data = {
       consultant: this.cra.consultant,
       mission: this.cra.mission,
       time: this.timesheetPicker.totalWorkedTime,
-      invoice: this.invoiceForm.invoice,
+      invoice: invoice || this.invoiceForm.invoice,
     };
     return this.serializer.serialize(data);
   }
