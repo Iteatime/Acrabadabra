@@ -40,11 +40,6 @@
                             <a target="_blank" [routerLink]="['/cra/edit']" [queryParams]="{ data: reviewToken }">ce lien</a>
                             pour le partager en lecture seule.
                           </p>
-                          <p *ngIf="generateInvoice">
-                            Utiliser
-                            <a target="_blank" [routerLink]="['/invoice/' + invoiceToken]">ce lien</a>
-                            pour obtenir votre facture.
-                          </p>
                           <u>
                             Si vous modifiez le CRA, vous devrez le valider à nouveau et utiliser le nouveau lien de partage.
                           </u>
@@ -199,6 +194,7 @@
                 type="checkbox"
                 [(ngModel)]="generateInvoice"
                 [ngModelOptions]="{standalone: true}"
+                (change)="this.showLinks = false"
                 >
                 Générer une facture
               </label>
@@ -214,6 +210,15 @@
             >
               <span>Valider mon CRA</span>
             </button>
+          </div>
+
+          <div *ngIf="showLinks" class="edit-cra__wrapper__form__icons">
+            <div *ngIf="generateInvoice" class="edit-cra__wrapper__form__icons__item">
+              <a target="_blank" [routerLink]="['/invoice/' + invoiceToken]">
+                <img>
+                <p>Télécharger la Facture</p>
+              </a>
+            </div>
           </div>
       </form>
   </div>

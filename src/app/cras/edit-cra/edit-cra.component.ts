@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { Component, OnInit, ViewChild, ViewEncapsulation, OnChanges } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl, NgForm } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Cra } from 'src/app/shared/cra.model';
 import { formData } from 'src/app/@types/formData';
@@ -21,8 +21,8 @@ import { InvoiceFormComponent } from './invoice-form/invoice-form.component';
   encapsulation: ViewEncapsulation.None
 })
 export class EditCraComponent implements OnInit {
-  @ViewChild (CalendarComponent) timesheetPicker;
-  @ViewChild (InvoiceFormComponent) invoiceForm;
+  @ViewChild (CalendarComponent) timesheetPicker: CalendarComponent;
+  @ViewChild (InvoiceFormComponent) invoiceForm: InvoiceFormComponent;
 
   cra = new Cra();
   editToken: string;
@@ -31,6 +31,7 @@ export class EditCraComponent implements OnInit {
 
   showModal = false;
   showErrorModal = false;
+  showLinks = false;
   generateInvoice = false;
 
   title = {
@@ -78,6 +79,14 @@ export class EditCraComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group(this.formControls);
+    this.form.valueChanges.subscribe(() => {
+      this.showLinks = false;
+    });
+
+    this.timesheetPicker.refresh.subscribe(() => {
+      this.showLinks = false;
+    });
+
     this.route.queryParams.subscribe(
       (params: Params) => {
         if (params.hasOwnProperty('data')) {
@@ -86,6 +95,7 @@ export class EditCraComponent implements OnInit {
           if (this.mode === 'review') {
             this.disableInputs();
             this.generateInvoice = false;
+            this.showLinks = true;
           }
         } else {
           this.mode = 'add';
@@ -123,8 +133,12 @@ export class EditCraComponent implements OnInit {
     this.setInputsValue(this.cra);
     if (datas.hasOwnProperty('invoice')) {
       this.generateInvoice = true;
-      setTimeout(() => { this.invoiceForm.invoice = datas.invoice; }, 0);
-
+      setTimeout(() => {
+        this.invoiceForm.invoice = datas.invoice;
+        this.invoiceForm.form.valueChanges.subscribe(() => {
+          this.showLinks = false;
+        });
+      }, 0);
     }
   }
 
@@ -148,9 +162,11 @@ export class EditCraComponent implements OnInit {
       this.createTokens();
       if (this.generateInvoice) { this.invoiceToken = this.createInvoiceToken(); }
       this.showModal = true;
+      this.showLinks = true;
     } else {
       this.showValidationMessages();
       this.showErrorModal = true;
+      document.querySelector('#top').scrollIntoView();
     }
   }
 
@@ -191,7 +207,6 @@ export class EditCraComponent implements OnInit {
 
   createTokens(): void {
     let invoice;
-    // if (this.generateInvoice) { invoice = this.invoiceDataService.getInvoice(); }
     if (this.generateInvoice) { invoice = this.invoiceForm.invoice; }
     const data: formData = {
       cra: this.cra,
@@ -235,6 +250,9 @@ export class EditCraComponent implements OnInit {
   }
 
   onModalClose(toggle: string) {
+    if (toggle === 'showModal') {
+      document.querySelector('#bottom').scrollIntoView();
+    }
     this[toggle] = false;
   }
 }

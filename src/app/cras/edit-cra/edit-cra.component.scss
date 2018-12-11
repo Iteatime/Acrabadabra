@@ -188,6 +188,29 @@
         			  font-weight: 700;
               }
             }
+
+            &__icons {
+              margin-top: 40px;
+              width: 100%;
+              display: flex;
+
+              &__item {
+                width: 100%;
+
+                p {
+                  text-align: center;
+                }
+
+                img {
+                  border: 1px solid #42A948;
+                  width: 40px;
+                  height: 40px;
+                  display: block;
+                  margin-left: auto;
+                  margin-right: auto;
+                }
+              }
+            }
         }
     }
 }
