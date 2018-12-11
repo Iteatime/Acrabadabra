@@ -143,15 +143,22 @@ export class EditCraComponent implements OnInit {
   }
 
   onSubmitCRA(): void {
-    if (this.form.invalid) {
-      this.showValidationMessages();
-      this.showErrorModal = true;
-    } else {
+    if (this.checkFormsValidity()) {
       this.createCRA();
       this.createTokens();
       if (this.generateInvoice) { this.invoiceToken = this.createInvoiceToken(); }
       this.showModal = true;
+    } else {
+      this.showValidationMessages();
+      this.showErrorModal = true;
     }
+  }
+
+  checkFormsValidity(): boolean {
+    if (this.generateInvoice) {
+      return this.invoiceForm.form.valid && this.form.valid;
+    }
+    return this.form.valid;
   }
 
   showValidationMessages(): void {
@@ -159,6 +166,11 @@ export class EditCraComponent implements OnInit {
       const control = this.form.get(field);
       control.markAsTouched({ onlySelf: true });
     });
+    if (this.generateInvoice) {
+      Object.keys(this.invoiceForm.form.controls).forEach(field => {
+        this.invoiceForm.form.controls[field].markAsTouched();
+      });
+    }
   }
 
   createCRA(): void {
