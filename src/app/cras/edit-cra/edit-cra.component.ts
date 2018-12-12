@@ -86,11 +86,13 @@ export class EditCraComponent implements OnInit {
           this.invoiceForm.invoice = datas.invoice;
           this.initChangesDetection(true);
         });
-      } else {
-        this.invoiceToken = this.createInvoiceToken(datas.invoice);
       }
+
+      this.createTimesheetTokens(datas.invoice);
+      this.invoiceToken = this.createInvoiceToken(datas.invoice);
     } else {
-      this.initChangesDetection();
+      this.createTimesheetTokens();
+      setTimeout(() => { this.initChangesDetection(); });
     }
   }
 
@@ -123,7 +125,7 @@ export class EditCraComponent implements OnInit {
   onSubmitCRA(): void {
     if (this.checkFormsValidity()) {
       this.createCRA();
-      this.createTokens();
+      this.createTimesheetTokens(this.invoiceForm.invoice);
       if (this.generateInvoice) { this.invoiceToken = this.createInvoiceToken(); }
       this.showModal = true;
       this.showLinks = true;
@@ -161,9 +163,7 @@ export class EditCraComponent implements OnInit {
     }
   }
 
-  createTokens(): void {
-    let invoice;
-    if (this.generateInvoice) { invoice = this.invoiceForm.invoice; }
+  createTimesheetTokens(invoice?: Invoice): void {
     const data: formData = {
       cra: this.cra,
       invoice: invoice,

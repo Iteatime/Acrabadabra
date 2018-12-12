@@ -192,18 +192,19 @@
 
               &__item {
                 width: 100%;
+                text-align: center;
 
-                p {
-                  text-align: center;
+                &__disabled {
+                  cursor: not-allowed;
                 }
 
-                img {
-                  border: 1px solid #42A948;
-                  width: 40px;
-                  height: 40px;
-                  display: block;
-                  margin-left: auto;
-                  margin-right: auto;
+                * {
+                  color: initial;
+                  text-decoration: none;
+                }
+
+                i {
+                  font-size: 30pt;
                 }
               }
             }
