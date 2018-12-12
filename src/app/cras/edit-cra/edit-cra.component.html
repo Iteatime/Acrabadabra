@@ -84,7 +84,7 @@
           </div>
       </div>
 
-      <form class="edit-cra__wrapper__form" [formGroup]="form">
+      <form class="edit-cra__wrapper__form" #form="ngForm">
           <div id="prestataire" class="edit-cra__wrapper__form__block">
               <h4 class="edit-cra__wrapper__form__block__title">Consultant</h4>
               <div class="edit-cra__wrapper__form__block__input-wrapper">
@@ -93,9 +93,12 @@
                       <div class="edit-cra__wrapper__form__block__input-wrapper__item__input">
                           <input
                           type="text"
+                          required
                           class="form-control"
                           name="consultantNameInput"
-                          formControlName="consultantNameInput"
+                          [disabled]="mode === 'review'"
+                          [(ngModel)]="cra.consultant.name"
+                          #consultantNameInput="ngModel"
                           >
                           <div
                           *ngIf="consultantNameInput.invalid && (consultantNameInput.dirty || consultantNameInput.touched)"
@@ -112,9 +115,13 @@
                       <div class="edit-cra__wrapper__form__block__input-wrapper__item__input">
                           <input
                           type="email"
+                          required
+                          email
                           class="form-control"
                           name="consultantEmailInput"
-                          formControlName="consultantEmailInput"
+                          [disabled]="mode === 'review'"
+                          [(ngModel)]="cra.consultant.email"
+                          #consultantEmailInput="ngModel"
                           >
                           <div
                           *ngIf="consultantEmailInput.invalid && (consultantEmailInput.dirty || consultantEmailInput.touched)"
@@ -140,9 +147,12 @@
                       <div class="edit-cra__wrapper__form__block__input-wrapper__item__input">
                           <input
                           type="text"
+                          required
                           class="form-control"
                           name="missionTitleInput"
-                          formControlName="missionTitleInput"
+                          [disabled]="mode === 'review'"
+                          [(ngModel)]="cra.mission.title"
+                          #missionTitleInput="ngModel"
                           >
                           <div
                           *ngIf="missionTitleInput.invalid && (missionTitleInput.dirty || missionTitleInput.touched)"
@@ -160,10 +170,12 @@
                       <div class="edit-cra__wrapper__form__block__input-wrapper__item__input">
                           <input
                           type="text"
+                          required
                           class="form-control"
                           name="missionFinalClientInput"
-                          formControlName="missionFinalClientInput"
-                          autocomplete="companyName"
+                          [disabled]="mode === 'review'"
+                          [(ngModel)]="cra.mission.client"
+                          #missionFinalClientInput="ngModel"
                           >
                           <div
                           *ngIf="missionFinalClientInput.invalid && (missionFinalClientInput.dirty || missionFinalClientInput.touched)"
@@ -193,8 +205,6 @@
                 name="invoiceToggle"
                 type="checkbox"
                 [(ngModel)]="generateInvoice"
-                [ngModelOptions]="{standalone: true}"
-                (change)="this.showLinks = false"
                 >
                 Générer une facture
               </label>
@@ -211,6 +221,8 @@
               <span>Valider mon CRA</span>
             </button>
           </div>
+
+
 
           <div *ngIf="showLinks" class="edit-cra__wrapper__form__icons">
             <div *ngIf="generateInvoice || mode === 'review'" class="edit-cra__wrapper__form__icons__item">

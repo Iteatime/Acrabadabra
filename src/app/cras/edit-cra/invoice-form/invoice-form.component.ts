@@ -9,7 +9,7 @@ import { NgForm } from '@angular/forms';
 })
 export class InvoiceFormComponent {
 
-  @ViewChild('invoiceForm') form: NgForm;
+  @ViewChild('form') form: NgForm;
   invoice: Invoice = new Invoice();
 
   constructor() {}
