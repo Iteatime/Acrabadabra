@@ -26,22 +26,12 @@
                       <div class="edit-cra__wrapper__modals__modal__dialog__content__header modal-header">
                           <h5 class="modal-title">Votre CRA a bien été créé</h5>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true" aria-label="Close">&times;</span>
+                            <span aria-hidden="true" aria-label="Close">&times;</span>
                           </button>
                       </div>
                       <div class="edit-cra__wrapper__modals__modal__dialog__content__body modal-body">
-                          <p>
-                              Conservez
-                              <a target="_blank" [routerLink]="['/cra/edit']" [queryParams]="{ data: editToken }">ce lien</a>
-                              pour le modifier ultérieurement.
-                          </p>
-                          <p>
-                              Envoyez
-                              <a target="_blank" [routerLink]="['/cra/edit']" [queryParams]="{ data: reviewToken }">ce lien</a>
-                              pour le partager en lecture seule.
-                          </p>
                           <u>
-                              Si vous modifiez le CRA, vous devrez le valider à nouveau et utiliser le nouveau lien de partage.
+                            Si vous modifiez le CRA, vous devrez le valider à nouveau et utiliser le nouveau lien de partage.
                           </u>
                       </div>
                       <div class="edit-cra__wrapper__modals__modal__dialog__content__footer modal-footer">
@@ -84,18 +74,21 @@
           </div>
       </div>
 
-      <form class="edit-cra__wrapper__form" [formGroup]="form">
+      <form class="edit-cra__wrapper__form" #form="ngForm">
           <div id="prestataire" class="edit-cra__wrapper__form__block">
-              <h4 class="edit-cra__wrapper__form__block__title">Prestataire</h4>
+              <h4 class="edit-cra__wrapper__form__block__title">Consultant</h4>
               <div class="edit-cra__wrapper__form__block__input-wrapper">
                   <div class="edit-cra__wrapper__form__block__input-wrapper__item form-group">
                       <label for="consultantNameInput" class="edit-cra__wrapper__form__block__input-wrapper__item__label">Nom</label>
                       <div class="edit-cra__wrapper__form__block__input-wrapper__item__input">
                           <input
                           type="text"
+                          required
                           class="form-control"
                           name="consultantNameInput"
-                          formControlName="consultantNameInput"
+                          [disabled]="mode === 'review'"
+                          [(ngModel)]="cra.consultant.name"
+                          #consultantNameInput="ngModel"
                           >
                           <div
                           *ngIf="consultantNameInput.invalid && (consultantNameInput.dirty || consultantNameInput.touched)"
@@ -112,9 +105,13 @@
                       <div class="edit-cra__wrapper__form__block__input-wrapper__item__input">
                           <input
                           type="email"
+                          required
+                          email
                           class="form-control"
                           name="consultantEmailInput"
-                          formControlName="consultantEmailInput"
+                          [disabled]="mode === 'review'"
+                          [(ngModel)]="cra.consultant.email"
+                          #consultantEmailInput="ngModel"
                           >
                           <div
                           *ngIf="consultantEmailInput.invalid && (consultantEmailInput.dirty || consultantEmailInput.touched)"
@@ -140,9 +137,12 @@
                       <div class="edit-cra__wrapper__form__block__input-wrapper__item__input">
                           <input
                           type="text"
+                          required
                           class="form-control"
                           name="missionTitleInput"
-                          formControlName="missionTitleInput"
+                          [disabled]="mode === 'review'"
+                          [(ngModel)]="cra.mission.title"
+                          #missionTitleInput="ngModel"
                           >
                           <div
                           *ngIf="missionTitleInput.invalid && (missionTitleInput.dirty || missionTitleInput.touched)"
@@ -160,10 +160,12 @@
                       <div class="edit-cra__wrapper__form__block__input-wrapper__item__input">
                           <input
                           type="text"
+                          required
                           class="form-control"
                           name="missionFinalClientInput"
-                          formControlName="missionFinalClientInput"
-                          autocomplete="companyName"
+                          [disabled]="mode === 'review'"
+                          [(ngModel)]="cra.mission.client"
+                          #missionFinalClientInput="ngModel"
                           >
                           <div
                           *ngIf="missionFinalClientInput.invalid && (missionFinalClientInput.dirty || missionFinalClientInput.touched)"
@@ -177,25 +179,69 @@
                   </div>
               </div>
           </div>
-  
-            <div class="edit-cra__wrapper__form__calendar">
-                <h4 class="edit-cra__wrapper__form__calendar__title">Compte rendu d'activité</h4>
-                <app-calendar
-                [minifiedTimesheet]="cra.timesheet"
-                [picking]="mode !== 'review'"
+
+          <div class="edit-cra__wrapper__form__component">
+              <h4 class="edit-cra__wrapper__form__component__title">Compte rendu d'activité</h4>
+              <app-calendar
+              [minifiedTimesheet]="cra.timesheet"
+              [picking]="mode !== 'review'"
+              >
+              </app-calendar>
+          </div>
+
+          <div class="edit-cra__wrapper__form__component" *ngIf="mode !== 'review'">
+              <label class="edit-cra__wrapper__form__component__toggle">
+                <input
+                name="invoiceToggle"
+                type="checkbox"
+                [(ngModel)]="generateInvoice"
                 >
-                </app-calendar>
-            </div>
+                Générer une facture
+              </label>
+              <app-invoice-form *ngIf="generateInvoice"></app-invoice-form>
+          </div>
 
           <div class="edit-cra__wrapper__form__submit">
-              <button
-              data-text="Valider mon CRA"
-              *ngIf="mode !== 'review'"
-              class="edit-cra__wrapper__form__submit__button"
-              (click)="onSubmitCRA()"
-              >
+            <button
+            data-text="Valider mon CRA"
+            *ngIf="mode !== 'review'"
+            class="edit-cra__wrapper__form__submit__button"
+            (click)="onSubmitCRA()"
+            >
               <span>Valider mon CRA</span>
-              </button>
+            </button>
+          </div>
+
+
+
+          <div *ngIf="showLinks" class="edit-cra__wrapper__form__icons">
+            <div *ngIf="generateInvoice || mode === 'review'" class="edit-cra__wrapper__form__icons__item">
+              <a target="_blank" [routerLink]="['/invoice/' + invoiceToken]">
+                <i class="material-icons">picture_as_pdf</i>
+                <p>Télécharger la facture</p>
+              </a>
+            </div>
+						<ng-container *ngIf="mode !== 'review'; then notReviewLinks"></ng-container>
+						<ng-template #notReviewLinks>
+							<div class="edit-cra__wrapper__form__icons__item">
+                <a class="edit-cra__wrapper__form__icons__item__disabled">
+                  <i class="material-icons">email</i>
+									<p>Envoyer le CRA par mail</p>
+								</a>
+							</div>
+							<div class="edit-cra__wrapper__form__icons__item">
+                <a target="_blank" [routerLink]="['/cra/edit']" [queryParams]="{ data: editToken }">
+                  <i class="material-icons">edit</i>
+									<p>Copier le lien de modification</p>
+								</a>
+							</div>
+							<div class="edit-cra__wrapper__form__icons__item">
+                <a target="_blank" [routerLink]="['/cra/edit']" [queryParams]="{ data: reviewToken }">
+                  <i class="material-icons">remove_red_eye</i>
+									<p>Copier le lien de partage</p>
+								</a>
+							</div>
+						</ng-template>
           </div>
       </form>
   </div>

@@ -13,7 +13,7 @@ const routes: Routes = [
     [
       { path: 'edit', component: EditCraComponent, },
     ],
-  }
+  },
 ];
 
 @NgModule({

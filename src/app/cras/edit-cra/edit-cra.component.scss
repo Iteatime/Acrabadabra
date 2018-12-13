@@ -5,112 +5,108 @@
   border-left: 5px solid #a94442; /* red */
 }
 
-.ng-valid[required], .ng-valid.required  {
-  border-left: 5px solid #42A948; /* green */
-}
-
 .edit-cra {
     background: $grey_light;
 
     &__header {
-        @media (min-width: $screen-sm-min) {
-            height: 80px;
+      @media (min-width: $screen-sm-min) {
+          height: 80px;
+      }
+      background: $main_blue;
+      padding: 10px 0;
+      height: 60px;
+      box-shadow: 0 0 8px rgba($black, .8);
+
+      &__container {
+        position: relative;
+        height: 100%;
+
+        a {
+          opacity: 1;
+          transition: opacity .15s ease-in-out;
         }
-        background: $main_blue;
-        padding: 10px 0;
-		height: 60px;
-        box-shadow: 0 0 8px rgba($black, .8);
 
-		&__container {
-            position: relative;
-			height: 100%;
+        a:hover {
+          opacity: 0.9;
+        }
 
-            a {
-                opacity: 1;
-                transition: opacity .15s ease-in-out;
-            }
-
-            a:hover {
-                opacity: 0.9;
-            }
-
-			&__logo {
-				display: block;
-				position: absolute;
-                left: 20px;
-				height: 100%;
-			}
-		}
-	}
+        &__logo {
+          display: block;
+          position: absolute;
+                  left: 20px;
+          height: 100%;
+        }
+		  }
+	  }
 
     &__wrapper {
-        @include container;
+      @include container;
 
-        @media (min-width: $screen-sm-min) {
-            padding: 40px;
+      @media (min-width: $screen-sm-min) {
+        padding: 40px;
+      }
+
+      @media (min-width: $screen-md-min) {
+        margin-top: 30px;
+      }
+
+      margin-top: 10px;
+      background: $white;
+      padding: 20px;
+      box-shadow: 0 0 8px rgba($black, .2);
+
+      &__title {
+        font-size: 22px;
+        color: $grey_mine_shaft;
+
+        & > h2 {
+          @media (min-width: $screen-sm-min) {
+            font-size: 28px;
+          }
+
+          font-weight: 700;
+          font-size: 20px;
         }
-
-        @media (min-width: $screen-md-min) {
-            margin-top: 30px;
-        }
-
-        margin-top: 10px;
-        background: $white;
-        padding: 20px;
-        box-shadow: 0 0 8px rgba($black, .2);
-
-        &__title {
-            font-size: 22px;
-            color: $grey_mine_shaft;
-
-            & > h2 {
-                @media (min-width: $screen-sm-min) {
-                    font-size: 28px;
-                }
-
-                font-weight: 700;
-                font-size: 20px;
-            }
-        }
+      }
 
         &__modals {
             &__modal {
                 &__dialog {
                     &__content {
-                        border: 0;
-                        border-radius: 0;
+                      border: 0;
+                      border-radius: 0;
 
-                        &__header {
-                            @include header-form;
+                      &__header {
+                          @include header-form;
 
-                            border: 0;
-                            border-radius: 0;
+                          border: 0;
+                          border-radius: 0;
 
-                            & > h5 {
-                                font-weight: 700;
+                          & > h5 {
+                            font-weight: 700;
+                          }
+
+                          & > .close {
+                            color: $white;
+
+                            &:not(:disabled):not(.disabled):hover {
+                              color: $white;
                             }
+                          }
+                      }
 
-                            & > .close {
-                                color: $white;
+                      &__footer {
+                        justify-content: center;
 
-                                &:not(:disabled):not(.disabled):hover {
-                                    color: $white;
-                                }
-                            }
+                        & > button {
+                          border: 0;
+                          background: $dark_blue;
+                          padding: 10px 20px;
+                          cursor: pointer;
+                          color: $white;
+                          font-weight: 700;
                         }
-
-                        &__footer {
-                            justify-content: center;
-
-                            & > button {
-                                border: 0;
-                                background: $dark_blue;
-                                padding: 10px 20px;
-                                cursor: pointer;
-                                color: $white;
-                                font-weight: 700;
-                            }
-                        }
+                      }
                     }
                 }
             }
@@ -118,7 +114,7 @@
 
         &__form {
             @media (min-width: $screen-sm-min) {
-                margin-top: 45px;
+              margin-top: 45px;
             }
 
             display: flex;
@@ -126,128 +122,91 @@
             margin-top: 25px;
 
             &__block {
+              @media (min-width: $screen-sm-min) {
+                width: calc(50% - 20px);
+              }
+
+              width: 100%;
+
+              &__title {
+                @include header-form;
+              }
+
+              &__input-wrapper {
+                @include form-input;
+              }
+
+              &#prestataire {
                 @media (min-width: $screen-sm-min) {
-                    width: calc(50% - 20px);
+                  margin-right: 20px;
+                }
+              }
+
+              &#mission {
+                @media (min-width: $screen-sm-min) {
+                  margin-top: 0;
+                  margin-left: 20px;
                 }
 
-                width: 100%;
-
-                &__title {
-                    @include header-form;
-                }
-
-                &__input-wrapper {
-                    border: 1px solid $grey_border_dark;
-                    border-top: 0;
-                    background: $grey_light;
-                    padding: 18px;
-
-                    &__item {
-                        &:last-child {
-                            margin-bottom: 0;
-                        }
-                        &__input {
-                            position: relative;
-
-                            & input {
-                                border-radius: 0;
-                                border: 1px solid $grey_border;
-                            }
-
-                            & .ng-invalid:not(form) {
-                                border-color: $grey_border;
-                            }
-
-                            & .form-control:focus {
-                                box-shadow: none;
-                                border-color: $main_blue;
-                            }
-
-                            & .alert {
-                                position: absolute;
-                                top: -5px;
-                                right: 0;
-                                transform: translateY(-100%);
-                                margin: 0;
-                                padding: 6px 10px;
-                                font-size: 13px;
-                                color: $white;
-                                background: $red_error;
-                                font-weight: 700;
-                                border: 0;
-
-                                &::before {
-                                    content: '';
-                                    height: 0;
-                                    width: 0;
-                                    display: block;
-                                    position: absolute;
-                                    left: 10px;
-                                    bottom: -4px;
-                                    border-color: $red_error transparent transparent transparent;
-                                    border-width: 5px 4px 0 4px;
-                                    border-style: solid;
-                                }
-                            }
-                        }
-
-                        &__label {
-                            font-size: 14px;
-                            color: $grey_mine_shaft;
-                            font-weight: 700;
-                        }
-                    }
-                }
-
-                &#prestataire {
-                    @media (min-width: $screen-sm-min) {
-                        margin-right: 20px;
-                    }
-                }
-
-                &#mission {
-                    @media (min-width: $screen-sm-min) {
-                        margin-top: 0;
-                        margin-left: 20px;
-                    }
-
-                    margin-top: 20px;
-                }
+                margin-top: 20px;
+              }
 
             }
 
-            
+            &__component {
+              margin-top: 30px;
+              width: 100%;
 
-            &__calendar {
-                margin-top: 30px;
-                width: 100%;
-
-                &__title {
-                    @include header-form;
-                }
+              &__title {
+                @include header-form;
+              }
             }
 
             &__submit {
-                margin-top: 40px;
+              margin-top: 40px;
+              width: 100%;
+              text-align: center;
+
+              &__button {
+                @include hoveranim_glow($darker_blue);
+
+                border: none;
+        			  display: inline-block;
+                background: $dark_blue;
+                padding: 0;
+        			  cursor: pointer;
+        			  width: 40%;
+                height: 60px;
+                min-width: 220px;
+        			  line-height: 60px;
+                color: $white;
+        			  font-size: 20px;
+        			  font-weight: 700;
+              }
+            }
+
+            &__icons {
+              margin-top: 40px;
+              width: 100%;
+              display: flex;
+
+              &__item {
                 width: 100%;
                 text-align: center;
 
-                &__button {
-                    @include hoveranim_glow($darker_blue);
-
-                    border: none;
-        			display: inline-block;
-                    background: $dark_blue;
-                    padding: 0;
-        			cursor: pointer;
-        			width: 40%;
-                    height: 60px;
-                    min-width: 220px;
-        			line-height: 60px;
-                    color: $white;
-        			font-size: 20px;
-        			font-weight: 700;
+                &__disabled {
+                  cursor: not-allowed;
                 }
+
+                * {
+                  color: initial;
+                  text-decoration: none;
+                }
+
+                i {
+                  font-size: 30pt;
+                }
+              }
             }
         }
     }

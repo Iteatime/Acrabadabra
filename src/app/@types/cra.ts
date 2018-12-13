@@ -1,4 +1,4 @@
-import { Consultant } from '../shared/consultant.model';
+import { Consultant } from './consultant';
 import { Mission } from './mission';
 
 export type Cra = {

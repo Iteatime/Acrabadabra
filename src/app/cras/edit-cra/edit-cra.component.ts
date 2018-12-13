@@ -1,16 +1,19 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { Component, OnInit, ViewChild, ViewEncapsulation, OnChanges, AfterViewInit, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl, NgForm } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { SerializerService } from 'src/app/shared/serialization/serializer.service';
 import { Cra } from 'src/app/shared/cra.model';
 import { formData } from 'src/app/@types/formData';
+import { SerializerService } from 'src/app/shared/serialization/serializer.service';
 
 import { CalendarComponent } from './calendar/calendar.component';
 import { CalendarEvent } from 'calendar-utils';
 
 import { getMonth, getDate, differenceInMinutes, getYear, lastDayOfMonth } from 'date-fns';
+import { InvoiceFormComponent } from './invoice-form/invoice-form.component';
+import { Invoice } from 'src/app/@types/invoice';
+
 
 @Component({
   selector: 'app-edit-cra',
@@ -19,14 +22,19 @@ import { getMonth, getDate, differenceInMinutes, getYear, lastDayOfMonth } from 
   encapsulation: ViewEncapsulation.None
 })
 export class EditCraComponent implements OnInit {
-  @ViewChild (CalendarComponent) timesheetPicker;
+  @ViewChild (CalendarComponent) timesheetPicker: CalendarComponent;
+  @ViewChild (InvoiceFormComponent) invoiceForm: InvoiceFormComponent;
+  @ViewChild ('form') form: NgForm;
 
   cra = new Cra();
   editToken: string;
   reviewToken: string;
+  invoiceToken: string;
 
   showModal = false;
   showErrorModal = false;
+  showLinks = false;
+  generateInvoice = false;
 
   title = {
     add: 'Saisir',
@@ -35,44 +43,15 @@ export class EditCraComponent implements OnInit {
   };
 
   mode: string;
-  form: FormGroup;
-  formControls = {
-    'consultantNameInput' : new FormControl(
-      this.cra.consultant.name,
-      [
-        Validators.required,
-      ]
-    ),
-    'consultantEmailInput' : new FormControl(
-      this.cra.consultant.email,
-      [
-        Validators.required,
-        Validators.email,
-      ]
-    ),
-    'missionTitleInput' : new FormControl(
-      this.cra.mission.title,
-      [
-        Validators.required,
-      ]
-    ),
-    'missionFinalClientInput' : new FormControl(
-      this.cra.mission.client,
-      [
-        Validators.required,
-      ]
-    ),
-  };
 
   constructor(
-    private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private serializer: SerializerService,
-    private titleService: Title
+    private titleService: Title,
   ) {}
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group(this.formControls);
+
     this.route.queryParams.subscribe(
       (params: Params) => {
         if (params.hasOwnProperty('data')) {
@@ -90,22 +69,6 @@ export class EditCraComponent implements OnInit {
     this.setPageTitle(this.title[this.mode] + ' un compte rendu d\'activité');
   }
 
-  get consultantNameInput(): AbstractControl  {
-    return this.form.get('consultantNameInput');
-  }
-
-  get consultantEmailInput(): AbstractControl  {
-    return this.form.get('consultantEmailInput');
-  }
-
-  get missionTitleInput(): AbstractControl  {
-    return this.form.get('missionTitleInput');
-  }
-
-  get missionFinalClientInput(): AbstractControl {
-    return this.form.get('missionFinalClientInput');
-  }
-
   setPageTitle(newTitle: string) {
     this.titleService.setTitle('Acrabadabra - ' + newTitle);
   }
@@ -114,49 +77,84 @@ export class EditCraComponent implements OnInit {
     const datas: formData = this.serializer.deserialize(params['data']);
     this.mode = datas.mode;
     this.cra = datas.cra;
-    this.setInputsValue(this.cra);
+    this.showLinks = true;
+
+    if (datas.hasOwnProperty('invoice')) {
+      if (this.mode !== 'review') {
+        this.generateInvoice = true;
+        setTimeout(() => {
+          this.invoiceForm.invoice = datas.invoice;
+          this.initChangesDetection(true);
+        });
+      }
+
+      this.createTimesheetTokens(datas.invoice);
+      this.invoiceToken = this.createInvoiceToken(datas.invoice);
+    } else {
+      this.createTimesheetTokens();
+      setTimeout(() => { this.initChangesDetection(); });
+    }
+  }
+
+  initChangesDetection(invoice?: boolean): void {
+    if (invoice) {
+      setTimeout(() => {
+        this.invoiceForm.form.valueChanges.subscribe(() => {
+          this.showLinks = false;
+        });
+      });
+    }
+
+    if (invoice === undefined || invoice) {
+      this.form.valueChanges.subscribe(() => {
+        this.showLinks = false;
+      });
+
+      this.timesheetPicker.refresh.subscribe(() => {
+        this.showLinks = false;
+      });
+    }
   }
 
   disableInputs(): void {
-    this.consultantNameInput.disable();
-    this.consultantEmailInput.disable();
-    this.missionTitleInput.disable();
-    this.missionFinalClientInput.disable();
-  }
-
-  setInputsValue(cra: Cra): void {
-    this.consultantNameInput.setValue(cra.consultant.name);
-    this.consultantEmailInput.setValue(cra.consultant.email);
-    this.missionTitleInput.setValue(cra.mission.title);
-    this.missionFinalClientInput.setValue(cra.mission.client);
+    Object.keys(this.form.controls).forEach(control => {
+      this.form.controls['control'].disable();
+    });
   }
 
   onSubmitCRA(): void {
-    if (this.form.invalid) {
+    if (this.checkFormsValidity()) {
+      this.createCRA();
+      this.createTimesheetTokens(this.invoiceForm.invoice);
+      if (this.generateInvoice) { this.invoiceToken = this.createInvoiceToken(); }
+      this.showModal = true;
+      this.showLinks = true;
+    } else {
       this.showValidationMessages();
       this.showErrorModal = true;
-    } else {
-      this.createCRA();
-      this.createTokens();
-      this.showModal = true;
+      document.querySelector('#top').scrollIntoView();
     }
+  }
+
+  checkFormsValidity(): boolean {
+    if (this.generateInvoice) {
+      return this.invoiceForm.form.valid && this.form.valid;
+    }
+    return this.form.valid;
   }
 
   showValidationMessages(): void {
     Object.keys(this.form.controls).forEach(field => {
-      const control = this.form.get(field);
-      control.markAsTouched({ onlySelf: true });
+      this.form.controls[field].markAsTouched();
     });
+    if (this.generateInvoice) {
+      Object.keys(this.invoiceForm.form.controls).forEach(field => {
+        this.invoiceForm.form.controls[field].markAsTouched();
+      });
+    }
   }
 
   createCRA(): void {
-    this.cra = new Cra(
-      this.consultantEmailInput.value,
-      this.consultantNameInput.value,
-      this.missionFinalClientInput.value,
-      this.missionTitleInput.value,
-    );
-
     const timesheet = this.timesheetPicker.timesheet;
     if (timesheet[0] !== undefined) {
       this.cra.timesheet = this.minifyTimesheet(timesheet);
@@ -165,13 +163,24 @@ export class EditCraComponent implements OnInit {
     }
   }
 
-  createTokens(): void {
+  createTimesheetTokens(invoice?: Invoice): void {
     const data: formData = {
       cra: this.cra,
+      invoice: invoice,
       mode: '',
     };
     this.editToken = this.serializer.serialize({ ...data, mode: 'edit' });
     this.reviewToken = this.serializer.serialize({ ...data, mode: 'review' });
+  }
+
+  createInvoiceToken(invoice?: Invoice): string {
+    const data = {
+      consultant: this.cra.consultant,
+      mission: this.cra.mission,
+      time: this.timesheetPicker.totalWorkedTime,
+      invoice: invoice || this.invoiceForm.invoice,
+    };
+    return this.serializer.serialize(data);
   }
 
   minifyTimesheet(timesheet: CalendarEvent[]): any {
@@ -197,6 +206,11 @@ export class EditCraComponent implements OnInit {
   }
 
   onModalClose(toggle: string) {
+    if (toggle === 'showModal') {
+      document.querySelector('#bottom').scrollIntoView();
+    }
     this[toggle] = false;
+    this.initChangesDetection(this.generateInvoice);
   }
 }
+

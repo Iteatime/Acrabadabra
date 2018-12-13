@@ -4,5 +4,11 @@
     "pathRewrite": {
       "^/\\.netlify/functions": ""
     }
+  },
+  "/invoice/*": {
+    "target": "http://localhost:9000",
+    "pathRewrite": {
+      "^/invoice/": "invoice?data="
+    }
   }
 }
