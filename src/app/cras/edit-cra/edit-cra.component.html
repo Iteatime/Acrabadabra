@@ -215,8 +215,8 @@
 
 
           <div *ngIf="showLinks" class="edit-cra__wrapper__form__icons">
-            <div *ngIf="generateInvoice || mode === 'review'" class="edit-cra__wrapper__form__icons__item">
-              <a target="_blank" [routerLink]="['/invoice/' + invoiceToken]">
+            <div *ngIf="(generateInvoice || mode === 'review') && invoiceToken !== undefined" class="edit-cra__wrapper__form__icons__item">
+              <a target="_blank" [routerLink]="['/invoice', invoiceToken]">
                 <i class="material-icons">picture_as_pdf</i>
                 <p>Afficher la facture</p>
               </a>
@@ -224,7 +224,11 @@
 						<ng-container *ngIf="mode !== 'review'; then notReviewLinks"></ng-container>
 						<ng-template #notReviewLinks>
 							<div class="edit-cra__wrapper__form__icons__item">
-                <a class="edit-cra__wrapper__form__icons__item__disabled">
+                <a
+                [mailto]
+                [mailtoSubject]="'Compte rendu d\'activité (' + this.timesheetPicker.viewDate.toLocaleString('fr', {month: '2-digit', year: 'numeric'}) + ')'"
+                [mailtoBody]="mailBody()"
+                >
                   <i class="material-icons">email</i>
 									<p>Envoyer le CRA par mail</p>
 								</a>

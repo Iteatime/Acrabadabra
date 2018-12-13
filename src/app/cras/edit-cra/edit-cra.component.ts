@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import { Cra } from 'src/app/shared/cra.model';
 import { formData } from 'src/app/@types/formData';
@@ -44,15 +44,26 @@ export class EditCraComponent implements OnInit {
 
   mode: string;
 
+  mailBody = (): string => {
+    return 'Bonjour,%0d%0a' +
+            '%0d%0a' +
+
+            'Vous trouverez le compte rendu d\'activité de ma prestation pour le mois de ' + this.timesheetPicker.viewDate.toLocaleString('fr', {month: 'long', year: 'numeric'}) + ' à cette url :%0d%0a' +
+            window.location.origin + '/cra/edit?data=' + this.reviewToken + '%0d%0a' +
+            '%0d%0a' +
+
+            'Cordialement,%0d%0a' +
+            this.cra.consultant.name + '%0d%0a' +
+            this.cra.consultant.email;
+  }
+
   constructor(
-    private changeDetector: ChangeDetectorRef,
     private route: ActivatedRoute,
     private serializer: SerializerService,
     private titleService: Title,
   ) {}
 
   ngOnInit(): void {
-
     this.route.queryParams.subscribe(
       (params: Params) => {
         if (params.hasOwnProperty('data')) {
@@ -95,7 +106,6 @@ export class EditCraComponent implements OnInit {
       this.createTimesheetTokens();
       setTimeout(() => { this.initChangesDetection(); });
     }
-    this.changeDetector.detectChanges();
   }
 
   initChangesDetection(invoice?: boolean): void {
@@ -127,8 +137,12 @@ export class EditCraComponent implements OnInit {
   onSubmitCRA(): void {
     if (this.checkFormsValidity()) {
       this.createCRA();
-      this.createTimesheetTokens(this.invoiceForm.invoice);
-      if (this.generateInvoice) { this.invoiceToken = this.createInvoiceToken(); }
+      if (this.generateInvoice) {
+        this.createTimesheetTokens(this.invoiceForm.invoice);
+        this.invoiceToken = this.createInvoiceToken();
+      } else {
+        this.createTimesheetTokens();
+      }
       this.showModal = true;
       this.showLinks = true;
     } else {
