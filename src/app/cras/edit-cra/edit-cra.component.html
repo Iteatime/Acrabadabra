@@ -218,7 +218,7 @@
             <div *ngIf="generateInvoice || mode === 'review'" class="edit-cra__wrapper__form__icons__item">
               <a target="_blank" [routerLink]="['/invoice/' + invoiceToken]">
                 <i class="material-icons">picture_as_pdf</i>
-                <p>Télécharger la facture</p>
+                <p>Afficher la facture</p>
               </a>
             </div>
 						<ng-container *ngIf="mode !== 'review'; then notReviewLinks"></ng-container>
@@ -230,16 +230,28 @@
 								</a>
 							</div>
 							<div class="edit-cra__wrapper__form__icons__item">
-                <a target="_blank" [routerLink]="['/cra/edit']" [queryParams]="{ data: editToken }">
+                <a
+                [copyToClipboard]="editLink.href"
+                [copyToClipboardMessage]="'Lien copié'"
+                [copyToClipboardMessageParent]="editLink.parentNode"
+                [href]="'/cra/edit?data=' + editToken"
+                #editLink
+                >
                   <i class="material-icons">edit</i>
 									<p>Copier le lien de modification</p>
 								</a>
 							</div>
 							<div class="edit-cra__wrapper__form__icons__item">
-                <a target="_blank" [routerLink]="['/cra/edit']" [queryParams]="{ data: reviewToken }">
+                <a
+                [copyToClipboard]="shareLink.href"
+                [copyToClipboardMessage]="'Lien copié'"
+                [copyToClipboardMessageParent]="shareLink.parentNode"
+                [href]="'/cra/edit?data=' + reviewToken"
+                #shareLink
+                >
                   <i class="material-icons">remove_red_eye</i>
-									<p>Copier le lien de partage</p>
-								</a>
+                  <p>Copier le lien de partage</p>
+                </a>
 							</div>
 						</ng-template>
           </div>

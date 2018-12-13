@@ -18,6 +18,7 @@ import { HomeComponent } from './home/home.component';
 
 import { InvoiceFormComponent } from './cras/edit-cra/invoice-form/invoice-form.component';
 
+import { CopyToClipboardDirective } from './shared/copy-to-clipboard.directive';
 import { ModalDirective } from './shared/style/modal.directive';
 
 registerLocaleData(localeFr);
@@ -35,6 +36,8 @@ registerLocaleData(localeFr);
     InvoiceFormComponent,
 
     ModalDirective,
+
+    CopyToClipboardDirective,
 
   ],
   imports: [

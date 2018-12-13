@@ -111,38 +111,42 @@
         border-color: $main_blue;
       }
 
-      & .alert {
-        position: absolute;
-        top: -5px;
-        right: 0;
-        transform: translateY(-100%);
-        margin: 0;
-        padding: 6px 10px;
-        font-size: 13px;
-        color: $white;
-        background: $red_error;
-        font-weight: 700;
-        border: 0;
-
-        &::before {
-          content: '';
-          height: 0;
-          width: 0;
-          display: block;
-          position: absolute;
-          left: 10px;
-          bottom: -4px;
-          border-color: $red_error transparent transparent transparent;
-          border-width: 5px 4px 0 4px;
-          border-style: solid;
-        }
-      }
+      @include alert;
     }
 
     &__label {
       font-size: 14px;
       color: $grey_mine_shaft;
       font-weight: 700;
+    }
+  }
+}
+
+@mixin alert {
+  & .alert {
+    position: absolute;
+    top: -5px;
+    right: 0;
+    transform: translateY(-100%);
+    margin: 0;
+    padding: 6px 10px;
+    font-size: 13px;
+    color: $white;
+    background: $red_error;
+    font-weight: 700;
+    border: 0;
+
+    &::before {
+      content: '';
+      height: 0;
+      width: 0;
+      display: block;
+      position: absolute;
+      left: 10px;
+      bottom: -4px;
+      border-color: $red_error transparent transparent transparent;
+      border-width: 5px 4px 0 4px;
+      border-style: solid;
     }
   }
 }
