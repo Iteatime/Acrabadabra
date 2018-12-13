@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation, OnChanges, AfterViewInit, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl, NgForm } from '@angular/forms';
+import { Component, OnInit, ViewChild, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
@@ -45,6 +45,7 @@ export class EditCraComponent implements OnInit {
   mode: string;
 
   constructor(
+    private changeDetector: ChangeDetectorRef,
     private route: ActivatedRoute,
     private serializer: SerializerService,
     private titleService: Title,
@@ -94,6 +95,7 @@ export class EditCraComponent implements OnInit {
       this.createTimesheetTokens();
       setTimeout(() => { this.initChangesDetection(); });
     }
+    this.changeDetector.detectChanges();
   }
 
   initChangesDetection(invoice?: boolean): void {

@@ -194,6 +194,19 @@
                 width: 100%;
                 text-align: center;
 
+                @include alert;
+
+                & .alert {
+                  position: relative;
+                  right: -118px;
+                  top: -90px;
+                  background: $green_valid;
+
+                  &::before {
+                    border-color: $green_valid transparent transparent transparent;
+                  }
+                }
+
                 &__disabled {
                   cursor: not-allowed;
                 }
