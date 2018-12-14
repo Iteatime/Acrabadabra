@@ -227,7 +227,7 @@
                 <a
                 href="#"
                 [mailto]
-                [mailtoSubject]="'Compte rendu d\'activité (' + this.timesheetPicker.viewDate.toLocaleString('fr', {month: '2-digit', year: 'numeric'}) + ')'"
+                [mailtoSubject]="mailSubject()"
                 [mailtoBody]="mailBody()"
                 >
                   <i class="material-icons">email</i>
