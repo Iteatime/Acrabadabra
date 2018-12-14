@@ -162,6 +162,24 @@
               }
             }
 
+            &__message {
+              height: 50px;
+              line-height: 50px;
+              width: 100%;
+              border-radius: 5px;
+              text-align: center;
+
+              &--success {
+                background-color: $green_valid;
+              }
+
+              &--error {
+                color: white;
+                font-weight: 700;
+                background-color: $red_error;
+              }
+            }
+
             &__submit {
               margin-top: 40px;
               width: 100%;

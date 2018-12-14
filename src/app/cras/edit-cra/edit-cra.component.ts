@@ -31,8 +31,7 @@ export class EditCraComponent implements OnInit {
   reviewToken: string;
   invoiceToken: string;
 
-  showModal = false;
-  showErrorModal = false;
+  showMessage = false;
   showLinks = false;
   generateInvoice = false;
 
@@ -43,6 +42,8 @@ export class EditCraComponent implements OnInit {
   };
 
   mode: string;
+
+  message: string;
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -63,6 +64,7 @@ export class EditCraComponent implements OnInit {
           }
         } else {
           this.mode = 'add';
+          this.initChangesDetection(false);
         }
       }
     );
@@ -99,23 +101,26 @@ export class EditCraComponent implements OnInit {
   }
 
   initChangesDetection(invoice?: boolean): void {
-    if (invoice) {
+    if (invoice === undefined || invoice) {
       setTimeout(() => {
         this.invoiceForm.form.valueChanges.subscribe(() => {
-          this.showLinks = false;
+          this.somethingChanged();
         });
       });
     }
 
-    if (invoice === undefined || invoice) {
-      this.form.valueChanges.subscribe(() => {
-        this.showLinks = false;
-      });
+    this.form.valueChanges.subscribe(() => {
+      this.somethingChanged();
+    });
 
-      this.timesheetPicker.refresh.subscribe(() => {
-        this.showLinks = false;
-      });
-    }
+    this.timesheetPicker.refresh.subscribe(() => {
+      this.somethingChanged();
+    });
+  }
+
+  somethingChanged() {
+    this.showLinks = false;
+    this.showMessage = false;
   }
 
   disableInputs(): void {
@@ -127,13 +132,22 @@ export class EditCraComponent implements OnInit {
   onSubmitCRA(): void {
     if (this.checkFormsValidity()) {
       this.createCRA();
-      this.createTimesheetTokens(this.invoiceForm.invoice);
-      if (this.generateInvoice) { this.invoiceToken = this.createInvoiceToken(); }
-      this.showModal = true;
+
+      if (this.generateInvoice) {
+        this.invoiceToken = this.createInvoiceToken();
+        this.createTimesheetTokens(this.invoiceForm.invoice);
+      } else {
+        this.createTimesheetTokens();
+      }
+
+      this.message = 'Si vous modifiez le CRA, vous devrez le valider à nouveau et utiliser le nouveau lien de partage.';
+      this.showMessage = true;
+      document.querySelector('#bottom').scrollIntoView();
       this.showLinks = true;
     } else {
       this.showValidationMessages();
-      this.showErrorModal = true;
+      this.message = 'Veuillez vérifier votre saisie';
+      this.showMessage = true;
       document.querySelector('#top').scrollIntoView();
     }
   }
@@ -205,14 +219,6 @@ export class EditCraComponent implements OnInit {
     }
 
     return minitimesheet;
-  }
-
-  onModalClose(toggle: string) {
-    if (toggle === 'showModal') {
-      document.querySelector('#bottom').scrollIntoView();
-    }
-    this[toggle] = false;
-    this.initChangesDetection(this.generateInvoice);
   }
 }
 
