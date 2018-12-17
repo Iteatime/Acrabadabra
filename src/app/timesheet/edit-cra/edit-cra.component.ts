@@ -38,8 +38,7 @@ export class EditCraComponent implements OnInit {
 
   title = {
     add: 'Saisir',
-    edit: 'Editer',
-    review: 'Consulter',
+    edit: 'Modifier',
   };
 
   mode: string;
@@ -57,10 +56,6 @@ export class EditCraComponent implements OnInit {
       (params: Params) => {
         if (params.hasOwnProperty('data')) {
           this.initDataFromUrlParams(params);
-
-          if (this.mode === 'review') {
-            this.disableInputs();
-          }
         } else {
           this.mode = 'add';
         }
@@ -80,15 +75,12 @@ export class EditCraComponent implements OnInit {
     this.cra = datas.cra;
     this.showLinks = true;
 
-    if (datas.hasOwnProperty('invoice')) {
-      if (this.mode !== 'review') {
-        this.generateInvoice = true;
-        setTimeout(() => {
-          this.invoiceForm.invoice = datas.invoice;
-          this.initChangesDetection(true);
-        });
-      }
-
+    if (datas.invoice !== null) {
+      this.generateInvoice = true;
+      setTimeout(() => {
+        this.invoiceForm.invoice = datas.invoice;
+        this.initChangesDetection(true);
+      });
       this.createTimesheetTokens(datas.invoice);
       this.invoiceToken = this.createInvoiceToken(datas.invoice);
     } else {
@@ -118,17 +110,14 @@ export class EditCraComponent implements OnInit {
     }
   }
 
-  disableInputs(): void {
-    Object.keys(this.form.controls).forEach(control => {
-      this.form.controls['control'].disable();
-    });
-  }
-
   onSubmitCRA(): void {
     if (this.checkFormsValidity()) {
       this.createCRA();
-      this.createTimesheetTokens(this.invoiceForm.invoice);
-      if (this.generateInvoice) { this.invoiceToken = this.createInvoiceToken(); }
+      this.createTimesheetTokens();
+      if (this.generateInvoice) {
+        this.invoiceToken = this.createInvoiceToken();
+        this.createTimesheetTokens(this.invoiceForm.invoice);
+      }
       this.showModal = true;
       this.showLinks = true;
     } else {
@@ -165,7 +154,7 @@ export class EditCraComponent implements OnInit {
     }
   }
 
-  createTimesheetTokens(invoice?: Invoice): void {
+  createTimesheetTokens(invoice: Invoice = null): void {
     const data: formData = {
       cra: this.cra,
       invoice: invoice,

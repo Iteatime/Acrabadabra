@@ -1,7 +1,7 @@
 <div class="edit-cra">
   <div class="edit-cra__header">
       <div class="edit-cra__header__container">
-          <a href="./" title="Retour à l'accueil">
+          <a href="" title="Retour à l'accueil">
               <img class="edit-cra__header__container__logo" src="assets/images/logo.white.svg" alt="logo acrabadabra" onerror="this.removeAttribute('onerror'); this.src='//assets/images/logo.white.png'">
           </a>
       </div>
@@ -234,7 +234,7 @@
                 [copyToClipboard]="editLink.href"
                 [copyToClipboardMessage]="'Lien copié'"
                 [copyToClipboardMessageParent]="editLink.parentNode"
-                [href]="'/cra/edit?data=' + editToken"
+                [href]="'/cra/modifier?data=' + editToken"
                 #editLink
                 >
                   <i class="material-icons">edit</i>
@@ -246,7 +246,7 @@
                 [copyToClipboard]="shareLink.href"
                 [copyToClipboardMessage]="'Lien copié'"
                 [copyToClipboardMessageParent]="shareLink.parentNode"
-                [href]="'/cra/edit?data=' + reviewToken"
+                [href]="'/cra/consulter?data=' + reviewToken"
                 #shareLink
                 >
                   <i class="material-icons">remove_red_eye</i>

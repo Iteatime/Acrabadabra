@@ -10,13 +10,14 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { CrasComponent } from './cras/cras.component';
-import { EditCraComponent } from './cras/edit-cra/edit-cra.component';
-import { CalendarComponent } from './cras/edit-cra/calendar/calendar.component';
+import { CalendarComponent } from './timesheet/edit-cra/calendar/calendar.component';
+import { EditCraComponent } from './timesheet/edit-cra/edit-cra.component';
+import { InvoiceFormComponent } from './timesheet/edit-cra/invoice-form/invoice-form.component';
+import { ReviewComponent } from './timesheet/review/review.component';
+import { TimesheetComponent } from './timesheet/timesheet.component';
 
 import { HomeComponent } from './home/home.component';
 
-import { InvoiceFormComponent } from './cras/edit-cra/invoice-form/invoice-form.component';
 
 import { CopyToClipboardDirective } from './shared/copy-to-clipboard.directive';
 import { ModalDirective } from './shared/style/modal.directive';
@@ -27,7 +28,7 @@ registerLocaleData(localeFr);
   declarations: [
     AppComponent,
 
-    CrasComponent,
+    TimesheetComponent,
     EditCraComponent,
     CalendarComponent,
 
@@ -38,6 +39,8 @@ registerLocaleData(localeFr);
     ModalDirective,
 
     CopyToClipboardDirective,
+
+    ReviewComponent,
 
   ],
   imports: [
