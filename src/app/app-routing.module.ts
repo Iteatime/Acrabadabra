@@ -5,10 +5,8 @@ import { TimesheetComponent } from './timesheet/timesheet.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, },
-  {
-    path: 'cra/:mode',
-    component: TimesheetComponent,
-  },
+  { path: 'timesheet/:mode/:token', component: TimesheetComponent },
+  { path: 'timesheet/:mode', component: TimesheetComponent },
 ];
 
 @NgModule({

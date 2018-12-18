@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
-import { Cra } from 'src/app/shared/cra.model';
-import { formData } from 'src/app/@types/formData';
+import { Timesheet } from 'src/app/shared/timesheet.model';
+import { TimesheetTokenData } from 'src/app/@types/timesheetTokenData';
 import { SerializerService } from 'src/app/shared/serialization/serializer.service';
 
-import { CalendarComponent } from './calendar/calendar.component';
+import { CalendarComponent } from 'src/app/calendar/calendar.component';
 import { CalendarEvent } from 'calendar-utils';
 
 import { getMonth, getDate, differenceInMinutes, getYear, lastDayOfMonth } from 'date-fns';
@@ -16,17 +16,17 @@ import { Invoice } from 'src/app/@types/invoice';
 
 
 @Component({
-  selector: 'app-edit-cra',
-  templateUrl: './edit-cra.component.html',
-  styleUrls: ['./edit-cra.component.scss'],
+  selector: 'app-edit-timesheet',
+  templateUrl: './edit-timesheet.component.html',
+  styleUrls: ['./edit-timesheet.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class EditCraComponent implements OnInit {
+export class EditTimesheetComponent implements OnInit {
   @ViewChild (CalendarComponent) timesheetPicker: CalendarComponent;
   @ViewChild (InvoiceFormComponent) invoiceForm: InvoiceFormComponent;
   @ViewChild ('form') form: NgForm;
 
-  cra = new Cra();
+  timesheet = new Timesheet();
   editToken: string;
   reviewToken: string;
   invoiceToken: string;
@@ -52,15 +52,13 @@ export class EditCraComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.route.queryParams.subscribe(
-      (params: Params) => {
-        if (params.hasOwnProperty('data')) {
-          this.initDataFromUrlParams(params);
-        } else {
-          this.mode = 'add';
-        }
+    this.route.params.subscribe((params: Params) => {
+      if (params.hasOwnProperty('token')) {
+        this.initDataFromUrlParams(params);
+      } else {
+        this.mode = 'add';
       }
-    );
+    });
 
     this.setPageTitle(this.title[this.mode] + ' un compte rendu d\'activité');
   }
@@ -70,19 +68,19 @@ export class EditCraComponent implements OnInit {
   }
 
   initDataFromUrlParams(params: Params): void {
-    const datas: formData = this.serializer.deserialize(params['data']);
-    this.mode = datas.mode;
-    this.cra = datas.cra;
+    const data: TimesheetTokenData = this.serializer.deserialize(params['token']);
+    this.mode = data.mode;
+    this.timesheet = data.timesheet;
     this.showLinks = true;
 
-    if (datas.invoice !== null) {
+    if (data.invoice !== null) {
       this.generateInvoice = true;
       setTimeout(() => {
-        this.invoiceForm.invoice = datas.invoice;
+        this.invoiceForm.invoice = data.invoice;
         this.initChangesDetection(true);
       });
-      this.createTimesheetTokens(datas.invoice);
-      this.invoiceToken = this.createInvoiceToken(datas.invoice);
+      this.createTimesheetTokens(data.invoice);
+      this.invoiceToken = this.createInvoiceToken(data.invoice);
     } else {
       this.createTimesheetTokens();
       setTimeout(() => { this.initChangesDetection(); });
@@ -110,9 +108,9 @@ export class EditCraComponent implements OnInit {
     }
   }
 
-  onSubmitCRA(): void {
+  onSubmitTimesheet(): void {
     if (this.checkFormsValidity()) {
-      this.createCRA();
+      this.createTimesheet();
       this.createTimesheetTokens();
       if (this.generateInvoice) {
         this.invoiceToken = this.createInvoiceToken();
@@ -145,18 +143,18 @@ export class EditCraComponent implements OnInit {
     }
   }
 
-  createCRA(): void {
+  createTimesheet(): void {
     const timesheet = this.timesheetPicker.timesheet;
     if (timesheet[0] !== undefined) {
-      this.cra.timesheet = this.minifyTimesheet(timesheet);
+      this.timesheet.workingDays = this.minifyTimesheet(timesheet);
     } else {
-      this.cra.timesheet = [];
+      this.timesheet.workingDays = [];
     }
   }
 
   createTimesheetTokens(invoice: Invoice = null): void {
-    const data: formData = {
-      cra: this.cra,
+    const data: TimesheetTokenData = {
+      timesheet: this.timesheet,
       invoice: invoice,
       mode: '',
     };
@@ -166,8 +164,8 @@ export class EditCraComponent implements OnInit {
 
   createInvoiceToken(invoice?: Invoice): string {
     const data = {
-      consultant: this.cra.consultant,
-      mission: this.cra.mission,
+      consultant: this.timesheet.consultant,
+      mission: this.timesheet.mission,
       time: this.timesheetPicker.totalWorkedTime,
       invoice: invoice || this.invoiceForm.invoice,
     };

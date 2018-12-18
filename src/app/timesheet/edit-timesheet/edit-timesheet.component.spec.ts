@@ -14,34 +14,36 @@ import { MockComponent, MockDirective  } from 'ng-mocks';
 
 import { CalendarEvent } from 'calendar-utils';
 
-import { CalendarComponent } from './calendar/calendar.component';
-import { EditCraComponent } from './edit-cra.component';
+import { EditTimesheetComponent } from './edit-timesheet.component';
 
-import { Cra } from 'src/app/shared/cra.model';
+import { CalendarComponent } from 'src/app/calendar/calendar.component';
+
+import { Timesheet } from 'src/app/shared/timesheet.model';
 import { ModalDirective } from 'src/app/shared/style/modal.directive';
 import { SerializerService } from 'src/app/shared/serialization/serializer.service';
 
-import { formData } from 'src/app/@types/formData';
+import { TimesheetTokenData } from 'src/app/@types/timesheetTokenData';
 
 
 describe('EditCraComponent - ', () => {
-  let fixture: ComponentFixture<EditCraComponent>,
-      component: EditCraComponent,
+  let fixture: ComponentFixture<EditTimesheetComponent>,
+      component: EditTimesheetComponent,
       route: ActivatedRoute,
       serializer: SerializerService,
       titleService: Title,
       calendar: CalendarComponent;
 
-  const testData: formData = {
+  const testData: TimesheetTokenData = {
           mode: 'add',
-          cra: {
+          timesheet: {
             consultant: { email: 'tester@test.com', name: 'tester', },
             mission: { client: 'Test.com', title: 'Testin' },
-            timesheet: {
+            workingDays: {
               // This is a minified timesheet it represent the working time for each days of the month and year in the key.
               '0.1900': [0.5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             },
           },
+          invoice: null,
         },
         // This is the timesheet corresponding to the above minified version.
         timesheet: CalendarEvent[] = [
@@ -50,17 +52,17 @@ describe('EditCraComponent - ', () => {
         ],
         testEditToken: string = new SerializerService().serialize({ ...testData, mode: 'edit' }),
         testReviewToken: string = new SerializerService().serialize({ ...testData, mode: 'review' }),
-        checkCra = (cra: Cra): boolean => {
-          const testTimesheet = _.isEqual(cra.timesheet, testData.cra.timesheet),
-                testConsultant = _.isEqual(cra.consultant, testData.cra.consultant),
-                testMission = _.isEqual(cra.mission, testData.cra.mission);
+        checkCra = (cra: Timesheet): boolean => {
+          const testTimesheet = _.isEqual(cra.workingDays, testData.timesheet.workingDays),
+                testConsultant = _.isEqual(cra.consultant, testData.timesheet.consultant),
+                testMission = _.isEqual(cra.mission, testData.timesheet.mission);
 
           return testTimesheet && testConsultant && testMission;
         },
         checkToken = (token: string, mode: string): boolean => {
-          const deserializedToken: formData = serializer.deserialize(token);
+          const deserializedToken: TimesheetTokenData = serializer.deserialize(token);
 
-          return checkCra(deserializedToken.cra) && deserializedToken.mode === mode;
+          return checkCra(deserializedToken.timesheet) && deserializedToken.mode === mode;
         };
 
   beforeEach(async(() => {
@@ -72,7 +74,7 @@ describe('EditCraComponent - ', () => {
         RouterTestingModule,
       ],
       declarations: [
-        EditCraComponent,
+        EditTimesheetComponent,
         MockComponent(CalendarComponent),
         MockDirective(ModalDirective)
       ],
@@ -89,7 +91,7 @@ describe('EditCraComponent - ', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditCraComponent);
+    fixture = TestBed.createComponent(EditTimesheetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
     serializer = fixture.debugElement.injector.get(SerializerService);
@@ -127,7 +129,7 @@ describe('EditCraComponent - ', () => {
         });
 
         it('with a new cra', () => {
-          expect(component.cra).toEqual(new Cra());
+          expect(component.timesheet).toEqual(new Timesheet());
         });
       });
     });
@@ -144,7 +146,7 @@ describe('EditCraComponent - ', () => {
         fixture.detectChanges();
         component.ngOnInit();
 
-        expect(checkCra(component.cra)).toBeTruthy('Expected component and test cra to have the same data');
+        expect(checkCra(component.timesheet)).toBeTruthy('Expected component and test cra to have the same data');
         expect(component.mode).toBe('edit');
       });
 
@@ -154,19 +156,19 @@ describe('EditCraComponent - ', () => {
 
       describe('it should fill the form', () => {
         it('consultantNameInput', () => {
-          expect(component.consultantNameInput.value).toBe(testData.cra.consultant.name);
+          expect(component.consultantNameInput.value).toBe(testData.timesheet.consultant.name);
         });
 
         it('consultantEmailInput', () => {
-          expect(component.consultantEmailInput.value).toBe(testData.cra.consultant.email);
+          expect(component.consultantEmailInput.value).toBe(testData.timesheet.consultant.email);
         });
 
         it('missionTitleInput', () => {
-          expect(component.missionTitleInput.value).toBe(testData.cra.mission.title);
+          expect(component.missionTitleInput.value).toBe(testData.timesheet.mission.title);
         });
 
         it('missionFinalClientInput', () => {
-          expect(component.missionFinalClientInput.value).toBe(testData.cra.mission.client);
+          expect(component.missionFinalClientInput.value).toBe(testData.timesheet.mission.client);
         });
       });
     });
@@ -183,7 +185,7 @@ describe('EditCraComponent - ', () => {
         fixture.detectChanges();
         component.ngOnInit();
 
-        expect(checkCra(component.cra)).toBeTruthy('Expected component and test cra to have the same data');
+        expect(checkCra(component.timesheet)).toBeTruthy('Expected component and test cra to have the same data');
         expect(component.mode).toBe('review');
       });
 
@@ -193,19 +195,19 @@ describe('EditCraComponent - ', () => {
 
       describe('it should fill the form', () => {
         it('consultantNameInput', () => {
-          expect(component.consultantNameInput.value).toBe(testData.cra.consultant.name);
+          expect(component.consultantNameInput.value).toBe(testData.timesheet.consultant.name);
         });
 
         it('consultantEmailInput', () => {
-          expect(component.consultantEmailInput.value).toBe(testData.cra.consultant.email);
+          expect(component.consultantEmailInput.value).toBe(testData.timesheet.consultant.email);
         });
 
         it('missionTitleInput', () => {
-          expect(component.missionTitleInput.value).toBe(testData.cra.mission.title);
+          expect(component.missionTitleInput.value).toBe(testData.timesheet.mission.title);
         });
 
         it('missionFinalClientInput', () => {
-          expect(component.missionFinalClientInput.value).toBe(testData.cra.mission.client);
+          expect(component.missionFinalClientInput.value).toBe(testData.timesheet.mission.client);
         });
       });
 
@@ -232,9 +234,9 @@ describe('EditCraComponent - ', () => {
   describe('when submiting', () => {
     describe('with a valid form', () => {
       beforeEach(() => {
-        component.setInputsValue(testData.cra);
+        component.timesheet = testData.timesheet;
         fixture.detectChanges();
-        component.onSubmitCRA();
+        component.onSubmitTimesheet();
       });
 
       it('it should enable modal', () => {
@@ -255,9 +257,9 @@ describe('EditCraComponent - ', () => {
       beforeEach(() => {
         spyShowValidationMessages = spyOn(component, 'showValidationMessages');
 
-        component.setInputsValue(new Cra());
+        component.timesheet = new Timesheet();
         fixture.detectChanges();
-        component.onSubmitCRA();
+        component.onSubmitTimesheet();
       });
 
       it('it should enable error modal', () => {

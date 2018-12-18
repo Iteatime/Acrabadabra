@@ -10,14 +10,14 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { CalendarComponent } from './timesheet/edit-cra/calendar/calendar.component';
-import { EditCraComponent } from './timesheet/edit-cra/edit-cra.component';
-import { InvoiceFormComponent } from './timesheet/edit-cra/invoice-form/invoice-form.component';
-import { ReviewComponent } from './timesheet/review/review.component';
-import { TimesheetComponent } from './timesheet/timesheet.component';
-
 import { HomeComponent } from './home/home.component';
 
+import { EditTimesheetComponent } from './timesheet/edit-timesheet/edit-timesheet.component';
+import { InvoiceFormComponent } from './timesheet/edit-timesheet/invoice-form/invoice-form.component';
+import { ReviewTimesheetComponent } from './timesheet/review-timesheet/review-timesheet.component';
+import { TimesheetComponent } from './timesheet/timesheet.component';
+
+import { CalendarComponent } from './calendar/calendar.component';
 
 import { CopyToClipboardDirective } from './shared/copy-to-clipboard.directive';
 import { ModalDirective } from './shared/style/modal.directive';
@@ -28,19 +28,18 @@ registerLocaleData(localeFr);
   declarations: [
     AppComponent,
 
-    TimesheetComponent,
-    EditCraComponent,
-    CalendarComponent,
-
     HomeComponent,
 
+    EditTimesheetComponent,
     InvoiceFormComponent,
+    ReviewTimesheetComponent,
+    TimesheetComponent,
+
+    CalendarComponent,
 
     ModalDirective,
 
     CopyToClipboardDirective,
-
-    ReviewComponent,
 
   ],
   imports: [

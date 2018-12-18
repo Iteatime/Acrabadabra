@@ -1,10 +1,10 @@
 import { Mission } from './mission.model';
 import { Consultant } from './consultant.model';
 
-export class Cra {
+export class Timesheet {
   consultant: Consultant;
   mission: Mission;
-  timesheet: any;
+  workingDays: Number[];
 
   constructor(
     consultantEmail: string = '',
@@ -16,6 +16,6 @@ export class Cra {
   ) {
     this.consultant = new Consultant(consultantEmail, consultantName) || consultant;
     this.mission = new Mission(missionClient, missionTitle) || mission;
-    this.timesheet = [];
+    this.workingDays = [];
   }
 }

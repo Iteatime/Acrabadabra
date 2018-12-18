@@ -11,12 +11,11 @@ import { SerializerService } from '../shared/serialization/serializer.service';
 export class TimesheetComponent implements OnInit {
 
   modeMap = {
-    add: 'saisir',
-    edit: 'modifier',
-    review: 'consulter'
+    add: 'create',
+    edit: 'edit',
+    review: 'review'
   };
   mode: string;
-  data: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,21 +25,16 @@ export class TimesheetComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.route.queryParams.subscribe((params: Params) => {
-      if (params.hasOwnProperty('data')) {
-        this.data = this.serializer.deserialize(params['data']);
-      }
-    });
-
     this.route.params.subscribe((params: Params) => {
 
-      if (this.data !== undefined) {
-        if (params['mode'] === this.modeMap.review && this.data.mode === 'review') {
-          this.mode = this.data.mode;
-        } else if (params['mode'] === this.modeMap.edit && this.data.mode === 'edit') {
-          this.mode = this.data.mode;
+      if (params.hasOwnProperty('token')) {
+        const token = this.serializer.deserialize(params['token']);
+        if (params['mode'] === this.modeMap.review && token.mode === 'review') {
+          this.mode = token.mode;
+        } else if (params['mode'] === this.modeMap.edit && token.mode === 'edit') {
+          this.mode = token.mode;
         } else {
-          this.router.navigate(['cra', 'saisir']);
+          this.router.navigate(['timesheet', this.modeMap.add]);
         }
       } else if (params.hasOwnProperty(this.modeMap.add)) {
         this.mode = 'add';

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Cra } from 'src/app/@types/cra';
+import { Timesheet } from 'src/app/@types/timesheet';
 
 @Injectable({
   providedIn: 'root'
@@ -8,10 +8,10 @@ export class CalendarManagerService {
 
   constructor() { }
 
-  getWorkedTime(timesheet: Cra) {
+  getWorkedTime(timesheet: Timesheet) {
     let time = 0;
 
-    timesheet.timesheet[Object.keys(timesheet.timesheet)[0]].forEach(element => {
+    timesheet.workingDays[Object.keys(timesheet.workingDays)[0]].forEach(element => {
       time += element;
     });
 
