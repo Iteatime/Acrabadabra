@@ -2,110 +2,79 @@
 @import '../../../style/mixins';
 
 .invoice-form {
-  width: 100%;
+    width: 100%;
 
-  &__block {
-    @media (min-width: $screen-sm-min) {
-      margin: 30px 0px;
-    }
-    margin: 20px 0px;
-
-    &__title {
-      @include header-form;
-    }
-
-    &__input-wrapper {
-      @include form-input;
-      display: flex;
-
-      &__item {
+    &__block {
         @media (min-width: $screen-sm-min) {
-          &--left {
-            margin-right: 9px;
-          }
-
-          &--right {
-            margin-left: 9px;
-          }
-
-          &--middle {
-            margin: 0px 9px;
-          }
+            margin: 30px 0px;
         }
-        width: 100%;
-        margin: 0px;
-      }
-
-      &__sub-block {
-        @media (min-width: $screen-sm-min) {
-          margin-bottom: 30px;
-        }
-        margin-bottom: 20px;
-        width: 100%;
+        margin: 20px 0px;
 
         &__title {
-          @include header-form;
+            @include header-form;
         }
 
         &__input-wrapper {
-          @include form-input;
-          display: flex;
+            @include form-input;
+            display: flex;
+            flex-wrap: wrap;
 
-          &__item {
-            @media (min-width: $screen-sm-min) {
-
-              &--left {
-                margin-right: 9px;
-              }
-
-              &--right {
-                margin-left: 9px;
-              }
-
-              &--middle {
-                margin: 0px 9px;
-              }
+            &__item {
+                width: calc(50% - 10px);
+                margin: 0 5px;
             }
-            width: 100%;
-            margin: 0px;
-          }
+
+            &__sub-block {
+                @media (min-width: $screen-sm-min) {
+                    margin-bottom: 30px;
+                }
+                margin-bottom: 20px;
+                width: 100%;
+
+                &__title {
+                    @include header-form;
+                }
+
+                &__input-wrapper {
+                    @include form-input;
+                    display: flex;
+
+                    &__item {
+                        width: 100%;
+                        margin: 0px;
+                    }
+                }
+            }
         }
-      }
-    }
-  }
-
-  &__half-block {
-    @media (min-width: $screen-sm-min) {
-      width: calc(50% - 20px);
-      margin-bottom: 0px;
-
-      &--right {
-        margin-left: 40px;
-      }
-    }
-    width: 100%;
-    display: inline-table;
-    margin-bottom: 20px;
-
-    &__title {
-      @include header-form;
     }
 
-    &__input-wrapper {
-      @include form-input;
-
-      &__item {
-
-        &__button {
-          border: none;
-          background: $dark_blue;
-          cursor: pointer;
-          width: 100%;
-          height: 38px;
-          color: $white;
-          font-weight: 700;
+    &__half-block {
+        @media (min-width: $screen-sm-min) {
+            width: calc(50% - 20px);
         }
-      }
+
+        display: inline-table;
+        width: 100%;
+        margin-bottom: 20px;
+
+        &__title {
+            @include header-form;
+        }
+
+        &__input-wrapper {
+            @include form-input;
+
+            &__item {
+                &__button {
+                    border: none;
+                    background: $dark_blue;
+                    cursor: pointer;
+                    width: 100%;
+                    height: 38px;
+                    color: $white;
+                    font-weight: 700;
+                }
+            }
+        }
     }
-  }
 }
