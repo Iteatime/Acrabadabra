@@ -12,9 +12,9 @@ import { AppComponent } from './app.component';
 
 import { HomeComponent } from './home/home.component';
 
-import { EditTimesheetComponent } from './timesheet/edit-timesheet/edit-timesheet.component';
-import { InvoiceFormComponent } from './timesheet/edit-timesheet/invoice-form/invoice-form.component';
-import { ReviewTimesheetComponent } from './timesheet/review-timesheet/review-timesheet.component';
+import { EditTimesheetComponent } from './edit-timesheet/edit-timesheet.component';
+import { InvoiceFormComponent } from './edit-timesheet/invoice-form/invoice-form.component';
+import { ReviewTimesheetComponent } from './review-timesheet/review-timesheet.component';
 import { TimesheetComponent } from './timesheet/timesheet.component';
 
 import { CalendarComponent } from './calendar/calendar.component';

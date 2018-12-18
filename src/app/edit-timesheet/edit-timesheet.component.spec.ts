@@ -22,7 +22,7 @@ import { Timesheet } from 'src/app/shared/timesheet.model';
 import { ModalDirective } from 'src/app/shared/style/modal.directive';
 import { SerializerService } from 'src/app/shared/serialization/serializer.service';
 
-import { TimesheetTokenData } from 'src/app/@types/timesheetTokenData';
+import { TimesheetTokenData } from 'src/app/@types/timesheet-token-data';
 
 
 describe('EditCraComponent - ', () => {

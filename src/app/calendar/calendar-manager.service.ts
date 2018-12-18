@@ -8,7 +8,7 @@ export class CalendarManagerService {
 
   constructor() { }
 
-  getWorkedTime(timesheet: Timesheet) {
+  getWorkedTime(timesheet: Timesheet): number {
     let time = 0;
 
     timesheet.workingDays[Object.keys(timesheet.workingDays)[0]].forEach(element => {
@@ -16,5 +16,11 @@ export class CalendarManagerService {
     });
 
     return time;
+  }
+
+  getDate(timesheet: Timesheet): Date {
+    const dateString = Object.keys(timesheet.workingDays)[0].split('.');
+
+    return new Date(+dateString[1], +dateString[0]);
   }
 }

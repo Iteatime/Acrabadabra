@@ -4,7 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { Timesheet } from 'src/app/shared/timesheet.model';
-import { TimesheetTokenData } from 'src/app/@types/timesheetTokenData';
+import { TimesheetTokenData } from 'src/app/@types/timesheet-token-data';
 import { SerializerService } from 'src/app/shared/serialization/serializer.service';
 
 import { CalendarComponent } from 'src/app/calendar/calendar.component';

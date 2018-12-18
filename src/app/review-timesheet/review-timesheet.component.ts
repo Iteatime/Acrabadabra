@@ -1,9 +1,13 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Timesheet } from '../../shared/timesheet.model';
-import { TimesheetTokenData } from 'src/app/@types/timesheetTokenData';
+import { Title } from '@angular/platform-browser';
 import { Params, ActivatedRoute } from '@angular/router';
-import { SerializerService } from 'src/app/shared/serialization/serializer.service';
-import { CalendarManagerService } from 'src/app/shared/calendar/calendar-manager.service';
+
+import { TimesheetTokenData } from 'src/app/@types/timesheet-token-data';
+
+import { Timesheet } from '../shared/timesheet.model';
+import { SerializerService } from '../shared/serialization/serializer.service';
+
+import { CalendarManagerService } from 'src/app/calendar/calendar-manager.service';
 
 @Component({
   selector: 'app-review',
@@ -15,29 +19,39 @@ export class ReviewTimesheetComponent implements OnInit {
   timesheet = new Timesheet();
   generateInvoice = false;
   invoiceToken: string;
+  date: Date;
+  locale = 'fr';
+  workingTime: number;
 
   constructor(
     private calendarManager: CalendarManagerService,
     private route: ActivatedRoute,
-    private serializer: SerializerService
+    private serializer: SerializerService,
+    private titleService: Title
   ) { }
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       const data: TimesheetTokenData = this.serializer.deserialize(params['token']);
       this.timesheet = data.timesheet;
+      this.date = this.calendarManager.getDate(this.timesheet);
+      this.workingTime = this.calendarManager.getWorkedTime(this.timesheet);
+
       if (data.invoice !== null) {
         this.generateInvoice = true;
         const invoice = {
           consultant: this.timesheet.consultant,
           mission: this.timesheet.mission,
-          time: this.calendarManager.getWorkedTime(this.timesheet),
+          time: this.workingTime,
           invoice: data.invoice,
         };
 
         this.invoiceToken = this.serializer.serialize(invoice);
       }
     });
+
+    this.titleService.setTitle('Acradababra - Consulter un compte rendu d\'activité');
+
   }
 
 }
