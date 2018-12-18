@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import { Cra } from 'src/app/shared/cra.model';
 import { formData } from 'src/app/@types/formData';
@@ -44,6 +44,22 @@ export class EditCraComponent implements OnInit {
 
   mode: string;
 
+  mailSubject = (): string => {
+    return   'Acrabadabra  - Compte rendu d\'activité de ' + this.cra.consultant.name;
+  }
+  mailBody = (): string => {
+    return  'Bonjour,%0d%0a' +
+            '%0d%0a' +
+            'Un compte rendu d\'activité est consultable sur http://Acrabadabra.com.%0d%0a' +
+            '%0d%0a' +
+            'Consultant : ' + this.cra.consultant.name + '%0d%0a' +
+            'Mission : ' + this.cra.mission.title + '%0d%0a' +
+            'Journées de prestation : ' + this.timesheetPicker.totalWorkedTime.toLocaleString('fr') + '%0d%0a' +
+            '%0d%0a' +
+            'Vous pouvez le consulter et télécharger la facture ici : ' +
+            window.location.origin + '/cra/edit?data=' + this.reviewToken;
+  }
+
   constructor(
     private changeDetector: ChangeDetectorRef,
     private route: ActivatedRoute,
@@ -52,7 +68,6 @@ export class EditCraComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     this.route.queryParams.subscribe(
       (params: Params) => {
         if (params.hasOwnProperty('data')) {
@@ -78,7 +93,6 @@ export class EditCraComponent implements OnInit {
     const datas: formData = this.serializer.deserialize(params['data']);
     this.mode = datas.mode;
     this.cra = datas.cra;
-    this.showLinks = true;
 
     if (datas.hasOwnProperty('invoice')) {
       if (this.mode !== 'review') {
@@ -95,7 +109,11 @@ export class EditCraComponent implements OnInit {
       this.createTimesheetTokens();
       setTimeout(() => { this.initChangesDetection(); });
     }
-    this.changeDetector.detectChanges();
+
+    setTimeout(() => {
+      this.showLinks = true;
+      this.changeDetector.detectChanges();
+    });
   }
 
   initChangesDetection(invoice?: boolean): void {
@@ -127,10 +145,17 @@ export class EditCraComponent implements OnInit {
   onSubmitCRA(): void {
     if (this.checkFormsValidity()) {
       this.createCRA();
-      this.createTimesheetTokens(this.invoiceForm.invoice);
-      if (this.generateInvoice) { this.invoiceToken = this.createInvoiceToken(); }
+      if (this.generateInvoice) {
+        this.createTimesheetTokens(this.invoiceForm.invoice);
+        this.invoiceToken = this.createInvoiceToken();
+      } else {
+        this.createTimesheetTokens();
+      }
       this.showModal = true;
       this.showLinks = true;
+      this.changeDetector.detectChanges();
+      this.initChangesDetection(this.generateInvoice);
+      document.querySelector('#bottom').scrollIntoView();
     } else {
       this.showValidationMessages();
       this.showErrorModal = true;
@@ -208,11 +233,7 @@ export class EditCraComponent implements OnInit {
   }
 
   onModalClose(toggle: string) {
-    if (toggle === 'showModal') {
-      document.querySelector('#bottom').scrollIntoView();
-    }
     this[toggle] = false;
-    this.initChangesDetection(this.generateInvoice);
   }
 }
 
