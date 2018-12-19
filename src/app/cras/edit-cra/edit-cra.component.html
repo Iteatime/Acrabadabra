@@ -141,13 +141,10 @@
 
           <div
           class="edit-cra__wrapper__form__message"
-          *ngIf="showMessage"
-          [ngClass]="{
-            'edit-cra__wrapper__form__message--success': checkFormsValidity(),
-            'edit-cra__wrapper__form__message--error': !checkFormsValidity()
-          }"
+          *ngIf="showValidationMessage"
+          [ngClass]="'edit-cra__wrapper__form__message--' + validationMessageType"
           >
-            <u>{{ message }}</u>
+            <u>{{ validationMessage }}</u>
           </div>
 
           <div class="edit-cra__wrapper__form__submit">
@@ -171,7 +168,12 @@
 						<ng-container *ngIf="mode !== 'review'; then notReviewLinks"></ng-container>
 						<ng-template #notReviewLinks>
 							<div class="edit-cra__wrapper__form__icons__item">
-                <a class="edit-cra__wrapper__form__icons__item__disabled">
+                <a
+                href="#"
+                [mailto]
+                [mailtoSubject]="mailSubject()"
+                [mailtoBody]="mailBody()"
+                >
                   <i class="material-icons">email</i>
 									<p>Envoyer le CRA par mail</p>
 								</a>

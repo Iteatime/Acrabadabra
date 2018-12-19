@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import { Cra } from 'src/app/shared/cra.model';
 import { formData } from 'src/app/@types/formData';
@@ -26,24 +26,40 @@ export class EditCraComponent implements OnInit {
   @ViewChild (InvoiceFormComponent) invoiceForm: InvoiceFormComponent;
   @ViewChild ('form') form: NgForm;
 
-  cra = new Cra();
-  editToken: string;
-  reviewToken: string;
-  invoiceToken: string;
-
-  showMessage = false;
-  showLinks = false;
-  generateInvoice = false;
-
+  mode: string;
   title = {
     add: 'Saisir',
     edit: 'Editer',
     review: 'Consulter',
   };
 
-  mode: string;
+  cra = new Cra();
+  editToken: string;
+  reviewToken: string;
 
-  message: string;
+  generateInvoice = false;
+  invoiceToken: string;
+
+  showLinks = false;
+  showValidationMessage = false;
+  validationMessage: string;
+  validationMessageType: string;
+
+  mailSubject = (): string => {
+    return   'Acrabadabra  - Compte rendu d\'activité de ' + this.cra.consultant.name;
+  }
+  mailBody = (): string => {
+    return  'Bonjour,%0d%0a' +
+            '%0d%0a' +
+            'Un compte rendu d\'activité est consultable sur http://Acrabadabra.com.%0d%0a' +
+            '%0d%0a' +
+            'Consultant : ' + this.cra.consultant.name + '%0d%0a' +
+            'Mission : ' + this.cra.mission.title + '%0d%0a' +
+            'Journées de prestation : ' + this.timesheetPicker.totalWorkedTime.toLocaleString('fr') + '%0d%0a' +
+            '%0d%0a' +
+            'Vous pouvez le consulter et télécharger la facture ici : ' +
+            window.location.origin + '/cra/edit?data=' + this.reviewToken;
+  }
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -53,7 +69,6 @@ export class EditCraComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     this.route.queryParams.subscribe(
       (params: Params) => {
         if (params.hasOwnProperty('data')) {
@@ -80,7 +95,6 @@ export class EditCraComponent implements OnInit {
     const datas: formData = this.serializer.deserialize(params['data']);
     this.mode = datas.mode;
     this.cra = datas.cra;
-    this.showLinks = true;
 
     if (datas.hasOwnProperty('invoice')) {
       if (this.mode !== 'review') {
@@ -97,7 +111,11 @@ export class EditCraComponent implements OnInit {
       this.createTimesheetTokens();
       setTimeout(() => { this.initChangesDetection(); });
     }
-    this.changeDetector.detectChanges();
+
+    setTimeout(() => {
+      this.showLinks = true;
+      this.changeDetector.detectChanges();
+    });
   }
 
   initChangesDetection(invoice?: boolean): void {
@@ -120,7 +138,7 @@ export class EditCraComponent implements OnInit {
 
   somethingChanged() {
     this.showLinks = false;
-    this.showMessage = false;
+    this.showValidationMessage = false;
   }
 
   disableInputs(): void {
@@ -132,22 +150,26 @@ export class EditCraComponent implements OnInit {
   onSubmitCRA(): void {
     if (this.checkFormsValidity()) {
       this.createCRA();
-
       if (this.generateInvoice) {
-        this.invoiceToken = this.createInvoiceToken();
         this.createTimesheetTokens(this.invoiceForm.invoice);
+        this.invoiceToken = this.createInvoiceToken();
       } else {
         this.createTimesheetTokens();
       }
 
-      this.message = 'Si vous modifiez le CRA, vous devrez le valider à nouveau et utiliser le nouveau lien de partage.';
-      this.showMessage = true;
+      this.validationMessage = 'Si vous modifiez le CRA, vous devrez le valider à nouveau et utiliser le nouveau lien de partage.';
+      this.validationMessageType = 'success';
+      this.showValidationMessage = true;
       document.querySelector('#bottom').scrollIntoView();
       this.showLinks = true;
+      this.changeDetector.detectChanges();
+      this.initChangesDetection(this.generateInvoice);
+      document.querySelector('#bottom').scrollIntoView();
     } else {
       this.showValidationMessages();
-      this.message = 'Veuillez vérifier votre saisie';
-      this.showMessage = true;
+      this.validationMessage = 'Veuillez vérifier votre saisie';
+      this.validationMessageType = 'error';
+      this.showValidationMessage = true;
       document.querySelector('#top').scrollIntoView();
     }
   }
