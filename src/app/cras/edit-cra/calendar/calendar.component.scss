@@ -2,6 +2,16 @@
 @import '../../../style/mixins';
 
 .calendar {
+
+  @include alert;
+
+  & .alert {
+    line-height: initial;
+    position: relative;
+    top: 45px;
+    width: fit-content;
+  }
+
   &__header {
     @media (min-width: $screen_xs_min) {
       height: 50px;

@@ -1,4 +1,7 @@
 <div class="calendar">
+    <div *ngIf="!valid" class="alert">
+      Vous n'avez sélectionné aucuns jours
+    </div>
   <div class="calendar__header">
     <div class="calendar__header__daycount">
       <span>Nombre total de journées :&nbsp;</span><span class="highlight">{{ totalWorkedTime.toLocaleString(locale) }}</span>

@@ -35,6 +35,7 @@ export class EditCraComponent implements OnInit {
   showErrorModal = false;
   showLinks = false;
   generateInvoice = false;
+  isCalendarValid = true;
 
   title = {
     add: 'Saisir',
@@ -164,10 +165,20 @@ export class EditCraComponent implements OnInit {
   }
 
   checkFormsValidity(): boolean {
-    if (this.generateInvoice) {
-      return this.invoiceForm.form.valid && this.form.valid;
+
+    let valid = this.form.valid;
+
+    if (this.timesheetPicker.totalWorkedTime > 0) {
+      this.isCalendarValid = true;
+    } else {
+      valid = false;
     }
-    return this.form.valid;
+
+    if (this.generateInvoice) {
+      valid = valid && this.invoiceForm.form.valid;
+    }
+
+    return valid;
   }
 
   showValidationMessages(): void {
@@ -179,6 +190,7 @@ export class EditCraComponent implements OnInit {
         this.invoiceForm.form.controls[field].markAsTouched();
       });
     }
+    this.isCalendarValid = this.timesheetPicker.totalWorkedTime > 0;
   }
 
   createCRA(): void {
