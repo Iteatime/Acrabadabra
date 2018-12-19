@@ -133,6 +133,7 @@
                 name="invoiceToggle"
                 type="checkbox"
                 [(ngModel)]="generateInvoice"
+                (change)="initChangesDetection(generateInvoice)"
                 >
                 Générer une facture
               </label>

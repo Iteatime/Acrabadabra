@@ -119,7 +119,7 @@ export class EditCraComponent implements OnInit {
   }
 
   initChangesDetection(invoice?: boolean): void {
-    if (invoice === undefined || invoice) {
+    if (invoice) {
       setTimeout(() => {
         this.invoiceForm.form.valueChanges.subscribe(() => {
           this.somethingChanged();
