@@ -21,8 +21,12 @@
                 <b>{{ timesheet.consultant.name }}</b>
               </div>
               <div class="review__wrapper__fields__block__item-wrapper__part__text">
-                <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Titre : </span>
+                <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Intitulé de la mission : </span>
                 <b>{{ timesheet.mission.title }}</b>
+              </div>
+              <div class="review__wrapper__fields__block__item-wrapper__part__text">
+                <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Client : </span>
+                <b>{{ timesheet.mission.client }}</b>
               </div>
             </div>
             <hr>
@@ -44,12 +48,12 @@
         class="review__wrapper__fields__invoice"
         >
           <a
-          data-text="Afficher la facture"
+          data-text="Télécharger a facture"
           class="review__wrapper__fields__invoice__button"
           target="_blank"
           [routerLink]="['/invoice/' + invoiceToken]"
           >
-            <span>Afficher la facture</span>
+            <span>Télécharger la facture</span>
           </a>
         </div>
 

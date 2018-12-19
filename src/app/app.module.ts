@@ -15,11 +15,11 @@ import { HomeComponent } from './home/home.component';
 import { EditTimesheetComponent } from './edit-timesheet/edit-timesheet.component';
 import { InvoiceFormComponent } from './edit-timesheet/invoice-form/invoice-form.component';
 import { ReviewTimesheetComponent } from './review-timesheet/review-timesheet.component';
-import { TimesheetComponent } from './timesheet/timesheet.component';
 
 import { CalendarComponent } from './calendar/calendar.component';
 
 import { CopyToClipboardDirective } from './shared/copy-to-clipboard.directive';
+import { MailtoDirective } from './shared/mailto.directive';
 import { ModalDirective } from './shared/style/modal.directive';
 
 registerLocaleData(localeFr);
@@ -33,13 +33,12 @@ registerLocaleData(localeFr);
     EditTimesheetComponent,
     InvoiceFormComponent,
     ReviewTimesheetComponent,
-    TimesheetComponent,
 
     CalendarComponent,
 
-    ModalDirective,
-
     CopyToClipboardDirective,
+    MailtoDirective,
+    ModalDirective,
 
   ],
   imports: [

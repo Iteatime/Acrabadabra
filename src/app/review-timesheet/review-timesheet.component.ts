@@ -2,12 +2,10 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Params, ActivatedRoute } from '@angular/router';
 
-import { TimesheetTokenData } from 'src/app/@types/timesheet-token-data';
+import { CalendarManagerService } from 'src/app/calendar/calendar-manager.service';
 
 import { Timesheet } from '../shared/timesheet.model';
-import { SerializerService } from '../shared/serialization/serializer.service';
-
-import { CalendarManagerService } from 'src/app/calendar/calendar-manager.service';
+import { TimesheetService } from '../shared/timesheet.service';
 
 @Component({
   selector: 'app-review',
@@ -26,13 +24,13 @@ export class ReviewTimesheetComponent implements OnInit {
   constructor(
     private calendarManager: CalendarManagerService,
     private route: ActivatedRoute,
-    private serializer: SerializerService,
+    private timesheetService: TimesheetService,
     private titleService: Title
   ) { }
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      const data: TimesheetTokenData = this.serializer.deserialize(params['token']);
+      const data = this.timesheetService.deTokenize(params['token']);
       this.timesheet = data.timesheet;
       this.date = this.calendarManager.getDate(this.timesheet);
       this.workingTime = this.calendarManager.getWorkedTime(this.timesheet);
@@ -46,7 +44,7 @@ export class ReviewTimesheetComponent implements OnInit {
           invoice: data.invoice,
         };
 
-        this.invoiceToken = this.serializer.serialize(invoice);
+        this.invoiceToken = this.timesheetService.tokenize(invoice);
       }
     });
 

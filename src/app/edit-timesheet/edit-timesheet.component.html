@@ -224,7 +224,12 @@
 						<ng-container *ngIf="mode !== 'review'; then notReviewLinks"></ng-container>
 						<ng-template #notReviewLinks>
 							<div class="edit-cra__wrapper__form__icons__item">
-                <a class="edit-cra__wrapper__form__icons__item__disabled">
+                <a
+                href="#"
+                [mailto]
+                [mailtoSubject]="mailSubject()"
+                [mailtoBody]="mailBody()"
+                >
                   <i class="material-icons">email</i>
 									<p>Envoyer le CRA par mail</p>
 								</a>

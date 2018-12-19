@@ -1,21 +1,28 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanActivate } from '@angular/router';
+
+import { Base64 } from 'js-base64';
 
 import { Observable } from 'rxjs';
-
-import { TimesheetTokenData } from '../../@types/timesheet-token-data';
-
-import { SerializerService } from '../serialization/serializer.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CanActivateTimesheetModeService implements CanActivate {
+export class TimesheetService implements CanActivate {
 
-  constructor(
-    private router: Router,
-    private serializer: SerializerService
-  ) { }
+  constructor(private router: Router) { }
+
+  tokenize(serializableContent: any): string {
+    return Base64.encode(JSON.stringify(serializableContent));
+  }
+
+  deTokenize(serializedContent: string): any {
+
+    const decodedValue: string = Base64.decode(serializedContent);
+    const deserializedContent: any = JSON.parse(decodedValue);
+
+    return deserializedContent;
+  }
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -24,7 +31,7 @@ export class CanActivateTimesheetModeService implements CanActivate {
 
     if (route.params.hasOwnProperty('token')) {
       try {
-        const mode = this.serializer.deserialize(route.params['token']).mode;
+        const mode = this.deTokenize(route.params['token']).mode;
         if (route.url[1].path === mode) {
           return true;
         } else {

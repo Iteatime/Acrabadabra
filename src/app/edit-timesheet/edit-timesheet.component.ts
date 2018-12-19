@@ -3,16 +3,18 @@ import { NgForm } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { Timesheet } from 'src/app/shared/timesheet.model';
-import { TimesheetTokenData } from 'src/app/@types/timesheet-token-data';
-import { SerializerService } from 'src/app/shared/serialization/serializer.service';
+import { getMonth, getDate, differenceInMinutes, getYear, lastDayOfMonth } from 'date-fns';
 
-import { CalendarComponent } from 'src/app/calendar/calendar.component';
 import { CalendarEvent } from 'calendar-utils';
 
-import { getMonth, getDate, differenceInMinutes, getYear, lastDayOfMonth } from 'date-fns';
+import { CalendarComponent } from 'src/app/calendar/calendar.component';
+import { CalendarManagerService } from '../calendar/calendar-manager.service';
+
 import { InvoiceFormComponent } from './invoice-form/invoice-form.component';
 import { Invoice } from 'src/app/@types/invoice';
+
+import { Timesheet } from 'src/app/shared/timesheet.model';
+import { TimesheetService } from '../shared/timesheet.service';
 
 
 @Component({
@@ -43,15 +45,31 @@ export class EditTimesheetComponent implements OnInit {
 
   mode: string;
 
+  mailSubject = (): string => {
+    return   'Acrabadabra  - Compte rendu d\'activité de ' + this.timesheet.consultant.name;
+  }
+  mailBody = (): string => {
+    return  'Bonjour,%0d%0a' +
+            '%0d%0a' +
+            'Un compte rendu d\'activité est consultable sur http://Acrabadabra.com.%0d%0a' +
+            '%0d%0a' +
+            'Consultant : ' + this.timesheet.consultant.name + '%0d%0a' +
+            'Mission : ' + this.timesheet.mission.title + '%0d%0a' +
+            'Journées de prestation : ' + this.calendarManager.getWorkedTime(this.timesheet).toLocaleString('fr') + '%0d%0a' +
+            '%0d%0a' +
+            'Vous pouvez le consulter et télécharger la facture ici : ' +
+            window.location.origin + '/timesheet/review/' + this.reviewToken;
+  }
+
   constructor(
+    private calendarManager: CalendarManagerService,
     private changeDetector: ChangeDetectorRef,
     private route: ActivatedRoute,
-    private serializer: SerializerService,
+    private timesheetService: TimesheetService,
     private titleService: Title,
   ) {}
 
   ngOnInit(): void {
-
     this.route.params.subscribe((params: Params) => {
       if (params.hasOwnProperty('token')) {
         this.initDataFromUrlParams(params);
@@ -68,7 +86,7 @@ export class EditTimesheetComponent implements OnInit {
   }
 
   initDataFromUrlParams(params: Params): void {
-    const data: TimesheetTokenData = this.serializer.deserialize(params['token']);
+    const data = this.timesheetService.deTokenize(params['token']);
     this.mode = data.mode;
     this.timesheet = data.timesheet;
     this.showLinks = true;
@@ -85,7 +103,11 @@ export class EditTimesheetComponent implements OnInit {
       this.createTimesheetTokens();
       setTimeout(() => { this.initChangesDetection(); });
     }
-    this.changeDetector.detectChanges();
+
+    setTimeout(() => {
+      this.changeDetector.detectChanges();
+      this.showLinks = true;
+    });
   }
 
   initChangesDetection(invoice?: boolean): void {
@@ -97,27 +119,29 @@ export class EditTimesheetComponent implements OnInit {
       });
     }
 
-    if (invoice === undefined || invoice) {
-      this.form.valueChanges.subscribe(() => {
-        this.showLinks = false;
-      });
+    this.form.valueChanges.subscribe((test) => {
+      this.showLinks = false;
+    });
 
-      this.timesheetPicker.refresh.subscribe(() => {
-        this.showLinks = false;
-      });
-    }
+    this.timesheetPicker.refresh.subscribe(() => {
+      this.showLinks = false;
+    });
   }
 
   onSubmitTimesheet(): void {
     if (this.checkFormsValidity()) {
       this.createTimesheet();
-      this.createTimesheetTokens();
       if (this.generateInvoice) {
         this.invoiceToken = this.createInvoiceToken();
         this.createTimesheetTokens(this.invoiceForm.invoice);
+      } else {
+        this.createTimesheetTokens();
       }
       this.showModal = true;
       this.showLinks = true;
+      this.changeDetector.detectChanges();
+      this.initChangesDetection(this.generateInvoice);
+      document.querySelector('#bottom').scrollIntoView();
     } else {
       this.showValidationMessages();
       this.showErrorModal = true;
@@ -153,13 +177,13 @@ export class EditTimesheetComponent implements OnInit {
   }
 
   createTimesheetTokens(invoice: Invoice = null): void {
-    const data: TimesheetTokenData = {
+    const data = {
       timesheet: this.timesheet,
       invoice: invoice,
       mode: '',
     };
-    this.editToken = this.serializer.serialize({ ...data, mode: 'edit' });
-    this.reviewToken = this.serializer.serialize({ ...data, mode: 'review' });
+    this.editToken = this.timesheetService.tokenize({ ...data, mode: 'edit' });
+    this.reviewToken = this.timesheetService.tokenize({ ...data, mode: 'review' });
   }
 
   createInvoiceToken(invoice?: Invoice): string {
@@ -169,7 +193,7 @@ export class EditTimesheetComponent implements OnInit {
       time: this.timesheetPicker.totalWorkedTime,
       invoice: invoice || this.invoiceForm.invoice,
     };
-    return this.serializer.serialize(data);
+    return this.timesheetService.tokenize(data);
   }
 
   minifyTimesheet(timesheet: CalendarEvent[]): any {
@@ -195,11 +219,7 @@ export class EditTimesheetComponent implements OnInit {
   }
 
   onModalClose(toggle: string) {
-    if (toggle === 'showModal') {
-      document.querySelector('#bottom').scrollIntoView();
-    }
     this[toggle] = false;
-    this.initChangesDetection(this.generateInvoice);
   }
 }
 
