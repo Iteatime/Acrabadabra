@@ -160,7 +160,6 @@ export class EditCraComponent implements OnInit {
       this.validationMessage = 'Si vous modifiez le CRA, vous devrez le valider à nouveau et utiliser le nouveau lien de partage.';
       this.validationMessageType = 'success';
       this.showValidationMessage = true;
-      document.querySelector('#bottom').scrollIntoView();
       this.showLinks = true;
       this.changeDetector.detectChanges();
       this.initChangesDetection(this.generateInvoice);
@@ -170,7 +169,6 @@ export class EditCraComponent implements OnInit {
       this.validationMessage = 'Veuillez vérifier votre saisie';
       this.validationMessageType = 'error';
       this.showValidationMessage = true;
-      document.querySelector('#top').scrollIntoView();
     }
   }
 
