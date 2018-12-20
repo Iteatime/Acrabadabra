@@ -1,86 +1,85 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { Cra } from 'src/app/shared/cra.model';
-import { formData } from 'src/app/@types/formData';
-import { SerializerService } from 'src/app/shared/serialization/serializer.service';
+import { getMonth, getDate, differenceInMinutes, getYear, lastDayOfMonth } from 'date-fns';
 
-import { CalendarComponent } from './calendar/calendar.component';
 import { CalendarEvent } from 'calendar-utils';
 
-import { getMonth, getDate, differenceInMinutes, getYear, lastDayOfMonth } from 'date-fns';
+import { CalendarComponent } from 'src/app/calendar/calendar.component';
+import { CalendarManagerService } from '../calendar/calendar-manager.service';
+
 import { InvoiceFormComponent } from './invoice-form/invoice-form.component';
 import { Invoice } from 'src/app/@types/invoice';
 
+import { Timesheet } from 'src/app/shared/timesheet.model';
+import { TimesheetService } from '../shared/timesheet.service';
+
 
 @Component({
-  selector: 'app-edit-cra',
-  templateUrl: './edit-cra.component.html',
-  styleUrls: ['./edit-cra.component.scss'],
+  selector: 'app-edit-timesheet',
+  templateUrl: './edit-timesheet.component.html',
+  styleUrls: ['./edit-timesheet.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class EditCraComponent implements OnInit {
+export class EditTimesheetComponent implements OnInit {
   @ViewChild (CalendarComponent) timesheetPicker: CalendarComponent;
   @ViewChild (InvoiceFormComponent) invoiceForm: InvoiceFormComponent;
   @ViewChild ('form') form: NgForm;
 
-  cra = new Cra();
-  editToken: string;
-  reviewToken: string;
-  invoiceToken: string;
-
-  showModal = false;
-  showErrorModal = false;
-  showLinks = false;
-  generateInvoice = false;
-
+  mode: string;
   title = {
     add: 'Saisir',
-    edit: 'Editer',
-    review: 'Consulter',
+    edit: 'Modifier',
   };
 
-  mode: string;
+  timesheet = new Timesheet();
+  editToken: string;
+  reviewToken: string;
+
+  generateInvoice = false;
+  invoiceToken: string;
+
+  showLinks = false;
+  showValidationMessage = false;
+  validationMessage: string;
+  validationMessageType: string;
+
+  originUrl = window.location.origin;
 
   mailSubject = (): string => {
-    return   'Acrabadabra  - Compte rendu d\'activité de ' + this.cra.consultant.name;
+    return   'Acrabadabra  - Compte rendu d\'activité de ' + this.timesheet.consultant.name;
   }
   mailBody = (): string => {
     return  'Bonjour,%0d%0a' +
             '%0d%0a' +
             'Un compte rendu d\'activité est consultable sur http://Acrabadabra.com.%0d%0a' +
             '%0d%0a' +
-            'Consultant : ' + this.cra.consultant.name + '%0d%0a' +
-            'Mission : ' + this.cra.mission.title + '%0d%0a' +
-            'Journées de prestation : ' + this.timesheetPicker.totalWorkedTime.toLocaleString('fr') + '%0d%0a' +
+            'Consultant : ' + this.timesheet.consultant.name + '%0d%0a' +
+            'Mission : ' + this.timesheet.mission.title + '%0d%0a' +
+            'Journées de prestation : ' + this.calendarManager.getWorkedTime(this.timesheet).toLocaleString('fr') + '%0d%0a' +
             '%0d%0a' +
             'Vous pouvez le consulter et télécharger la facture ici : ' +
-            window.location.origin + '/cra/edit?data=' + this.reviewToken;
+            this.originUrl + '/timesheet/review/' + this.reviewToken;
   }
 
   constructor(
-    private changeDetector: ChangeDetectorRef,
+    private calendarManager: CalendarManagerService,
     private route: ActivatedRoute,
-    private serializer: SerializerService,
+    private timesheetService: TimesheetService,
     private titleService: Title,
   ) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(
-      (params: Params) => {
-        if (params.hasOwnProperty('data')) {
-          this.initDataFromUrlParams(params);
-
-          if (this.mode === 'review') {
-            this.disableInputs();
-          }
-        } else {
-          this.mode = 'add';
-        }
+    this.route.params.subscribe((params: Params) => {
+      if (params.hasOwnProperty('token')) {
+        this.initDataFromUrlParams(params);
+      } else {
+        this.mode = 'add';
+        this.initChangesDetection(false);
       }
-    );
+    });
 
     this.setPageTitle(this.title[this.mode] + ' un compte rendu d\'activité');
   }
@@ -90,76 +89,70 @@ export class EditCraComponent implements OnInit {
   }
 
   initDataFromUrlParams(params: Params): void {
-    const datas: formData = this.serializer.deserialize(params['data']);
-    this.mode = datas.mode;
-    this.cra = datas.cra;
+    const data = this.timesheetService.deTokenize(params['token']);
+    this.mode = data.mode;
+    this.timesheet = data.timesheet;
+    this.showLinks = true;
 
-    if (datas.hasOwnProperty('invoice')) {
-      if (this.mode !== 'review') {
-        this.generateInvoice = true;
-        setTimeout(() => {
-          this.invoiceForm.invoice = datas.invoice;
-          this.initChangesDetection(true);
-        });
-      }
-
-      this.createTimesheetTokens(datas.invoice);
-      this.invoiceToken = this.createInvoiceToken(datas.invoice);
+    if (data.invoice !== null) {
+      this.generateInvoice = true;
+      setTimeout(() => {
+        this.invoiceForm.invoice = data.invoice;
+        this.initChangesDetection(true);
+      });
+      this.createTimesheetTokens(data.invoice);
+      this.invoiceToken = this.createInvoiceToken(data.invoice);
     } else {
       this.createTimesheetTokens();
       setTimeout(() => { this.initChangesDetection(); });
     }
-
-    setTimeout(() => {
-      this.showLinks = true;
-      this.changeDetector.detectChanges();
-    });
+    this.showLinks = true;
   }
 
   initChangesDetection(invoice?: boolean): void {
     if (invoice) {
       setTimeout(() => {
         this.invoiceForm.form.valueChanges.subscribe(() => {
-          this.showLinks = false;
+          this.somethingChanged();
         });
       });
     }
 
-    if (invoice === undefined || invoice) {
-      this.form.valueChanges.subscribe(() => {
-        this.showLinks = false;
-      });
+    this.form.valueChanges.subscribe(() => {
+      this.somethingChanged();
+    });
 
-      this.timesheetPicker.refresh.subscribe(() => {
-        this.showLinks = false;
-      });
-    }
-  }
-
-  disableInputs(): void {
-    Object.keys(this.form.controls).forEach(control => {
-      this.form.controls['control'].disable();
+    this.timesheetPicker.refresh.subscribe(() => {
+      this.somethingChanged();
     });
   }
 
-  onSubmitCRA(): void {
+  somethingChanged() {
+    this.showLinks = false;
+    this.showValidationMessage = false;
+  }
+
+  onSubmitTimesheet(): void {
     if (this.checkFormsValidity()) {
-      this.createCRA();
+      this.createTimesheet();
       if (this.generateInvoice) {
-        this.createTimesheetTokens(this.invoiceForm.invoice);
         this.invoiceToken = this.createInvoiceToken();
+        this.createTimesheetTokens(this.invoiceForm.invoice);
       } else {
         this.createTimesheetTokens();
       }
-      this.showModal = true;
+
+      this.validationMessage = 'Si vous modifiez le CRA, vous devrez le valider à nouveau et utiliser le nouveau lien de partage.';
+      this.validationMessageType = 'success';
+      this.showValidationMessage = true;
       this.showLinks = true;
-      this.changeDetector.detectChanges();
       this.initChangesDetection(this.generateInvoice);
       document.querySelector('#bottom').scrollIntoView();
     } else {
       this.showValidationMessages();
-      this.showErrorModal = true;
-      document.querySelector('#top').scrollIntoView();
+      this.validationMessage = 'Veuillez vérifier votre saisie';
+      this.validationMessageType = 'error';
+      this.showValidationMessage = true;
     }
   }
 
@@ -181,33 +174,33 @@ export class EditCraComponent implements OnInit {
     }
   }
 
-  createCRA(): void {
+  createTimesheet(): void {
     const timesheet = this.timesheetPicker.timesheet;
     if (timesheet[0] !== undefined) {
-      this.cra.timesheet = this.minifyTimesheet(timesheet);
+      this.timesheet.workingDays = this.minifyTimesheet(timesheet);
     } else {
-      this.cra.timesheet = [];
+      this.timesheet.workingDays = [];
     }
   }
 
-  createTimesheetTokens(invoice?: Invoice): void {
-    const data: formData = {
-      cra: this.cra,
+  createTimesheetTokens(invoice: Invoice = null): void {
+    const data = {
+      timesheet: this.timesheet,
       invoice: invoice,
       mode: '',
     };
-    this.editToken = this.serializer.serialize({ ...data, mode: 'edit' });
-    this.reviewToken = this.serializer.serialize({ ...data, mode: 'review' });
+    this.editToken = this.timesheetService.tokenize({ ...data, mode: 'edit' });
+    this.reviewToken = this.timesheetService.tokenize({ ...data, mode: 'review' });
   }
 
   createInvoiceToken(invoice?: Invoice): string {
     const data = {
-      consultant: this.cra.consultant,
-      mission: this.cra.mission,
+      consultant: this.timesheet.consultant,
+      mission: this.timesheet.mission,
       time: this.timesheetPicker.totalWorkedTime,
       invoice: invoice || this.invoiceForm.invoice,
     };
-    return this.serializer.serialize(data);
+    return this.timesheetService.tokenize(data);
   }
 
   minifyTimesheet(timesheet: CalendarEvent[]): any {
@@ -230,10 +223,6 @@ export class EditCraComponent implements OnInit {
     }
 
     return minitimesheet;
-  }
-
-  onModalClose(toggle: string) {
-    this[toggle] = false;
   }
 }
 

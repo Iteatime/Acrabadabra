@@ -48,6 +48,8 @@ export class CalendarComponent implements OnInit {
     this.refresh.subscribe(() => {
       this.changeDetector.detectChanges();
     });
+
+    setTimeout(() => { this.changeDetector.detectChanges(); });
   }
 
   initTimesheet(): void {

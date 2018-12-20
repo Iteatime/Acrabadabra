@@ -1,5 +1,8 @@
 <div class="calendar">
-  <div class="calendar__header">
+  <div
+  *ngIf="picking"
+  class="calendar__header"
+  >
     <div class="calendar__header__daycount">
       <span>Nombre total de journées :&nbsp;</span><span class="highlight">{{ totalWorkedTime.toLocaleString(locale) }}</span>
     </div>
