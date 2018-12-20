@@ -12,68 +12,6 @@
           <h2>{{ title[mode] }} un compte rendu d'activité</h2>
       </div>
 
-      <div class="edit-cra__wrapper__modals">
-          <div
-          class="edit-cra__wrapper__modals__modal modal show"
-          tabindex="-1"
-          role="dialog"
-          aria-label="Close"
-          [toggled]="showModal"
-          (close)="onModalClose('showModal')"
-          >
-              <div class="edit-cra__wrapper__modals__modal__dialog modal-dialog" role="document">
-                  <div class="edit-cra__wrapper__modals__modal__dialog__content modal-content">
-                      <div class="edit-cra__wrapper__modals__modal__dialog__content__header modal-header">
-                          <h5 class="modal-title">Votre CRA a bien été créé</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true" aria-label="Close">&times;</span>
-                          </button>
-                      </div>
-                      <div class="edit-cra__wrapper__modals__modal__dialog__content__body modal-body">
-                          <u>
-                            Si vous modifiez le CRA, vous devrez le valider à nouveau et utiliser le nouveau lien de partage.
-                          </u>
-                      </div>
-                      <div class="edit-cra__wrapper__modals__modal__dialog__content__footer modal-footer">
-                          <button data-text="Fermer" type="button" class="edit-cra__wrapper__modals__modal__dialog__content__footer__button" data-dismiss="modal" aria-label="Close">
-                              Fermer
-                          </button>
-                      </div>
-                  </div>
-              </div>
-          </div>
-
-          <div
-          class="edit-cra__wrapper__modals__modal modal show"
-          tabindex="-1"
-          role="dialog"
-          aria-label="Close"
-          [toggled]="showErrorModal"
-          (close)="onModalClose('showErrorModal')"
-          >
-              <div class="edit-cra__wrapper__modals__modal__dialog modal-dialog" role="document">
-                  <div class="edit-cra__wrapper__modals__modal__dialog__content modal-content">
-                      <div class="edit-cra__wrapper__modals__modal__dialog__content__header modal-header">
-                          <h5 class="modal-title">Validation impossible</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true" aria-label="Close">&times;</span>
-                          </button>
-                      </div>
-                      <div class="edit-cra__wrapper__modals__modal__dialog__content__body modal-body">
-                          <p class="">
-                              Veuillez vérifier votre saisie.
-                          </p>
-                      </div>
-                      <div data-text="Fermer" class="edit-cra__wrapper__modals__modal__dialog__content__footer modal-footer">
-                          <button type="button" class="edit-cra__wrapper__modals__modal__dialog__content__footer__button" data-dismiss="modal" aria-label="Close">
-                              Fermer
-                          </button>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-
       <form class="edit-cra__wrapper__form" #form="ngForm">
           <div id="prestataire" class="edit-cra__wrapper__form__block">
               <h4 class="edit-cra__wrapper__form__block__title">Consultant</h4>
@@ -195,10 +133,19 @@
                 name="invoiceToggle"
                 type="checkbox"
                 [(ngModel)]="generateInvoice"
+                (change)="initChangesDetection(generateInvoice)"
                 >
                 Générer une facture
               </label>
               <app-invoice-form *ngIf="generateInvoice"></app-invoice-form>
+          </div>
+
+          <div
+          class="edit-cra__wrapper__form__message"
+          *ngIf="showValidationMessage"
+          [ngClass]="'edit-cra__wrapper__form__message--' + validationMessageType"
+          >
+            <u>{{ validationMessage }}</u>
           </div>
 
           <div class="edit-cra__wrapper__form__submit">
@@ -211,8 +158,6 @@
               <span>Valider mon CRA</span>
             </button>
           </div>
-
-
 
           <div *ngIf="showLinks" class="edit-cra__wrapper__form__icons">
             <div *ngIf="generateInvoice || mode === 'review'" class="edit-cra__wrapper__form__icons__item">
@@ -236,10 +181,10 @@
 							</div>
 							<div class="edit-cra__wrapper__form__icons__item">
                 <a
-                [copyToClipboard]="editLink.href"
+                href="#"
+                [copyToClipboard]="originUrl + '/timesheet/edit/' + editToken"
                 [copyToClipboardMessage]="'Lien copié'"
                 [copyToClipboardMessageParent]="editLink.parentNode"
-                [href]="'/timesheet/edit/' + editToken"
                 #editLink
                 >
                   <i class="material-icons">edit</i>
@@ -248,10 +193,10 @@
 							</div>
 							<div class="edit-cra__wrapper__form__icons__item">
                 <a
-                [copyToClipboard]="shareLink.href"
+                href="#"
+                [copyToClipboard]="originUrl + '/timesheet/review/' + reviewToken"
                 [copyToClipboardMessage]="'Lien copié'"
                 [copyToClipboardMessageParent]="shareLink.parentNode"
-                [href]="'/timesheet/review/' + reviewToken"
                 #shareLink
                 >
                   <i class="material-icons">remove_red_eye</i>

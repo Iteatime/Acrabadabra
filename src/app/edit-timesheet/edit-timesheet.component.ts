@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -28,22 +28,25 @@ export class EditTimesheetComponent implements OnInit {
   @ViewChild (InvoiceFormComponent) invoiceForm: InvoiceFormComponent;
   @ViewChild ('form') form: NgForm;
 
-  timesheet = new Timesheet();
-  editToken: string;
-  reviewToken: string;
-  invoiceToken: string;
-
-  showModal = false;
-  showErrorModal = false;
-  showLinks = false;
-  generateInvoice = false;
-
+  mode: string;
   title = {
     add: 'Saisir',
     edit: 'Modifier',
   };
 
-  mode: string;
+  timesheet = new Timesheet();
+  editToken: string;
+  reviewToken: string;
+
+  generateInvoice = false;
+  invoiceToken: string;
+
+  showLinks = false;
+  showValidationMessage = false;
+  validationMessage: string;
+  validationMessageType: string;
+
+  originUrl = window.location.origin;
 
   mailSubject = (): string => {
     return   'Acrabadabra  - Compte rendu d\'activité de ' + this.timesheet.consultant.name;
@@ -58,12 +61,11 @@ export class EditTimesheetComponent implements OnInit {
             'Journées de prestation : ' + this.calendarManager.getWorkedTime(this.timesheet).toLocaleString('fr') + '%0d%0a' +
             '%0d%0a' +
             'Vous pouvez le consulter et télécharger la facture ici : ' +
-            window.location.origin + '/timesheet/review/' + this.reviewToken;
+            this.originUrl + '/timesheet/review/' + this.reviewToken;
   }
 
   constructor(
     private calendarManager: CalendarManagerService,
-    private changeDetector: ChangeDetectorRef,
     private route: ActivatedRoute,
     private timesheetService: TimesheetService,
     private titleService: Title,
@@ -75,6 +77,7 @@ export class EditTimesheetComponent implements OnInit {
         this.initDataFromUrlParams(params);
       } else {
         this.mode = 'add';
+        this.initChangesDetection(false);
       }
     });
 
@@ -103,29 +106,30 @@ export class EditTimesheetComponent implements OnInit {
       this.createTimesheetTokens();
       setTimeout(() => { this.initChangesDetection(); });
     }
-
-    setTimeout(() => {
-      this.changeDetector.detectChanges();
-      this.showLinks = true;
-    });
+    this.showLinks = true;
   }
 
   initChangesDetection(invoice?: boolean): void {
     if (invoice) {
       setTimeout(() => {
         this.invoiceForm.form.valueChanges.subscribe(() => {
-          this.showLinks = false;
+          this.somethingChanged();
         });
       });
     }
 
-    this.form.valueChanges.subscribe((test) => {
-      this.showLinks = false;
+    this.form.valueChanges.subscribe(() => {
+      this.somethingChanged();
     });
 
     this.timesheetPicker.refresh.subscribe(() => {
-      this.showLinks = false;
+      this.somethingChanged();
     });
+  }
+
+  somethingChanged() {
+    this.showLinks = false;
+    this.showValidationMessage = false;
   }
 
   onSubmitTimesheet(): void {
@@ -137,15 +141,18 @@ export class EditTimesheetComponent implements OnInit {
       } else {
         this.createTimesheetTokens();
       }
-      this.showModal = true;
+
+      this.validationMessage = 'Si vous modifiez le CRA, vous devrez le valider à nouveau et utiliser le nouveau lien de partage.';
+      this.validationMessageType = 'success';
+      this.showValidationMessage = true;
       this.showLinks = true;
-      this.changeDetector.detectChanges();
       this.initChangesDetection(this.generateInvoice);
       document.querySelector('#bottom').scrollIntoView();
     } else {
       this.showValidationMessages();
-      this.showErrorModal = true;
-      document.querySelector('#top').scrollIntoView();
+      this.validationMessage = 'Veuillez vérifier votre saisie';
+      this.validationMessageType = 'error';
+      this.showValidationMessage = true;
     }
   }
 
@@ -216,10 +223,6 @@ export class EditTimesheetComponent implements OnInit {
     }
 
     return minitimesheet;
-  }
-
-  onModalClose(toggle: string) {
-    this[toggle] = false;
   }
 }
 
