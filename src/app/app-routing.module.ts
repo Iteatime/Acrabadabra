@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { HomeComponent } from './home/home.component';
-import { EditCraComponent } from './cras/edit-cra/edit-cra.component';
-import { CrasComponent } from './cras/cras.component';
+
+import { EditTimesheetComponent } from './edit-timesheet/edit-timesheet.component';
+
+import { ReviewTimesheetComponent } from './review-timesheet/review-timesheet.component';
+
+import { TimesheetService } from './shared/timesheet.service';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, },
-  {
-    path: 'cra',
-    component: CrasComponent,
-    children:
-    [
-      { path: 'edit', component: EditCraComponent, },
-    ],
-  },
+  { path: 'timesheet/create', component: EditTimesheetComponent, canActivate: [TimesheetService] },
+  { path: 'timesheet/edit/:token', component: EditTimesheetComponent, canActivate: [TimesheetService] },
+  { path: 'timesheet/review/:token', component: ReviewTimesheetComponent, canActivate: [TimesheetService] },
 ];
 
 @NgModule({

@@ -1,7 +1,7 @@
 <div class="edit-cra">
   <div class="edit-cra__header">
       <div class="edit-cra__header__container">
-          <a href="./" title="Retour à l'accueil">
+          <a href="" title="Retour à l'accueil">
               <img class="edit-cra__header__container__logo" src="assets/images/logo.white.svg" alt="logo acrabadabra" onerror="this.removeAttribute('onerror'); this.src='//assets/images/logo.white.png'">
           </a>
       </div>
@@ -25,7 +25,7 @@
                           class="form-control"
                           name="consultantNameInput"
                           [disabled]="mode === 'review'"
-                          [(ngModel)]="cra.consultant.name"
+                          [(ngModel)]="timesheet.consultant.name"
                           #consultantNameInput="ngModel"
                           >
                           <div
@@ -48,7 +48,7 @@
                           class="form-control"
                           name="consultantEmailInput"
                           [disabled]="mode === 'review'"
-                          [(ngModel)]="cra.consultant.email"
+                          [(ngModel)]="timesheet.consultant.email"
                           #consultantEmailInput="ngModel"
                           >
                           <div
@@ -79,7 +79,7 @@
                           class="form-control"
                           name="missionTitleInput"
                           [disabled]="mode === 'review'"
-                          [(ngModel)]="cra.mission.title"
+                          [(ngModel)]="timesheet.mission.title"
                           #missionTitleInput="ngModel"
                           >
                           <div
@@ -102,7 +102,7 @@
                           class="form-control"
                           name="missionFinalClientInput"
                           [disabled]="mode === 'review'"
-                          [(ngModel)]="cra.mission.client"
+                          [(ngModel)]="timesheet.mission.client"
                           #missionFinalClientInput="ngModel"
                           >
                           <div
@@ -121,7 +121,7 @@
           <div class="edit-cra__wrapper__form__component">
               <h4 class="edit-cra__wrapper__form__component__title">Compte rendu d'activité</h4>
               <app-calendar
-              [minifiedTimesheet]="cra.timesheet"
+              [minifiedTimesheet]="timesheet.workingDays"
               [picking]="mode !== 'review'"
               >
               </app-calendar>
@@ -153,7 +153,7 @@
             data-text="Valider mon CRA"
             *ngIf="mode !== 'review'"
             class="edit-cra__wrapper__form__submit__button"
-            (click)="onSubmitCRA()"
+            (click)="onSubmitTimesheet()"
             >
               <span>Valider mon CRA</span>
             </button>
@@ -181,10 +181,10 @@
 							</div>
 							<div class="edit-cra__wrapper__form__icons__item">
                 <a
-                [copyToClipboard]="editLink.href"
+                href="#"
+                [copyToClipboard]="originUrl + '/timesheet/edit/' + editToken"
                 [copyToClipboardMessage]="'Lien copié'"
                 [copyToClipboardMessageParent]="editLink.parentNode"
-                [href]="'/cra/edit?data=' + editToken"
                 #editLink
                 >
                   <i class="material-icons">edit</i>
@@ -193,10 +193,10 @@
 							</div>
 							<div class="edit-cra__wrapper__form__icons__item">
                 <a
-                [copyToClipboard]="shareLink.href"
+                href="#"
+                [copyToClipboard]="originUrl + '/timesheet/review/' + reviewToken"
                 [copyToClipboardMessage]="'Lien copié'"
                 [copyToClipboardMessageParent]="shareLink.parentNode"
-                [href]="'/cra/edit?data=' + reviewToken"
                 #shareLink
                 >
                   <i class="material-icons">remove_red_eye</i>
