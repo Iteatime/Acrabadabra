@@ -1,8 +1,8 @@
 import { Consultant } from './consultant';
 import { Mission } from './mission';
 
-export type Cra = {
+export type Timesheet = {
   consultant: Consultant,
   mission: Mission,
-  timesheet: any;
+  workingDays: any;
 };
