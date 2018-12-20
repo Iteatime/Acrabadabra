@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, OnInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 
 import { Subject } from 'rxjs';
 
@@ -39,12 +39,17 @@ export class CalendarComponent implements OnInit {
   weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
   weekendDays: number[] = [DAYS_OF_WEEK.SATURDAY, DAYS_OF_WEEK.SUNDAY];
   viewDate: Date = new Date();
-  totalWorkedTime: number;
+  totalWorkedTime = 0;
 
-  constructor() {}
+  constructor(private changeDetector: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.initTimesheet();
+    this.refresh.subscribe(() => {
+      this.changeDetector.detectChanges();
+    });
+
+    setTimeout(() => { this.changeDetector.detectChanges(); });
   }
 
   initTimesheet(): void {
