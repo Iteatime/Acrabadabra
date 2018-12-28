@@ -8,7 +8,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "watch:front": "ng serve",
-    "watch:back": " npx --node-arg=--inspect netlify-lambda -c ./webpack.functions.js serve src/functions",
+    "watch:back": "netlify-lambda serve src/functions",
     "dev": "concurrently --names \"FRONT,BACK\" --prefix-colors \"reset.bgBlue.bold,reset.bgRed.bold\"  \"npm:watch:front\" \"npm:watch:back\""
   },
   "private": true,
@@ -56,7 +56,6 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "lambda-tester": "^3.5.0",
     "netlify-lambda": "^1.0.2",
-    "npx": "^10.2.0",
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",

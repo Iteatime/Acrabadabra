@@ -31,12 +31,6 @@ Ex: A get on this root `localhost:4200/.netlify/functions/status` will return a 
 
 > Here is a [documentation](https://www.netlify.com/docs/functions/#javascript-lambda-functions) to know more about `netlify lambda function`
 
-#### 3.2 Debugging lambdas
-
-We use the inspector protocol to ease lambda debugging. You can get dignostic infos using an inspector client like Chrome DevTools.
-
-Details [here](https://nodejs.org/en/docs/guides/debugging-getting-started/)
-
 ### 4 Unit tests:
 
  To perform unit tests run:
