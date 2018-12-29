@@ -1,0 +1,27 @@
+#invoice {
+  width: 21cm;
+  min-height: 29.7cm;
+  padding: 1.5cm;
+  margin: 1cm auto;
+  border: 1px #D3D3D3 solid;
+  background: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.headers-table, .price-details-table{
+	width: 100%;
+	margin-bottom: 50px;
+}
+
+.client{
+	text-align: right;
+}
+
+.invoice-date{
+	margin-top: 50px;
+	margin-bottom: 5px;
+}
+
+.price-details-table{
+	border: 1px solid;
+}

@@ -21,6 +21,7 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { CopyToClipboardDirective } from './shared/copy-to-clipboard.directive';
 import { MailtoDirective } from './shared/mailto.directive';
 import { ModalDirective } from './shared/style/modal.directive';
+import { PdfInvoiceComponent } from './pdf-invoice/pdf-invoice.component';
 
 registerLocaleData(localeFr);
 
@@ -39,6 +40,7 @@ registerLocaleData(localeFr);
     CopyToClipboardDirective,
     MailtoDirective,
     ModalDirective,
+    PdfInvoiceComponent,
 
   ],
   imports: [
