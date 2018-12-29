@@ -11,10 +11,13 @@ import { ActivatedRoute } from '@angular/router';
 
 export class PdfInvoiceComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute) { }
+  data;
+
+  constructor(private route: ActivatedRoute) { 
+    this.data = JSON.parse(atob(this.route.snapshot.paramMap.get('data')));
+  }
 
   ngOnInit() {
-    this.data = JSON.parse(atob(this.route.snapshot.paramMap.get('data')));
 
     html2canvas(document.getElementById('invoice')).then(canvas => {    
       let pdf = new jsPDF('p', 'mm', 'a4'); 
