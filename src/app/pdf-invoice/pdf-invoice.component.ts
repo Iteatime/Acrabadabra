@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as html2canvas from 'html2canvas';
 import * as jsPDF from 'jspdf';
 import { ActivatedRoute } from '@angular/router';
+import { startOfMonth, endOfMonth } from 'date-fns';
 
 @Component({
   selector: 'app-pdf-invoice',
@@ -39,4 +40,10 @@ export class PdfInvoiceComponent implements OnInit {
     return +sum + '€';
   }
 
+  formatDuration(period: string): string {
+    return 'du ' +
+          startOfMonth(period).toLocaleString(this.local, { day: '2-digit', month: '2-digit', year: 'numeric'}) +
+          ' au ' +
+          endOfMonth(period).toLocaleString(this.local, { day: '2-digit', month: '2-digit', year: 'numeric'});
+  }
 }

@@ -30,4 +30,28 @@
 			<td>{{ formatCurency(data.time * data.invoice.dailyRate) }}</td>
 		</tr>
   </table>
+
+  <table class="summary">
+    <tr>
+      <td class="fifty additional-information">
+        <div>Date de règlement : {{ formatDate(data.invoice.paymentDate) }}</div>
+        <div>Modalités de paiement : {{ data.invoice.paymentModality }}</div>
+        <div>Date d’exécution de la vente ou de la prestation : {{ formatDuration(data.period) }}</div>
+        <div *ngIf="data.invoice.paymentLatePenalty">
+          Tout retard de paiement donnera lieu, en plus des pénalités de retard (10 % par an), au versement d'une indemnité forfaitaire de 40 € pour frais de recouvrement.
+        </div>
+      </td>
+      <td class="total">
+        <h2>Total HT : {{ formatCurency(total()) }}</h2>
+        <ng-container *ngIf="data.invoice.provider.vatExemption; then withoutVAT; else withVAT"></ng-container>
+        <ng-template #withoutVAT>
+          <div>TVA non applicable, art 293 B du CGI</div>
+        </ng-template>
+        <ng-template #withVAT>
+          <div>Montant TVA 20% : {{ formatCurency(vat()) }}</div>
+          <h2>Total TTC : {{ formatCurency(total() + vat()) }}</h2>
+        </ng-template>
+      </td>
+    </tr>
+  </table>
 </div>

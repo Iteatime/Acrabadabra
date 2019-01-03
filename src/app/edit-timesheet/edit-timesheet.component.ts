@@ -197,7 +197,8 @@ export class EditTimesheetComponent implements OnInit {
     const data = {
       consultant: this.timesheet.consultant,
       mission: this.timesheet.mission,
-      time: this.timesheetPicker.totalWorkedTime,
+      time: this.calendarManager.getWorkedTime(this.timesheet),
+      period: this.calendarManager.getDate(this.timesheet),
       invoice: invoice || this.invoiceForm.invoice,
     };
     return this.timesheetService.tokenize(data);
