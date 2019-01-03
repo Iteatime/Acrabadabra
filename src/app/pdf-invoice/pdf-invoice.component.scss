@@ -1,3 +1,5 @@
+@import '../style/vars';
+
 #invoice {
   width: 21cm;
   min-height: 29.7cm;
@@ -6,22 +8,37 @@
   border: 1px #D3D3D3 solid;
   background: white;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
+  div {
+    margin-top: 10px;
+  }
 }
 
-.headers-table, .price-details-table{
+.headers-table, .price-details-table {
 	width: 100%;
-	margin-bottom: 50px;
+  margin-bottom: 50px;
 }
 
-.client{
+.headers-table {
+  tr {
+    vertical-align: initial;
+    font-size: 11pt;
+  }
+}
+
+.fifty {
+  width: 50%;
+}
+
+#client {
 	text-align: right;
 }
 
-.invoice-date{
+.invoice-date {
 	margin-top: 50px;
 	margin-bottom: 5px;
 }
 
-.price-details-table{
-	border: 1px solid;
+.price-details-table {
+  border: 1px solid;
 }
