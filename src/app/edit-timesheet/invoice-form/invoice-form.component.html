@@ -61,6 +61,7 @@
                         <input
                         type="text"
                         required
+                        pattern="[0-9]+"
                         class="form-control"
                         name="invoiceDailyRateInput"
                         [(ngModel)]="invoice.dailyRate"
@@ -69,6 +70,9 @@
                         <div *ngIf="dailyRate.invalid && (dailyRate.dirty || dailyRate.touched)" class="alert alert-danger">
                             <div *ngIf="dailyRate.errors['required']">
                                 Ce champ est obligatoire.
+                            </div>
+                            <div *ngIf="dailyRate.errors['pattern']">
+                                Doit être un nombre correct.
                             </div>
                         </div>
                     </div>

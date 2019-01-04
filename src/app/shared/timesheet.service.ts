@@ -4,6 +4,8 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanActivate } from
 import { Base64 } from 'js-base64';
 
 import { Observable } from 'rxjs';
+import { Invoice } from '../@types/invoice';
+import { Timesheet } from '../@types/timesheet';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +24,28 @@ export class TimesheetService implements CanActivate {
     const deserializedContent: any = JSON.parse(decodedValue);
 
     return deserializedContent;
+  }
+
+  createTimesheetTokens(timesheet: Timesheet, invoice: Invoice = null): string[] {
+    const data = {
+      timesheet: timesheet,
+      invoice: invoice,
+      mode: '',
+    };
+
+    return [
+      this.tokenize({ ...data, mode: 'edit' }),
+      this.tokenize({ ...data, mode: 'review' }),
+    ];
+  }
+
+  createInvoiceToken(timesheet: Timesheet, invoice: Invoice): string {
+    const data = {
+      timesheet: timesheet,
+      invoice: invoice,
+    };
+
+    return this.tokenize(data);
   }
 
   canActivate(

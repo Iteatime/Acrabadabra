@@ -30,14 +30,12 @@ export class Company {
   }
 
 
-  getVATNumber(): string {
+  getFormattedVATNumber(): string {
     if (this.vatExemption) {
-      return '';
+      return undefined;
     } else {
       const vat = this.vatNumber.toString();
-      // N° TVA intra-communautaire : FR 24 790 488 894.
-      return  'N° TVA intra-communautaire : ' +
-              vat.substring(0, 2) + ' ' +
+      return  vat.substring(0, 2) + ' ' +
               vat.substring(2, 4) + ' ' +
               vat.substring(4, 7) + ' ' +
               vat.substring(7, 10) + ' ' +
@@ -45,34 +43,27 @@ export class Company {
     }
   }
 
-  getTelephoneNumber(): string {
+  getFormattedTelephoneNumber(): string {
     switch (this.telephone.length) {
       case 10:
-        // Tel : 01;23.45.67.89
-        return  'Tel : ' +
-                this.telephone.substring(0, 2) + '.' +
+        return  this.telephone.substring(0, 2) + '.' +
                 this.telephone.substring(2, 4) + '.' +
                 this.telephone.substring(4, 6) + '.' +
                 this.telephone.substring(6, 8) + '.' +
                 this.telephone.substring(8, 10);
       default:
-        return  'Tel : ' + this.telephone;
+        return  this.telephone;
     }
   }
 
-  getSIRENNumber(): string {
+  getFormattedSIRENNumber(): string {
     switch (this.siren.length) {
       case 9:
-        // SIREN : 810 581 900
-        return  'SIREN : ' +
-                this.siren.substring(0, 3) + ' ' +
+        return  this.siren.substring(0, 3) + ' ' +
                 this.siren.substring(3, 6) + ' ' +
                 this.siren.substring(6, 9);
       case 10:
-        // SIRET : B 793 569 757
-        return  'SIRET : ' +
-                this.siren.substring(0, 1) + ' ' +
-                this.siren.substring(1, 4) + ' ' +
+        return  this.siren.substring(1, 4) + ' ' +
                 this.siren.substring(4, 7) + ' ' +
                 this.siren.substring(7, 10);
       default:

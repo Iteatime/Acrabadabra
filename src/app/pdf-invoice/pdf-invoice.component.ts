@@ -4,7 +4,7 @@ import * as jsPDF from 'jspdf';
 import { ActivatedRoute } from '@angular/router';
 import { startOfMonth, endOfMonth } from 'date-fns';
 import { Company } from '../shared/company.model';
-import { CurrencyService } from '../shared/currency.service';
+import { MonetaryService } from '../shared/monetary.service';
 import { CalendarManagerService } from '../calendar/calendar-manager.service';
 import { TimesheetService } from '../shared/timesheet.service';
 
@@ -29,7 +29,7 @@ export class PdfInvoiceComponent implements OnInit {
 
   constructor(
     private calendarManager: CalendarManagerService,
-    private currencyService: CurrencyService,
+    private currencyService: MonetaryService,
     private route: ActivatedRoute,
     private timesheetService: TimesheetService,
   ) {
@@ -49,12 +49,10 @@ export class PdfInvoiceComponent implements OnInit {
       const pdf = new jsPDF('p', 'mm', 'a4');
             pdf.addImage(canvas.toDataURL('image/jpeg', 1.0), 'JPG', 0, 0);
             pdf.save(this.data.invoice.number + '.pdf');
-      setTimeout(() => { window.close(); });
     });
   }
 
   formatDate(date: string): string {
-    // 21/12/2012
     return new Date(date).toLocaleString(this.local, { day: '2-digit', month: '2-digit', year: 'numeric'});
   }
 
@@ -64,4 +62,6 @@ export class PdfInvoiceComponent implements OnInit {
           ' au ' +
           endOfMonth(period).toLocaleString(this.local, { day: '2-digit', month: '2-digit', year: 'numeric'});
   }
+
+
 }
