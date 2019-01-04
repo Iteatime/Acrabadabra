@@ -36,15 +36,8 @@ export class ReviewTimesheetComponent implements OnInit {
       this.workingTime = this.calendarManager.getWorkedTime(this.timesheet);
 
       if (data.invoice !== null) {
+        this.invoiceToken = this.timesheetService.createInvoiceToken(this.timesheet, data.invoice);
         this.generateInvoice = true;
-        const invoice = {
-          consultant: this.timesheet.consultant,
-          mission: this.timesheet.mission,
-          time: this.workingTime,
-          invoice: data.invoice,
-        };
-
-        this.invoiceToken = this.timesheetService.tokenize(invoice);
       }
     });
 

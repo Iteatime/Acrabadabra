@@ -5,38 +5,38 @@
       <td class="fifty" id="provider">
         <h2>{{ provider.name }}</h2>
         <p>{{ provider.address }}</p>
-        <p>{{ provider.getTelephoneNumber() }}</p>
+        <p>Tel: {{ provider.getFormattedTelephoneNumber() }}</p>
         <ng-container *ngIf="provider.tradeAndCompaniesRegisterExemption; then providerTradeAndCompaniesRegisterExemption; else providerTradeAndCompaniesRegisterCity"></ng-container>
         <ng-template #providerTradeAndCompaniesRegisterExemption>
-          <p>{{ provider.getSIRENNumber() }}</p>
-          <p>{{ provider.getVATNumber() }}</p>
+          <p>SIREN : {{ provider.getFormattedSIRENNumber() }}</p>
+          <p *ngIf="!provider.vatExemption">N° TVA intra-communautaire : {{ provider.getFormattedVATNumber() }}</p>
           <p>Dispensé d’immatriculation au registre du commerce et des sociétés (RCS) et au répertoire des métiers (RM)</p>
         </ng-template>
         <ng-template #providerTradeAndCompaniesRegisterCity>
-          <p>{{ provider.getSIRENNumber() }} R.C.S {{ provider.tradeAndCompaniesRegisterCity }}</p>
-          <p>{{ provider.getVATNumber() }}</p>
+          <p>SIREN : {{ provider.getFormattedSIRENNumber() }} R.C.S {{ provider.tradeAndCompaniesRegisterCity }}</p>
+          <p *ngIf="!provider.vatExemption">N° TVA intra-communautaire : {{ provider.getFormattedVATNumber() }}</p>
         </ng-template>
       </td>
 			<td class="fifty" id="client">
           <h2>{{ client.name }}</h2>
           <p>{{ client.address }}</p>
-          <p>{{ client.getTelephoneNumber() }}</p>
+          <p>Tel: {{ client.getFormattedTelephoneNumber() }}</p>
           <ng-container *ngIf="client.tradeAndCompaniesRegisterExemption; then clientTradeAndCompaniesRegisterExemption; else clientTradeAndCompaniesRegisterCity"></ng-container>
           <ng-template #clientTradeAndCompaniesRegisterExemption>
-            <p>{{ client.getSIRENNumber() }}</p>
-            <p>{{ client.getVATNumber() }}</p>
+            <p>SIREN : {{ client.getFormattedSIRENNumber() }}</p>
+            <p *ngIf="!client.vatExemption">N° TVA intra-communautaire : {{ client.getFormattedVATNumber() }}</p>
             <p>Dispensé d’immatriculation au registre du commerce et des sociétés (RCS) et au répertoire des métiers (RM)</p>
           </ng-template>
           <ng-template #clientTradeAndCompaniesRegisterCity>
-            <p>{{ client.getSIRENNumber() }} R.C.S {{ client.tradeAndCompaniesRegisterCity }}</p>
-            <p>{{ client.getVATNumber() }}</p>
+            <p>SIREN : {{ client.getFormattedSIRENNumber() }} R.C.S {{ client.tradeAndCompaniesRegisterCity }}</p>
+            <p *ngIf="!client.vatExemption">N° TVA intra-communautaire : {{ client.getFormattedVATNumber() }}</p>
           </ng-template>
       </td>
 		</tr>
 	</table>
 
 	<h1>Facture n° {{ data.invoice.number }}</h1>
-	<h2 *ngIf="data.invoice.clientRef !== ''">Bon de commande : {{ data.invoice.clientRef }}</h2>
+	<h2 *ngIf="data.invoice.clientRef !== ''">Référence client : {{ data.invoice.clientRef }}</h2>
 
 	<p class="invoice-date">Date : {{ formatDate(data.invoice.date) }}</p>
 
@@ -86,7 +86,7 @@
           <ng-template #withVAT>
             <tr>
               <td>Montant TVA {{ vat }}% :</td>
-              <td>{{ totalTTC - totalHT }}{{ currency }}</td>
+              <td>{{ (totalTTC - totalHT).toFixed(2) }}{{ currency }}</td>
             </tr>
             <tr class="bigger">
               <td>Total TTC :</td>
@@ -110,7 +110,9 @@
   </table>
 
   <div class="footer">
-    {{ provider.name }} – {{ provider.address }} -  {{ provider.getTelephoneNumber() }} – {{ provider.getSIRENNumber() }}
+    {{ provider.name }} – {{ provider.address }} -  {{ provider.getFormattedTelephoneNumber() }} –
     <span *ngIf="!provider.tradeAndCompaniesRegisterExemption">R.C.S. {{ provider.tradeAndCompaniesRegisterCity }}</span>
+    <span *ngIf="provider.tradeAndCompaniesRegisterExemption">SIREN : </span>
+    {{ provider.getFormattedSIRENNumber() }}
   </div>
 </div>

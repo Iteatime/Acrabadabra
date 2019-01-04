@@ -35,8 +35,7 @@ export class EditTimesheetComponent implements OnInit {
   };
 
   timesheet = new Timesheet();
-  editToken: string;
-  reviewToken: string;
+  timesheetTokens: string[];
 
   generateInvoice = false;
   invoiceToken: string;
@@ -61,7 +60,7 @@ export class EditTimesheetComponent implements OnInit {
             'Journées de prestation : ' + this.calendarManager.getWorkedTime(this.timesheet).toLocaleString('fr') + '%0d%0a' +
             '%0d%0a' +
             'Vous pouvez le consulter et télécharger la facture ici : ' +
-            this.originUrl + '/timesheet/review/' + this.reviewToken;
+            this.originUrl + '/timesheet/review/' + this.timesheetTokens[1];
   }
 
   constructor(
@@ -100,10 +99,10 @@ export class EditTimesheetComponent implements OnInit {
         this.invoiceForm.invoice = data.invoice;
         this.initChangesDetection(true);
       });
-      this.createTimesheetTokens(data.invoice);
-      this.invoiceToken = this.createInvoiceToken(data.invoice);
+      this.timesheetTokens = this.timesheetService.createTimesheetTokens(this.timesheet, data.invoice);
+      this.invoiceToken = this.timesheetService.createInvoiceToken(this.timesheet, data.invoice);
     } else {
-      this.createTimesheetTokens();
+      this.timesheetTokens = this.timesheetService.createTimesheetTokens(this.timesheet);
       setTimeout(() => { this.initChangesDetection(); });
     }
     this.showLinks = true;
@@ -136,10 +135,10 @@ export class EditTimesheetComponent implements OnInit {
     if (this.checkFormsValidity()) {
       this.createTimesheet();
       if (this.generateInvoice) {
-        this.invoiceToken = this.createInvoiceToken();
-        this.createTimesheetTokens(this.invoiceForm.invoice);
+        this.invoiceToken = this.timesheetService.createInvoiceToken(this.timesheet, this.invoiceForm.invoice);
+        this.timesheetTokens = this.timesheetService.createTimesheetTokens(this.timesheet, this.invoiceForm.invoice);
       } else {
-        this.createTimesheetTokens();
+        this.timesheetTokens = this.timesheetService.createTimesheetTokens(this.timesheet);
       }
 
       this.validationMessage = 'Si vous modifiez le CRA, vous devrez le valider à nouveau et utiliser le nouveau lien de partage.';
@@ -181,24 +180,6 @@ export class EditTimesheetComponent implements OnInit {
     } else {
       this.timesheet.workingDays = [];
     }
-  }
-
-  createTimesheetTokens(invoice: Invoice = null): void {
-    const data = {
-      timesheet: this.timesheet,
-      invoice: invoice,
-      mode: '',
-    };
-    this.editToken = this.timesheetService.tokenize({ ...data, mode: 'edit' });
-    this.reviewToken = this.timesheetService.tokenize({ ...data, mode: 'review' });
-  }
-
-  createInvoiceToken(invoice?: Invoice): string {
-    const data = {
-      timesheet: this.timesheet,
-      invoice: invoice || this.invoiceForm.invoice,
-    };
-    return this.timesheetService.tokenize(data);
   }
 
   minifyTimesheet(timesheet: CalendarEvent[]): any {
