@@ -8,10 +8,7 @@
   border: 1px #D3D3D3 solid;
   background: white;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-
-  div {
-    margin-top: 10px;
-  }
+  position:relative;
 }
 
 .headers-table, .price-details-table {
@@ -22,12 +19,13 @@
 .headers-table {
   tr {
     vertical-align: initial;
-    font-size: 11pt;
+    font-size: 10pt;
   }
 }
 
 .fifty {
-  width: 50%;
+  width: 49%;
+  padding: 5px;
 }
 
 #client {
@@ -41,12 +39,40 @@
 
 .price-details-table {
   border: 1px solid;
+  .separator {
+    border-bottom: 1px solid;
+  }
+}
+
+.summary {
+  p {
+    margin-bottom: 2px;
+  }
 }
 
 .additional-information {
   font-size: 14px;
 }
 
+.empty_spacer {
+  width: 21%;
+}
+
 .total {
-	text-align: right;
+  text-align: right;
+  vertical-align: initial;
+  width: 29%;
+}
+
+.bigger {
+  font-weight: bold;
+  font-size: 15pt;
+}
+
+.footer{
+  position:absolute;
+  bottom: 10px;
+  width: calc(100% - 3cm);
+  font-size: 8px;
+  text-align: center;
 }

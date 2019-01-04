@@ -23,7 +23,6 @@ import { MailtoDirective } from './shared/mailto.directive';
 import { ModalDirective } from './shared/style/modal.directive';
 
 import { PdfInvoiceComponent } from './pdf-invoice/pdf-invoice.component';
-import { CompanyHeaderDirectiveDirective } from './pdf-invoice/company-header-directive.directive';
 
 registerLocaleData(localeFr);
 
@@ -44,7 +43,6 @@ registerLocaleData(localeFr);
     ModalDirective,
 
     PdfInvoiceComponent,
-    CompanyHeaderDirectiveDirective,
 
   ],
   imports: [

@@ -2,56 +2,115 @@
 
 	<table class="headers-table">
 		<tr>
-			<td class="fifty" id="provider">
-        <div [companyHeaderDirective]="data.invoice.provider"></div>
+      <td class="fifty" id="provider">
+        <h2>{{ provider.name }}</h2>
+        <p>{{ provider.address }}</p>
+        <p>{{ provider.getTelephoneNumber() }}</p>
+        <ng-container *ngIf="provider.tradeAndCompaniesRegisterExemption; then providerTradeAndCompaniesRegisterExemption; else providerTradeAndCompaniesRegisterCity"></ng-container>
+        <ng-template #providerTradeAndCompaniesRegisterExemption>
+          <p>{{ provider.getSIRENNumber() }}</p>
+          <p>{{ provider.getVATNumber() }}</p>
+          <p>Dispensé d’immatriculation au registre du commerce et des sociétés (RCS) et au répertoire des métiers (RM)</p>
+        </ng-template>
+        <ng-template #providerTradeAndCompaniesRegisterCity>
+          <p>{{ provider.getSIRENNumber() }} R.C.S {{ provider.tradeAndCompaniesRegisterCity }}</p>
+          <p>{{ provider.getVATNumber() }}</p>
+        </ng-template>
       </td>
 			<td class="fifty" id="client">
-        <div [companyHeaderDirective]="data.invoice.client"></div>
+          <h2>{{ client.name }}</h2>
+          <p>{{ client.address }}</p>
+          <p>{{ client.getTelephoneNumber() }}</p>
+          <ng-container *ngIf="client.tradeAndCompaniesRegisterExemption; then clientTradeAndCompaniesRegisterExemption; else clientTradeAndCompaniesRegisterCity"></ng-container>
+          <ng-template #clientTradeAndCompaniesRegisterExemption>
+            <p>{{ client.getSIRENNumber() }}</p>
+            <p>{{ client.getVATNumber() }}</p>
+            <p>Dispensé d’immatriculation au registre du commerce et des sociétés (RCS) et au répertoire des métiers (RM)</p>
+          </ng-template>
+          <ng-template #clientTradeAndCompaniesRegisterCity>
+            <p>{{ client.getSIRENNumber() }} R.C.S {{ client.tradeAndCompaniesRegisterCity }}</p>
+            <p>{{ client.getVATNumber() }}</p>
+          </ng-template>
       </td>
 		</tr>
 	</table>
 
 	<h1>Facture n° {{ data.invoice.number }}</h1>
-	<h2>Référence client : {{ data.invoice.ClientRef }}</h2>
+	<h2 *ngIf="data.invoice.clientRef !== ''">Bon de commande : {{ data.invoice.clientRef }}</h2>
 
-	<div class="invoice-date">Date : {{ formatDate(data.invoice.date) }}</div>
+	<p class="invoice-date">Date : {{ formatDate(data.invoice.date) }}</p>
 
 	<table class="price-details-table">
-		<tr>
+		<tr class="separator">
 			<th>Désignation des prestations</th>
 			<th>Prix unitataire HT</th>
 			<th>Quantité</th>
 			<th>Total HT</th>
 		</tr>
 		<tr>
-			<td>{{ data.mission.title }}</td>
-			<td>{{ formatCurency( data.invoice.dailyRate) }}</td>
-			<td>{{ data.time }}</td>
-			<td>{{ formatCurency(data.time * data.invoice.dailyRate) }}</td>
+			<td>{{ data.timesheet.mission.title }}</td>
+			<td>{{ data.invoice.dailyRate + currency}}</td>
+			<td>{{ workedTime }}</td>
+			<td>{{ totalHT + currency }}</td>
 		</tr>
   </table>
 
   <table class="summary">
     <tr>
-      <td class="fifty additional-information">
-        <div>Date de règlement : {{ formatDate(data.invoice.paymentDate) }}</div>
-        <div>Modalités de paiement : {{ data.invoice.paymentModality }}</div>
-        <div>Date d’exécution de la vente ou de la prestation : {{ formatDuration(data.period) }}</div>
-        <div *ngIf="data.invoice.paymentLatePenalty">
+      <td class="additional-information">
+        <p>Date de règlement : {{ formatDate(data.invoice.paymentDate) }}</p>
+        <p>Modalités de paiement : {{ data.invoice.paymentModality }}</p>
+        <p>
+          Date d’exécution de la vente
+          <br>
+          ou de la prestation : {{ formatDuration(period) }}
+        </p>
+        <p *ngIf="data.invoice.paymentLatePenalty">
           Tout retard de paiement donnera lieu, en plus des pénalités de retard (10 % par an), au versement d'une indemnité forfaitaire de 40 € pour frais de recouvrement.
-        </div>
+        </p>
+      </td>
+      <td class="empty_spacer">
       </td>
       <td class="total">
-        <h2>Total HT : {{ formatCurency(total()) }}</h2>
-        <ng-container *ngIf="data.invoice.provider.vatExemption; then withoutVAT; else withVAT"></ng-container>
-        <ng-template #withoutVAT>
-          <div>TVA non applicable, art 293 B du CGI</div>
-        </ng-template>
-        <ng-template #withVAT>
-          <div>Montant TVA 20% : {{ formatCurency(vat()) }}</div>
-          <h2>Total TTC : {{ formatCurency(total() + vat()) }}</h2>
-        </ng-template>
+        <table>
+          <tr class="bigger">
+            <td>Total HT :</td>
+            <td>{{ totalHT + currency }}</td>
+          </tr>
+          <ng-container *ngIf="data.invoice.provider.vatExemption; then withoutVAT; else withVAT"></ng-container>
+          <ng-template #withoutVAT>
+            <tr>
+              <td colspan="2">TVA non applicable, art 293 B du CGI</td>
+            </tr>
+          </ng-template>
+          <ng-template #withVAT>
+            <tr>
+              <td>Montant TVA {{ vat }}% :</td>
+              <td>{{ totalTTC - totalHT }}{{ currency }}</td>
+            </tr>
+            <tr class="bigger">
+              <td>Total TTC :</td>
+              <td>{{ totalTTC }}{{ currency }}</td>
+            </tr>
+          </ng-template>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>Coordonnées bancaires :</p>
+        <p>Titulaire du compte : {{ provider.name }}</p>
+        <p>Banque : {{ data.invoice.bankingDomiciliation }}</p>
+        <p>Code banque : {{ data.invoice.bankIBAN.substr(4, 5) }}</p>
+        <p>Code guichet : {{ data.invoice.bankIBAN.substr(9, 5) }}</p>
+        <p>Numéro de compte : {{ data.invoice.bankIBAN.substr(14, 11)}}</p>
+        <p>Clé RIB : {{ data.invoice.bankIBAN.substr(25, 2) }}</p>
       </td>
     </tr>
   </table>
+
+  <div class="footer">
+    {{ provider.name }} – {{ provider.address }} -  {{ provider.getTelephoneNumber() }} – {{ provider.getSIRENNumber() }}
+    <span *ngIf="!provider.tradeAndCompaniesRegisterExemption">R.C.S. {{ provider.tradeAndCompaniesRegisterCity }}</span>
+  </div>
 </div>

@@ -195,10 +195,7 @@ export class EditTimesheetComponent implements OnInit {
 
   createInvoiceToken(invoice?: Invoice): string {
     const data = {
-      consultant: this.timesheet.consultant,
-      mission: this.timesheet.mission,
-      time: this.calendarManager.getWorkedTime(this.timesheet),
-      period: this.calendarManager.getDate(this.timesheet),
+      timesheet: this.timesheet,
       invoice: invoice || this.invoiceForm.invoice,
     };
     return this.timesheetService.tokenize(data);
