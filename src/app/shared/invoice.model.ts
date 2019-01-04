@@ -11,9 +11,11 @@ export class Invoice {
   paymentDate: string;
   paymentModality: string;
   paymentLatePenalty: boolean;
+  bankAccountHolder: string;
+  bankingAgency: string;
+  bankingDomiciliation: string;
   bankIBAN: string;
   bankSWIFT: string;
-  bankingDomiciliation: string;
 
   constructor(
     number?: number,
@@ -26,9 +28,11 @@ export class Invoice {
     paymentDate?: string,
     paymentModality?: string,
     paymentLatePenalty?: boolean,
+    bankAccountHolder?: string,
+    bankingAgency?: string,
+    bankingDomiciliation?: string,
     bankIBAN?: string,
     bankSWIFT?: string,
-    bankingDomiciliation?: string,
   ) {
     this.number = number || null;
     this.date = date || '';
@@ -40,8 +44,10 @@ export class Invoice {
     this.paymentDate = paymentDate || '';
     this.paymentModality = paymentModality || '';
     this.paymentLatePenalty = paymentLatePenalty || false;
+    this.bankAccountHolder = bankAccountHolder || '';
+    this.bankingAgency = bankingAgency || '';
+    this.bankingDomiciliation = bankingDomiciliation || '';
     this.bankIBAN = bankIBAN || '';
     this.bankSWIFT = bankSWIFT || '';
-    this.bankingDomiciliation = bankingDomiciliation || '';
   }
 }

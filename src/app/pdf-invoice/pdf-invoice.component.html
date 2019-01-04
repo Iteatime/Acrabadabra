@@ -65,6 +65,7 @@
           <br>
           ou de la prestation : {{ formatDuration(period) }}
         </p>
+        <p>Consultant chargé de la prestation : {{ data.timesheet.consultant.name }}</p>
         <p *ngIf="data.invoice.paymentLatePenalty">
           Tout retard de paiement donnera lieu, en plus des pénalités de retard (10 % par an), au versement d'une indemnité forfaitaire de 40 € pour frais de recouvrement.
         </p>
@@ -99,8 +100,9 @@
     <tr>
       <td>
         <p>Coordonnées bancaires :</p>
-        <p>Titulaire du compte : {{ provider.name }}</p>
+        <p>Titulaire du compte : {{ data.invoice.bankAccountHolder }}</p>
         <p>Banque : {{ data.invoice.bankingDomiciliation }}</p>
+        <p>Agence : {{ data.invoice.bankingAgency }}</p>
         <p>Code banque : {{ data.invoice.bankIBAN.substr(4, 5) }}</p>
         <p>Code guichet : {{ data.invoice.bankIBAN.substr(9, 5) }}</p>
         <p>Numéro de compte : {{ data.invoice.bankIBAN.substr(14, 11)}}</p>

@@ -6,6 +6,7 @@ import { startOfMonth, endOfMonth } from 'date-fns';
 import { Company } from '../shared/company.model';
 import { CurrencyService } from '../shared/currency.service';
 import { CalendarManagerService } from '../calendar/calendar-manager.service';
+import { TimesheetService } from '../shared/timesheet.service';
 
 @Component({
   selector: 'app-pdf-invoice',
@@ -30,8 +31,9 @@ export class PdfInvoiceComponent implements OnInit {
     private calendarManager: CalendarManagerService,
     private currencyService: CurrencyService,
     private route: ActivatedRoute,
+    private timesheetService: TimesheetService,
   ) {
-    this.data = JSON.parse(atob(this.route.snapshot.paramMap.get('data')));
+    this.data = this.timesheetService.deTokenize(this.route.snapshot.paramMap.get('data'));
     this.provider = Object.assign(new Company(), this.data.invoice.provider);
     this.client = Object.assign(new Company(), this.data.invoice.client);
     this.workedTime = this.calendarManager.getWorkedTime(this.data.timesheet);
@@ -47,7 +49,7 @@ export class PdfInvoiceComponent implements OnInit {
       const pdf = new jsPDF('p', 'mm', 'a4');
             pdf.addImage(canvas.toDataURL('image/jpeg', 1.0), 'JPG', 0, 0);
             pdf.save(this.data.invoice.number + '.pdf');
-       setTimeout(() => { window.close(); });
+      setTimeout(() => { window.close(); });
     });
   }
 
