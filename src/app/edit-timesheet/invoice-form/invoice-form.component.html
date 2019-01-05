@@ -156,18 +156,24 @@
                         <div class="invoice-form__block__column__input-wrapper__item__input">
                             <input
                             type="text"
+                            required
                             class="form-control"
                             name="invoiceProviderTradeAndCompaniesRegisterCityInput"
                             [disabled]="providerTradeAndCompaniesRegisterExemption.checked"
                             [(ngModel)]="invoice.provider.tradeAndCompaniesRegisterCity"
-                            #providerTradeAndCompaniesRegisterCity
+                            #providerTradeAndCompaniesRegisterCity="ngModel"
                             >
+                            <div *ngIf="providerTradeAndCompaniesRegisterCity.invalid && (providerTradeAndCompaniesRegisterCity.dirty || providerTradeAndCompaniesRegisterCity.touched)" class="alert alert-danger">
+                                <div *ngIf="providerTradeAndCompaniesRegisterCity.errors['required']">
+                                    Ce champ est obligatoire.
+                                </div>
+                            </div>
                             <label class="invoice-form__block__column__input-wrapper__item__input__toggle">
                                 <input
                                 type="checkbox"
                                 name="invoiceProviderTradeAndCompaniesRegisterToggle"
                                 [(ngModel)]="invoice.provider.tradeAndCompaniesRegisterExemption"
-                                (change)="providerTradeAndCompaniesRegisterCity.value = ''"
+                                (change)="invoice.provider.tradeAndCompaniesRegisterCity = ''"
                                 #providerTradeAndCompaniesRegisterExemption
                                 >
                                 Dispensé d'immatriculation au RCS et au RM
@@ -179,18 +185,25 @@
                         <div class="invoice-form__block__column__input-wrapper__item__input">
                             <input
                             type="text"
+                            required
                             class="form-control"
                             name="invoiceProviderVATNumberInput"
                             [disabled]="providerVATExemption.checked"
                             [(ngModel)]="invoice.provider.vatNumber"
-                            #providerVATNumber
+                            #providerVATNumber="ngModel"
                             >
+                            <div *ngIf="providerVATNumber.invalid && (providerVATNumber.dirty || providerVATNumber.touched)" class="alert alert-danger">
+
+                                <div *ngIf="providerVATNumber.errors['required']">
+                                    Ce champ est obligatoire.
+                                </div>
+                            </div>
                             <label class="invoice-form__block__column__input-wrapper__item__input__toggle">
                                 <input
                                 type="checkbox"
                                 name="invoiceProviderVATToggle"
                                 [(ngModel)]="invoice.provider.vatExemption"
-                                (change)="providerVATNumber.value = ''"
+                                (change)="invoice.provider.vatNumber = ''"
                                 #providerVATExemption
                                 >
                                 Franchise TVA
@@ -277,18 +290,25 @@
                         <div class="invoice-form__block__column__input-wrapper__item__input">
                             <input
                             type="text"
+                            required
                             class="form-control"
                             name="invoiceClientTradeAndCompaniesRegisterCityInput"
                             [disabled]="invoiceClientTradeAndCompaniesRegisterExemption.checked"
                             [(ngModel)]="invoice.client.tradeAndCompaniesRegisterCity"
-                            #invoiceClientTradeAndCompaniesRegisterCity
+                            #invoiceClientTradeAndCompaniesRegisterCity="ngModel"
                             >
+                            <div *ngIf="invoiceClientTradeAndCompaniesRegisterCity.invalid && (invoiceClientTradeAndCompaniesRegisterCity.dirty || invoiceClientTradeAndCompaniesRegisterCity.touched)" class="alert alert-danger">
+
+                                <div *ngIf="invoiceClientTradeAndCompaniesRegisterCity.errors['required']">
+                                    Ce champ est obligatoire.
+                                </div>
+                            </div>
                             <label class="invoice-form__block__column__input-wrapper__item__input__toggle">
                                 <input
                                 type="checkbox"
                                 name="invoiceClientTradeAndCompaniesRegisterToggle"
                                 [(ngModel)]="invoice.client.tradeAndCompaniesRegisterExemption"
-                                (change)="invoiceClientTradeAndCompaniesRegisterCity.value = ''"
+                                (change)="invoice.client.tradeAndCompaniesRegisterCity = ''"
                                 #invoiceClientTradeAndCompaniesRegisterExemption
                                 >
                                 Dispensé d'immatriculation au RCS et au RM
@@ -300,18 +320,25 @@
                         <div class="invoice-form__block__column__input-wrapper__item__input">
                             <input
                             type="text"
+                            required
                             class="form-control"
                             name="invoiceClientVATNumberInput"
                             [disabled]="clientVATExemption.checked"
                             [(ngModel)]="invoice.client.vatNumber"
-                            #clientVATNumber
+                            #clientVATNumber="ngModel"
                             >
+                            <div *ngIf="clientVATNumber.invalid && (clientVATNumber.dirty || clientVATNumber.touched)" class="alert alert-danger">
+
+                                <div *ngIf="clientVATNumber.errors['required']">
+                                    Ce champ est obligatoire.
+                                </div>
+                            </div>
                             <label class="invoice-form__block__column__input-wrapper__item__input__toggle">
                                 <input
                                 type="checkbox"
                                 name="invoiceClientVATToggle"
                                 [(ngModel)]="invoice.client.vatExemption"
-                                (change)="clientVATNumber.value = ''"
+                                (change)="invoice.client.vatNumber = ''"
                                 #clientVATExemption
                                 >
                                 Franchise TVA
@@ -335,10 +362,18 @@
                     <div class="invoice-form__block__input-wrapper__item__input">
                         <input
                         type="date"
+                        required
                         class="form-control"
                         name="invoicePaymentDateInput"
                         [(ngModel)]="invoice.paymentDate"
+                        #paymentDate="ngModel"
                         >
+                        <div *ngIf="paymentDate.invalid && (paymentDate.dirty || paymentDate.touched)" class="alert alert-danger">
+
+                            <div *ngIf="paymentDate.errors['required']">
+                                Ce champ est obligatoire.
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="invoice-form__block__input-wrapper__item form-group" >
@@ -346,10 +381,18 @@
                     <div class="invoice-form__block__input-wrapper__item__input">
                         <input
                         type="text"
+                        required
                         class="form-control"
                         name="invoicePaymentModalityInput"
                         [(ngModel)]="invoice.paymentModality"
+                        #paymentModality="ngModel"
                         >
+                        <div *ngIf="paymentModality.invalid && (paymentModality.dirty || paymentModality.touched)" class="alert alert-danger">
+
+                          <div *ngIf="paymentModality.errors['required']">
+                            Ce champ est obligatoire.
+                          </div>
+                        </div>
                     </div>
                 </div>
                 <div class="invoice-form__block__input-wrapper__item">
