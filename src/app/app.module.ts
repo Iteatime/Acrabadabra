@@ -22,6 +22,8 @@ import { CopyToClipboardDirective } from './shared/copy-to-clipboard.directive';
 import { MailtoDirective } from './shared/mailto.directive';
 import { ModalDirective } from './shared/style/modal.directive';
 
+import { PdfInvoiceComponent } from './pdf-invoice/pdf-invoice.component';
+
 registerLocaleData(localeFr);
 
 @NgModule({
@@ -40,6 +42,7 @@ registerLocaleData(localeFr);
     MailtoDirective,
     ModalDirective,
 
+    PdfInvoiceComponent,
   ],
   imports: [
     AppRoutingModule,

@@ -38,6 +38,17 @@
                 &__input-wrapper {
                     @include form-input;
                     display: flex;
+                    flex-wrap: wrap;
+                    background: $white;
+                    border-bottom: none;
+
+                    &:first-of-type {
+                        border-top: 1px solid $grey_border_dark;
+                    }
+
+                    &:last-of-type {
+                      border-bottom: 1px solid $grey_border_dark;
+                    }
 
                     &__item {
                         width: 100%;
