@@ -7,6 +7,7 @@ import { Company } from '../shared/company.model';
 import { MonetaryService } from '../shared/monetary.service';
 import { CalendarManagerService } from '../calendar/calendar-manager.service';
 import { TimesheetService } from '../shared/timesheet.service';
+import { Invoice } from '../shared/invoice.model';
 
 @Component({
   selector: 'app-pdf-invoice',
@@ -20,6 +21,7 @@ export class PdfInvoiceComponent implements OnInit {
   local = 'fr';
   provider: Company;
   client: Company;
+  invoice: Invoice;
   workedTime: number;
   totalHT: number;
   totalTTC: number;
@@ -36,6 +38,7 @@ export class PdfInvoiceComponent implements OnInit {
     this.data = this.timesheetService.deTokenize(this.route.snapshot.paramMap.get('data'));
     this.provider = Object.assign(new Company(), this.data.invoice.provider);
     this.client = Object.assign(new Company(), this.data.invoice.client);
+    this.invoice = Object.assign(new Invoice(), this.data.invoice);
     this.workedTime = this.calendarManager.getWorkedTime(this.data.timesheet);
     this.period = this.calendarManager.getDate(this.data.timesheet);
     this.vat = this.currencyService.getVat();
@@ -62,6 +65,5 @@ export class PdfInvoiceComponent implements OnInit {
           ' au ' +
           endOfMonth(period).toLocaleString(this.local, { day: '2-digit', month: '2-digit', year: 'numeric'});
   }
-
 
 }

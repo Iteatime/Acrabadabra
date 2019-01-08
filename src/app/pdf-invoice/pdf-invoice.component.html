@@ -35,10 +35,10 @@
 		</tr>
 	</table>
 
-	<h1>Facture n° {{ data.invoice.number }}</h1>
-	<h2 *ngIf="data.invoice.clientRef !== ''">Référence client : {{ data.invoice.clientRef }}</h2>
+	<h1>Facture n° {{ invoice.number }}</h1>
+	<h2 *ngIf="invoice.clientRef !== ''">Référence client : {{ invoice.clientRef }}</h2>
 
-	<p class="invoice-date">Date : {{ formatDate(data.invoice.date) }}</p>
+	<p class="invoice-date">Date : {{ formatDate(invoice.date) }}</p>
 
 	<table class="price-details-table">
 		<tr class="separator">
@@ -49,7 +49,7 @@
 		</tr>
 		<tr>
 			<td>{{ data.timesheet.mission.title }}</td>
-			<td>{{ data.invoice.dailyRate + currency}}</td>
+			<td>{{ invoice.dailyRate + currency}}</td>
 			<td>{{ workedTime }}</td>
 			<td>{{ totalHT + currency }}</td>
 		</tr>
@@ -58,15 +58,15 @@
   <table class="summary">
     <tr>
       <td class="additional-information">
-        <p>Date de règlement : {{ formatDate(data.invoice.paymentDate) }}</p>
-        <p>Modalités de paiement : {{ data.invoice.paymentModality }}</p>
+        <p>Date de règlement : {{ formatDate(invoice.paymentDate) }}</p>
+        <p>Modalités de paiement : {{ invoice.paymentModality }}</p>
         <p>
           Date d’exécution de la vente
           <br>
           ou de la prestation : {{ formatDuration(period) }}
         </p>
         <p>Consultant chargé de la prestation : {{ data.timesheet.consultant.name }}</p>
-        <p *ngIf="data.invoice.paymentLatePenalty">
+        <p *ngIf="invoice.paymentLatePenalty">
           Tout retard de paiement donnera lieu, en plus des pénalités de retard (10 % par an), au versement d'une indemnité forfaitaire de 40 € pour frais de recouvrement.
         </p>
       </td>
@@ -78,7 +78,7 @@
             <td>Total HT :</td>
             <td>{{ totalHT + currency }}</td>
           </tr>
-          <ng-container *ngIf="data.invoice.provider.vatExemption; then withoutVAT; else withVAT"></ng-container>
+          <ng-container *ngIf="provider.vatExemption; then withoutVAT; else withVAT"></ng-container>
           <ng-template #withoutVAT>
             <tr>
               <td colspan="2">TVA non applicable, art 293 B du CGI</td>
@@ -97,16 +97,16 @@
         </table>
       </td>
     </tr>
-    <tr>
+    <tr *ngIf="invoice.isBankingDetails()">
       <td>
         <p>Coordonnées bancaires :</p>
-        <p>Titulaire du compte : {{ data.invoice.bankAccountHolder }}</p>
-        <p>Banque : {{ data.invoice.bankingDomiciliation }}</p>
-        <p>Agence : {{ data.invoice.bankingAgency }}</p>
-        <p>Code banque : {{ data.invoice.bankIBAN.substr(4, 5) }}</p>
-        <p>Code guichet : {{ data.invoice.bankIBAN.substr(9, 5) }}</p>
-        <p>Numéro de compte : {{ data.invoice.bankIBAN.substr(14, 11)}}</p>
-        <p>Clé RIB : {{ data.invoice.bankIBAN.substr(25, 2) }}</p>
+        <p>Titulaire du compte : {{ invoice.bankAccountHolder }}</p>
+        <p>Banque : {{ invoice.bankingDomiciliation }}</p>
+        <p>Agence : {{ invoice.bankingAgency }}</p>
+        <p>Code banque : {{ invoice.bankIBAN.substr(4, 5) }}</p>
+        <p>Code guichet : {{ invoice.bankIBAN.substr(9, 5) }}</p>
+        <p>Numéro de compte : {{ invoice.bankIBAN.substr(14, 11)}}</p>
+        <p>Clé RIB : {{ invoice.bankIBAN.substr(25, 2) }}</p>
       </td>
     </tr>
   </table>
