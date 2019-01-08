@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, OnInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 
 import { Subject } from 'rxjs';
 
@@ -39,12 +39,17 @@ export class CalendarComponent implements OnInit {
   weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
   weekendDays: number[] = [DAYS_OF_WEEK.SATURDAY, DAYS_OF_WEEK.SUNDAY];
   viewDate: Date = new Date();
-  totalWorkedTime: number;
+  totalWorkedTime = 0;
 
-  constructor() {}
+  constructor(private changeDetector: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.initTimesheet();
+    this.refresh.subscribe(() => {
+      this.changeDetector.detectChanges();
+    });
+
+    setTimeout(() => { this.changeDetector.detectChanges(); });
   }
 
   initTimesheet(): void {
@@ -56,7 +61,7 @@ export class CalendarComponent implements OnInit {
       const daysValue = this.minifiedTimesheet[timesheetDate];
 
       this.viewDate = setMonth(setYear(this.viewDate, year), month);
-      
+
       for (let date = 0; date < daysValue.length; date++) {
         const day = new Date(+year, +month, date + 1);
 
@@ -82,7 +87,7 @@ export class CalendarComponent implements OnInit {
       });
     });
   }
-  
+
   getDayWorkingTime(day: Date): CalendarEvent {
     return this.timesheet.find((currenDay) => {
       return isSameDay(currenDay.start, day);
@@ -150,7 +155,7 @@ export class CalendarComponent implements OnInit {
     this.timesheet = [];
     this.refresh.next();
   }
-  
+
   addTimesheetDay(date: Date, end?: Date): void {
     date = startOfDay(date);
 

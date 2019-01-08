@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {  ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 
@@ -10,13 +10,19 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { CrasComponent } from './cras/cras.component';
-import { EditCraComponent } from './cras/edit-cra/edit-cra.component';
-import { CalendarComponent } from './cras/edit-cra/calendar/calendar.component';
-
 import { HomeComponent } from './home/home.component';
 
+import { EditTimesheetComponent } from './edit-timesheet/edit-timesheet.component';
+import { InvoiceFormComponent } from './edit-timesheet/invoice-form/invoice-form.component';
+import { ReviewTimesheetComponent } from './review-timesheet/review-timesheet.component';
+
+import { CalendarComponent } from './calendar/calendar.component';
+
+import { CopyToClipboardDirective } from './shared/copy-to-clipboard.directive';
+import { MailtoDirective } from './shared/mailto.directive';
 import { ModalDirective } from './shared/style/modal.directive';
+
+import { PdfInvoiceComponent } from './pdf-invoice/pdf-invoice.component';
 
 registerLocaleData(localeFr);
 
@@ -24,13 +30,19 @@ registerLocaleData(localeFr);
   declarations: [
     AppComponent,
 
-    CrasComponent,
-    EditCraComponent,
-    CalendarComponent,
-
     HomeComponent,
 
+    EditTimesheetComponent,
+    InvoiceFormComponent,
+    ReviewTimesheetComponent,
+
+    CalendarComponent,
+
+    CopyToClipboardDirective,
+    MailtoDirective,
     ModalDirective,
+
+    PdfInvoiceComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -39,6 +51,7 @@ registerLocaleData(localeFr);
       provide: DateAdapter,
       useFactory: adapterFactory
     }),
+    FormsModule,
     ReactiveFormsModule,
   ],
   providers: [],

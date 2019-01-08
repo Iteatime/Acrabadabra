@@ -1,5 +1,8 @@
 <div class="calendar">
-  <div class="calendar__header">
+  <div
+  *ngIf="picking"
+  class="calendar__header"
+  >
     <div class="calendar__header__daycount">
       <span>Nombre total de journées :&nbsp;</span><span class="highlight">{{ totalWorkedTime.toLocaleString(locale) }}</span>
     </div>
@@ -18,9 +21,17 @@
 
   <div class="calendar__content">
     <div class="calendar__content__tools">
-      <div class="calendar__content__tools__selectall" [ngClass]="picking ? '' : 'disabled-element'" (click)="selectAllBusinessDays()">
-        Sélectionner les jours ouvrés
-      </div>
+        <ng-container *ngIf="totalWorkedTime === 0; then thenTemplate; else elseTemplate"></ng-container>
+        <ng-template #thenTemplate>
+          <div class="calendar__content__tools__selectall" [ngClass]="picking ? '' : 'disabled-element'" (click)="selectAllBusinessDays()">
+            Sélectionner les jours ouvrés
+          </div>
+        </ng-template>
+        <ng-template #elseTemplate>
+          <div class="calendar__content__tools__selectall" [ngClass]="picking ? '' : 'disabled-element'" (click)="emptyDays()">
+            Désélectionner tout
+          </div>
+        </ng-template>
     </div>
 
     <div class="calendar__content__dayselect">
