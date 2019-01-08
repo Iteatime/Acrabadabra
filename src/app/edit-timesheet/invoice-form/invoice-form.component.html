@@ -193,7 +193,6 @@
                             #providerVATNumber="ngModel"
                             >
                             <div *ngIf="providerVATNumber.invalid && (providerVATNumber.dirty || providerVATNumber.touched)" class="alert alert-danger">
-
                                 <div *ngIf="providerVATNumber.errors['required']">
                                     Ce champ est obligatoire.
                                 </div>
@@ -217,24 +216,26 @@
                     </div>
                 </div>
             </div>
-            <div class="invoice-form__block__column">
-                <h4 class="invoice-form__block__column__title">Client</h4>
-                <div class="invoice-form__block__column__input-wrapper">
-                    <div class="invoice-form__block__column__input-wrapper__item form-group" >
-                        <label for="invoiceClientNameInput" class="invoice-form__block__column__input-wrapper__item__label">Dénomination</label>
-                        <div class="invoice-form__block__column__input-wrapper__item__input">
-                            <input
-                            type="text"
-                            required
-                            class="form-control"
-                            name="invoiceClientNameInput"
-                            [(ngModel)]="invoice.client.name"
-                            #clientName="ngModel"
-                            >
-                            <div *ngIf="clientName.invalid && (clientName.dirty || clientName.touched)" class="alert alert-danger">
-                                <div *ngIf="clientName.errors['required']">
-                                    Ce champ est obligatoire.
-                                </div>
+        </div>
+
+        <div class="invoice-form__half-block" id="client">
+            <h4 class="invoice-form__half-block__title">Client</h4>
+            <div class="invoice-form__half-block__input-wrapper">
+                <div class="invoice-form__half-block__input-wrapper__item form-group" >
+                    <label for="invoiceClientNameInput" class="invoice-form__half-block__input-wrapper__item__label">Dénomination</label>
+                    <div class="invoice-form__half-block__input-wrapper__item__input">
+                        <input
+                        type="text"
+                        required
+                        class="form-control"
+                        name="invoiceClientNameInput"
+                        [(ngModel)]="invoice.client.name"
+                        #clientName="ngModel"
+                        >
+                        <div *ngIf="clientName.invalid && (clientName.dirty || clientName.touched)"
+                        class="alert alert-danger">
+                            <div *ngIf="clientName.errors['required']">
+                                Ce champ est obligatoire.
                             </div>
                         </div>
                     </div>
@@ -298,7 +299,6 @@
                             #invoiceClientTradeAndCompaniesRegisterCity="ngModel"
                             >
                             <div *ngIf="invoiceClientTradeAndCompaniesRegisterCity.invalid && (invoiceClientTradeAndCompaniesRegisterCity.dirty || invoiceClientTradeAndCompaniesRegisterCity.touched)" class="alert alert-danger">
-
                                 <div *ngIf="invoiceClientTradeAndCompaniesRegisterCity.errors['required']">
                                     Ce champ est obligatoire.
                                 </div>
@@ -328,7 +328,6 @@
                             #clientVATNumber="ngModel"
                             >
                             <div *ngIf="clientVATNumber.invalid && (clientVATNumber.dirty || clientVATNumber.touched)" class="alert alert-danger">
-
                                 <div *ngIf="clientVATNumber.errors['required']">
                                     Ce champ est obligatoire.
                                 </div>
@@ -406,7 +405,6 @@
                     </label>
                 </div>
             </div>
-
             <div class="invoice-form__block__input-wrapper">
                 <div class="invoice-form__block__input-wrapper__sub-block">
                     <h4 class="invoice-form__block__input-wrapper__sub-block__title">Coordonnées bancaires</h4>

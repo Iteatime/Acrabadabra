@@ -1,4 +1,5 @@
 import { Company } from './company.model';
+import * as _ from 'lodash';
 
 export class Invoice {
   number: number;
@@ -43,5 +44,13 @@ export class Invoice {
     this.bankIBAN = bankIBAN || '';
     this.bankSWIFT = bankSWIFT || '';
     this.bankingDomiciliation = bankingDomiciliation || '';
+  }
+
+  isBankingDetails(): boolean {
+    return  !_.isEmpty(this.bankAccountHolder) &&
+            !_.isEmpty(this.bankingAgency) &&
+            !_.isEmpty(this.bankingDomiciliation) &&
+            !_.isEmpty(this.bankIBAN) &&
+            !_.isEmpty(this.bankSWIFT);
   }
 }

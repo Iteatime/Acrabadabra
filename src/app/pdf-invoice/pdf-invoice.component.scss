@@ -1,5 +1,13 @@
 @import '../style/vars';
 
+h1 {
+  font-size: 32px;
+}
+
+h2 {
+  font-size: 19px;
+}
+
 #invoice {
   width: 21cm;
   min-height: 29.7cm;
@@ -9,6 +17,7 @@
   background: white;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   position:relative;
+  font-size: 12px;
 }
 
 .headers-table, .price-details-table {
@@ -48,10 +57,6 @@
   p {
     margin-bottom: 2px;
   }
-}
-
-.additional-information {
-  font-size: 14px;
 }
 
 .empty_spacer {

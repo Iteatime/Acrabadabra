@@ -2,6 +2,7 @@ import { Directive, Input, Output, EventEmitter, HostListener, OnChanges} from '
 
 @Directive({
 
+  // tslint:disable-next-line:directive-selector
   selector: '[copyToClipboard]',
 })
 export class CopyToClipboardDirective {
@@ -9,9 +10,11 @@ export class CopyToClipboardDirective {
   @Input('copyToClipboard')
   public payload: string;
 
+  // tslint:disable-next-line:no-input-rename
   @Input('copyToClipboardMessage')
   public message: string;
 
+  // tslint:disable-next-line:no-input-rename
   @Input('copyToClipboardMessageParent')
   public parent: HTMLElement;
 
@@ -19,7 +22,7 @@ export class CopyToClipboardDirective {
   public copied: EventEmitter<string> = new EventEmitter<string>();
 
   @HostListener('click', ['$event'])
-  public onClick(event: MouseEvent): void {
+  public onCopy(event: MouseEvent): void {
 
     event.preventDefault();
     if (!this.payload) {
@@ -47,7 +50,7 @@ export class CopyToClipboardDirective {
           message.innerText = this.message;
 
     setTimeout(() => {
-      (<HTMLElement>event.target).parentNode.parentNode.removeChild(message);
+      this.parent.removeChild(message);
     }, 5000);
   }
 

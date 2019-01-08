@@ -6,13 +6,11 @@ import { EditTimesheetComponent } from './edit-timesheet/edit-timesheet.componen
 import { ReviewTimesheetComponent } from './review-timesheet/review-timesheet.component';
 import { PdfInvoiceComponent } from './pdf-invoice/pdf-invoice.component';
 
-import { TimesheetService } from './shared/timesheet.service';
-
 const routes: Routes = [
   { path: '', component: HomeComponent, },
-  { path: 'timesheet/create', component: EditTimesheetComponent, canActivate: [TimesheetService] },
-  { path: 'timesheet/edit/:token', component: EditTimesheetComponent, canActivate: [TimesheetService] },
-  { path: 'timesheet/review/:token', component: ReviewTimesheetComponent, canActivate: [TimesheetService] },
+  { path: 'timesheet/create', component: EditTimesheetComponent },
+  { path: 'timesheet/edit/:data', component: EditTimesheetComponent },
+  { path: 'timesheet/review/:data', component: ReviewTimesheetComponent },
   { path: 'invoice/:data', component: PdfInvoiceComponent }
 ];
 
