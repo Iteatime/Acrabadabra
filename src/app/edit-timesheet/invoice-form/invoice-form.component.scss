@@ -89,3 +89,10 @@
         }
     }
 }
+
+#client {
+  @media (min-width: $screen-sm-min) {
+    margin-left: 40px;
+  }
+}
+
