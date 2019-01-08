@@ -16,7 +16,6 @@ export class CalendarManagerService {
         time += element;
       });
     }
-
     return time;
   }
 
