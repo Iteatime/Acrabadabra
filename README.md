@@ -33,7 +33,7 @@ Ex: A get on this root `localhost:4200/.netlify/functions/status` will return a 
 
 #### 3.2 Debugging lambdas
 
-We use the inspector protocol to ease lambda debugging. You can get dignostic infos using an inspector client like Chrome DevTools.
+We use the inspector protocol to ease lambda debugging. You can get diagnostic infos using an inspector client like Chrome DevTools.
 
 Details [here](https://nodejs.org/en/docs/guides/debugging-getting-started/)
 

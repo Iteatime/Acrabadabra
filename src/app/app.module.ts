@@ -43,7 +43,6 @@ registerLocaleData(localeFr);
     ModalDirective,
 
     PdfInvoiceComponent,
-
   ],
   imports: [
     AppRoutingModule,

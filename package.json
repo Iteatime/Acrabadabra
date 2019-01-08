@@ -8,7 +8,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "watch:front": "ng serve",
-    "watch:back": " npx --node-arg=--inspect netlify-lambda serve src/functions",
+    "watch:back": "npx --node-arg=--inspect netlify-lambda serve src/functions",
     "dev": "concurrently --names \"FRONT,BACK\" --prefix-colors \"reset.bgBlue.bold,reset.bgRed.bold\"  \"npm:watch:front\" \"npm:watch:back\""
   },
   "private": true,
