@@ -78,6 +78,15 @@
 	font-weight: 700;
 }
 
+@mixin sub-heading {
+	margin: 0 auto 5px;
+	border-left: 5px solid $main_blue;
+	padding: 5px;
+	text-align: left;
+	font-size: 18px;
+	font-weight: 700;
+}
+
 @mixin form-input {
   &--has-next-line {
     border-bottom: 0;
