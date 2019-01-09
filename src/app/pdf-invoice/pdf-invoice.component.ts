@@ -59,11 +59,11 @@ export class PdfInvoiceComponent implements OnInit {
     return new Date(date).toLocaleString(this.local, { day: '2-digit', month: '2-digit', year: 'numeric'});
   }
 
-  formatDuration(period: string): string {
+  formatDuration(month: Date): string {
     return 'du ' +
-          startOfMonth(period).toLocaleString(this.local, { day: '2-digit', month: '2-digit', year: 'numeric'}) +
+          startOfMonth(month).toLocaleString(this.local, { day: '2-digit', month: '2-digit', year: 'numeric'}) +
           ' au ' +
-          endOfMonth(period).toLocaleString(this.local, { day: '2-digit', month: '2-digit', year: 'numeric'});
+          endOfMonth(month).toLocaleString(this.local, { day: '2-digit', month: '2-digit', year: 'numeric'});
   }
 
 }

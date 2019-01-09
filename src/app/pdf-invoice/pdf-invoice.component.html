@@ -59,15 +59,15 @@
     <tr>
       <td class="additional-information">
         <p>Date de règlement : {{ formatDate(invoice.paymentDate) }}</p>
-        <p>Modalités de paiement : {{ invoice.paymentModality }}</p>
+        <p>Modalités de paiement : {{ invoice.paymentModality }}</p>
         <p>
-          Date d’exécution de la vente
+          Date d’exécution de la vente
           <br>
           ou de la prestation : {{ formatDuration(period) }}
         </p>
         <p>Consultant chargé de la prestation : {{ data.timesheet.consultant.name }}</p>
         <p *ngIf="invoice.paymentLatePenalty">
-          Tout retard de paiement donnera lieu, en plus des pénalités de retard (10 % par an), au versement d'une indemnité forfaitaire de 40 € pour frais de recouvrement.
+          Tout retard de paiement donnera lieu, en plus des pénalités de retard (10 % par an), au versement d'une indemnité forfaitaire de 40 € pour frais de recouvrement.
         </p>
       </td>
       <td class="empty_spacer">

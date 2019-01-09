@@ -6,7 +6,7 @@ export class Company {
   siren: string;
   tradeAndCompaniesRegisterCity: string;
   tradeAndCompaniesRegisterExemption: boolean;
-  vatNumber: number;
+  vatNumber: string;
   vatExemption: boolean;
 
   constructor(
@@ -16,7 +16,7 @@ export class Company {
     siren?: string,
     tradeAndCompaniesRegisterCity?: string,
     tradeAndCompaniesRegisterExemption?: boolean,
-    vatNumber?: number,
+    vatNumber?: string,
     vatExemption?: boolean
   ) {
     this.name = name || '';
@@ -34,38 +34,47 @@ export class Company {
     if (this.vatExemption) {
       return undefined;
     } else {
-      const vat = this.vatNumber.toString();
-      return  vat.substring(0, 2) + ' ' +
-              vat.substring(2, 4) + ' ' +
-              vat.substring(4, 7) + ' ' +
-              vat.substring(7, 10) + ' ' +
-              vat.substring(10, 13) + '.';
+      return  this.vatNumber.substring(0, 2) + ' ' +
+              this.vatNumber.substring(2, 4) + ' ' +
+              this.vatNumber.substring(4, 7) + ' ' +
+              this.vatNumber.substring(7, 10) + ' ' +
+              this.vatNumber.substring(10, 13) + '.';
     }
   }
 
   getFormattedTelephoneNumber(): string {
     switch (this.telephone.length) {
       case 10:
-        return  this.telephone.substring(0, 2) + '.' +
-                this.telephone.substring(2, 4) + '.' +
-                this.telephone.substring(4, 6) + '.' +
-                this.telephone.substring(6, 8) + '.' +
-                this.telephone.substring(8, 10);
+      const newTelephoneNumber = [];
+      for (let index = 0; index <= this.telephone.length; index++) {
+        if (index % 2 === 0 && index !== 0) {
+          newTelephoneNumber.push(this.telephone.substring(index - 2, index));
+        }
+      }
+      return newTelephoneNumber.join('.');
       default:
         return  this.telephone;
     }
   }
 
   getFormattedSIRENNumber(): string {
+    const newSiren = [];
+
     switch (this.siren.length) {
       case 9:
-        return  this.siren.substring(0, 3) + ' ' +
-                this.siren.substring(3, 6) + ' ' +
-                this.siren.substring(6, 9);
+        for (let index = 0; index <= this.siren.length; index++) {
+          if (index % 3 === 0 && index !== 0) {
+            newSiren.push(this.siren.substring(index - 3, index));
+          }
+        }
+        return newSiren.join(' ');
       case 10:
-        return  this.siren.substring(1, 4) + ' ' +
-                this.siren.substring(4, 7) + ' ' +
-                this.siren.substring(7, 10);
+        for (let index = 1; index <= this.siren.length; index++) {
+          if (index % 3 === 0 && index !== 0) {
+            newSiren.push(this.siren.substring(index - 2, index + 1));
+          }
+        }
+        return newSiren.join(' ');
       default:
         return this.siren;
     }
