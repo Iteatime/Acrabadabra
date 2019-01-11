@@ -1,74 +1,45 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanActivate } from '@angular/router';
+import { Timesheet } from './timesheet.model';
 
-import { Base64 } from 'js-base64';
-
-import { Observable } from 'rxjs';
-import { Invoice } from '../@types/invoice';
-import { Timesheet } from '../@types/timesheet';
+function tokenize(a: any): string {
+  return btoa(unescape(encodeURIComponent(JSON.stringify(a))));
+}
+ ​
+function untokenize(a: string): any {
+  return JSON.parse(decodeURIComponent(escape(atob(a))));
+}
 
 @Injectable({
   providedIn: 'root'
 })
-export class TimesheetService implements CanActivate {
+export class TimesheetService {
 
-  constructor(private router: Router) { }
+  timesheet: Timesheet;
 
-  tokenize(serializableContent: any): string {
-    return Base64.encode(JSON.stringify(serializableContent));
+  constructor() {
+      this.timesheet = new Timesheet();
   }
 
-  deTokenize(serializedContent: string): any {
-
-    const decodedValue: string = Base64.decode(serializedContent);
-    const deserializedContent: any = JSON.parse(decodedValue);
-
-    return deserializedContent;
+  public getEditToken(): string {
+      return tokenize({
+          mode: 'edit',
+          timesheet: this.timesheet
+      });
   }
 
-  createTimesheetTokens(timesheet: Timesheet, invoice: Invoice = null): string[] {
-    const data = {
-      timesheet: timesheet,
-      invoice: invoice,
-      mode: '',
-    };
-
-    return [
-      this.tokenize({ ...data, mode: 'edit' }),
-      this.tokenize({ ...data, mode: 'review' }),
-    ];
+  public getReviewToken(): string {
+      return tokenize({
+          mode: 'review',
+          timesheet: this.timesheet
+      });
   }
 
-  createInvoiceToken(timesheet: Timesheet, invoice: Invoice): string {
-    const data = {
-      timesheet: timesheet,
-      invoice: invoice,
-    };
-
-    return this.tokenize(data);
-  }
-
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean>|Promise<boolean>|boolean {
-
-    if (route.params.hasOwnProperty('token')) {
-      try {
-        const mode = this.deTokenize(route.params['token']).mode;
-        if (route.url[1].path === mode) {
-          return true;
-        } else {
-          this.router.navigate(['timesheet', mode, route.params['token']]);
-          return false;
-        }
-      } catch (e) {
-        this.router.navigate(['timesheet', 'create']);
-        console.log('Invalid token');
-      }
-
-    } else if (route.url[1].path === 'create') {
-      return true;
+  public openTimesheet(token: string, mode: string): boolean|void {
+    const a = untokenize(token);
+    if (a.mode !== mode) {
+       return false;
+    } else {
+      this.timesheet = Object.assign(new Timesheet, a.timesheet);
     }
   }
 }

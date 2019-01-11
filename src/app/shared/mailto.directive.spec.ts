@@ -1,8 +1,8 @@
-import { MailtoLinkDirective } from './mailto-link.directive';
+import { MailtoDirective } from './mailto.directive';
 
-describe('MailtoLinkDirective', () => {
+describe('MailtoDirective', () => {
   it('should create an instance', () => {
-    const directive = new MailtoLinkDirective();
+    const directive = new MailtoDirective();
     expect(directive).toBeTruthy();
   });
 });

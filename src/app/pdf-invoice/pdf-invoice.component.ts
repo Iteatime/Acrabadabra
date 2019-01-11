@@ -8,6 +8,7 @@ import { MonetaryService } from '../shared/monetary.service';
 import { CalendarManagerService } from '../calendar/calendar-manager.service';
 import { TimesheetService } from '../shared/timesheet.service';
 import { Invoice } from '../shared/invoice.model';
+import { Timesheet } from '../shared/timesheet.model';
 
 @Component({
   selector: 'app-pdf-invoice',
@@ -17,11 +18,8 @@ import { Invoice } from '../shared/invoice.model';
 
 export class PdfInvoiceComponent implements OnInit {
 
-  data;
+  timesheet: Timesheet;
   local = 'fr';
-  provider: Company;
-  client: Company;
-  invoice: Invoice;
   workedTime: number;
   totalHT: number;
   totalTTC: number;
@@ -35,14 +33,15 @@ export class PdfInvoiceComponent implements OnInit {
     private route: ActivatedRoute,
     private timesheetService: TimesheetService,
   ) {
-    this.data = this.timesheetService.deTokenize(this.route.snapshot.paramMap.get('data'));
-    this.provider = Object.assign(new Company(), this.data.invoice.provider);
-    this.client = Object.assign(new Company(), this.data.invoice.client);
-    this.invoice = Object.assign(new Invoice(), this.data.invoice);
-    this.workedTime = this.calendarManager.getWorkedTime(this.data.timesheet);
-    this.period = this.calendarManager.getDate(this.data.timesheet);
+    this.timesheetService.openTimesheet(this.route.snapshot.paramMap.get('data'), 'review');
+    this.timesheet = this.timesheetService.timesheet;
+    this.timesheet.invoice = Object.assign(new Invoice(), this.timesheet.invoice);
+    this.timesheet.invoice.provider = Object.assign(new Company(), this.timesheet.invoice.provider);
+    this.timesheet.invoice.client = Object.assign(new Company(), this.timesheet.invoice.client);
+    this.workedTime = this.calendarManager.getWorkedTime(this.timesheet);
+    this.period = this.calendarManager.getDate(this.timesheet);
     this.vat = this.currencyService.getVat();
-    this.totalHT = this.workedTime * this.data.invoice.dailyRate;
+    this.totalHT = this.workedTime * this.timesheet.invoice.dailyRate;
     this.totalTTC = this.totalHT + (this.vat * this.totalHT / 100);
     this.currency = this.currencyService.getCurrency();
   }
@@ -51,7 +50,7 @@ export class PdfInvoiceComponent implements OnInit {
     html2canvas(document.getElementById('invoice')).then(canvas => {
       const pdf = new jsPDF('p', 'mm', 'a4');
             pdf.addImage(canvas.toDataURL('image/jpeg', 1.0), 'JPG', 0, 0);
-            pdf.save(this.data.invoice.number + '.pdf');
+            pdf.save(this.timesheet.invoice.number + '.pdf');
     });
   }
 

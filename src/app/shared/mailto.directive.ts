@@ -1,6 +1,7 @@
 import { Directive, Input, HostListener } from '@angular/core';
 
 @Directive({
+  // tslint:disable-next-line:directive-selector
   selector: '[mailto]'
 })
 export class MailtoDirective {
@@ -8,9 +9,11 @@ export class MailtoDirective {
   @Input('mailto')
   public recipient: string;
 
+  // tslint:disable-next-line:no-input-rename
   @Input('mailtoSubject')
   public subject: string;
 
+  // tslint:disable-next-line:no-input-rename
   @Input('mailtoBody')
   public body: string;
 
