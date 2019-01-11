@@ -1,5 +1,6 @@
 import { Company } from '../shared/company.model';
 
+// tslint:disable-next-line:interface-over-type-literal
 export type Invoice = {
   number: number;
   date: string;
