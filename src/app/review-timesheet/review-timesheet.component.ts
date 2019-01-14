@@ -30,7 +30,7 @@ export class ReviewTimesheetComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      if (this.timesheetService.openTimesheet(params['data'], 'review') === undefined) {
+      if (this.timesheetService.openTimesheet(params['data'], 'review')) {
         this.timesheet = this.timesheetService.timesheet;
         this.date = this.calendarManager.getDate(this.timesheet);
         this.workingTime = this.calendarManager.getWorkedTime(this.timesheet);

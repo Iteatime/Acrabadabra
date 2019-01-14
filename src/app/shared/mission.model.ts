@@ -6,5 +6,4 @@ export class Mission {
     this.client = missionClient;
     this.title = missionTitle;
   }
-
 }
