@@ -1,5 +1,4 @@
-// tslint:disable-next-line:interface-over-type-literal
-export type Mission = {
+export interface Mission {
   client: string;
   title: string;
 }

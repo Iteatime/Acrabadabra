@@ -5,7 +5,7 @@ import { Invoice } from './invoice.model';
 export class Timesheet {
   consultant: Consultant;
   mission: Mission;
-  workingDays: Number[];
+  workingDays: {};
   invoice: Invoice;
 
   constructor(
@@ -18,6 +18,6 @@ export class Timesheet {
   ) {
     this.consultant = new Consultant(consultantEmail, consultantName) || consultant;
     this.mission = new Mission(missionClient, missionTitle) || mission;
-    this.workingDays = [];
+    this.workingDays = {};
   }
 }

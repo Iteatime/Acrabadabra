@@ -156,7 +156,7 @@
 
           <div *ngIf="showLinks" class="edit-cra__wrapper__form__icons">
             <div *ngIf="generateInvoice" class="edit-cra__wrapper__form__icons__item">
-              <a target="_blank" [routerLink]="['/invoice/' + reviewToken]">
+              <a target="_blank" [routerLink]="['/invoice/' + reviewToken()]">
                 <i class="material-icons">picture_as_pdf</i>
                 <p>Télécharger la facture</p>
               </a>
@@ -175,7 +175,7 @@
             <div class="edit-cra__wrapper__form__icons__item">
               <a
               href="#"
-              [copyToClipboard]="originUrl + '/timesheet/edit/' + editToken"
+              [copyToClipboard]="originUrl + '/timesheet/edit/' + editToken()"
               [copyToClipboardMessage]="'Lien copié'"
               [copyToClipboardMessageParent]="editLink.parentNode"
               #editLink
@@ -187,7 +187,7 @@
             <div class="edit-cra__wrapper__form__icons__item">
               <a
               href="#"
-              [copyToClipboard]="originUrl + '/timesheet/review/' + reviewToken"
+              [copyToClipboard]="originUrl + '/timesheet/review/' + reviewToken()"
               [copyToClipboardMessage]="'Lien copié'"
               [copyToClipboardMessageParent]="shareLink.parentNode"
               #shareLink

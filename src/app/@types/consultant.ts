@@ -1,5 +1,4 @@
-// tslint:disable-next-line:interface-over-type-literal
-export type Consultant = {
+export interface Consultant {
   email: string;
   name: string;
-};
+}
