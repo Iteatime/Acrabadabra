@@ -38,22 +38,6 @@ export class EditTimesheetComponent implements OnInit {
   originUrl = window.location.origin;
 
   editMode = false;
-  editToken = (): string => {
-    if (!this.showLinks) {
-      return undefined;
-    }
-
-    this.timesheetService.timesheet = this.timesheet;
-    return this.timesheetService.getEditToken();
-  }
-  reviewToken = (): string => {
-    if (!this.showLinks) {
-      return undefined;
-    }
-
-    this.timesheetService.timesheet = this.timesheet;
-    return this.timesheetService.getReviewToken();
-  }
   title = () => this.editMode ? 'Modifier' : 'Saisir';
 
   mailSubject = (): string => {
@@ -69,14 +53,14 @@ export class EditTimesheetComponent implements OnInit {
             'Journées de prestation : ' + this.calendarManager.getWorkedTime(this.timesheet).toLocaleString('fr') + '%0d%0a' +
             '%0d%0a' +
             'Vous pouvez le consulter et télécharger la facture ici : ' +
-            this.originUrl + '/timesheet/review/' + this.reviewToken();
+            this.originUrl + '/timesheet/review/' + this.timesheetService.getReviewToken();
   }
 
   constructor(
     private calendarManager: CalendarManagerService,
     private route: ActivatedRoute,
     private router: Router,
-    private timesheetService: TimesheetService,
+    protected timesheetService: TimesheetService,
     private titleService: Title,
   ) {}
 
@@ -146,6 +130,7 @@ export class EditTimesheetComponent implements OnInit {
         this.timesheet.invoice = this.invoiceForm.invoice;
       }
 
+      this.timesheetService.timesheet = this.timesheet;
       this.validationMessage = 'Si vous modifiez le CRA, vous devrez le valider à nouveau et utiliser le nouveau lien de partage.';
       this.validationMessageType = 'success';
       this.showValidationMessage = true;

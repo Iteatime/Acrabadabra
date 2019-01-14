@@ -17,17 +17,17 @@ export class TimesheetService {
   timesheet: Timesheet;
 
   public getEditToken(): string {
-      return tokenize({
-          mode: 'edit',
-          timesheet: this.timesheet
-      });
+    return tokenize({
+        mode: 'edit',
+        timesheet: this.timesheet
+    });
   }
 
   public getReviewToken(): string {
-      return tokenize({
-          mode: 'review',
-          timesheet: this.timesheet
-      });
+    return tokenize({
+        mode: 'review',
+        timesheet: this.timesheet
+    });
   }
 
   public openTimesheet(token: string, mode: string): boolean|void {
