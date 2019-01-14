@@ -67,7 +67,7 @@ export class EditTimesheetComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       if (params.hasOwnProperty('data')) {
-        if (this.timesheetService.openTimesheet(params['data'], 'edit') !== undefined) {
+        if (!this.timesheetService.openTimesheet(params['data'], 'edit')) {
           this.router.navigate(['timesheet', 'create']);
         } else {
           this.editMode = true;

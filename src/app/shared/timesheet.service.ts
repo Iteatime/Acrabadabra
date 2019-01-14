@@ -30,12 +30,13 @@ export class TimesheetService {
     });
   }
 
-  public openTimesheet(token: string, mode: string): boolean|void {
+  public openTimesheet(token: string, mode: string): boolean {
     const a = untokenize(token);
     if (a.mode !== mode) {
        return false;
     } else {
       this.timesheet = Object.assign(new Timesheet(), a.timesheet);
+      return true;
     }
   }
 }
