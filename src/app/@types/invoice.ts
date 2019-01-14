@@ -1,7 +1,6 @@
 import { Company } from '../shared/company.model';
 
-// tslint:disable-next-line:interface-over-type-literal
-export type Invoice = {
+export interface Invoice {
   number: number;
   date: string;
   clientRef: string;
@@ -15,4 +14,4 @@ export type Invoice = {
   bankIBAN: string;
   bankSWIFT: string;
   bankingDomiciliation: string;
-};
+}

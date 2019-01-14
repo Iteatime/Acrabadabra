@@ -28,8 +28,6 @@ export class EditTimesheetComponent implements OnInit {
   @ViewChild ('form') form: NgForm;
 
   timesheet = new Timesheet();
-  editToken: string;
-  reviewToken: string;
   generateInvoice = false;
 
   showLinks = false;
@@ -40,6 +38,22 @@ export class EditTimesheetComponent implements OnInit {
   originUrl = window.location.origin;
 
   editMode = false;
+  editToken = (): string => {
+    if (!this.showLinks) {
+      return undefined;
+    }
+
+    this.timesheetService.timesheet = this.timesheet;
+    return this.timesheetService.getEditToken();
+  }
+  reviewToken = (): string => {
+    if (!this.showLinks) {
+      return undefined;
+    }
+
+    this.timesheetService.timesheet = this.timesheet;
+    return this.timesheetService.getReviewToken();
+  }
   title = () => this.editMode ? 'Modifier' : 'Saisir';
 
   mailSubject = (): string => {
@@ -55,7 +69,7 @@ export class EditTimesheetComponent implements OnInit {
             'Journées de prestation : ' + this.calendarManager.getWorkedTime(this.timesheet).toLocaleString('fr') + '%0d%0a' +
             '%0d%0a' +
             'Vous pouvez le consulter et télécharger la facture ici : ' +
-            this.originUrl + '/timesheet/review/' + this.reviewToken;
+            this.originUrl + '/timesheet/review/' + this.reviewToken();
   }
 
   constructor(
@@ -89,8 +103,6 @@ export class EditTimesheetComponent implements OnInit {
 
   initDataFromUrlParams(): void {
     this.timesheet = this.timesheetService.timesheet;
-
-    this.getTimesheetTokens();
 
     if (this.timesheet.invoice !== undefined) {
       this.generateInvoice = true;
@@ -133,7 +145,6 @@ export class EditTimesheetComponent implements OnInit {
       if (this.generateInvoice) {
         this.timesheet.invoice = this.invoiceForm.invoice;
       }
-      this.getTimesheetTokens();
 
       this.validationMessage = 'Si vous modifiez le CRA, vous devrez le valider à nouveau et utiliser le nouveau lien de partage.';
       this.validationMessageType = 'success';
@@ -147,12 +158,6 @@ export class EditTimesheetComponent implements OnInit {
       this.validationMessageType = 'error';
       this.showValidationMessage = true;
     }
-  }
-
-  getTimesheetTokens() {
-    this.timesheetService.timesheet = this.timesheet;
-    this.editToken = this.timesheetService.getEditToken();
-    this.reviewToken = this.timesheetService.getReviewToken();
   }
 
   checkFormsValidity(): boolean {

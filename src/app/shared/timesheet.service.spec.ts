@@ -3,54 +3,56 @@ import { TestBed } from '@angular/core/testing';
 import * as _ from 'Lodash';
 
 import { TimesheetService } from './timesheet.service';
-import { Timesheet } from './timesheet.model';
 
-describe('TimesheetService - ', () => {
+class MockTimesheet {
+  consultant: any;
+  mission: any;
+  workingDays: any;
+  invoice: any;
+
+  constructor() {
+    this.consultant = { email: 'tester@test.com', name: 'tester', };
+    this.mission = { client: 'Test.com', title: 'Testin' };
+    this.workingDays = {
+      '0.1900': [0.5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    };
+    this.invoice = null;
+  }
+}
+
+describe('TimesheetService -', () => {
 
   let service: TimesheetService;
-  const timesheet = {
-    consultant: { email: 'tester@test.com', name: 'tester', },
-    mission: { client: 'Test.com', title: 'Testin' },
-    workingDays: {
-      '0.1900': [0.5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    },
-    invoice: null
-  };
-  const token = (mode: string) => btoa(unescape(encodeURIComponent(JSON.stringify({ mode, timesheet }))));
+  const timesheet = new MockTimesheet();
+  const editToken = () => btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'edit', timesheet }))));
+  const reviewToken = () => btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'review', timesheet }))));
 
-  beforeEach(() => TestBed.configureTestingModule({}));
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.get(TimesheetService);
+    service.openTimesheet(reviewToken(), 'review');
+  });
 
   it('should be created', () => {
-    service = TestBed.get(TimesheetService);
     expect(service).toBeTruthy();
   });
 
-  describe('when opening a timesheet on edit mode', () => {
-    let result;
-
-    beforeEach(() => {
-      result = service.openTimesheet(token('edit'), 'edit');
-    });
-
-    it('shouldn\'t return anything if the second arg is edit', () => {
-      expect(result).toBeUndefined();
-    });
-
-    it('should return false if the second arg is not edit', () => {
-      result = service.openTimesheet(token('edit'), 'review');
-      expect(result).toBeFalsy();
+  describe('when opening a timesheet (openTimesheet)', () => {
+    it('should return false if the "mode" argument does not match the "mode" stored in the token', () => {
+      expect(service.openTimesheet(reviewToken(), 'edit')).toBeFalsy();
     });
   });
 
-  describe('when getting the EditToken', () => {
-    it('should be returned', () => {
-      expect(service.getEditToken()).toBe(token('edit'));
+  describe('when getting the EditToken (getEditToken)', () => {
+    it('should return a base64 encoded json object containing the timesheet property, and a "mode" property set to "edit"', () => {
+      expect(service.getEditToken()).toBe(editToken());
     });
   });
 
-  describe('when getting the ReviewToken', () => {
-    it('should be returned', () => {
-      expect(service.getReviewToken()).toBe(token('review'));
+  describe('when getting the ReviewToken (getReviewToken)', () => {
+    it('should return a base64 encoded json object containing the timesheet property, and a "mode" property set to "review"', () => {
+      expect(service.getReviewToken()).toBe(reviewToken());
     });
   });
 });

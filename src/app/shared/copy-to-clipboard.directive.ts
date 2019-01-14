@@ -2,7 +2,6 @@ import { Directive, Input, Output, EventEmitter, HostListener, OnChanges} from '
 
 @Directive({
 
-  // tslint:disable-next-line:directive-selector
   selector: '[copyToClipboard]',
 })
 export class CopyToClipboardDirective {
@@ -10,11 +9,9 @@ export class CopyToClipboardDirective {
   @Input('copyToClipboard')
   public payload: string;
 
-  // tslint:disable-next-line:no-input-rename
   @Input('copyToClipboardMessage')
   public message: string;
 
-  // tslint:disable-next-line:no-input-rename
   @Input('copyToClipboardMessageParent')
   public parent: HTMLElement;
 

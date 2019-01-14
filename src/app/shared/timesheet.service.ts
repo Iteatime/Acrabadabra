@@ -16,10 +16,6 @@ export class TimesheetService {
 
   timesheet: Timesheet;
 
-  constructor() {
-      this.timesheet = new Timesheet();
-  }
-
   public getEditToken(): string {
       return tokenize({
           mode: 'edit',
@@ -39,7 +35,7 @@ export class TimesheetService {
     if (a.mode !== mode) {
        return false;
     } else {
-      this.timesheet = Object.assign(new Timesheet, a.timesheet);
+      this.timesheet = Object.assign(new Timesheet(), a.timesheet);
     }
   }
 }
