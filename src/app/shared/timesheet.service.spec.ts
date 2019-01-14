@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import * as _ from 'Lodash';
 
 import { TimesheetService } from './timesheet.service';
+import { Timesheet } from './timesheet.model';
 
 class MockTimesheet {
   consultant: any;
@@ -10,20 +11,13 @@ class MockTimesheet {
   workingDays: any;
   invoice: any;
 
-  constructor() {
-    this.consultant = { email: 'tester@test.com', name: 'tester', };
-    this.mission = { client: 'Test.com', title: 'Testin' };
-    this.workingDays = {
-      '0.1900': [0.5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    };
-    this.invoice = null;
-  }
+  constructor() {}
 }
 
 describe('TimesheetService -', () => {
 
   let service: TimesheetService;
-  const timesheet = new MockTimesheet();
+  const timesheet = new Timesheet('tester@test.com', 'Tester', 'Test.com', 'Testing TimesheetService');
   const editToken = () => btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'edit', timesheet }))));
   const reviewToken = () => btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'review', timesheet }))));
 
@@ -38,19 +32,19 @@ describe('TimesheetService -', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('when opening a timesheet (openTimesheet)', () => {
+  describe('openTimesheet())', () => {
     it('should return false if the "mode" argument does not match the "mode" stored in the token', () => {
       expect(service.openTimesheet(reviewToken(), 'edit')).toBeFalsy();
     });
   });
 
-  describe('when getting the EditToken (getEditToken)', () => {
+  describe('getEditToken())', () => {
     it('should return a base64 encoded json object containing the timesheet property, and a "mode" property set to "edit"', () => {
       expect(service.getEditToken()).toBe(editToken());
     });
   });
 
-  describe('when getting the ReviewToken (getReviewToken)', () => {
+  describe('getReviewToken())', () => {
     it('should return a base64 encoded json object containing the timesheet property, and a "mode" property set to "review"', () => {
       expect(service.getReviewToken()).toBe(reviewToken());
     });
