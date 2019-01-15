@@ -40,7 +40,7 @@ describe('TimesheetService -', () => {
 
   describe('when oppening a token', () => {
     beforeEach(() => {
-      service.openTimesheet(getEditToken, 'edit');
+      service.timesheet = this.timesheet;
     });
 
     describe('getEditToken())', () => {
