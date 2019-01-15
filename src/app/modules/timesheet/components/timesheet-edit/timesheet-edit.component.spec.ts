@@ -1,21 +1,23 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { FormsModule, NgModel, FormControl, AbstractControl, NgForm } from '@angular/forms';
+import { ComponentFixture, TestBed} from '@angular/core/testing';
+import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Title, By } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 
 import { MockComponent, MockDirective } from 'ng-mocks';
 
+import { CalendarSelectorComponent } from 'src/app/modules/calendar/components/calendar-selector/calendar-selector.component';
+
+import { InvoiceFormComponent } from '../invoice-form/invoice-form.component';
 import { TimesheetEditComponent } from './timesheet-edit.component';
-import { CalendarManagerService } from 'src/app/calendar/calendar-manager.service';
-import { TimesheetService } from 'src/app/shared/timesheet.service';
-import { CalendarComponent } from 'src/app/calendar/calendar.component';
-import { CopyToClipboardDirective } from 'src/app/shared/copy-to-clipboard.directive';
-import { MailtoDirective } from 'src/app/shared/mailto.directive';
-import { InvoiceFormComponent } from '../../invoice/invoice-form/invoice-form.component';
-import { Timesheet } from 'src/app/shared/timesheet.model';
-import { Invoice } from 'src/app/shared/invoice.model';
-import { ReviewMail } from 'src/app/shared/review-mail.model';
+import { TimesheetService } from '../../timesheet.service';
+
+import { CopyToClipboardDirective } from 'src/app/shared/directives/copy-to-clipboard/copy-to-clipboard.directive';
+import { MailtoDirective } from 'src/app/shared/directives/mailto/mailto.directive';
+
+import { Timesheet } from 'src/app/shared/models/timesheet.model';
+import { Invoice } from 'src/app/shared/models/invoice.model';
+import { ReviewMail } from 'src/app/shared/models/review-mail.model';
 
 let testTimesheet = new Timesheet('test');
     testTimesheet.workingDays['0.1900'] = [0.5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -52,7 +54,7 @@ describe('TimesheetEditComponent', () => {
       ],
       declarations: [
         TimesheetEditComponent,
-        MockComponent(CalendarComponent),
+        MockComponent(CalendarSelectorComponent),
         MockComponent(InvoiceFormComponent),
         MockDirective(CopyToClipboardDirective),
         MockDirective(MailtoDirective)

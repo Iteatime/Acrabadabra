@@ -119,7 +119,7 @@
               <app-calendar-selector
               [minifiedTimesheet]="timesheetService.timesheet.workingDays"
               [picking]="true"
-              (changed)="onUserInput()"
+              (changed)="onUserInput($event)"
               >
               </app-calendar-selector>
           </div>

@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import * as html2canvas from 'html2canvas';
+
 import * as jsPDF from 'jspdf';
 
+import { startOfMonth, endOfMonth } from 'date-fns';
+
 import { CalendarService } from 'src/app/modules/calendar/calendar.service';
+
+import { TimesheetService } from '../../timesheet.service';
 
 import { MonetaryService } from 'src/app/shared/services/monetary/monetary.service';
 import { Invoice } from 'src/app/shared/models/invoice.model';
@@ -20,54 +26,49 @@ export class InvoicePDFComponent implements OnInit {
 
   timesheet: Timesheet;
   local = 'fr';
+  workedTime: number;
   totalHT: number;
   totalTTC: number;
-  vatRate: number;
-  currencyCode: string;
-  workedTime: number;
+  vat: number;
+  period: Date;
+  currency: string;
 
   constructor(
-    public calendarService: CalendarService,
-    private monetaryService: MonetaryService,
+    private calendarManager: CalendarService,
+    private currencyService: MonetaryService,
     private route: ActivatedRoute,
+    private timesheetService: TimesheetService,
   ) {
     this.timesheetService.openTimesheet(this.route.snapshot.paramMap.get('data'), 'review');
     this.timesheet = this.timesheetService.timesheet;
     this.timesheet.invoice = Object.assign(new Invoice(), this.timesheet.invoice);
     this.timesheet.invoice.provider = Object.assign(new Company(), this.timesheet.invoice.provider);
     this.timesheet.invoice.client = Object.assign(new Company(), this.timesheet.invoice.client);
-    this.workedTime = this.calendarService.getWorkedTime(this.timesheet);
-    this.vatRate = this.monetaryService.vatRate;
+    this.workedTime = this.calendarManager.getWorkedTime(this.timesheet);
+    this.period = this.calendarManager.getDate(this.timesheet);
+    this.vat = this.currencyService.getVat();
     this.totalHT = this.workedTime * this.timesheet.invoice.dailyRate;
-    this.totalTTC = this.totalHT + (this.vatRate * this.totalHT / 100);
-    this.currencyCode = this.monetaryService.currencyCode;
+    this.totalTTC = this.totalHT + (this.vat * this.totalHT / 100);
+    this.currency = this.currencyService.getCurrency();
   }
 
   ngOnInit() {
-    const pdf = new jsPDF('p', 'pt', 'A4');
-          pdf.html(document.querySelector('.invoice'), {callback: pdf => {
-            pdf.deletePage(2);
-            pdf.save(`${this.timesheet.invoice.number}.pdf`);
-          }});
+    // const pdf = new jsPDF('p', 'pt', 'A4');
+    //       pdf.html(document.querySelector('.invoice'), {callback: pdf => {
+    //         pdf.deletePage(2);
+    //         pdf.save(`${this.timesheet.invoice.number}.pdf`);
+    //       }});
   }
 
   formatDate(date: string): string {
     return new Date(date).toLocaleString(this.local, { day: '2-digit', month: '2-digit', year: 'numeric'});
   }
 
-  formatDuration(): string {
-    console.log(this.calendarService.getLastWorkingDay(this.timesheet));
-
-    const start = this.formatDate(this.calendarService.getFirstWorkingDay(this.timesheet).toString());
-    const end = this.formatDate(this.calendarService.getLastWorkingDay(this.timesheet).toString());
-
-    if (start !== end) {
-      return  'du ' +
-            start +
-            ' au ' +
-            end;
-    } else {
-      return `le ${start}`;
-    }
+  formatDuration(month: Date): string {
+    return 'du ' +
+          startOfMonth(month).toLocaleString(this.local, { day: '2-digit', month: '2-digit', year: 'numeric'}) +
+          ' au ' +
+          endOfMonth(month).toLocaleString(this.local, { day: '2-digit', month: '2-digit', year: 'numeric'});
   }
+
 }
