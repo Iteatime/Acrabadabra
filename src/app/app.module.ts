@@ -12,9 +12,9 @@ import { AppComponent } from './app.component';
 
 import { HomeComponent } from './home/home.component';
 
-import { EditTimesheetComponent } from './edit-timesheet/edit-timesheet.component';
-import { InvoiceFormComponent } from './edit-timesheet/invoice-form/invoice-form.component';
+import { TimesheetEditComponent } from './components/timesheet/timesheet-edit/timesheet-edit.component';
 import { ReviewTimesheetComponent } from './review-timesheet/review-timesheet.component';
+import { InvoiceFormComponent } from './components/invoice/invoice-form/invoice-form.component';
 
 import { CalendarComponent } from './calendar/calendar.component';
 
@@ -31,9 +31,9 @@ registerLocaleData(localeFr);
 
     HomeComponent,
 
-    EditTimesheetComponent,
     InvoiceFormComponent,
     ReviewTimesheetComponent,
+    TimesheetEditComponent,
 
     CalendarComponent,
 

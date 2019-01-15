@@ -9,7 +9,7 @@
 
   <div class="edit-cra__wrapper">
       <div class="edit-cra__wrapper__title">
-          <h2>{{ title() }} un compte rendu d'activité</h2>
+          <h2>{{ getTitlePrefix() }} un compte rendu d'activité</h2>
       </div>
 
       <form class="edit-cra__wrapper__form" #form="ngForm">
@@ -119,6 +119,7 @@
               <app-calendar
               [minifiedTimesheet]="timesheet.workingDays"
               [picking]="true"
+              (changed)="onUserInput($event)"
               >
               </app-calendar>
           </div>
@@ -129,26 +130,29 @@
                 name="invoiceToggle"
                 type="checkbox"
                 [(ngModel)]="generateInvoice"
-                (change)="initChangesDetection(generateInvoice)"
                 >
                 Générer une facture
               </label>
-              <app-invoice-form *ngIf="generateInvoice"></app-invoice-form>
+              <app-invoice-form
+              *ngIf="generateInvoice"
+              [invoice]="timesheet.invoice"
+              (changed)="onUserInput($event)"
+              ></app-invoice-form>
           </div>
 
           <div
           class="edit-cra__wrapper__form__message"
-          *ngIf="showValidationMessage"
-          [ngClass]="'edit-cra__wrapper__form__message--' + validationMessageType"
+          *ngIf="showSubmitMessage"
+          [ngClass]="'edit-cra__wrapper__form__message--' + submitMessageType"
           >
-            <u>{{ validationMessage }}</u>
+            <u>{{ submitMessage }}</u>
           </div>
 
           <div class="edit-cra__wrapper__form__submit">
             <button
             data-text="Valider mon CRA"
             class="edit-cra__wrapper__form__submit__button"
-            (click)="onSubmitTimesheet()"
+            (click)="onSubmit()"
             >
               <span>Valider mon CRA</span>
             </button>
@@ -165,8 +169,7 @@
               <a
               href="#"
               [mailto]
-              [mailtoSubject]="mailSubject()"
-              [mailtoBody]="mailBody()"
+              [mailContent]="reviewMail"
               >
                 <i class="material-icons">email</i>
                 <p>Envoyer le CRA par mail</p>

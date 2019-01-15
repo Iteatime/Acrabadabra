@@ -1,7 +1,12 @@
 <div id="homepage" class="homepage">
   <div class="homepage__header">
     <div class="homepage__header__container">
-      <img class="homepage__header__container__logo" src="assets/images/logo.white.svg" alt="logo {{ title }}" onerror="this.removeAttribute('onerror'); this.src='//assets/images/logo.white.png'">
+      <img
+      class="homepage__header__container__logo"
+      src="assets/images/logo.white.svg"
+      alt="logo {{ title }}"
+      (error)="this.removeAttribute('onerror'); this.src='//assets/images/logo.white.png'"
+      >
     </div>
   </div>
 
