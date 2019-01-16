@@ -9,7 +9,7 @@
 
   <div class="edit-cra__wrapper">
       <div class="edit-cra__wrapper__title">
-          <h2>{{ getTitlePrefix() }} un compte rendu d'activité</h2>
+          <h2>{{ getModeTitle() }} un compte rendu d'activité</h2>
       </div>
 
       <form class="edit-cra__wrapper__form" #form="ngForm">
@@ -24,7 +24,7 @@
                           required
                           class="form-control"
                           name="consultantNameInput"
-                          [(ngModel)]="timesheet.consultant.name"
+                          [(ngModel)]="timesheetService.timesheet.consultant.name"
                           #consultantNameInput="ngModel"
                           >
                           <div
@@ -46,7 +46,7 @@
                           email
                           class="form-control"
                           name="consultantEmailInput"
-                          [(ngModel)]="timesheet.consultant.email"
+                          [(ngModel)]="timesheetService.timesheet.consultant.email"
                           #consultantEmailInput="ngModel"
                           >
                           <div
@@ -63,9 +63,9 @@
                       </div>
                   </div>
               </div>
-          </div>
+            </div>
 
-          <div id="mission" class="edit-cra__wrapper__form__block">
+            <div id="mission" class="edit-cra__wrapper__form__block">
               <h4 class="edit-cra__wrapper__form__block__title">Mission</h4>
               <div class="edit-cra__wrapper__form__block__input-wrapper">
                   <div class="edit-cra__wrapper__form__block__input-wrapper__item form-group">
@@ -76,7 +76,7 @@
                           required
                           class="form-control"
                           name="missionTitleInput"
-                          [(ngModel)]="timesheet.mission.title"
+                          [(ngModel)]="timesheetService.timesheet.mission.title"
                           #missionTitleInput="ngModel"
                           >
                           <div
@@ -98,7 +98,7 @@
                           required
                           class="form-control"
                           name="missionFinalClientInput"
-                          [(ngModel)]="timesheet.mission.client"
+                          [(ngModel)]="timesheetService.timesheet.mission.client"
                           #missionFinalClientInput="ngModel"
                           >
                           <div
@@ -112,12 +112,12 @@
                       </div>
                   </div>
               </div>
-          </div>
+            </div>
 
           <div class="edit-cra__wrapper__form__component">
               <h4 class="edit-cra__wrapper__form__component__title">Compte rendu d'activité</h4>
               <app-calendar
-              [minifiedTimesheet]="timesheet.workingDays"
+              [minifiedTimesheet]="timesheetService.timesheet.workingDays"
               [picking]="true"
               (changed)="onUserInput($event)"
               >
@@ -129,23 +129,23 @@
                 <input
                 name="invoiceToggle"
                 type="checkbox"
-                [(ngModel)]="generateInvoice"
+                #invoiceToggle
                 >
                 Générer une facture
               </label>
               <app-invoice-form
               *ngIf="generateInvoice"
-              [invoice]="timesheet.invoice"
+              [invoice]="timesheetService.timesheet.invoice"
               (changed)="onUserInput($event)"
               ></app-invoice-form>
           </div>
 
           <div
           class="edit-cra__wrapper__form__message"
-          *ngIf="showSubmitMessage"
-          [ngClass]="'edit-cra__wrapper__form__message--' + submitMessageType"
+          *ngIf="submitMessage"
+          [ngClass]="'edit-cra__wrapper__form__message--' + submitMessage.type"
           >
-            <u>{{ submitMessage }}</u>
+            <u>{{ submitMessage.text }}</u>
           </div>
 
           <div class="edit-cra__wrapper__form__submit">

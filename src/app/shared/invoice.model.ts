@@ -2,7 +2,7 @@ import { Company } from './company.model';
 import * as _ from 'lodash';
 
 export class Invoice {
-  number: number;
+  number: string;
   date: string;
   clientRef: string;
   dailyRate: number;
@@ -19,7 +19,7 @@ export class Invoice {
   bankSWIFT: string;
 
   constructor(
-    number?: number,
+    number?: string,
     date?: string,
     clientRef?: string,
     dailyRate?: number,

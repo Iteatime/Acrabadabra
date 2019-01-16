@@ -32,11 +32,12 @@ export class CalendarManagerService {
     }
   }
 
-  getworkingDays(events: CalendarEvent[]): any {
-    const month = new Date(events[0].start).getMonth(),
+  getWorkingDays(events: CalendarEvent[]): any {
+    if (events[0] !== undefined) {
+      const month = new Date(events[0].start).getMonth(),
           year = new Date(events[0].start).getFullYear(),
-          minitimesheet = {};
-          minitimesheet[month + '.' + year] = new Array();
+          workingDays = {};
+          workingDays[month + '.' + year] = new Array();
     for (let date = 0; date < new Date(lastDayOfMonth(events[0].start)).getDate(); date++) {
       let time = 0;
       events.forEach(aDay => {
@@ -45,8 +46,11 @@ export class CalendarManagerService {
           return;
         }
       });
-      minitimesheet[month + '.' + year][date] = time;
+      workingDays[month + '.' + year][date] = time;
     }
-    return minitimesheet;
+    return workingDays;
+    } else {
+      return {};
+    }
   }
 }
