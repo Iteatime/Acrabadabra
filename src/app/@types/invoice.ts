@@ -1,7 +1,7 @@
 import { Company } from '../shared/company.model';
 
 export interface Invoice {
-  number: number;
+  number: string;
   date: string;
   clientRef: string;
   dailyRate: number;

@@ -13,8 +13,6 @@ export class InvoiceFormComponent implements OnInit {
   @Input() invoice: Invoice = new Invoice();
   @Output() changed: EventEmitter<boolean> = new EventEmitter();
 
-  constructor() {}
-
   ngOnInit() {
     this.form.valueChanges.subscribe(() => {
       if (this.form.dirty) {

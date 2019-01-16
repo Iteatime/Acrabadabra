@@ -18,23 +18,15 @@ import { InvoiceFormComponent } from 'src/app/components/invoice/invoice-form/in
   styleUrls: ['./timesheet-edit.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class TimesheetEditComponent implements OnInit, AfterViewInit {
-  @ViewChild (CalendarComponent) timesheetPicker: CalendarComponent;
+export class TimesheetEditComponent implements OnInit {
+  @ViewChild (CalendarComponent) calendar: CalendarComponent;
   @ViewChild (InvoiceFormComponent) invoiceForm: InvoiceFormComponent;
   @ViewChild ('form') form: NgForm;
-
-  timesheet = new Timesheet();
   generateInvoice = false;
-
   showLinks = false;
-  showSubmitMessage = false;
-  submitMessage: string;
-  submitMessageType: string;
-
+  submitMessage: any;
   originUrl = window.location.origin;
-
   reviewMail: ReviewMail;
-
   editMode = false;
 
   constructor(
@@ -47,17 +39,16 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     if (this.route.snapshot.params.hasOwnProperty('data')) {
-      this.editMode = this.timesheetService.openTimesheet(this.route.snapshot.paramMap.get('data'), 'edit');
+      this.editMode = this.timesheetService.openTimesheet(this.route.snapshot.params['data'], 'edit');
       if (!this.editMode) {
         this.router.navigate(['timesheet', 'create']);
         return;
       }
-      this.fillForm(this.timesheetService.timesheet);
+      this.initData(this.timesheetService.timesheet);
     }
-    this.setPageTitle(this.getTitlePrefix() + ' un compte rendu d\'activité');
-  }
 
-  ngAfterViewInit(): void {
+    this.titleService.setTitle(`Acrabadabra - ${this.getModeTitle()}  un compte rendu d'activité`);
+
     this.form.valueChanges.subscribe(() => {
       if (this.form.dirty) {
         this.onUserInput();
@@ -65,67 +56,61 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
     });
   }
 
-  fillForm(timesheet: Timesheet): void {
-    this.timesheet = timesheet;
+  initData(timesheet: Timesheet): void {
+    this.timesheetService.timesheet = timesheet;
     this.showLinks = true;
     this.generateInvoice = timesheet.invoice !== undefined;
     this.updateMailtoLink();
   }
 
-  getTitlePrefix() {
+  getModeTitle() {
     return this.editMode ? 'Modifier' : 'Saisir';
-  }
-
-  setPageTitle(newTitle: string) {
-    this.titleService.setTitle('Acrabadabra - ' + newTitle);
   }
 
   onUserInput() {
     this.showLinks = false;
-    this.showSubmitMessage = false;
+    this.submitMessage = null;
   }
 
   onSubmit() {
     if (this.checkFormsValidity()) {
-      this.getWorkingDays();
-      if (this.generateInvoice) {
-        this.timesheet.invoice = this.invoiceForm.invoice;
-      }
+      this.calendarManager.getWorkingDays(this.calendar.timesheet);
+      this.timesheetService.timesheet.invoice = this.generateInvoice ? this.invoiceForm.invoice : null;
       this.updateMailtoLink();
-      this.timesheetService.timesheet = this.timesheet;
-      this.showLinks = true;
-      this.setSubmitMessage(false);
+      this.reactToSubmition(false);
     } else {
       this.showValidationMessages();
-      this.setSubmitMessage(true);
+      this.reactToSubmition(true);
     }
   }
 
-  setSubmitMessage(error: boolean): void {
+  reactToSubmition(error: boolean): void {
     if (error) {
-      this.submitMessage = 'Veuillez vérifier votre saisie';
-      this.submitMessageType = 'error';
+      this.submitMessage = { text: 'Veuillez vérifier votre saisie', type: 'error' };
     } else {
-      this.submitMessage = 'Si vous modifiez le CRA, vous devrez le valider à nouveau et utiliser le nouveau lien de partage.';
-      this.submitMessageType = 'success';
+      this.submitMessage = {
+        text: 'Si vous modifiez le CRA, vous devrez le valider à nouveau et utiliser le nouveau lien de partage.',
+        type: 'success'
+      };
     }
-    this.showSubmitMessage = true;
+    this.showLinks = !error;
   }
 
   updateMailtoLink(): void {
     this.reviewMail = new ReviewMail(
-      this.timesheet,
-      this.calendarManager.getWorkedTime(this.timesheet),
+      this.timesheetService.timesheet,
+      this.calendarManager.getWorkedTime(this.timesheetService.timesheet),
       this.timesheetService.getReviewToken(),
       this.originUrl + '/timesheet/edit/'
     );
   }
 
   checkFormsValidity(): boolean {
+    let valid = this.form.valid;
     if (this.generateInvoice) {
-      return this.invoiceForm.form.valid && this.form.valid;
+      valid = valid && this.invoiceForm.form.valid;
     }
-    return this.form.valid;
+    return valid;
   }
 
   showValidationMessages(): void {
@@ -136,15 +121,6 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
       Object.keys(this.invoiceForm.form.controls).forEach(field => {
         this.invoiceForm.form.controls[field].markAsTouched();
       });
-    }
-  }
-
-  getWorkingDays(): void {
-    const events = this.timesheetPicker.timesheet;
-    if (events[0] !== undefined) {
-      this.timesheet.workingDays = this.calendarManager.getworkingDays(events);
-    } else {
-      this.timesheet.workingDays = [];
     }
   }
 }
