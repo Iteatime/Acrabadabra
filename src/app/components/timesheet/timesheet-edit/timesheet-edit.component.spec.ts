@@ -1,10 +1,8 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, Params, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Title } from '@angular/platform-browser';
-
-import { of, Subject, BehaviorSubject } from 'rxjs';
 
 import { MockComponent, MockDirective } from 'ng-mocks';
 
@@ -103,17 +101,17 @@ describe('TimesheetEditComponent', () => {
       spySetTitle = spyOn(titleService, 'setTitle');
     });
 
-    describe('when responding to the create URL', () => {
+    describe('When there is no `data` parameter', () => {
       beforeEach(() => {
         component.ngOnInit();
         fixture.detectChanges();
       });
 
-      it('should set "editMode" to false', () => {
+      it('should set `editMode` to false', () => {
         expect(component.editMode).toBe(false);
       });
 
-      it('should create a new "Timsheet" instance', () => {
+      it('should create a new Timsheet instance', () => {
         expect(timesheetService.timesheet.consultant.email).toBe('');
       });
 
@@ -122,8 +120,8 @@ describe('TimesheetEditComponent', () => {
       });
     });
 
-    describe('when responding to the edit URL', () => {
-      describe('if the "mode" stored in the token is not "edit"', () => {
+    describe('When there is a `data` parameter', () => {
+      describe('if the `mode` stored in the token is not "edit"', () => {
 
         let spyRouterNavigate;
 
@@ -134,7 +132,7 @@ describe('TimesheetEditComponent', () => {
           fixture.detectChanges();
         });
 
-        it('should set "editMode" to false', () => {
+        it('should set `editMode` to false', () => {
           expect(component.editMode).toBe(false);
         });
 
@@ -143,14 +141,14 @@ describe('TimesheetEditComponent', () => {
         });
       });
 
-      describe('if the "mode" stored in the token is edit', () => {
+      describe('if the `mode` stored in the token is "edit"', () => {
         beforeEach(() => {
           route.snapshot.params = { data: editToken };
           component.ngOnInit();
           fixture.detectChanges();
         });
 
-        it('should set "editMode" to true', () => {
+        it('should set `editMode` to true', () => {
           expect(component.editMode).toBe(true);
         });
 
@@ -162,11 +160,11 @@ describe('TimesheetEditComponent', () => {
   });
 
   describe('getModeTitle()', () => {
-    it('should return "Saisir" saisir if "editMode" is false', () => {
+    it('should return "Saisir" if `editMode` is false', () => {
       expect(component.getModeTitle()).toBe('Saisir');
     });
 
-    it('should return "Modifier" saisir if "editMode" is true', () => {
+    it('should return "Modifier" if `editMode` is true', () => {
       component.editMode = true;
       expect(component.getModeTitle()).toBe('Modifier');
     });
