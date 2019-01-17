@@ -45,9 +45,11 @@ export class TimesheetEditComponent implements OnInit {
         return;
       }
       this.initData(this.timesheetService.timesheet);
+    } else {
+      this.timesheetService.timesheet = new Timesheet();
     }
 
-    this.titleService.setTitle(`Acrabadabra - ${this.getModeTitle()}  un compte rendu d'activité`);
+    this.titleService.setTitle(`Acrabadabra - ${this.getModeTitle()} un compte rendu d'activité`);
 
     this.form.valueChanges.subscribe(() => {
       if (this.form.dirty) {
@@ -59,7 +61,7 @@ export class TimesheetEditComponent implements OnInit {
   initData(timesheet: Timesheet): void {
     this.timesheetService.timesheet = timesheet;
     this.showLinks = true;
-    this.generateInvoice = timesheet.invoice !== undefined;
+    this.generateInvoice = timesheet.invoice !== null;
     this.updateMailtoLink();
   }
 
@@ -74,7 +76,7 @@ export class TimesheetEditComponent implements OnInit {
 
   onSubmit() {
     if (this.checkFormsValidity()) {
-      this.calendarManager.getWorkingDays(this.calendar.timesheet);
+      this.timesheetService.timesheet.workingDays = this.calendarManager.getWorkingDays(this.calendar.timesheet);
       this.timesheetService.timesheet.invoice = this.generateInvoice ? this.invoiceForm.invoice : null;
       this.updateMailtoLink();
       this.reactToSubmition(false);
