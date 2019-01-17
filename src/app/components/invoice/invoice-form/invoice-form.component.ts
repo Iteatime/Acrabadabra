@@ -10,10 +10,14 @@ import { NgForm } from '@angular/forms';
 export class InvoiceFormComponent implements OnInit {
 
   @ViewChild('form') form: NgForm;
-  @Input() invoice: Invoice = new Invoice();
+  @Input() invoice: Invoice;
   @Output() changed: EventEmitter<boolean> = new EventEmitter();
 
   ngOnInit() {
+    if (!this.invoice) {
+      this.invoice = new Invoice();
+    }
+
     this.form.valueChanges.subscribe(() => {
       if (this.form.dirty) {
         this.changed.emit(true);
