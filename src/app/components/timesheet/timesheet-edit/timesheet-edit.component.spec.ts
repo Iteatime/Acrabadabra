@@ -163,12 +163,11 @@ describe('TimesheetEditComponent', () => {
 
   describe('getModeTitle()', () => {
     it('should return "Saisir" saisir if "editMode" is false', () => {
-      component.editMode = false;
       expect(component.getModeTitle()).toBe('Saisir');
     });
 
     it('should return "Modifier" saisir if "editMode" is true', () => {
-      component.editMode = false;
+      component.editMode = true;
       expect(component.getModeTitle()).toBe('Modifier');
     });
   });
