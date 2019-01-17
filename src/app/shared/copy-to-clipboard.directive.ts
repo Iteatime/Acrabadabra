@@ -19,7 +19,7 @@ export class CopyToClipboardDirective {
   public copied: EventEmitter<string> = new EventEmitter<string>();
 
   @HostListener('click', ['$event'])
-  public onClick(event: MouseEvent): void {
+  public onCopy(event: MouseEvent): void {
 
     event.preventDefault();
     if (!this.payload) {
@@ -47,7 +47,7 @@ export class CopyToClipboardDirective {
           message.innerText = this.message;
 
     setTimeout(() => {
-      (<HTMLElement>event.target).parentNode.parentNode.removeChild(message);
+      this.parent.removeChild(message);
     }, 5000);
   }
 

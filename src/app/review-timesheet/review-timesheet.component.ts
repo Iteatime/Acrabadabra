@@ -30,14 +30,15 @@ export class ReviewTimesheetComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      const data = this.timesheetService.deTokenize(params['token']);
-      this.timesheet = data.timesheet;
-      this.date = this.calendarManager.getDate(this.timesheet);
-      this.workingTime = this.calendarManager.getWorkedTime(this.timesheet);
+      if (this.timesheetService.openTimesheet(params['data'], 'review')) {
+        this.timesheet = this.timesheetService.timesheet;
+        this.date = this.calendarManager.getDate(this.timesheet);
+        this.workingTime = this.calendarManager.getWorkedTime(this.timesheet);
 
-      if (data.invoice !== null) {
-        this.invoiceToken = this.timesheetService.createInvoiceToken(this.timesheet, data.invoice);
-        this.generateInvoice = true;
+        if (this.timesheet.invoice !== undefined) {
+           this.invoiceToken = params['data'];
+           this.generateInvoice = true;
+        }
       }
     });
 

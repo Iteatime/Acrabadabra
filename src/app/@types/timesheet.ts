@@ -1,8 +1,10 @@
 import { Consultant } from './consultant';
 import { Mission } from './mission';
+import { Invoice } from './invoice';
 
-export type Timesheet = {
-  consultant: Consultant,
-  mission: Mission,
+export interface Timesheet {
+  consultant: Consultant;
+  mission: Mission;
   workingDays: any;
-};
+  invoice: Invoice;
+}

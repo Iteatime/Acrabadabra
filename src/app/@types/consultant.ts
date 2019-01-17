@@ -1,4 +1,4 @@
-export type Consultant = {
+export interface Consultant {
   email: string;
   name: string;
-};
+}
