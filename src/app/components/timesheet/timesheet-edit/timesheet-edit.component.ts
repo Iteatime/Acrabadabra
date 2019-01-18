@@ -25,7 +25,6 @@ export class TimesheetEditComponent implements OnInit {
   originUrl = window.location.origin;
   submitMessage: any;
   reviewMail: ReviewMail;
-  editMode = false;
   generateInvoice = false;
   showLinks = false;
 
@@ -38,40 +37,23 @@ export class TimesheetEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (!this.redirectIfNoEditToken()) {
-      this.initData(this.timesheetService.timesheet === undefined);
+    if (!this.timesheetService.openTimesheet(this.route.snapshot.params['data'], 'edit')) {
+      this.router.navigate(['timesheet', 'create']);
+    } else {
+      this.showLinks = true;
+      this.generateInvoice = this.timesheetService.timesheet.invoice ? true : false;
+      this.updateMailtoLink();
       this.form.valueChanges.subscribe(() => {
         if (this.form.dirty) {
           this.onUserInput();
         }
       });
     }
-  }
-
-  redirectIfNoEditToken(): boolean {
-    if (
-      this.route.snapshot.params.hasOwnProperty('data') &&
-      !this.timesheetService.openTimesheet(this.route.snapshot.params['data'], 'edit')
-    ) {
-      this.router.navigate(['timesheet', 'create']);
-      return true;
-    }
-    return false;
-  }
-
-  initData(createMode: boolean): void {
-    this.showLinks = this.editMode = !createMode;
-    if (createMode) {
-      this.timesheetService.timesheet = new Timesheet();
-    } else {
-      this.generateInvoice = this.timesheetService.timesheet.invoice ? true : false;
-      this.updateMailtoLink();
-    }
     this.titleService.setTitle(`Acrabadabra - ${this.getModeTitle()} un compte rendu d'activité`);
   }
 
   getModeTitle() {
-    return this.editMode ? 'Modifier' : 'Saisir';
+    return this.timesheetService.mode === 'edit' ? 'Modifier' : 'Saisir';
   }
 
   onUserInput() {
@@ -129,5 +111,5 @@ export class TimesheetEditComponent implements OnInit {
         this.invoiceForm.form.controls[field].markAsTouched();
       });
     }
-}
+  }
 }

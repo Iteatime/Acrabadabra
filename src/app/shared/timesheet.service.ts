@@ -6,7 +6,10 @@ function tokenize(a: any): string {
 }
  ​
 function untokenize(a: string): any {
-  return JSON.parse(decodeURIComponent(escape(atob(a))));
+  if (a) {
+    return JSON.parse(decodeURIComponent(escape(atob(a))));
+  }
+  return { mode: '' };
 }
 
 @Injectable({
@@ -15,6 +18,7 @@ function untokenize(a: string): any {
 export class TimesheetService {
 
   timesheet: Timesheet;
+  mode: string;
 
   public getEditToken(): string {
     return tokenize({
@@ -33,8 +37,10 @@ export class TimesheetService {
   public openTimesheet(token: string, mode: string): boolean {
     const a = untokenize(token);
     if (a.mode !== mode) {
-       return false;
+      this.timesheet = new Timesheet();
+      return false;
     } else {
+      this.mode = a.mode;
       this.timesheet = Object.assign(new Timesheet(), a.timesheet);
       return true;
     }
