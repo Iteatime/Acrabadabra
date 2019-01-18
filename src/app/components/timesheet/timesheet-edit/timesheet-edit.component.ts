@@ -23,7 +23,7 @@ export class TimesheetEditComponent implements OnInit {
   @ViewChild (InvoiceFormComponent) invoiceForm: InvoiceFormComponent;
   @ViewChild ('form') form: NgForm;
   originUrl = window.location.origin;
-  submitMessage: any;
+  submitMessage: any = null;
   reviewMail: ReviewMail;
   generateInvoice = false;
   showLinks = false;
@@ -43,12 +43,12 @@ export class TimesheetEditComponent implements OnInit {
       this.showLinks = true;
       this.generateInvoice = this.timesheetService.timesheet.invoice ? true : false;
       this.updateMailtoLink();
-      this.form.valueChanges.subscribe(() => {
-        if (this.form.dirty) {
-          this.onUserInput();
-        }
-      });
     }
+    this.form.valueChanges.subscribe(() => {
+      if (this.form.dirty) {
+        this.onUserInput();
+      }
+    });
     this.titleService.setTitle(`Acrabadabra - ${this.getModeTitle()} un compte rendu d'activité`);
   }
 
