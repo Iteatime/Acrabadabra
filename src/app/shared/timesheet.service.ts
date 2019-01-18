@@ -9,7 +9,7 @@ function untokenize(a: string): any {
   if (a) {
     return JSON.parse(decodeURIComponent(escape(atob(a))));
   }
-  return { mode: '' };
+  return false;
 }
 
 @Injectable({
@@ -19,6 +19,10 @@ export class TimesheetService {
 
   timesheet: Timesheet;
   mode: string;
+
+  constructor() {
+    this.timesheet = new Timesheet();
+  }
 
   public getEditToken(): string {
     return tokenize({
@@ -36,12 +40,11 @@ export class TimesheetService {
 
   public openTimesheet(token: string, mode: string): boolean {
     const a = untokenize(token);
-    if (a.mode !== mode) {
-      this.timesheet = new Timesheet();
+    if (!a || a.mode !== mode) {
       return false;
     } else {
-      this.mode = a.mode;
-      this.timesheet = Object.assign(new Timesheet(), a.timesheet);
+      this.mode = mode;
+      this.timesheet = Object.assign(this.timesheet, a.timesheet);
       return true;
     }
   }
