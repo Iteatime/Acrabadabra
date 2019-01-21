@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgModel, FormControl, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Title, By } from '@angular/platform-browser';
@@ -19,33 +19,9 @@ import { Invoice } from 'src/app/shared/invoice.model';
 let testTimesheet = new Timesheet('test');
     testTimesheet.workingDays['0.1900'] = [0.5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     testTimesheet.invoice = new Invoice('F190001-01');
+const testEditTokenWithoutInvoice = btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'edit', timesheet: new Timesheet('test') }))));
 const testEditTokenWithInvoice = btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'edit', timesheet: testTimesheet }))));
-const testEditTokenWithoutInvoice = btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'edit', timesheet: testTimesheet }))));
 const testReviewToken = btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'review', timesheet: testTimesheet }))));
-
-class MockTimesheetService {
-  timesheet: Timesheet;
-  mode: string;
-
-  openTimesheet(token: string): boolean {
-    if (token === testEditTokenWithInvoice) {
-      this.timesheet = testTimesheet;
-      this.mode = 'edit';
-      return true;
-    } else {
-      this.timesheet = new Timesheet();
-      return false;
-    }
-  }
-
-  getEditToken(): string {
-    return testEditTokenWithInvoice;
-  }
-
-  getReviewToken(): string {
-    return testReviewToken;
-  }
-}
 
 class MockCalendarManagerService {
   getworkingDays(): any {
@@ -88,7 +64,7 @@ describe('TimesheetEditComponent', () => {
           }
         },
         { provide: CalendarManagerService, useClass: MockCalendarManagerService },
-        { provide: TimesheetService, useClass: MockTimesheetService },
+        TimesheetService,
       ],
     })
     .compileComponents();
@@ -140,6 +116,17 @@ describe('TimesheetEditComponent', () => {
           expect(component.generateInvoice).toBeTruthy();
         });
 
+        it('should set `generateInvoice` to false otherwise', () => {
+          fixture = TestBed.createComponent(TimesheetEditComponent);
+          component = fixture.componentInstance;
+          timesheetService = TestBed.get(TimesheetService);
+          route = TestBed.get(ActivatedRoute);
+          route.snapshot.params = { data: undefined };
+          fixture.detectChanges();
+
+          expect(component.generateInvoice).toBeFalsy();
+        });
+
         testValueChanges();
       });
 
@@ -164,6 +151,7 @@ describe('TimesheetEditComponent', () => {
     });
 
     it('should set "Acrabadabra - Modifier un compte rendu d\'activité" as page title if `mode` is "edit"', () => {
+
       route.snapshot.params = { data: testEditTokenWithInvoice };
       fixture.detectChanges();
       expect(spySetTitle).toHaveBeenCalledWith('Acrabadabra - Modifier un compte rendu d\'activité');
@@ -183,10 +171,21 @@ describe('TimesheetEditComponent', () => {
       //     const emailInput: HTMLInputElement = fixture.debugElement.query(By.css('input[name=consultantEmailInput]')).nativeElement;
       //           emailInput.value = 'test';
       //           emailInput.dispatchEvent(new Event('input'));
+      //           fixture.detectChanges();
       //   });
 
       //   it('should set `showLinks` to false', () => {
       //     fixture.whenStable().then(() => {
+      //       component.ngOnInit();
+      //       const c: AbstractControl = component.form.controls['consultantEmailInput'];
+      //             component.form.valueChanges.subscribe(() => {
+      //               console.log(c.value);
+      //             });
+      //             c.setValue('test');
+      //             component.form.form.updateValueAndValidity({ emitEvent: true });
+      //       component.form.form.markAsTouched();
+      //       console.log(component.form);
+      //       fixture.detectChanges();
       //       expect(component.showLinks).toBeFalsy();
       //     });
       //   });
