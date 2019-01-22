@@ -209,7 +209,7 @@ describe('TimesheetEditComponent', () => {
     testOnUserInput();
   });
 
-  fdescribe('reactToSubmition()', () => {
+  describe('reactToSubmition()', () => {
     beforeEach(() => {
       component.submitMessage = null;
       component.showLinks = null;
