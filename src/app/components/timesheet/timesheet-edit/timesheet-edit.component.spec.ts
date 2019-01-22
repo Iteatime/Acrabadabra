@@ -209,6 +209,43 @@ describe('TimesheetEditComponent', () => {
     testOnUserInput();
   });
 
+  fdescribe('reactToSubmition()', () => {
+    beforeEach(() => {
+      component.submitMessage = null;
+      component.showLinks = null;
+    });
+
+    describe('when there is an `error`', () => {
+      beforeEach(() => {
+        component.reactToSubmition(true);
+      });
+      it('sould let `showLinks` false', () => {
+        expect(component.showLinks).toBeFalsy();
+      });
+      it('should set the `submitMessage.text` to "Veuillez vérifier votre saisie"', () => {
+        expect(component.submitMessage.text).toBe('Veuillez vérifier votre saisie');
+      });
+      it('should set the `submitMessage.type` to "error"', () => {
+        expect(component.submitMessage.type).toBe('error');
+      });
+    });
+
+    describe('when there is no `error`', () => {
+      beforeEach(() => {
+        component.reactToSubmition(false);
+      });
+      it('should set `showLinks` to true', () => {
+        expect(component.showLinks).toBeTruthy();
+      });
+      it('should set the `submitMessage.text` to "Si vous modifiez le CRA, vous devrez le valider à nouveau et utiliser le nouveau lien de partage."', () => {
+        expect(component.submitMessage.text).toBe('Si vous modifiez le CRA, vous devrez le valider à nouveau et utiliser le nouveau lien de partage.');
+      });
+      it('should set the `submitMessage.type` to "success"', () => {
+        expect(component.submitMessage.type).toBe('success');
+      });
+    });
+  });
+
   function testOnUserInput() {
     it('should set `showLinks` to false', () => {
       expect(component.showLinks).toBeFalsy();
