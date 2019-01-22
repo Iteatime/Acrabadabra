@@ -252,6 +252,48 @@ describe('TimesheetEditComponent', () => {
     });
   });
 
+  describe('onSubmit()', () => {
+    describe('call', () => {
+      testcheckFormsValidity();
+    });
+
+    describe('when it return true', () => {
+
+    });
+  });
+
+  function testcheckFormsValidity() {
+    describe('checkFormsValidity()', () => {
+      // describe('when `generateInvoice` is set to true', () => {
+      //   it('should return true if the two `forms` are valid', () => {
+
+      //   });
+      //   it('should return false the two `forms` are invalid', () => {
+
+      //   });
+      // });
+      describe('when `generateInvoice` is set to false', () => {
+        beforeEach(async() => {
+          route.snapshot.params = { data: testEditTokenWithoutInvoice };
+          fixture.detectChanges();
+        });
+        it('should return true if the `forms` is valid', async() => {
+          component.form.form.get('consultantNameInput').setValue('Tester');
+          component.form.form.get('consultantEmailInput').setValue('tester@test.com');
+          component.form.form.get('missionTitleInput').setValue('Testing');
+          component.form.form.get('missionFinalClientInput').setValue('Test.com');
+          await fixture.whenStable;
+          expect(component.form.valid).toBeTruthy();
+        });
+        it('should return false if the `forms` is invalid', async() => {
+          await fixture.whenStable;
+          expect(component.form.valid).toBeFalsy();
+        });
+      });
+
+    });
+  }
+
   function testOnUserInput() {
     it('should set `showLinks` to false', () => {
       expect(component.showLinks).toBeFalsy();
