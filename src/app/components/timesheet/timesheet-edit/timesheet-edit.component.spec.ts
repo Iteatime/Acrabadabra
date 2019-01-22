@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { FormsModule, NgModel, FormControl, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -165,36 +165,24 @@ describe('TimesheetEditComponent', () => {
       // TODO Make it work...
 
       // describe('after subscribing if the user input data into the `form`', () => {
-      //   beforeEach(() => {
+      //   beforeEach(async() => {
+      //     fixture.detectChanges();
+      //     await fixture.whenStable();
       //     component.showLinks = true;
       //     component.submitMessage = { content: 'test' };
-      //     const emailInput: HTMLInputElement = fixture.debugElement.query(By.css('input[name=consultantEmailInput]')).nativeElement;
-      //           emailInput.value = 'test';
-      //           emailInput.dispatchEvent(new Event('input'));
-      //           fixture.detectChanges();
-      //   });
-
-      //   it('should set `showLinks` to false', () => {
-      //     fixture.whenStable().then(() => {
-      //       component.ngOnInit();
-      //       const c: AbstractControl = component.form.controls['consultantEmailInput'];
-      //             component.form.valueChanges.subscribe(() => {
-      //               console.log(c.value);
-      //             });
-      //             c.setValue('test');
-      //             component.form.form.updateValueAndValidity({ emitEvent: true });
-      //       component.form.form.markAsTouched();
-      //       console.log(component.form);
-      //       fixture.detectChanges();
-      //       expect(component.showLinks).toBeFalsy();
-      //     });
-      //   });
-
-      //   it('should set `submitMessage`to null', () => {
-      //     fixture.whenStable().then(() => {
-      //       expect(component.submitMessage).toBeNull();
-      //     });
-      //   });
+      //     const fc = this.form.form.get('consultantEmailInput');
+      //     console.log('show links :', this.showLinks);
+      //     console.log(this.form.dirty);
+      //     this.form.form.markAsDirty();
+      //     fc.setValue('un autre test');
+      //     console.log(this.form.dirty);
+      //     console.log('show links :', this.showLinks);
+          // const emailInput: HTMLInputElement = fixture.debugElement.query(By.css('input[name=consultantEmailInput]')).nativeElement;
+          //       emailInput.value = 'test';
+          //       emailInput.dispatchEvent(new Event('input'));
+          //       fixture.detectChanges();
+        // });
+        // testOnUserInput();
       // });
     }
   });
@@ -209,4 +197,25 @@ describe('TimesheetEditComponent', () => {
       expect(component.getModeTitle()).toBe('Modifier');
     });
   });
+
+  describe('onUserInput()', () => {
+    beforeEach(async(() => {
+      fixture.whenStable().then(() => {
+        component.showLinks = true;
+        component.submitMessage = { content: 'test' };
+        component.onUserInput();
+      });
+    }));
+    testOnUserInput();
+  });
+
+  function testOnUserInput() {
+    it('should set `showLinks` to false', () => {
+      expect(component.showLinks).toBeFalsy();
+    });
+
+    it('should set `submitMessage` to null', () => {
+      expect(component.submitMessage).toBeNull();
+    });
+  }
 });
