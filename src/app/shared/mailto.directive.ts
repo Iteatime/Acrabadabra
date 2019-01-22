@@ -23,7 +23,7 @@ export class MailtoDirective {
     window.open(
       'mailto:' + this.recipient +
       '?subject=' + this.mailContent.subject +
-      '&body=' + this.mailContent.boby,
+      '&body=' + this.mailContent.body,
       '_self'
     );
   }
