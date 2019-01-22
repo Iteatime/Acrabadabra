@@ -41,7 +41,6 @@ describe('TimesheetEditComponent', () => {
   let route: ActivatedRoute;
   let router: Router;
   let timesheetService: TimesheetService;
-  let spyValueChangesSubscribe: jasmine.Spy;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -70,13 +69,14 @@ describe('TimesheetEditComponent', () => {
       ],
     })
     .compileComponents();
+    
     fixture = TestBed.createComponent(TimesheetEditComponent);
     component = fixture.componentInstance;
+
     titleService = TestBed.get(Title);
     timesheetService = TestBed.get(TimesheetService);
     route = TestBed.get(ActivatedRoute);
     router = TestBed.get(Router);
-    spyValueChangesSubscribe = spyOn(component.form.valueChanges, 'subscribe');
   });
 
   it('should be created', () => {
@@ -98,14 +98,13 @@ describe('TimesheetEditComponent', () => {
       it('should create a new Timsheet instance', () => {
         expect(timesheetService.timesheet.consultant.email).toBe('');
       });
-
-      testValueChanges();
     });
 
     describe('When there is a `data` parameter', () => {
       describe('and the `mode` stored in the token is "edit"', () => {
         beforeEach(() => {
           route.snapshot.params = { data: testEditTokenWithInvoice };
+          spyOn(component, 'onUserInput').and.callThrough();
           fixture.detectChanges();
         });
 
@@ -128,7 +127,14 @@ describe('TimesheetEditComponent', () => {
           expect(component.generateInvoice).toBeFalsy();
         });
 
-        testValueChanges();
+        it('should hide links on any input value change', async() => {
+          await fixture.whenStable;
+
+          component.form.form.markAsDirty();
+          component.form.form.get('consultantEmailInput').setValue('test');
+
+          expect(component.onUserInput).toHaveBeenCalled();
+        });
       });
 
       describe('and the `mode` stored in the token is not "edit"', () => {
@@ -305,9 +311,9 @@ describe('TimesheetEditComponent', () => {
   }
 
   function testValueChanges() {
-    it('should subscribe to the `valueChanges` observable', () => {
-      expect(spyValueChangesSubscribe).toHaveBeenCalled();
-    });
+    // it('should subscribe to the `valueChanges` observable', () => {
+    //   expect(spyValueChangesSubscribe).toHaveBeenCalled();
+    // });
 
     // TODO Make it work...
 

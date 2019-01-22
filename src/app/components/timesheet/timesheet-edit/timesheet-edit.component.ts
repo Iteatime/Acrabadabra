@@ -45,7 +45,6 @@ export class TimesheetEditComponent implements OnInit {
       this.updateMailtoLink();
     }
     this.form.valueChanges.subscribe(() => {
-      console.log('change detected');
       if (this.form.dirty) {
         this.onUserInput();
       }
