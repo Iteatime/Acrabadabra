@@ -1,6 +1,7 @@
-import { Component, ViewChild, Input, Output, OnInit, EventEmitter, AfterViewInit } from '@angular/core';
-import { Invoice } from 'src/app/shared/invoice.model';
+import { Component, ViewChild, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
+
+import { Invoice } from 'src/app/shared/models/invoice.model';
 
 @Component({
   selector: 'app-invoice-form',

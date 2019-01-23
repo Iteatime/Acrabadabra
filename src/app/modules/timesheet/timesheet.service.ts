@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Timesheet } from './timesheet.model';
+import { Timesheet } from 'src/app/shared/models/timesheet.model';
 
 function tokenize(a: any): string {
   return btoa(unescape(encodeURIComponent(JSON.stringify(a))));

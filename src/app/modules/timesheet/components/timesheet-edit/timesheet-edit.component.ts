@@ -1,15 +1,16 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { ReviewMail } from 'src/app/shared/models/review-mail.model';
+
+import { TimesheetService } from '../../timesheet.service';
+import { InvoiceFormComponent } from '../invoice-form/invoice-form.component';
+
 import { CalendarComponent } from 'src/app/calendar/calendar.component';
 import { CalendarManagerService } from 'src/app/calendar/calendar-manager.service';
 
-import { ReviewMail } from 'src/app/shared/review-mail.model';
-import { TimesheetService } from 'src/app/shared/timesheet.service';
-
-import { InvoiceFormComponent } from 'src/app/components/invoice/invoice-form/invoice-form.component';
 
 @Component({
   selector: 'app-timesheet-edit',
@@ -28,7 +29,7 @@ export class TimesheetEditComponent implements OnInit {
   showLinks = false;
 
   constructor(
-    private calendarManager: CalendarManagerService,
+    private calendarService: CalendarManagerService,
     private route: ActivatedRoute,
     private router: Router,
     protected timesheetService: TimesheetService,
@@ -62,7 +63,7 @@ export class TimesheetEditComponent implements OnInit {
 
   onSubmit() {
     if (this.checkFormsValidity()) {
-      this.timesheetService.timesheet.workingDays = this.calendarManager.getWorkingDays(this.calendar.timesheet);
+      this.timesheetService.timesheet.workingDays = this.calendarService.getWorkingDays(this.calendar.timesheet);
       this.timesheetService.timesheet.invoice = this.generateInvoice ? this.invoiceForm.invoice : null;
       this.updateMailtoLink();
       this.reactToSubmition(false);
@@ -87,7 +88,7 @@ export class TimesheetEditComponent implements OnInit {
   updateMailtoLink(): void {
     this.reviewMail = new ReviewMail(
       this.timesheetService.timesheet,
-      this.calendarManager.getWorkedTime(this.timesheetService.timesheet),
+      this.calendarService.getWorkedTime(this.timesheetService.timesheet),
       this.timesheetService.getReviewToken(),
       this.originUrl + '/timesheet/edit/'
     );
