@@ -126,6 +126,8 @@ describe('TimesheetEditComponent', () => {
           expect(component.generateInvoice).toBeFalsy();
         });
 
+        testUpdateMailtoLink();
+
         testValueChanges();
       });
 
@@ -166,6 +168,14 @@ describe('TimesheetEditComponent', () => {
     });
   });
 
+  describe('onUserInput()', () => {
+    beforeEach(() => {
+      fixture.detectChanges();
+    });
+
+    testOnUpdateInput();
+  });
+
   describe('onSubmit()', () => {
     beforeEach(() => {
       fixture.detectChanges();
@@ -194,9 +204,7 @@ describe('TimesheetEditComponent', () => {
         expect(timesheetService.timesheet.invoice.number).toBe(testTimesheet.invoice.number);
       });
 
-      it('should create an instance of ReviewMail', () => {
-        expect(component.reviewMail instanceof ReviewMail).toBeTruthy();
-      });
+      testUpdateMailtoLink();
 
       it('should show the links', () => {
         expect(component.showLinks).toBeTruthy();
@@ -301,13 +309,23 @@ describe('TimesheetEditComponent', () => {
       component.form.form.get('consultantEmailInput').setValue('test');
       });
 
-      it('should hide links', () => {
-        expect(component.showLinks).toBeFalsy();
-      });
+      testOnUpdateInput();
+    });
+  }
 
-      it('should hide the submit message', () => {
-        expect(component.submitMessage).toBeNull();
-      });
+  function testOnUpdateInput() {
+    it('should hide links', () => {
+      expect(component.showLinks).toBeFalsy();
+    });
+
+    it('should hide the submit message', () => {
+      expect(component.submitMessage).toBeNull();
+    });
+  }
+
+  function testUpdateMailtoLink() {
+    it('should create an instance of ReviewMail', () => {
+      expect(component.reviewMail instanceof ReviewMail).toBeTruthy();
     });
   }
 });

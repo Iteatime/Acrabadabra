@@ -7,7 +7,6 @@ import { CalendarComponent } from 'src/app/calendar/calendar.component';
 import { CalendarManagerService } from 'src/app/calendar/calendar-manager.service';
 
 import { ReviewMail } from 'src/app/shared/review-mail.model';
-import { Timesheet } from 'src/app/shared/timesheet.model';
 import { TimesheetService } from 'src/app/shared/timesheet.service';
 
 import { InvoiceFormComponent } from 'src/app/components/invoice/invoice-form/invoice-form.component';
