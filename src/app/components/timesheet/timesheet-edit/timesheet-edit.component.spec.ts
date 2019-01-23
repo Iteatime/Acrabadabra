@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { FormsModule, NgModel, FormControl, AbstractControl } from '@angular/forms';
+import { FormsModule, NgModel, FormControl, AbstractControl, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Title, By } from '@angular/platform-browser';
@@ -25,7 +25,7 @@ const testEditTokenWithInvoice = btoa(unescape(encodeURIComponent(JSON.stringify
 const testReviewToken = btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'review', timesheet: testTimesheet }))));
 
 class MockCalendarManagerService {
-  getworkingDays(): any {
+  getWorkingDays(): any {
     return testTimesheet.workingDays;
   }
 
@@ -69,7 +69,7 @@ describe('TimesheetEditComponent', () => {
       ],
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(TimesheetEditComponent);
     component = fixture.componentInstance;
 
@@ -84,10 +84,8 @@ describe('TimesheetEditComponent', () => {
   });
 
   describe('ngOnInit()', () => {
-    let spySetTitle: jasmine.Spy;
-
     beforeEach(() => {
-      spySetTitle = spyOn(titleService, 'setTitle');
+      spyOn(titleService, 'setTitle').and.callThrough();
     });
 
     describe('When there is no `data` parameter', () => {
@@ -95,16 +93,17 @@ describe('TimesheetEditComponent', () => {
         fixture.detectChanges();
       });
 
-      it('should create a new Timsheet instance', () => {
+      it('should create a new Timesheet instance', () => {
         expect(timesheetService.timesheet.consultant.email).toBe('');
       });
+
+      testValueChanges();
     });
 
     describe('When there is a `data` parameter', () => {
       describe('and the `mode` stored in the token is "edit"', () => {
         beforeEach(() => {
           route.snapshot.params = { data: testEditTokenWithInvoice };
-          spyOn(component, 'onUserInput').and.callThrough();
           fixture.detectChanges();
         });
 
@@ -127,41 +126,32 @@ describe('TimesheetEditComponent', () => {
           expect(component.generateInvoice).toBeFalsy();
         });
 
-        it('should hide links on any input value change', async() => {
-          await fixture.whenStable;
-
-          component.form.form.markAsDirty();
-          component.form.form.get('consultantEmailInput').setValue('test');
-
-          expect(component.onUserInput).toHaveBeenCalled();
-        });
+        testValueChanges();
       });
 
       describe('and the `mode` stored in the token is not "edit"', () => {
-        let spyRouterNavigate;
-
         beforeEach(() => {
           route.snapshot.params = { data: testReviewToken };
-          spyRouterNavigate = spyOn(router, 'navigate');
+          spyOn(router, 'navigate').and.callThrough();
           fixture.detectChanges();
         });
 
         it('should navigate to the "create" URL', () => {
-          expect(spyRouterNavigate).toHaveBeenCalledWith(['timesheet', 'create']);
+          expect(router.navigate).toHaveBeenCalledWith(['timesheet', 'create']);
         });
       });
     });
 
     it('should set "Acrabadabra - Saisir un compte rendu d\'activité" as page title if `mode` is not "edit"', () => {
       fixture.detectChanges();
-      expect(spySetTitle).toHaveBeenCalledWith('Acrabadabra - Saisir un compte rendu d\'activité');
+      expect(titleService.setTitle).toHaveBeenCalledWith('Acrabadabra - Saisir un compte rendu d\'activité');
     });
 
     it('should set "Acrabadabra - Modifier un compte rendu d\'activité" as page title if `mode` is "edit"', () => {
 
       route.snapshot.params = { data: testEditTokenWithInvoice };
       fixture.detectChanges();
-      expect(spySetTitle).toHaveBeenCalledWith('Acrabadabra - Modifier un compte rendu d\'activité');
+      expect(titleService.setTitle).toHaveBeenCalledWith('Acrabadabra - Modifier un compte rendu d\'activité');
     });
   });
 
@@ -176,47 +166,39 @@ describe('TimesheetEditComponent', () => {
     });
   });
 
-  describe('onUserInput()', () => {
-    beforeEach(async(() => {
-      fixture.whenStable().then(() => {
-        component.showLinks = true;
-        component.submitMessage = { content: 'test' };
-        component.onUserInput();
-      });
-    }));
-    testOnUserInput();
-  });
-
-  describe('reactToSubmition()', () => {
+  describe('onSubmit()', () => {
     beforeEach(() => {
-      component.submitMessage = null;
-      component.showLinks = null;
+      fixture.detectChanges();
     });
 
-    describe('when there is an `error`', () => {
-      beforeEach(() => {
-        component.reactToSubmition(true);
+    describe('when the forms are valid', () => {
+      beforeEach(async() => {
+        await fixture.whenStable;
+        spyOn(component, 'checkFormsValidity').and.returnValue(true);
+        component.onSubmit();
       });
 
-      it('should let `showLinks` false', () => {
-        expect(component.showLinks).toBeFalsy();
+      it('should update the `workingDays` value', async() => {
+        expect(timesheetService.timesheet.workingDays).toBe(testTimesheet.workingDays);
       });
 
-      it('should set the `submitMessage.text` to "Veuillez vérifier votre saisie"', () => {
-        expect(component.submitMessage.text).toBe('Veuillez vérifier votre saisie');
+      it('should set the invoice to null if `generateInvoice` is false', () => {
+        expect(timesheetService.timesheet.invoice).toBeNull();
       });
 
-      it('should set the `submitMessage.type` to "error"', () => {
-        expect(component.submitMessage.type).toBe('error');
-      });
-    });
-
-    describe('when there is no `error`', () => {
-      beforeEach(() => {
-        component.reactToSubmition(false);
+      it('should update the invoice if `generateInvoice` is true', () => {
+        route.snapshot.params = { data: testEditTokenWithInvoice };
+        component.ngOnInit();
+        fixture.detectChanges();
+        component.onSubmit();
+        expect(timesheetService.timesheet.invoice.number).toBe(testTimesheet.invoice.number);
       });
 
-      it('should set `showLinks` to true', () => {
+      it('should create an instance of ReviewMail', () => {
+        expect(component.reviewMail instanceof ReviewMail).toBeTruthy();
+      });
+
+      it('should show the links', () => {
         expect(component.showLinks).toBeTruthy();
       });
 
@@ -228,110 +210,104 @@ describe('TimesheetEditComponent', () => {
         expect(component.submitMessage.type).toBe('success');
       });
     });
-  });
 
-  describe('updateMailtoLink()', () => {
-    beforeEach(() => {
-      timesheetService.timesheet.consultant.name = 'test';
-      component.updateMailtoLink();
-    });
-
-    it('should create an instance of ReviewMail', () => {
-      expect(component.reviewMail instanceof ReviewMail).toBeTruthy();
-    });
-  });
-
-  describe('showValidationMessages()', () => {
-    beforeEach(async() => {
-      fixture.detectChanges();
-      await fixture.whenStable;
-      component.form.form.get('consultantEmailInput').setValue('test');
-      component.showValidationMessages();
-    });
-
-    it('should mark the form as touched', () => {
-      expect(component.form.touched).toBeTruthy();
-    });
-
-    it('sould set the invalid field `status` to "INVALID"', () => {
-      expect(component.form.form.get('consultantEmailInput').status).toBe('INVALID');
-    });
-  });
-
-  describe('onSubmit()', () => {
-    describe('call', () => {
-      testcheckFormsValidity();
-    });
-
-    describe('when it return true', () => {
-
-    });
-  });
-
-  function testcheckFormsValidity() {
-    describe('checkFormsValidity()', () => {
-      // describe('when `generateInvoice` is set to true', () => {
-      //   it('should return true if the two `forms` are valid', () => {
-
-      //   });
-      //   it('should return false the two `forms` are invalid', () => {
-
-      //   });
-      // });
-      describe('when `generateInvoice` is set to false', () => {
-        beforeEach(async() => {
-          route.snapshot.params = { data: testEditTokenWithoutInvoice };
-          fixture.detectChanges();
-        });
-        it('should return true if the `forms` is valid', async() => {
-          component.form.form.get('consultantNameInput').setValue('Tester');
-          component.form.form.get('consultantEmailInput').setValue('tester@test.com');
-          component.form.form.get('missionTitleInput').setValue('Testing');
-          component.form.form.get('missionFinalClientInput').setValue('Test.com');
-          await fixture.whenStable;
-          expect(component.form.valid).toBeTruthy();
-        });
-        it('should return false if the `forms` is invalid', async() => {
-          await fixture.whenStable;
-          expect(component.form.valid).toBeFalsy();
-        });
+    describe('when the forms aren\'t valid', () => {
+      beforeEach(async() => {
+        await fixture.whenStable;
+        spyOn(component, 'checkFormsValidity').and.returnValue(false);
+        component.onSubmit();
       });
 
-    });
-  }
+      it('should mark the form as touched', () => {
+        expect(component.form.touched).toBeTruthy();
+      });
 
-  function testOnUserInput() {
-    it('should set `showLinks` to false', () => {
-      expect(component.showLinks).toBeFalsy();
+      it('should set the invalid field `status` to "INVALID"', () => {
+        expect(component.form.form.get('consultantEmailInput').status).toBe('INVALID');
+      });
+
+      it('shouldn\'t show the links', () => {
+        expect(component.showLinks).toBeFalsy();
+      });
+
+      it('should set the `submitMessage.text` to "Veuillez vérifier votre saisie"', () => {
+        expect(component.submitMessage.text).toBe('Veuillez vérifier votre saisie');
+      });
+
+      it('should set the `submitMessage.type` to "error"', () => {
+        expect(component.submitMessage.type).toBe('error');
+      });
+    });
+  });
+
+  describe('checkFormsValidity()', () => {
+    beforeEach(async() => {
+      await fixture.whenStable;
+      component.submitMessage = null;
+      component.showLinks = null;
     });
 
-    it('should set `submitMessage` to null', () => {
-      expect(component.submitMessage).toBeNull();
+    describe('when `generateInvoice` is set to true', () => {
+      beforeEach(() => {
+        component.generateInvoice = true;
+        fixture.detectChanges();
+        component.invoiceForm.form = new NgForm(undefined, undefined);
+      });
+
+      it('should return true if the two `forms` are valid', () => {
+        spyOnProperty(component.form, 'valid').and.returnValue(true);
+        spyOnProperty(component.invoiceForm.form, 'valid').and.returnValue(true);
+        expect(component.checkFormsValidity()).toBeTruthy();
+      });
+
+      it('should return false the timesheet `form` is invalid', () => {
+        spyOnProperty(component.form, 'valid').and.returnValue(false);
+        spyOnProperty(component.invoiceForm.form, 'valid').and.returnValue(true);
+        expect(component.checkFormsValidity()).toBeFalsy();
+      });
+
+      it('should return false the invoice `form` is invalid', () => {
+        spyOnProperty(component.form, 'valid').and.returnValue(true);
+        spyOnProperty(component.invoiceForm.form, 'valid').and.returnValue(false);
+        expect(component.checkFormsValidity()).toBeFalsy();
+      });
+
+      it('should return false the two `form` are invalid', () => {
+        spyOnProperty(component.form, 'valid').and.returnValue(false);
+        spyOnProperty(component.invoiceForm.form, 'valid').and.returnValue(false);
+        expect(component.checkFormsValidity()).toBeFalsy();
+      });
     });
-  }
+
+    describe('when `generateInvoice` is set to false', () => {
+      it('should return true if the `forms` is valid', () => {
+        spyOnProperty(component.form, 'valid').and.returnValue(true);
+        expect(component.checkFormsValidity()).toBeTruthy();
+      });
+
+      it('should return false if the `forms` is invalid', () => {
+        spyOnProperty(component.form, 'valid').and.returnValue(false);
+        expect(component.checkFormsValidity()).toBeFalsy();
+      });
+    });
+  });
 
   function testValueChanges() {
-    // it('should subscribe to the `valueChanges` observable', () => {
-    //   expect(spyValueChangesSubscribe).toHaveBeenCalled();
-    // });
+    describe('on any input value change', () => {
+      beforeEach(async() => {
+      await fixture.whenStable;
 
-    // TODO Make it work...
+      component.form.form.markAsDirty();
+      component.form.form.get('consultantEmailInput').setValue('test');
+      });
 
-    // describe('after subscribing if the user input data into the `form`', () => {
-    //   beforeEach(async() => {
-    //     fixture.detectChanges();
-    //     await fixture.whenStable();
-    //     component.showLinks = true;
-    //     component.submitMessage = { content: 'test' };
-    //     const fc = this.form.form.get('consultantEmailInput');
-    //     this.form.form.markAsDirty();
-    //     fc.setValue('un autre test');
-        // const emailInput: HTMLInputElement = fixture.debugElement.query(By.css('input[name=consultantEmailInput]')).nativeElement;
-        //       emailInput.value = 'test';
-        //       emailInput.dispatchEvent(new Event('input'));
-        //       fixture.detectChanges();
-      // });
-      // testOnUserInput();
-    // });
+      it('should hide links', () => {
+        expect(component.showLinks).toBeFalsy();
+      });
+
+      it('should hide the submit message', () => {
+        expect(component.submitMessage).toBeNull();
+      });
+    });
   }
 });
