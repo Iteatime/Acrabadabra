@@ -1,10 +1,10 @@
-@import '../style/vars';
-@import '../style/mixins';
+@import 'src/app/style/vars';
+@import 'src/app/style/mixins';
 
 /* homepage */
 
 .homepage {
-	background: $main_color; 
+	background: $main_color;
 	color: $white;
 	position: absolute;
 	top: 0;
