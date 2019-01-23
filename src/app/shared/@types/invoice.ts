@@ -1,4 +1,4 @@
-import { Company } from '../shared/company.model';
+import { Company } from '../models/company.model';
 
 export interface Invoice {
   number: string;
