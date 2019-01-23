@@ -3,14 +3,14 @@ import { NgForm } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { CalendarComponent } from 'src/app/calendar/calendar.component';
-import { CalendarManagerService } from 'src/app/calendar/calendar-manager.service';
+import { ReviewMail } from 'src/app/shared/models/review-mail.model';
+import { Timesheet } from 'src/app/shared/models/timesheet.model';
 
-import { ReviewMail } from 'src/app/shared/review-mail.model';
-import { Timesheet } from 'src/app/shared/timesheet.model';
-import { TimesheetService } from 'src/app/shared/timesheet.service';
+import { TimesheetService } from '../../timesheet.service';
+import { InvoiceFormComponent } from '../invoice-form/invoice-form.component';
 
-import { InvoiceFormComponent } from 'src/app/components/invoice/invoice-form/invoice-form.component';
+import { CalendarSelectorComponent } from 'src/app/modules/calendar/components/calendar-selector/calendar-selector.component';
+import { CalendarService } from 'src/app/modules/calendar/calendar.service';
 
 @Component({
   selector: 'app-timesheet-edit',
@@ -19,7 +19,7 @@ import { InvoiceFormComponent } from 'src/app/components/invoice/invoice-form/in
   encapsulation: ViewEncapsulation.None
 })
 export class TimesheetEditComponent implements OnInit {
-  @ViewChild (CalendarComponent) calendar: CalendarComponent;
+  @ViewChild (CalendarSelectorComponent) calendar: CalendarSelectorComponent;
   @ViewChild (InvoiceFormComponent) invoiceForm: InvoiceFormComponent;
   @ViewChild ('form') form: NgForm;
   generateInvoice = false;
@@ -30,7 +30,7 @@ export class TimesheetEditComponent implements OnInit {
   editMode = false;
 
   constructor(
-    private calendarManager: CalendarManagerService,
+    private calendarService: CalendarService,
     private route: ActivatedRoute,
     private router: Router,
     protected timesheetService: TimesheetService,
@@ -76,7 +76,7 @@ export class TimesheetEditComponent implements OnInit {
 
   onSubmit() {
     if (this.checkFormsValidity()) {
-      this.timesheetService.timesheet.workingDays = this.calendarManager.getWorkingDays(this.calendar.timesheet);
+      this.timesheetService.timesheet.workingDays = this.calendarService.getWorkingDays(this.calendar.timesheet);
       this.timesheetService.timesheet.invoice = this.generateInvoice ? this.invoiceForm.invoice : null;
       this.updateMailtoLink();
       this.reactToSubmition(false);
@@ -101,7 +101,7 @@ export class TimesheetEditComponent implements OnInit {
   updateMailtoLink(): void {
     this.reviewMail = new ReviewMail(
       this.timesheetService.timesheet,
-      this.calendarManager.getWorkedTime(this.timesheetService.timesheet),
+      this.calendarService.getWorkedTime(this.timesheetService.timesheet),
       this.timesheetService.getReviewToken(),
       this.originUrl + '/timesheet/edit/'
     );

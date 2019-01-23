@@ -1,22 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import * as html2canvas from 'html2canvas';
-import * as jsPDF from 'jspdf';
 import { ActivatedRoute } from '@angular/router';
+
+import * as html2canvas from 'html2canvas';
+
+import * as jsPDF from 'jspdf';
+
 import { startOfMonth, endOfMonth } from 'date-fns';
-import { Company } from '../shared/company.model';
-import { MonetaryService } from '../shared/monetary.service';
-import { CalendarManagerService } from '../calendar/calendar-manager.service';
-import { TimesheetService } from '../shared/timesheet.service';
-import { Invoice } from '../shared/invoice.model';
-import { Timesheet } from '../shared/timesheet.model';
+
+import { CalendarService } from 'src/app/modules/calendar/calendar.service';
+
+import { TimesheetService } from '../../timesheet.service';
+
+import { MonetaryService } from 'src/app/shared/services/monetary/monetary.service';
+import { Invoice } from 'src/app/shared/models/invoice.model';
+import { Company } from 'src/app/shared/models/company.model';
+import { Timesheet } from 'src/app/shared/models/timesheet.model';
 
 @Component({
-  selector: 'app-pdf-invoice',
-  templateUrl: './pdf-invoice.component.html',
-  styleUrls: ['./pdf-invoice.component.scss']
+  selector: 'app-invoice-pdf',
+  templateUrl: './invoice-pdf.component.html',
+  styleUrls: ['./invoice-pdf.component.scss']
 })
 
-export class PdfInvoiceComponent implements OnInit {
+export class InvoicePDFComponent implements OnInit {
 
   timesheet: Timesheet;
   local = 'fr';
@@ -28,7 +34,7 @@ export class PdfInvoiceComponent implements OnInit {
   currency: string;
 
   constructor(
-    private calendarManager: CalendarManagerService,
+    private calendarManager: CalendarService,
     private currencyService: MonetaryService,
     private route: ActivatedRoute,
     private timesheetService: TimesheetService,

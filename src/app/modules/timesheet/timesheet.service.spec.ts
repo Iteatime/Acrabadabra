@@ -1,5 +1,6 @@
 import { TimesheetService } from './timesheet.service';
-import { Timesheet } from './timesheet.model';
+
+import { Timesheet } from 'src/app/shared/models/timesheet.model';
 
 describe('TimesheetService', () => {
 

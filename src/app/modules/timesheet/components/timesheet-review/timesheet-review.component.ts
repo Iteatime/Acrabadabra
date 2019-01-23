@@ -2,18 +2,20 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Params, ActivatedRoute } from '@angular/router';
 
-import { CalendarManagerService } from 'src/app/calendar/calendar-manager.service';
+import { Timesheet } from 'src/app/shared/models/timesheet.model';
 
-import { Timesheet } from '../shared/timesheet.model';
-import { TimesheetService } from '../shared/timesheet.service';
+import { CalendarService } from 'src/app/modules/calendar/calendar.service';
+
+import { TimesheetService } from '../../timesheet.service';
+
 
 @Component({
   selector: 'app-review',
-  templateUrl: './review-timesheet.component.html',
-  styleUrls: ['./review-timesheet.component.scss'],
+  templateUrl: './timesheet-review.component.html',
+  styleUrls: ['./timesheet-review.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ReviewTimesheetComponent implements OnInit {
+export class TimesheetReviewComponent implements OnInit {
   timesheet = new Timesheet();
   generateInvoice = false;
   invoiceToken: string;
@@ -22,7 +24,7 @@ export class ReviewTimesheetComponent implements OnInit {
   workingTime: number;
 
   constructor(
-    private calendarManager: CalendarManagerService,
+    private calendarManager: CalendarService,
     private route: ActivatedRoute,
     private timesheetService: TimesheetService,
     private titleService: Title

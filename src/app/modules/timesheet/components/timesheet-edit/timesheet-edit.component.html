@@ -116,12 +116,12 @@
 
           <div class="edit-cra__wrapper__form__component">
               <h4 class="edit-cra__wrapper__form__component__title">Compte rendu d'activité</h4>
-              <app-calendar
+              <app-calendar-selector
               [minifiedTimesheet]="timesheetService.timesheet.workingDays"
               [picking]="true"
               (changed)="onUserInput($event)"
               >
-              </app-calendar>
+              </app-calendar-selector>
           </div>
 
           <div class="edit-cra__wrapper__form__component">
