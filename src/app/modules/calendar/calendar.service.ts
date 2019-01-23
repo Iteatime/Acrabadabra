@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Timesheet } from 'src/app/@types/timesheet';
+
 import { CalendarEvent } from 'calendar-utils';
+
 import { lastDayOfMonth, differenceInMinutes } from 'date-fns';
+
+import { Timesheet } from 'src/app/shared/@types/timesheet';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CalendarManagerService {
+export class CalendarService {
 
   constructor() { }
 
