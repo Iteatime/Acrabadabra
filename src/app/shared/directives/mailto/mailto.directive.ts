@@ -1,5 +1,5 @@
 import { Directive, Input, HostListener } from '@angular/core';
-import { ReviewMail } from './review-mail.model';
+import { ReviewMail } from '../../models/review-mail.model';
 
 @Directive({
   selector: '[mailto]'
