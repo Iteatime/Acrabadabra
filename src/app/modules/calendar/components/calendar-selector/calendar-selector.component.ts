@@ -1,14 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  ChangeDetectionStrategy,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewEncapsulation,
-  OnDestroy
-} from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, OnInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 
 import { Subject } from 'rxjs';
 
@@ -32,14 +22,13 @@ import {
 import { CalendarEvent, CalendarMonthViewDay, DAYS_OF_WEEK } from 'angular-calendar';
 
 @Component({
-  selector: 'app-calendar',
+  selector: 'app-calendar-selector',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss'],
+  templateUrl: './calendar-selector.component.html',
+  styleUrls: ['./calendar-selector.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class CalendarComponent implements OnInit {
-  @Output() changed: EventEmitter<boolean> = new EventEmitter();
+export class CalendarSelectorComponent implements OnInit {
   @Input() picking: boolean;
 
   @Input() minifiedTimesheet: any;
@@ -56,10 +45,11 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit(): void {
     this.initTimesheet();
-    this.refresh.subscribe((value: any) => {
+    this.refresh.subscribe(() => {
       this.changeDetector.detectChanges();
-      this.changed.emit(true);
     });
+
+    setTimeout(() => { this.changeDetector.detectChanges(); });
   }
 
   initTimesheet(): void {

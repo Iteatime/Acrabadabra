@@ -9,13 +9,13 @@ import { addMonths, isSameMonth, getMonth, subMonths, addHours } from 'date-fns'
 
 import * as _ from 'lodash';
 
-import { CalendarComponent } from './calendar.component';
+import { CalendarSelectorComponent } from './calendar-selector.component';
 
 registerLocaleData(localeFr);
 
 describe('CalendarComponent - ', () => {
-  let component: CalendarComponent,
-      fixture: ComponentFixture<CalendarComponent>,
+  let component: CalendarSelectorComponent,
+      fixture: ComponentFixture<CalendarSelectorComponent>,
       compiled: any;
 
   const testDate = new Date(1900, 0, 1),
@@ -35,7 +35,7 @@ describe('CalendarComponent - ', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        CalendarComponent,
+        CalendarSelectorComponent,
       ],
       imports: [
         CalendarModule.forRoot({
@@ -48,7 +48,7 @@ describe('CalendarComponent - ', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CalendarComponent);
+    fixture = TestBed.createComponent(CalendarSelectorComponent);
     component = fixture.componentInstance;
     compiled = fixture.debugElement.nativeElement;
 
