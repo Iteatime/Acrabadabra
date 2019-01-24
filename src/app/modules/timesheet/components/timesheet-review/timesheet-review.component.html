@@ -37,7 +37,7 @@
               </div>
               <div class="review__wrapper__fields__block__item-wrapper__part__text">
                 <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Période : </span>
-                <b>{{ date.toLocaleString(locale, { month: 'long', year: 'numeric' }) }}</b>
+                <b>{{ calendarService.period.month.format('MMMM YYYY') }}</b>
               </div>
             </div>
           </div>
@@ -60,8 +60,7 @@
         <div class="review__wrapper__fields__calendar">
           <h3 class="review__wrapper__fields__calendar__title">Journées de travail</h3>
           <app-calendar-selector
-          [minifiedTimesheet]="timesheet.workingDays"
-          [picking]="false"
+          [enable]="false"
           >
           </app-calendar-selector>
         </div>

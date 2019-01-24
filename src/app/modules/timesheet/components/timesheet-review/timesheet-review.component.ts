@@ -24,7 +24,7 @@ export class TimesheetReviewComponent implements OnInit {
   workingTime: number;
 
   constructor(
-    private calendarManager: CalendarService,
+    public calendarService: CalendarService,
     private route: ActivatedRoute,
     private timesheetService: TimesheetService,
     private titleService: Title
@@ -34,10 +34,10 @@ export class TimesheetReviewComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       if (this.timesheetService.openTimesheet(params['data'], 'review')) {
         this.timesheet = this.timesheetService.timesheet;
-        this.date = this.calendarManager.getDate(this.timesheet);
-        this.workingTime = this.calendarManager.getWorkedTime(this.timesheet);
+        this.calendarService.openWorkingDays(this.timesheet.workingDays);
+        this.workingTime = this.calendarService.getWorkedTime();
 
-        if (this.timesheet.invoice !== undefined) {
+        if (this.timesheet.invoice) {
            this.invoiceToken = params['data'];
            this.generateInvoice = true;
         }

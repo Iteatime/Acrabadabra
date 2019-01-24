@@ -44,8 +44,9 @@ export class InvoicePDFComponent implements OnInit {
     this.timesheet.invoice = Object.assign(new Invoice(), this.timesheet.invoice);
     this.timesheet.invoice.provider = Object.assign(new Company(), this.timesheet.invoice.provider);
     this.timesheet.invoice.client = Object.assign(new Company(), this.timesheet.invoice.client);
-    this.workedTime = this.calendarManager.getWorkedTime(this.timesheet);
-    this.period = this.calendarManager.getDate(this.timesheet);
+    this.calendarManager.openWorkingDays(this.timesheet.workingDays);
+    this.workedTime = this.calendarManager.getWorkedTime();
+    this.period = this.calendarManager.period.month;
     this.vat = this.currencyService.getVat();
     this.totalHT = this.workedTime * this.timesheet.invoice.dailyRate;
     this.totalTTC = this.totalHT + (this.vat * this.totalHT / 100);

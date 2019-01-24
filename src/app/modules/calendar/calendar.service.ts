@@ -1,58 +1,62 @@
 import { Injectable } from '@angular/core';
 
-import { CalendarEvent } from 'calendar-utils';
+import * as moment from '@sebastien-cleany/moment-ferie-fr';
 
-import { lastDayOfMonth, differenceInMinutes } from 'date-fns';
-
-import { Timesheet } from 'src/app/shared/@types/timesheet';
+import { Period } from 'src/app/shared/models/period.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CalendarService {
+  public period: Period;
+  public workingDays: any;
 
-  constructor() { }
-
-  getWorkedTime(timesheet: Timesheet): number {
-    let time = 0;
-
-    if (Object.keys(timesheet.workingDays).length > 0) {
-      timesheet.workingDays[Object.keys(timesheet.workingDays)[0]].forEach(element => {
-        time += element;
-      });
-    }
-    return time;
+  constructor() {
+    this.period = new Period();
+    this.workingDays = this.getWorkingDays();
   }
 
-  getDate(timesheet: Timesheet): Date {
-
-    if (Object.keys(timesheet.workingDays).length > 0) {
-      const dateString = Object.keys(timesheet.workingDays)[0].split('.');
-      return new Date(+dateString[1], +dateString[0]);
-    } else {
-      return new Date();
-    }
+  public openWorkingDays(workingDays: any) {
+    workingDays.forEach(week => {
+      week.forEach(day => {
+        day.date = moment(day.date);
+      });
+    });
+    this.workingDays = workingDays;
   }
 
-  getWorkingDays(events: CalendarEvent[]): any {
-    if (events[0] !== undefined) {
-      const month = new Date(events[0].start).getMonth(),
-          year = new Date(events[0].start).getFullYear(),
-          workingDays = {};
-          workingDays[month + '.' + year] = new Array();
-    for (let date = 0; date < new Date(lastDayOfMonth(events[0].start)).getDate(); date++) {
-      let time = 0;
-      events.forEach(aDay => {
-        if (date + 1 === new Date(aDay.start).getDate()) {
-          time = differenceInMinutes(aDay.end, aDay.start) / 60 / 8;
-          return;
-        }
+  public getWorkingDays() {
+    const array = [];
+    let week = [];
+    for (let index = 0; index <= this.period.duration;  index++) {
+      week.push({ date: moment(this.period.start).add(index, 'days'), time: 0 });
+      if (index % 7 === 6) {
+        array.push(week);
+        week = [];
+      }
+    }
+    return array;
+  }
+
+  public setPeriod(value: any) {
+    this.period.month = value;
+    this.workingDays = this.getWorkingDays();
+  }
+
+  isBusinessDay(day: moment.Moment) {
+    return  day.day() !== 0 &&
+            day.day() !== 6 &&
+            day.isSame(this.period.month, 'month') &&
+            !day.isFerie();
+  }
+
+  getWorkedTime() {
+    let workedTime = 0;
+    this.workingDays.forEach(week => {
+      week.forEach(day => {
+        workedTime += day.time;
       });
-      workingDays[month + '.' + year][date] = time;
-    }
-    return workingDays;
-    } else {
-      return {};
-    }
+    });
+    return workedTime;
   }
 }

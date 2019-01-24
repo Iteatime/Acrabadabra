@@ -117,9 +117,8 @@
           <div class="edit-cra__wrapper__form__component">
               <h4 class="edit-cra__wrapper__form__component__title">Compte rendu d'activité</h4>
               <app-calendar-selector
-              [minifiedTimesheet]="timesheetService.timesheet.workingDays"
-              [picking]="true"
-              (changed)="onUserInput($event)"
+              [enable]="true"
+              (changed)="onUserInput()"
               >
               </app-calendar-selector>
           </div>
@@ -137,7 +136,7 @@
               <app-invoice-form
               *ngIf="generateInvoice"
               [invoice]="timesheetService.timesheet.invoice"
-              (changed)="onUserInput($event)"
+              (changed)="onUserInput()"
               ></app-invoice-form>
           </div>
 

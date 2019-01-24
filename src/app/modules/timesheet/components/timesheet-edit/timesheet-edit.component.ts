@@ -8,7 +8,6 @@ import { ReviewMail } from 'src/app/shared/models/review-mail.model';
 import { TimesheetService } from '../../timesheet.service';
 import { InvoiceFormComponent } from '../invoice-form/invoice-form.component';
 
-import { CalendarSelectorComponent } from 'src/app/modules/calendar/components/calendar-selector/calendar-selector.component';
 import { CalendarService } from 'src/app/modules/calendar/calendar.service';
 
 @Component({
@@ -18,7 +17,6 @@ import { CalendarService } from 'src/app/modules/calendar/calendar.service';
   encapsulation: ViewEncapsulation.None
 })
 export class TimesheetEditComponent implements OnInit {
-  @ViewChild (CalendarSelectorComponent) calendar: CalendarSelectorComponent;
   @ViewChild (InvoiceFormComponent) invoiceForm: InvoiceFormComponent;
   @ViewChild ('form') form: NgForm;
   originUrl = window.location.origin;
@@ -31,7 +29,7 @@ export class TimesheetEditComponent implements OnInit {
     private calendarService: CalendarService,
     private route: ActivatedRoute,
     private router: Router,
-    protected timesheetService: TimesheetService,
+    public timesheetService: TimesheetService,
     private titleService: Title,
   ) {}
 
@@ -41,6 +39,7 @@ export class TimesheetEditComponent implements OnInit {
     } else {
       this.showLinks = true;
       this.generateInvoice = this.timesheetService.timesheet.invoice ? true : false;
+      this.calendarService.openWorkingDays(this.timesheetService.timesheet.workingDays);
       this.updateMailtoLink();
     }
     this.form.valueChanges.subscribe(() => {
@@ -62,7 +61,7 @@ export class TimesheetEditComponent implements OnInit {
 
   onSubmit() {
     if (this.checkFormsValidity()) {
-      this.timesheetService.timesheet.workingDays = this.calendarService.getWorkingDays(this.calendar.timesheet);
+      this.timesheetService.timesheet.workingDays = this.calendarService.workingDays;
       this.timesheetService.timesheet.invoice = this.generateInvoice ? this.invoiceForm.invoice : null;
       this.updateMailtoLink();
       this.reactToSubmition(false);
@@ -87,9 +86,9 @@ export class TimesheetEditComponent implements OnInit {
   updateMailtoLink(): void {
     this.reviewMail = new ReviewMail(
       this.timesheetService.timesheet,
-      this.calendarService.getWorkedTime(this.timesheetService.timesheet),
+      this.calendarService.getWorkedTime(),
       this.timesheetService.getReviewToken(),
-      this.originUrl + '/timesheet/edit/'
+      this.originUrl + '/timesheet/review/'
     );
   }
 

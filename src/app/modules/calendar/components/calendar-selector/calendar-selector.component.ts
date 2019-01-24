@@ -1,179 +1,66 @@
-import { Component, ChangeDetectionStrategy, Input, OnInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-import { Subject } from 'rxjs';
-
-import {
-  addHours,
-  addMinutes,
-  addMonths,
-  differenceInMinutes,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  setDate,
-  startOfDay,
-  startOfMonth,
-  getDay,
-  setMonth,
-  subMonths,
-  setYear,
-} from 'date-fns';
-
-import { CalendarEvent, CalendarMonthViewDay, DAYS_OF_WEEK } from 'angular-calendar';
+import { CalendarService } from '../../calendar.service';
 
 @Component({
   selector: 'app-calendar-selector',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './calendar-selector.component.html',
-  styleUrls: ['./calendar-selector.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  styleUrls: ['./calendar-selector.component.scss']
 })
-export class CalendarSelectorComponent implements OnInit {
-  @Input() picking: boolean;
-
-  @Input() minifiedTimesheet: any;
-  timesheet: CalendarEvent[] = [];
-  refresh: Subject<any> = new Subject();
-
+export class CalendarSelectorComponent {
+  @Input() enable: boolean;
+  @Output() changed: EventEmitter<boolean> = new EventEmitter();
   locale = 'fr';
-  weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
-  weekendDays: number[] = [DAYS_OF_WEEK.SATURDAY, DAYS_OF_WEEK.SUNDAY];
-  viewDate: Date = new Date();
-  totalWorkedTime = 0;
 
-  constructor(private changeDetector: ChangeDetectorRef) {}
-
-  ngOnInit(): void {
-    this.initTimesheet();
-    this.refresh.subscribe(() => {
-      this.changeDetector.detectChanges();
-    });
-
-    setTimeout(() => { this.changeDetector.detectChanges(); });
-  }
-
-  initTimesheet(): void {
-    const timesheetDate = Object.keys(this.minifiedTimesheet)[0];
-
-    if (timesheetDate !== undefined) {
-      const month = Number.parseInt(timesheetDate.split('.')[0], 10);
-      const year = Number.parseInt(timesheetDate.split('.')[1], 10);
-      const daysValue = this.minifiedTimesheet[timesheetDate];
-
-      this.viewDate = setMonth(setYear(this.viewDate, year), month);
-
-      for (let date = 0; date < daysValue.length; date++) {
-        const day = new Date(+year, +month, date + 1);
-
-        if (daysValue[date] !== undefined && daysValue[date] !== 0) {
-          this.addTimesheetDay(day, addMinutes(day, daysValue[date] * 60 * 8));
-        }
-      }
-    }
-  }
-
-  beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
-    this.totalWorkedTime = 0;
-
-    body.forEach(day => {
-      if (!this.picking) {
-        day.cssClass = 'cal-disabled';
-      }
-
-      day.events.forEach((event) => {
-        const dayTime = differenceInMinutes(event.end, event.start) / 60 / 8;
-        day.badgeTotal = dayTime;
-        this.totalWorkedTime += dayTime;
-      });
-    });
-  }
-
-  getDayWorkingTime(day: Date): CalendarEvent {
-    return this.timesheet.find((currenDay) => {
-      return isSameDay(currenDay.start, day);
-    });
-  }
-
-  isDayWorked(day: Date): boolean {
-    return this.timesheet.some((currentDay) => {
-      return isSameDay(currentDay.start, day);
-    });
-  }
-
-  dayClicked(date: Date): void {
-    if (isSameMonth(date, this.viewDate)) {
-      if (!this.isDayWorked(date)) {
-        this.addTimesheetDay(date);
-      } else {
-        this.deleteDay(date);
-      }
-    }
-
-    this.refresh.next();
-  }
-
-  dayEdited(event: Event, date: Date, time: number): void {
-    event.stopPropagation();
-
-    const day = this.getDayWorkingTime(date),
-          end = addMinutes(day.start, 8 * 60 * time);
-
-    if (time !== 0 && end) {
-      day.end = end;
-    } else {
-      this.deleteDay(date);
-    }
-
-    this.refresh.next();
-  }
+  constructor(public calendarService: CalendarService) {}
 
   selectAllBusinessDays(): void {
-    const monthStart = startOfMonth(this.viewDate).getDate(),
-          monthEnd = endOfMonth(this.viewDate).getDate();
+    this.calendarService.workingDays.forEach(week => {
+      week.forEach(day => {
+        if (this.calendarService.isBusinessDay(day.date)) {
+          day.time = 1;
+        }
+      });
+    });
+    this.changed.emit(true);
+  }
 
-    for (let date = monthStart; date <= monthEnd; date++) {
-      const aDay = setDate(this.viewDate, date);
+  emptySelection(): void {
+    this.calendarService.workingDays.forEach(week => {
+      week.forEach(day => {
+        day.time = 0;
+      });
+    });
+    this.changed.emit(true);
+  }
 
-      if (!this.isDayWorked(aDay) && this.weekendDays.indexOf(getDay(aDay)) === -1) {
-        this.addTimesheetDay(aDay);
-      }
+  editDayTime(event: Event, week: number, day: number, time: number) {
+    if (this.enable) {
+      event.stopPropagation();
+      this.calendarService.workingDays[week][day].time = time;
+      this.changed.emit(true);
     }
-    this.refresh.next();
+  }
+
+  toggleDay(event: Event, week: number, day: number) {
+    if (this.enable) {
+      event.stopPropagation();
+      if  (this.calendarService.workingDays[week][day].time !== 0) {
+        this.calendarService.workingDays[week][day].time = 0;
+      } else {
+        this.calendarService.workingDays[week][day].time = 1;
+      }
+      this.changed.emit(true);
+    }
   }
 
   nextMonth(): void {
-    this.viewDate = addMonths(this.viewDate, 1);
-    this.emptyDays();
+    this.calendarService.setPeriod(this.calendarService.period.month.add(1, 'month'));
+    this.changed.emit(true);
   }
 
   previousMonth(): void {
-    this.viewDate = subMonths(this.viewDate, 1);
-    this.emptyDays();
-  }
-
-  emptyDays(): void {
-    this.timesheet = [];
-    this.refresh.next();
-  }
-
-  addTimesheetDay(date: Date, end?: Date): void {
-    date = startOfDay(date);
-
-    if (end === undefined) {
-      end = addHours(date, 8);
-    }
-
-    this.timesheet.push({
-      title: '',
-      start: date,
-      end: end,
-      draggable: false,
-    });
-  }
-
-  deleteDay(day: Date): void  {
-    this.timesheet = this.timesheet.filter(
-      (iEvent) => !isSameDay(day, iEvent.start)
-    );
+    this.calendarService.setPeriod(this.calendarService.period.month.subtract(1, 'month'));
+    this.changed.emit(true);
   }
 }

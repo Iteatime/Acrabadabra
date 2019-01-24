@@ -1,7 +1,11 @@
 @import 'src/app/style/vars';
 @import 'src/app/style/mixins';
 
+
 .calendar {
+  margin: 20px auto;
+  width: 1000px;
+
   &__header {
     @media (min-width: $screen_xs_min) {
       height: 50px;
@@ -105,33 +109,60 @@
     &__dayselect {
       margin-top: 20px;
 
-      & .cal-header,
-      & .cal-out-month {
-        @media (min-width: $screen_sm_min) {
-          display: flex;
-        }
-
-        display: none;
-      }
-
-      & .cal-cell-row {
-        @media (min-width: $screen_sm_min) {
-          flex-direction: row;
-        }
-
-        flex-direction: column;
-      }
-
-      &__dayitem {
-        flex: 1;
+      &__header {
         display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        height: 100%;
+
+        &__item {
+          width: 250px;
+          text-align: center;
+          border: 1px solid $grey_border_dark;
+          border-left: none;
+
+          &:first-of-type {
+            border-left: 1px solid $grey_border_dark;
+          }
+        }
+      }
+
+      &__row {
+        display: flex;
 
         &__cell {
+          width: 250px;
+          height: 100px;
+          opacity: 1;
+          transition: opacity .15s ease-in-out;
           position: relative;
-          height: 100%;
+
+          border: 1px solid $grey_border;
+          border-left: none;
+          border-top: none;
+
+          &:first-of-type {
+            border-left: 1px solid $grey_border;
+          }
+
+          &:hover {
+            opacity: 0.9;
+            background-color: $grey_light;
+          }
+
+          &__date {
+            position: absolute;
+            font-size: 12px;
+            left: 10px;
+            top: 10px;
+
+            &.noBusiness {
+              color: $main_red;
+            }
+          }
+
+          &__holidays {
+            position: absolute;
+            top: 36px;
+            left: 25px;
+          }
 
           &__changer {
             @media (min-width: $screen_sm_min) {
@@ -248,89 +279,6 @@
           }
         }
       }
-
-      & .cal-weekend.cal-day-cell,
-      & .cal-month-view .cal-cell-row .cal-cell.cal-weekend.cal-out-month:hover {
-        background: rgba($black, .02);
-      }
-
-      & .cal-month-view .cal-day-cell {
-        @media (min-width: $screen_sm_min) {
-          height: 100px;
-          min-height: 100px;
-        }
-
-        height: 80px;
-        min-height: 80px;
-      }
-
-      & .cal-month-view .cal-day-cell.cal-today {
-        background: none;
-        box-shadow: inset 0px 0px 0px 1px $main_blue;
-      }
-
-      & .cal-month-view .cal-cell-row:hover,
-      & .cal-month-view .cal-cell-row.cal-header .cal-cell:hover,
-      & .cal-month-view .cal-cell.cal-has-events.cal-open {
-        background: none;
-      }
-
-      & .cal-month-view .cal-cell-row .cal-cell {
-        transition: background .2s ease-in-out
-      }
-
-      & .cal-month-view .cal-cell-row .cal-cell:hover {
-        background: none;
-      }
-
-      & .cal-month-view .cal-cell-row:not(.cal-header) .cal-cell:not(.cal-out-month):hover {
-        background: $grey_light;
-      }
-
-      & .cal-month-view .cal-day-cell:not(:last-child) {
-        @media (min-width: $screen_sm_min) {
-          border-right: 1px solid $grey_border;
-          border-bottom: 0;
-        }
-
-        border-right: 0;
-        border-bottom: 1px solid $grey_border;
-      }
-
-      & .cal-month-view .cal-days {
-        @media (min-width: $screen_sm_min) {
-          border-bottom: 1px solid $grey_border;
-        }
-
-        border:1px solid $grey_border;
-        border-bottom: 0;
-      }
     }
   }
-}
-
-.fill-height {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-
-}
-
-.cal-disabled {
-  background-color: #eee;
-  pointer-events: none;
-
-}
-
-.cal-disabled .cal-day-number {
-  filter: opacity(25%);
-}
-
-.cal-has-events.cal-disabled .cal-day-number {
-  filter: opacity(100%);
-}
-
-.disabled-element {
-  visibility: hidden;
 }
