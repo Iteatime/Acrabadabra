@@ -1,0 +1,183 @@
+@import 'src/app/style/vars';
+@import 'src/app/style/mixins';
+
+.review {
+  background: $grey_light;
+
+  &__header {
+    @media (min-width: $screen-sm-min) {
+        height: 80px;
+    }
+    background: $main_blue;
+    padding: 10px 0;
+    height: 60px;
+    box-shadow: 0 0 8px rgba($black, .8);
+
+    &__container {
+      position: relative;
+      height: 100%;
+
+      a {
+        opacity: 1;
+        transition: opacity .15s ease-in-out;
+      }
+
+      a:hover {
+        opacity: 0.9;
+      }
+
+      &__logo {
+        display: block;
+        position: absolute;
+                left: 20px;
+        height: 100%;
+      }
+    }
+  }
+
+  &__wrapper {
+    @include container;
+
+    @media (min-width: $screen-sm-min) {
+      padding: 40px;
+    }
+
+    @media (min-width: $screen-md-min) {
+      margin-top: 30px;
+    }
+
+    margin-top: 10px;
+    background: $white;
+    padding: 20px;
+    box-shadow: 0 0 8px rgba($black, .2);
+
+    &__title {
+      font-size: 22px;
+      color: $grey_mine_shaft;
+
+      & > h2 {
+        @media (min-width: $screen-sm-min) {
+          font-size: 28px;
+        }
+
+        font-weight: 700;
+        font-size: 20px;
+      }
+
+      & > h3 {
+        @media (min-width: $screen-sm-min) {
+          font-size: 24px;
+        }
+
+        font-weight: 400;
+        font-size: 16px;
+        margin-left: 20px;
+      }
+    }
+
+    &__fields {
+      @media (min-width: $screen-sm-min) {
+        margin-top: 45px;
+      }
+
+      margin-top: 25px;
+
+      &__block {
+
+        &__title {
+          @include header-form;
+        }
+
+        &__item-wrapper {
+          @media (min-width: $screen-sm-min) {
+            display: flex;
+            flex-wrap: wrap;
+          }
+
+          @media (min-width: $screen_md_min) {
+            padding: 18px 30px;
+          }
+
+          @media (min-width: $screen_lg_min) {
+            padding: 18px 50px;
+          }
+
+          border: 1px solid $grey_border_dark;
+          border-top: 0;
+          background: $grey_light;
+          padding: 18px;
+
+          & > hr {
+            @media (min-width: $screen-sm-min) {
+              display: block;
+              width: 1px;
+              height: 90px;
+              background-color: $grey_border_dark;
+              margin: 0px;
+            }
+            display: none;
+          }
+
+          &__part {
+            @media (min-width: $screen-sm-min) {
+              width: calc(50% - 20px);
+
+              &#left-part {
+                margin-right: 10px;
+              }
+
+              &#right-part {
+                margin-left: 10px;
+              }
+            }
+
+            width: 100%;
+
+            &__text {
+              height: 30px;
+              &__label {
+                float: left;
+              }
+
+              & > b {
+                float: right;
+              }
+            }
+          }
+        }
+      }
+
+      &__invoice {
+        margin-top: 40px;
+        width: 100%;
+        text-align: center;
+
+        &__button {
+          @include hoveranim_glow($darker_blue);
+
+          border: none;
+          display: inline-block;
+          background: $dark_blue;
+          padding: 0;
+          cursor: pointer;
+          width: 40%;
+          height: 60px;
+          min-width: 220px;
+          line-height: 60px;
+          color: $white;
+          font-size: 20px;
+          font-weight: 700;
+        }
+      }
+
+      &__calendar {
+        margin-top: 30px;
+        width: 100%;
+
+        &__title {
+          @include header-form;
+        }
+      }
+    }
+  }
+}

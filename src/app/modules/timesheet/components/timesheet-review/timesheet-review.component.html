@@ -1,0 +1,70 @@
+<div class="review">
+    <div class="review__header">
+        <div class="review__header__container">
+            <a href="" title="Retour à l'accueil">
+                <img class="review__header__container__logo" src="assets/images/logo.white.svg" alt="logo acrabadabra" onerror="this.removeAttribute('onerror'); this.src='//assets/images/logo.white.png'">
+            </a>
+        </div>
+    </div>
+
+    <div class="review__wrapper">
+        <div class="review__wrapper__title">
+            <h2>Consulter un compte rendu d'activité</h2>
+        </div>
+      <div class="review__wrapper__fields">
+        <div class="review__wrapper__fields__block">
+          <h3 class="review__wrapper__fields__block__title">Informations</h3>
+          <div class="review__wrapper__fields__block__item-wrapper">
+            <div id="left-part" class="review__wrapper__fields__block__item-wrapper__part">
+              <div class="review__wrapper__fields__block__item-wrapper__part__text">
+                <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Consultant : </span>
+                <b>{{ timesheet.consultant.name }}</b>
+              </div>
+              <div class="review__wrapper__fields__block__item-wrapper__part__text">
+                <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Intitulé de la mission : </span>
+                <b>{{ timesheet.mission.title }}</b>
+              </div>
+              <div class="review__wrapper__fields__block__item-wrapper__part__text">
+                <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Client : </span>
+                <b>{{ timesheet.mission.client }}</b>
+              </div>
+            </div>
+            <hr>
+            <div id="right-part" class="review__wrapper__fields__block__item-wrapper__part">
+              <div class="review__wrapper__fields__block__item-wrapper__part__text">
+                <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Nombre de journées : </span>
+                <b>{{ workingTime }}</b>
+              </div>
+              <div class="review__wrapper__fields__block__item-wrapper__part__text">
+                <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Période : </span>
+                <b>{{ date.toLocaleString(locale, { month: 'long', year: 'numeric' }) }}</b>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+        *ngIf="generateInvoice"
+        class="review__wrapper__fields__invoice"
+        >
+          <a
+          data-text="Télécharger a facture"
+          class="review__wrapper__fields__invoice__button"
+          target="_blank"
+          [routerLink]="['/invoice/' + invoiceToken]"
+          >
+            <span>Télécharger la facture</span>
+          </a>
+        </div>
+
+        <div class="review__wrapper__fields__calendar">
+          <h3 class="review__wrapper__fields__calendar__title">Journées de travail</h3>
+          <app-calendar-selector
+          [minifiedTimesheet]="timesheet.workingDays"
+          [picking]="false"
+          >
+          </app-calendar-selector>
+        </div>
+      </div>
+    </div>
+</div>
