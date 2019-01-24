@@ -1,309 +1,331 @@
-// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-// import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-// import { Title, By } from '@angular/platform-browser';
-// import { ActivatedRoute } from '@angular/router';
-// import { RouterTestingModule } from '@angular/router/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { FormsModule, NgModel, FormControl, AbstractControl, NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Title, By } from '@angular/platform-browser';
 
-// import { of } from 'rxjs';
+import { MockComponent, MockDirective } from 'ng-mocks';
 
-// import * as _ from 'lodash';
+import { TimesheetEditComponent } from './timesheet-edit.component';
+import { CalendarManagerService } from 'src/app/calendar/calendar-manager.service';
+import { TimesheetService } from 'src/app/shared/timesheet.service';
+import { CalendarComponent } from 'src/app/calendar/calendar.component';
+import { CopyToClipboardDirective } from 'src/app/shared/copy-to-clipboard.directive';
+import { MailtoDirective } from 'src/app/shared/mailto.directive';
+import { InvoiceFormComponent } from '../../invoice/invoice-form/invoice-form.component';
+import { Timesheet } from 'src/app/shared/timesheet.model';
+import { Invoice } from 'src/app/shared/invoice.model';
+import { ReviewMail } from 'src/app/shared/review-mail.model';
 
-// import { differenceInMinutes } from 'date-fns';
+let testTimesheet = new Timesheet('test');
+    testTimesheet.workingDays['0.1900'] = [0.5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    testTimesheet.invoice = new Invoice('F190001-01');
+const testEditTokenWithoutInvoice = btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'edit', timesheet: new Timesheet('test') }))));
+const testEditTokenWithInvoice = btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'edit', timesheet: testTimesheet }))));
+const testReviewToken = btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'review', timesheet: testTimesheet }))));
 
-// import { MockComponent, MockDirective  } from 'ng-mocks';
+class MockCalendarManagerService {
+  getWorkingDays(): any {
+    return testTimesheet.workingDays;
+  }
 
-// import { CalendarEvent } from 'calendar-utils';
+  getWorkedTime(): number {
+    return 1.5;
+  }
+}
 
-// import { EditTimesheetComponent } from './edit-timesheet.component';
+describe('TimesheetEditComponent', () => {
+  let component: TimesheetEditComponent;
+  let fixture: ComponentFixture<TimesheetEditComponent>;
+  let titleService: Title;
+  let route: ActivatedRoute;
+  let router: Router;
+  let timesheetService: TimesheetService;
 
-// import { CalendarComponent } from 'src/app/calendar/calendar.component';
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        FormsModule,
+        RouterTestingModule.withRoutes([
+          { path: 'timesheet/create', component: TimesheetEditComponent },
+        ]),
+      ],
+      declarations: [
+        TimesheetEditComponent,
+        MockComponent(CalendarComponent),
+        MockComponent(InvoiceFormComponent),
+        MockDirective(CopyToClipboardDirective),
+        MockDirective(MailtoDirective)
+      ],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: { params: {} }
+          }
+        },
+        { provide: CalendarManagerService, useClass: MockCalendarManagerService },
+        TimesheetService,
+      ],
+    })
+    .compileComponents();
 
-// import { Timesheet } from 'src/app/shared/timesheet.model';
-// import { ModalDirective } from 'src/app/shared/style/modal.directive';
-// import { SerializerService } from 'src/app/shared/serialization/serializer.service';
+    fixture = TestBed.createComponent(TimesheetEditComponent);
+    component = fixture.componentInstance;
 
-// import { TimesheetTokenData } from 'src/app/@types/timesheet-token-data';
+    titleService = TestBed.get(Title);
+    timesheetService = TestBed.get(TimesheetService);
+    route = TestBed.get(ActivatedRoute);
+    router = TestBed.get(Router);
+  });
 
+  it('should be created', () => {
+    expect(component).toBeTruthy();
+  });
 
-// describe('EditCraComponent - ', () => {
-//   let fixture: ComponentFixture<EditTimesheetComponent>,
-//       component: EditTimesheetComponent,
-//       route: ActivatedRoute,
-//       serializer: SerializerService,
-//       titleService: Title,
-//       calendar: CalendarComponent;
+  describe('ngOnInit()', () => {
+    beforeEach(() => {
+      spyOn(titleService, 'setTitle').and.callThrough();
+    });
 
-//   const testData: TimesheetTokenData = {
-//           mode: 'add',
-//           timesheet: {
-//             consultant: { email: 'tester@test.com', name: 'tester', },
-//             mission: { client: 'Test.com', title: 'Testin' },
-//             workingDays: {
-//               // This is a minified timesheet it represent the working time for each days of the month and year in the key.
-//               '0.1900': [0.5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-//             },
-//           },
-//           invoice: null,
-//         },
-//         // This is the timesheet corresponding to the above minified version.
-//         timesheet: CalendarEvent[] = [
-//           { title: '', start: new Date(1900, 0, 1), end: new Date(1900, 0, 1, 4)},
-//           { title: '', start: new Date(1900, 0, 2), end: new Date(1900, 0, 2, 8)},
-//         ],
-//         testEditToken: string = new SerializerService().serialize({ ...testData, mode: 'edit' }),
-//         testReviewToken: string = new SerializerService().serialize({ ...testData, mode: 'review' }),
-//         checkCra = (cra: Timesheet): boolean => {
-//           const testTimesheet = _.isEqual(cra.workingDays, testData.timesheet.workingDays),
-//                 testConsultant = _.isEqual(cra.consultant, testData.timesheet.consultant),
-//                 testMission = _.isEqual(cra.mission, testData.timesheet.mission);
+    describe('When there is no `data` parameter', () => {
+      beforeEach(() => {
+        fixture.detectChanges();
+      });
 
-//           return testTimesheet && testConsultant && testMission;
-//         },
-//         checkToken = (token: string, mode: string): boolean => {
-//           const deserializedToken: TimesheetTokenData = serializer.deserialize(token);
+      it('should create a new Timesheet instance', () => {
+        expect(timesheetService.timesheet.consultant.email).toBe('');
+      });
 
-//           return checkCra(deserializedToken.timesheet) && deserializedToken.mode === mode;
-//         };
+      testValueChanges();
+    });
 
-//   beforeEach(async(() => {
+    describe('When there is a `data` parameter', () => {
+      describe('and the `mode` stored in the token is "edit"', () => {
+        beforeEach(() => {
+          route.snapshot.params = { data: testEditTokenWithInvoice };
+          fixture.detectChanges();
+        });
 
-//     TestBed.configureTestingModule({
-//       imports: [
-//         FormsModule,
-//         ReactiveFormsModule,
-//         RouterTestingModule,
-//       ],
-//       declarations: [
-//         EditTimesheetComponent,
-//         MockComponent(CalendarComponent),
-//         MockDirective(ModalDirective)
-//       ],
-//       providers: [
-//         {
-//           provide: ActivatedRoute,
-//           useValue: {
-//             queryParams: of({})
-//           }
-//         },
-//       ],
-//     })
-//     .compileComponents();
-//   }));
+        it('should set `showLinks` to true', () => {
+          expect(component.showLinks).toBeTruthy();
+        });
 
-//   beforeEach(() => {
-//     fixture = TestBed.createComponent(EditTimesheetComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//     serializer = fixture.debugElement.injector.get(SerializerService);
-//     route = fixture.debugElement.injector.get(ActivatedRoute);
-//     titleService = fixture.debugElement.injector.get(Title);
-//     calendar = fixture.debugElement.query(By.css('app-calendar')).componentInstance as CalendarComponent;
-//     calendar.timesheet = timesheet;
-//   });
+        it('should set `generateInvoice` to true if `timesheet.invoice` contain an `Invoice` instance', () => {
+          expect(component.generateInvoice).toBeTruthy();
+        });
 
-//   it('it should create the component', () => {
-//     expect(component).toBeTruthy('Expected edit-cra component to create but it did not worked');
-//   });
+        it('should set `generateInvoice` to false otherwise', () => {
+          fixture = TestBed.createComponent(TimesheetEditComponent);
+          component = fixture.componentInstance;
+          timesheetService = TestBed.get(TimesheetService);
+          route = TestBed.get(ActivatedRoute);
+          route.snapshot.params = { data: undefined };
+          fixture.detectChanges();
 
-//   describe('reading queryparams', () => {
-//     let spySetTitle;
+          expect(component.generateInvoice).toBeFalsy();
+        });
 
-//     beforeEach(() => {
-//       spySetTitle = spyOn(titleService, 'setTitle');
-//     });
+        testUpdateMailtoLink();
 
-//     describe('when called in add mode:', () => {
-//       beforeEach(() => {
-//         route.queryParams = of({});
-//         fixture.detectChanges();
-//         component.ngOnInit();
-//       });
+        testValueChanges();
+      });
 
-//       it('it should set Acrabadabra - Saisir un compte rendu d\'activité as page title', () => {
-//         expect(spySetTitle).toHaveBeenCalledWith('Acrabadabra - Saisir un compte rendu d\'activité');
-//       });
+      describe('and the `mode` stored in the token is not "edit"', () => {
+        beforeEach(() => {
+          route.snapshot.params = { data: testReviewToken };
+          spyOn(router, 'navigate').and.callThrough();
+          fixture.detectChanges();
+        });
 
-//       describe('it should init', () => {
-//         it('mode as "add"', () => {
-//           expect(component.mode).toBe(testData.mode);
-//         });
+        it('should navigate to the "create" URL', () => {
+          expect(router.navigate).toHaveBeenCalledWith(['timesheet', 'create']);
+        });
+      });
+    });
 
-//         it('with a new cra', () => {
-//           expect(component.timesheet).toEqual(new Timesheet());
-//         });
-//       });
-//     });
+    it('should set "Acrabadabra - Saisir un compte rendu d\'activité" as page title if `mode` is not "edit"', () => {
+      fixture.detectChanges();
+      expect(titleService.setTitle).toHaveBeenCalledWith('Acrabadabra - Saisir un compte rendu d\'activité');
+    });
 
-//     describe('when called in edit mode', () => {
-//       beforeEach(() => {
-//         route.queryParams = of({ data: testEditToken });
-//         fixture.detectChanges();
-//         component.ngOnInit();
-//       });
+    it('should set "Acrabadabra - Modifier un compte rendu d\'activité" as page title if `mode` is "edit"', () => {
 
-//       it('it should init with token data', () => {
-//         route.queryParams = of({ data: testEditToken });
-//         fixture.detectChanges();
-//         component.ngOnInit();
+      route.snapshot.params = { data: testEditTokenWithInvoice };
+      fixture.detectChanges();
+      expect(titleService.setTitle).toHaveBeenCalledWith('Acrabadabra - Modifier un compte rendu d\'activité');
+    });
+  });
 
-//         expect(checkCra(component.timesheet)).toBeTruthy('Expected component and test cra to have the same data');
-//         expect(component.mode).toBe('edit');
-//       });
+  describe('getModeTitle()', () => {
+    it('should return "Saisir" if `mode` is not "edit"', () => {
+      expect(component.getModeTitle()).toBe('Saisir');
+    });
 
-//       it('it should set "Acrabadabra - Editer un compte rendu d\'activité as page title" as page title', () => {
-//         expect(spySetTitle).toHaveBeenCalledWith('Acrabadabra - Editer un compte rendu d\'activité');
-//       });
+    it('should return "Modifier" if `mode` is "edit"', () => {
+      timesheetService.mode = 'edit';
+      expect(component.getModeTitle()).toBe('Modifier');
+    });
+  });
 
-//       describe('it should fill the form', () => {
-//         it('consultantNameInput', () => {
-//           expect(component.consultantNameInput.value).toBe(testData.timesheet.consultant.name);
-//         });
+  describe('onUserInput()', () => {
+    beforeEach(() => {
+      fixture.detectChanges();
+    });
 
-//         it('consultantEmailInput', () => {
-//           expect(component.consultantEmailInput.value).toBe(testData.timesheet.consultant.email);
-//         });
+    testOnUpdateInput();
+  });
 
-//         it('missionTitleInput', () => {
-//           expect(component.missionTitleInput.value).toBe(testData.timesheet.mission.title);
-//         });
+  describe('onSubmit()', () => {
+    beforeEach(() => {
+      fixture.detectChanges();
+    });
 
-//         it('missionFinalClientInput', () => {
-//           expect(component.missionFinalClientInput.value).toBe(testData.timesheet.mission.client);
-//         });
-//       });
-//     });
+    describe('when the forms are valid', () => {
+      beforeEach(async() => {
+        await fixture.whenStable;
+        spyOn(component, 'checkFormsValidity').and.returnValue(true);
+        component.onSubmit();
+      });
 
-//     describe('when called in review mode', () => {
-//       beforeEach(() => {
-//         route.queryParams = of({ data: testReviewToken });
-//         fixture.detectChanges();
-//         component.ngOnInit();
-//       });
+      it('should update the `workingDays` value', async() => {
+        expect(timesheetService.timesheet.workingDays).toBe(testTimesheet.workingDays);
+      });
 
-//       it('it should init with token data', () => {
-//         route.queryParams = of({ data: testReviewToken });
-//         fixture.detectChanges();
-//         component.ngOnInit();
+      it('should set the invoice to null if `generateInvoice` is false', () => {
+        expect(timesheetService.timesheet.invoice).toBeNull();
+      });
 
-//         expect(checkCra(component.timesheet)).toBeTruthy('Expected component and test cra to have the same data');
-//         expect(component.mode).toBe('review');
-//       });
+      it('should update the invoice if `generateInvoice` is true', () => {
+        route.snapshot.params = { data: testEditTokenWithInvoice };
+        component.ngOnInit();
+        fixture.detectChanges();
+        component.onSubmit();
+        expect(timesheetService.timesheet.invoice.number).toBe(testTimesheet.invoice.number);
+      });
 
-//       it('it should set "Acrabadabra - Consulter un compte rendu d\'activité" as page title', () => {
-//         expect(spySetTitle).toHaveBeenCalledWith('Acrabadabra - Consulter un compte rendu d\'activité');
-//       });
+      testUpdateMailtoLink();
 
-//       describe('it should fill the form', () => {
-//         it('consultantNameInput', () => {
-//           expect(component.consultantNameInput.value).toBe(testData.timesheet.consultant.name);
-//         });
+      it('should show the links', () => {
+        expect(component.showLinks).toBeTruthy();
+      });
 
-//         it('consultantEmailInput', () => {
-//           expect(component.consultantEmailInput.value).toBe(testData.timesheet.consultant.email);
-//         });
+      it('should set the `submitMessage.text` to "Si vous modifiez le CRA, vous devrez le valider à nouveau et utiliser le nouveau lien de partage."', () => {
+        expect(component.submitMessage.text).toBe('Si vous modifiez le CRA, vous devrez le valider à nouveau et utiliser le nouveau lien de partage.');
+      });
 
-//         it('missionTitleInput', () => {
-//           expect(component.missionTitleInput.value).toBe(testData.timesheet.mission.title);
-//         });
+      it('should set the `submitMessage.type` to "success"', () => {
+        expect(component.submitMessage.type).toBe('success');
+      });
+    });
 
-//         it('missionFinalClientInput', () => {
-//           expect(component.missionFinalClientInput.value).toBe(testData.timesheet.mission.client);
-//         });
-//       });
+    describe('when the forms aren\'t valid', () => {
+      beforeEach(async() => {
+        await fixture.whenStable;
+        spyOn(component, 'checkFormsValidity').and.returnValue(false);
+        component.onSubmit();
+      });
 
-//       describe('it should disable form', () => {
-//         it('consultantNameInput', () => {
-//           expect(component.consultantNameInput.disabled).toBeTruthy();
-//         });
+      it('should mark the form as touched', () => {
+        expect(component.form.touched).toBeTruthy();
+      });
 
-//         it('consultantEmailInput', () => {
-//           expect(component.consultantEmailInput.disabled).toBeTruthy();
-//         });
+      it('should set the invalid field `status` to "INVALID"', () => {
+        expect(component.form.form.get('consultantEmailInput').status).toBe('INVALID');
+      });
 
-//         it('missionTitleInput', () => {
-//           expect(component.missionTitleInput.disabled).toBeTruthy();
-//         });
+      it('shouldn\'t show the links', () => {
+        expect(component.showLinks).toBeFalsy();
+      });
 
-//         it('missionFinalClientInput', () => {
-//           expect(component.missionFinalClientInput.disabled).toBeTruthy();
-//         });
-//       });
-//     });
-//   });
+      it('should set the `submitMessage.text` to "Veuillez vérifier votre saisie"', () => {
+        expect(component.submitMessage.text).toBe('Veuillez vérifier votre saisie');
+      });
 
-//   describe('when submiting', () => {
-//     describe('with a valid form', () => {
-//       beforeEach(() => {
-//         component.timesheet = testData.timesheet;
-//         fixture.detectChanges();
-//         component.onSubmitTimesheet();
-//       });
+      it('should set the `submitMessage.type` to "error"', () => {
+        expect(component.submitMessage.type).toBe('error');
+      });
+    });
+  });
 
-//       it('it should enable modal', () => {
-//         expect(component.showModal).toBeTruthy();
-//       });
+  describe('checkFormsValidity()', () => {
+    beforeEach(async() => {
+      await fixture.whenStable;
+      component.submitMessage = null;
+      component.showLinks = null;
+    });
 
-//       it('it should create edit token', () => {
-//         expect(checkToken(component.editToken, 'edit')).toBeTruthy('Expected component and test edit token to have the same data');
-//       });
+    describe('when `generateInvoice` is set to true', () => {
+      beforeEach(() => {
+        component.generateInvoice = true;
+        fixture.detectChanges();
+        component.invoiceForm.form = new NgForm(undefined, undefined);
+      });
 
-//       it('it should create review token', () => {
-//         expect(checkToken(component.reviewToken, 'review')).toBeTruthy('Expected component and test review token to have the same data');
-//       });
-//     });
+      it('should return true if the two `forms` are valid', () => {
+        spyOnProperty(component.form, 'valid').and.returnValue(true);
+        spyOnProperty(component.invoiceForm.form, 'valid').and.returnValue(true);
+        expect(component.checkFormsValidity()).toBeTruthy();
+      });
 
-//     describe('with an invalid form', () => {
-//       let spyShowValidationMessages;
-//       beforeEach(() => {
-//         spyShowValidationMessages = spyOn(component, 'showValidationMessages');
+      it('should return false the timesheet `form` is invalid', () => {
+        spyOnProperty(component.form, 'valid').and.returnValue(false);
+        spyOnProperty(component.invoiceForm.form, 'valid').and.returnValue(true);
+        expect(component.checkFormsValidity()).toBeFalsy();
+      });
 
-//         component.timesheet = new Timesheet();
-//         fixture.detectChanges();
-//         component.onSubmitTimesheet();
-//       });
+      it('should return false the invoice `form` is invalid', () => {
+        spyOnProperty(component.form, 'valid').and.returnValue(true);
+        spyOnProperty(component.invoiceForm.form, 'valid').and.returnValue(false);
+        expect(component.checkFormsValidity()).toBeFalsy();
+      });
 
-//       it('it should enable error modal', () => {
-//         expect(component.showErrorModal).toBeTruthy();
-//       });
+      it('should return false the two `form` are invalid', () => {
+        spyOnProperty(component.form, 'valid').and.returnValue(false);
+        spyOnProperty(component.invoiceForm.form, 'valid').and.returnValue(false);
+        expect(component.checkFormsValidity()).toBeFalsy();
+      });
+    });
 
-//       it('it should enable the validation message', () => {
-//         expect(spyShowValidationMessages).toHaveBeenCalled();
-//       });
-//     });
-//   });
+    describe('when `generateInvoice` is set to false', () => {
+      it('should return true if the `forms` is valid', () => {
+        spyOnProperty(component.form, 'valid').and.returnValue(true);
+        expect(component.checkFormsValidity()).toBeTruthy();
+      });
 
-//   describe('when closing a modal', () => {
-//     it('it should reset it\'s toggle', () => {
-//       component.showModal = true;
+      it('should return false if the `forms` is invalid', () => {
+        spyOnProperty(component.form, 'valid').and.returnValue(false);
+        expect(component.checkFormsValidity()).toBeFalsy();
+      });
+    });
+  });
 
-//       fixture.detectChanges();
-//       component.onModalClose('showModal');
+  function testValueChanges() {
+    describe('on any input value change', () => {
+      beforeEach(async() => {
+      await fixture.whenStable;
 
-//       expect(component.showModal).toBeFalsy();
-//     });
-//   });
+      component.form.form.markAsDirty();
+      component.form.form.get('consultantEmailInput').setValue('test');
+      });
 
-//   describe('when minifying a timesheet it should return an object of whitch the first property an array', () => {
-//     let minifyedTimesheet,
-//         month;
+      testOnUpdateInput();
+    });
+  }
 
-//     beforeEach(() => {
-//       minifyedTimesheet = component.minifyTimesheet(timesheet);
-//       month = Object.keys(minifyedTimesheet)[0];
-//     });
+  function testOnUpdateInput() {
+    it('should hide links', () => {
+      expect(component.showLinks).toBeFalsy();
+    });
 
-//     it('and it\'s name is the month (starting at 0) and the year separeted by a dot', () => {
-//       expect(month).toBe('0.1900');
-//     });
+    it('should hide the submit message', () => {
+      expect(component.submitMessage).toBeNull();
+    });
+  }
 
-//     it('and it\'s length is same as the month it is bound to', () => {
-//       expect(minifyedTimesheet[month].length).toBe(31);
-//     });
-
-//     it('and each element contains the corresponding working day', () => {
-//       timesheet.forEach((workedDay: CalendarEvent, index: number) => {
-//         expect(differenceInMinutes(workedDay.end, workedDay.start) / 60 / 8).toEqual(minifyedTimesheet[month][index]);
-//       });
-//     });
-//   });
-// });
+  function testUpdateMailtoLink() {
+    it('should create an instance of ReviewMail', () => {
+      expect(component.reviewMail instanceof ReviewMail).toBeTruthy();
+    });
+  }
+});

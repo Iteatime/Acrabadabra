@@ -14,13 +14,20 @@ describe('TimesheetService', () => {
     expect(service).toBeTruthy();
   });
 
+  it('should create an instance of Timesheet', () => {
+    expect(service.timesheet instanceof Timesheet).toBeTruthy();
+  });
+
   describe('openTimesheet())', () => {
     it('should return false if the "mode" argument does not match the "mode" stored in the token', () => {
       expect(service.openTimesheet(reviewToken, 'edit')).toBeFalsy();
     });
 
-    describe('if the "mode" argument matches the "mode" stored in the token', () => {
+    it('should return false if the token is undefined', () => {
+      expect(service.openTimesheet(undefined, 'edit')).toBeFalsy();
+    });
 
+    describe('if the "mode" argument matches the "mode" stored in the token', () => {
       let returnValue;
 
       beforeEach(() => {
@@ -31,12 +38,12 @@ describe('TimesheetService', () => {
         expect(returnValue).toBeTruthy();
       });
 
-      it('should create an instance of Timesheet', () => {
-        expect(service.timesheet instanceof Timesheet).toBeTruthy();
-      });
-
       it('should copy the data to the new timesheet', () => {
         expect(service.timesheet.consultant.email).toBe('test');
+      });
+
+      it('should copy the `mode` the service property `mode`', () => {
+        expect(service.mode).toBe('edit');
       });
     });
   });

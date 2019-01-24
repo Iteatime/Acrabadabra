@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ReviewMail } from 'src/app/shared/models/review-mail.model';
-import { Timesheet } from 'src/app/shared/models/timesheet.model';
 
 import { TimesheetService } from '../../timesheet.service';
 import { InvoiceFormComponent } from '../invoice-form/invoice-form.component';
@@ -22,12 +21,11 @@ export class TimesheetEditComponent implements OnInit {
   @ViewChild (CalendarSelectorComponent) calendar: CalendarSelectorComponent;
   @ViewChild (InvoiceFormComponent) invoiceForm: InvoiceFormComponent;
   @ViewChild ('form') form: NgForm;
+  originUrl = window.location.origin;
+  submitMessage: any = null;
+  reviewMail: ReviewMail;
   generateInvoice = false;
   showLinks = false;
-  submitMessage: any;
-  originUrl = window.location.origin;
-  reviewMail: ReviewMail;
-  editMode = false;
 
   constructor(
     private calendarService: CalendarService,
@@ -38,35 +36,23 @@ export class TimesheetEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.route.snapshot.params.hasOwnProperty('data')) {
-      this.editMode = this.timesheetService.openTimesheet(this.route.snapshot.params['data'], 'edit');
-      if (!this.editMode) {
-        this.router.navigate(['timesheet', 'create']);
-        return;
-      }
-      this.initData(this.timesheetService.timesheet);
+    if (!this.timesheetService.openTimesheet(this.route.snapshot.params['data'], 'edit')) {
+      this.router.navigate(['timesheet', 'create']);
     } else {
-      this.timesheetService.timesheet = new Timesheet();
+      this.showLinks = true;
+      this.generateInvoice = this.timesheetService.timesheet.invoice ? true : false;
+      this.updateMailtoLink();
     }
-
-    this.titleService.setTitle(`Acrabadabra - ${this.getModeTitle()} un compte rendu d'activité`);
-
     this.form.valueChanges.subscribe(() => {
       if (this.form.dirty) {
         this.onUserInput();
       }
     });
-  }
-
-  initData(timesheet: Timesheet): void {
-    this.timesheetService.timesheet = timesheet;
-    this.showLinks = true;
-    this.generateInvoice = timesheet.invoice !== null;
-    this.updateMailtoLink();
+    this.titleService.setTitle(`Acrabadabra - ${this.getModeTitle()} un compte rendu d'activité`);
   }
 
   getModeTitle() {
-    return this.editMode ? 'Modifier' : 'Saisir';
+    return this.timesheetService.mode === 'edit' ? 'Modifier' : 'Saisir';
   }
 
   onUserInput() {
