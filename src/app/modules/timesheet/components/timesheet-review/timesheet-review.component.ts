@@ -37,7 +37,7 @@ export class TimesheetReviewComponent implements OnInit {
         this.date = this.calendarManager.getDate(this.timesheet);
         this.workingTime = this.calendarManager.getWorkedTime(this.timesheet);
 
-        if (this.timesheet.invoice !== undefined) {
+        if (this.timesheet.invoice) {
            this.invoiceToken = params['data'];
            this.generateInvoice = true;
         }
