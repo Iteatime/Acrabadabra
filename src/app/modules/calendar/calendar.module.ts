@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, registerLocaleData } from '@angular/common';
-import localeFr from '@angular/common/locales/fr';
+import { CommonModule } from '@angular/common';
 
 import * as moment from '@sebastien-cleany/moment-ferie-fr';
+import 'moment/locale/fr';
 
 import { CalendarSelectorComponent } from './components/calendar-selector/calendar-selector.component';
 
-registerLocaleData(localeFr);
 
 @NgModule({
   imports: [
@@ -20,12 +19,4 @@ registerLocaleData(localeFr);
     CalendarSelectorComponent,
   ]
 })
-export class CalendarModule {
-  constructor() {
-    moment.locale('fr', {
-      months : 'Janvier_Février_Mars_Avril_Mai_Juin_Juillet_Août_Septembre_Octobre_Novembre_Décembre'.split('_'),
-      weekdays : 'Dimanche_Lundi_Mardi_Mercredi_Jeudi_Vendredi_Samedi'.split('_'),
-      week : { dow : 1, doy : 4 }
-    });
-  }
-}
+export class CalendarModule {}

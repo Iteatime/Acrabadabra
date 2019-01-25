@@ -19,8 +19,8 @@ export class Period {
 
   public set month(value: moment.Moment) {
     this._month = moment(value).startOf('month');
-    this.setStart(moment(this.month).day('Monday'));
-    this.setEnd(moment(this.month).endOf('month').day('Sunday'));
+    this.setStart(moment(this.month).day(1));
+    this.setEnd(moment(this.month).endOf('month').day(0));
     this.duration = this._end.diff(this._start, 'days');
   }
 

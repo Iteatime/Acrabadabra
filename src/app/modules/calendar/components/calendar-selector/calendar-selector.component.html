@@ -68,36 +68,42 @@
             }"
           >{{ day.date.format('D') }}</p>
           <p class="calendar__content__dayselect__row__cell__holidays" *ngIf="day.date.isFerie()">{{ day.date.getFerie() }}</p>
-          <div class="calendar__content__dayselect__row__cell__changer" *ngIf="day.time > 0">
-              <div
-                class="calendar__content__dayselect__row__cell__changer__options"
-                *ngIf="enable"
+          <div
+            [ngClass]="{
+              'disable': !enable,
+              'calendar__content__dayselect__row__cell__changer': true
+            }"
+            *ngIf="day.time > 0"
+          >
+            <div
+              class="calendar__content__dayselect__row__cell__changer__options"
+              *ngIf="enable"
+            >
+              <span
+                class="calendar__content__dayselect__row__cell__changer__options__item cal-day-badge-selector"
+                (click)="editDayTime($event, weekInPeriod, dayInWeek, 0)"
               >
-                <span
-                  class="calendar__content__dayselect__row__cell__changer__options__item cal-day-badge-selector"
-                  (click)="editDayTime($event, weekInPeriod, dayInWeek, 0)"
-                >
-                  0
-                </span>
-                <span
-                  class="calendar__content__dayselect__row__cell__changer__options__item cal-day-badge-selector"
-                  [ngClass]="{'selected': day.time === 0.5}"
-                  (click)="editDayTime($event, weekInPeriod, dayInWeek, 0.5)"
-                >
-                  0,5
-                </span>
-                <span
-                  class="calendar__content__dayselect__row__cell__changer__options__item cal-day-badge-selector"
-                  [ngClass]="{'selected': day.time === 1}"
-                  (click)="editDayTime($event, weekInPeriod, dayInWeek, 1)"
-                >
-                  1
-                </span>
-              </div>
-              <span class="calendar__content__dayselect__row__cell__changer__maintext">
-                {{ day.time.toLocaleString(locale) }}<span> jour</span>
+                0
+              </span>
+              <span
+                class="calendar__content__dayselect__row__cell__changer__options__item cal-day-badge-selector"
+                [ngClass]="{'selected': day.time === 0.5}"
+                (click)="editDayTime($event, weekInPeriod, dayInWeek, 0.5)"
+              >
+                0,5
+              </span>
+              <span
+                class="calendar__content__dayselect__row__cell__changer__options__item cal-day-badge-selector"
+                [ngClass]="{'selected': day.time === 1}"
+                (click)="editDayTime($event, weekInPeriod, dayInWeek, 1)"
+              >
+                1
               </span>
             </div>
+            <span class="calendar__content__dayselect__row__cell__changer__maintext">
+              {{ day.time.toLocaleString(locale) }}<span> jour</span>
+            </span>
+          </div>
         </div>
       </div>
     </div>

@@ -1,9 +1,8 @@
-import { TimesheetService } from './timesheet.service';
-
 import { Timesheet } from 'src/app/shared/models/timesheet.model';
 
-describe('TimesheetService', () => {
+import { TimesheetService } from './timesheet.service';
 
+describe('TimesheetService', () => {
   let service = new TimesheetService();
   const testTimesheet = new Timesheet('test');
   service.timesheet = testTimesheet;

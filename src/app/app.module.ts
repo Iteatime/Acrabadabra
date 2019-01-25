@@ -8,7 +8,6 @@ import { HomeComponent } from './components/home/home.component';
 
 import { TimesheetModule } from './modules/timesheet/timesheet.module';
 
-
 @NgModule({
   declarations: [
     AppComponent,

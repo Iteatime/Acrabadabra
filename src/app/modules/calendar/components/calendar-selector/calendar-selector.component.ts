@@ -35,7 +35,7 @@ export class CalendarSelectorComponent {
   }
 
   editDayTime(event: Event, week: number, day: number, time: number) {
-    if (this.enable) {
+    if (this.enable && this.calendarService.workingDays[week][day].date.isSame(this.calendarService.period.month, 'month')) {
       event.stopPropagation();
       this.calendarService.workingDays[week][day].time = time;
       this.changed.emit(true);
@@ -45,10 +45,12 @@ export class CalendarSelectorComponent {
   toggleDay(event: Event, week: number, day: number) {
     if (this.enable) {
       event.stopPropagation();
-      if  (this.calendarService.workingDays[week][day].time !== 0) {
-        this.calendarService.workingDays[week][day].time = 0;
-      } else {
-        this.calendarService.workingDays[week][day].time = 1;
+      if (this.calendarService.workingDays[week][day].date.isSame(this.calendarService.period.month, 'month')) {
+        if  (this.calendarService.workingDays[week][day].time !== 0) {
+          this.calendarService.workingDays[week][day].time = 0;
+        } else {
+          this.calendarService.workingDays[week][day].time = 1;
+        }
       }
       this.changed.emit(true);
     }
