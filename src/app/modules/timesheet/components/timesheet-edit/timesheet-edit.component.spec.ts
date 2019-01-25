@@ -1,38 +1,30 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { FormsModule, NgModel, FormControl, AbstractControl, NgForm } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Title, By } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 
 import { MockComponent, MockDirective } from 'ng-mocks';
 
+import { InvoiceFormComponent } from '../invoice-form/invoice-form.component';
 import { TimesheetEditComponent } from './timesheet-edit.component';
-import { CalendarManagerService } from 'src/app/calendar/calendar-manager.service';
-import { TimesheetService } from 'src/app/shared/timesheet.service';
-import { CalendarComponent } from 'src/app/calendar/calendar.component';
-import { CopyToClipboardDirective } from 'src/app/shared/copy-to-clipboard.directive';
-import { MailtoDirective } from 'src/app/shared/mailto.directive';
-import { InvoiceFormComponent } from '../../invoice/invoice-form/invoice-form.component';
-import { Timesheet } from 'src/app/shared/timesheet.model';
-import { Invoice } from 'src/app/shared/invoice.model';
-import { ReviewMail } from 'src/app/shared/review-mail.model';
+import { TimesheetService } from '../../timesheet.service';
+
+import { CalendarService } from 'src/app/modules/calendar/calendar.service';
+import { CalendarSelectorComponent } from 'src/app/modules/calendar/components/calendar-selector/calendar-selector.component';
+
+import { Invoice } from 'src/app/shared/models/invoice.model';
+import { Timesheet } from 'src/app/shared/models/timesheet.model';
+import { ReviewMail } from 'src/app/shared/models/review-mail.model';
+
+import { CopyToClipboardDirective } from 'src/app/shared/directives/copy-to-clipboard/copy-to-clipboard.directive';
+import { MailtoDirective } from 'src/app/shared/directives/mailto/mailto.directive';
+
 
 let testTimesheet = new Timesheet('test');
-    testTimesheet.workingDays['0.1900'] = [0.5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     testTimesheet.invoice = new Invoice('F190001-01');
-const testEditTokenWithoutInvoice = btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'edit', timesheet: new Timesheet('test') }))));
-const testEditTokenWithInvoice = btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'edit', timesheet: testTimesheet }))));
-const testReviewToken = btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'review', timesheet: testTimesheet }))));
-
-class MockCalendarManagerService {
-  getWorkingDays(): any {
-    return testTimesheet.workingDays;
-  }
-
-  getWorkedTime(): number {
-    return 1.5;
-  }
-}
+let testEditToken;
+let testReviewToken;
 
 describe('TimesheetEditComponent', () => {
   let component: TimesheetEditComponent;
@@ -41,6 +33,7 @@ describe('TimesheetEditComponent', () => {
   let route: ActivatedRoute;
   let router: Router;
   let timesheetService: TimesheetService;
+  let calendarService: CalendarService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -52,7 +45,7 @@ describe('TimesheetEditComponent', () => {
       ],
       declarations: [
         TimesheetEditComponent,
-        MockComponent(CalendarComponent),
+        MockComponent(CalendarSelectorComponent),
         MockComponent(InvoiceFormComponent),
         MockDirective(CopyToClipboardDirective),
         MockDirective(MailtoDirective)
@@ -64,7 +57,7 @@ describe('TimesheetEditComponent', () => {
             snapshot: { params: {} }
           }
         },
-        { provide: CalendarManagerService, useClass: MockCalendarManagerService },
+        CalendarService,
         TimesheetService,
       ],
     })
@@ -75,8 +68,13 @@ describe('TimesheetEditComponent', () => {
 
     titleService = TestBed.get(Title);
     timesheetService = TestBed.get(TimesheetService);
+    calendarService = TestBed.get(CalendarService);
     route = TestBed.get(ActivatedRoute);
     router = TestBed.get(Router);
+
+    testTimesheet.workingDays = calendarService.workingDays;
+    testEditToken  = btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'edit', timesheet: testTimesheet }))));
+    testReviewToken = btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'review', timesheet: testTimesheet }))));
   });
 
   it('should be created', () => {
@@ -103,7 +101,7 @@ describe('TimesheetEditComponent', () => {
     describe('When there is a `data` parameter', () => {
       describe('and the `mode` stored in the token is "edit"', () => {
         beforeEach(() => {
-          route.snapshot.params = { data: testEditTokenWithInvoice };
+          route.snapshot.params = { data: testEditToken };
           fixture.detectChanges();
         });
 
@@ -151,7 +149,7 @@ describe('TimesheetEditComponent', () => {
 
     it('should set "Acrabadabra - Modifier un compte rendu d\'activité" as page title if `mode` is "edit"', () => {
 
-      route.snapshot.params = { data: testEditTokenWithInvoice };
+      route.snapshot.params = { data: testEditToken };
       fixture.detectChanges();
       expect(titleService.setTitle).toHaveBeenCalledWith('Acrabadabra - Modifier un compte rendu d\'activité');
     });
@@ -197,7 +195,7 @@ describe('TimesheetEditComponent', () => {
       });
 
       it('should update the invoice if `generateInvoice` is true', () => {
-        route.snapshot.params = { data: testEditTokenWithInvoice };
+        route.snapshot.params = { data: testEditToken };
         component.ngOnInit();
         fixture.detectChanges();
         component.onSubmit();
