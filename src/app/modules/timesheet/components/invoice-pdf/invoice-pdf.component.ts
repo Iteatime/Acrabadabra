@@ -50,7 +50,7 @@ export class InvoicePDFComponent implements OnInit {
     const pdf = new jsPDF('p', 'pt', 'A4');
           pdf.html(document.querySelector('.invoice'), {callback: pdf => {
             pdf.deletePage(2);
-            // pdf.save(`${this.timesheet.invoice.number}.pdf`);
+            pdf.save(`${this.timesheet.invoice.number}.pdf`);
           }});
   }
 

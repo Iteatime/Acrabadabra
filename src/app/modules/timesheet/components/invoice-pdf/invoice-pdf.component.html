@@ -9,7 +9,10 @@
         Tel : {{ timesheet.invoice.provider.getFormattedTelephoneNumber() }}
       </div>
       <div *ngIf="!timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">
-          {{ timesheet.invoice.provider.getFormattedSIRENNumber() }} R.C.S. {{ timesheet.invoice.provider.tradeAndCompaniesRegisterCity }}
+          {{ timesheet.invoice.provider.getFormattedSIRENNumber() }} R.C.S.&#160;{{ timesheet.invoice.provider.tradeAndCompaniesRegisterCity }}
+      </div>
+      <div *ngIf="timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">
+          SIREN :&#160;{{ timesheet.invoice.provider.getFormattedSIRENNumber() }}
       </div>
       <div *ngIf="!timesheet.invoice.provider.vatExemption">
         N° TVA&#160;intra-communautaire :&#160;{{ timesheet.invoice.provider.vatNumber }}.
@@ -47,7 +50,7 @@
   <div class="invoice__reference">
     <div class="invoice__reference__number">FACTURE&#160;N° {{ timesheet.invoice.number }}</div>
     <div class="invoice__reference__order"><b>Référence client :</b> {{ timesheet.invoice.clientRef }}</div>
-    <div class="invoice__reference__date">Date :{{ formatDate(timesheet.invoice.date) }}</div>
+    <div class="invoice__reference__date">Date : {{ formatDate(timesheet.invoice.date) }}</div>
   </div>
 
   <div class="invoice__table">
@@ -88,6 +91,9 @@
       Date d’exécution de la vente
       <br/>
       ou de la prestation : {{ formatDuration() }}
+    </div>
+    <div>
+      Consultant chargé de la prestation : {{ timesheet.consultant.name }}
     </div>
     <div id="penalty">
       Tout retard de paiement donnera lieu, en plus des pénalités de retard (10 % par an), au versement d'une indemnité forfaitaire de 40€ pour frais de recouvrement.
@@ -139,10 +145,10 @@
   <div class="invoice__footer">
     <div>
       {{ timesheet.invoice.provider.name }}
-      –
+      -
       {{ timesheet.invoice.provider.address.replace(';', '') }}
       Tel : {{ timesheet.invoice.provider.getFormattedTelephoneNumber() }}
-      –
+      -
       <span *ngIf="!timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">R.C.S. {{ timesheet.invoice.provider.tradeAndCompaniesRegisterCity }}&#160;</span>
       <span *ngIf="timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">SIREN : </span>
       {{ timesheet.invoice.provider.getFormattedSIRENNumber() }}
