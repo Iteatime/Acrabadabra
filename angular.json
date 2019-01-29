@@ -32,7 +32,9 @@
               "node_modules/bootstrap/scss/bootstrap.scss",
               "src/app/style/main.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/html2canvas/dist/html2canvas.js"
+            ]
           },
           "configurations": {
             "production": {

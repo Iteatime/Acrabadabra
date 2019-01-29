@@ -8,8 +8,8 @@ import { ReviewMail } from 'src/app/shared/models/review-mail.model';
 import { TimesheetService } from '../../timesheet.service';
 import { InvoiceFormComponent } from '../invoice-form/invoice-form.component';
 
-import { CalendarComponent } from 'src/app/calendar/calendar.component';
-import { CalendarManagerService } from 'src/app/calendar/calendar-manager.service';
+import { CalendarSelectorComponent } from 'src/app/modules/calendar/components/calendar-selector/calendar-selector.component';
+import { CalendarService } from 'src/app/modules/calendar/calendar.service';
 
 
 @Component({
@@ -19,7 +19,7 @@ import { CalendarManagerService } from 'src/app/calendar/calendar-manager.servic
   encapsulation: ViewEncapsulation.None
 })
 export class TimesheetEditComponent implements OnInit {
-  @ViewChild (CalendarComponent) calendar: CalendarComponent;
+  @ViewChild (CalendarSelectorComponent) calendar: CalendarSelectorComponent;
   @ViewChild (InvoiceFormComponent) invoiceForm: InvoiceFormComponent;
   @ViewChild ('form') form: NgForm;
   originUrl = window.location.origin;
@@ -29,7 +29,7 @@ export class TimesheetEditComponent implements OnInit {
   showLinks = false;
 
   constructor(
-    private calendarService: CalendarManagerService,
+    private calendarService: CalendarService,
     private route: ActivatedRoute,
     private router: Router,
     protected timesheetService: TimesheetService,
