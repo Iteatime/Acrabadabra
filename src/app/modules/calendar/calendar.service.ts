@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { CalendarEvent } from 'calendar-utils';
 
-import { lastDayOfMonth, differenceInMinutes } from 'date-fns';
+import { lastDayOfMonth, differenceInMinutes, getDaysInMonth } from 'date-fns';
 
 import { Timesheet } from 'src/app/shared/@types/timesheet';
 
@@ -55,5 +55,41 @@ export class CalendarService {
     } else {
       return {};
     }
+  }
+
+  public getFirstWorkingDay(timesheet: Timesheet): Date {
+    let date;
+
+    if (Object.keys(timesheet.workingDays).length > 0) {
+      const timesheetDate = Object.keys(timesheet.workingDays)[0];
+      timesheet.workingDays[timesheetDate].some((time, day) => {
+        date = new Date(
+          +Number.parseInt(timesheetDate.split('.')[1], 10),
+          +Number.parseInt(timesheetDate.split('.')[0], 10),
+          day + 1
+        );
+        return time > 0;
+      });
+    }
+
+    return date;
+  }
+
+  public getLastWorkingDay(timesheet: Timesheet): Date {
+    let date: Date;
+
+    if (Object.keys(timesheet.workingDays).length > 0) {
+      const timesheetDate = Object.keys(timesheet.workingDays)[0];
+      [...timesheet.workingDays[timesheetDate]].reverse().some((time, day) => {
+        date = new Date(
+          +Number.parseInt(timesheetDate.split('.')[1], 10),
+          +Number.parseInt(timesheetDate.split('.')[0], 10)
+        );
+        date.setDate(getDaysInMonth(date) - (day));
+        return time > 0;
+      });
+    }
+
+    return date;
   }
 }

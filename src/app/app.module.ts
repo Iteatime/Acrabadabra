@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
 
 import { AppRoutingModule } from './app.routes';
 
@@ -8,6 +10,7 @@ import { HomeComponent } from './components/home/home.component';
 
 import { TimesheetModule } from './modules/timesheet/timesheet.module';
 
+registerLocaleData(localeFr, 'fr');
 
 @NgModule({
   declarations: [
