@@ -49,7 +49,12 @@
 
   <div class="invoice__reference">
     <div class="invoice__reference__number">FACTURE&#160;N° {{ timesheet.invoice.number }}</div>
-    <div class="invoice__reference__order"><b>Référence client :</b> {{ timesheet.invoice.clientRef }}</div>
+    <div
+      class="invoice__reference__order"
+      *ngIf="timesheet.invoice.clientRef"
+    >
+      <b>Référence client :</b> {{ timesheet.invoice.clientRef }}
+    </div>
     <div class="invoice__reference__date">Date : {{ formatDate(timesheet.invoice.date) }}</div>
   </div>
 
@@ -86,7 +91,11 @@
 
   <div class="invoice__additional-information">
     <div>Date de règlement : {{ formatDate(timesheet.invoice.paymentDate) }}</div>
-    <div>Modalités de paiement : {{ timesheet.invoice.paymentModality }}</div>
+    <div
+      *ngIf="timesheet.invoice.paymentModality"
+    >
+      Modalités de paiement : {{ timesheet.invoice.paymentModality }}
+    </div>
     <div>
       Date d’exécution de la vente
       <br/>
@@ -95,7 +104,10 @@
     <div>
       Consultant chargé de la prestation : {{ timesheet.consultant.name }}
     </div>
-    <div id="penalty">
+    <div
+      *ngIf="timesheet.invoice.paymentLatePenalty"
+      id="penalty"
+    >
       Tout retard de paiement donnera lieu, en plus des pénalités de retard (10 % par an), au versement d'une indemnité forfaitaire de 40€ pour frais de recouvrement.
     </div>
 
