@@ -21,7 +21,7 @@
         SIRET :&#160;{{ timesheet.invoice.provider.siren }}
       </div>
       <div *ngIf="timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">
-        Dispensé d’immatriculation au registre du commerce et des sociétés (RCS) et au répertoire des métiers (RM)
+        Dispensé d'immatriculation au registre du commerce et des sociétés (RCS)&#160;et au répertoire des métiers (RM)
       </div>
     </div>
     <div class="invoice__header__client">
@@ -38,11 +38,14 @@
       <div *ngIf="!timesheet.invoice.client.tradeAndCompaniesRegisterExemption">
         R.C. {{ timesheet.invoice.client.tradeAndCompaniesRegisterCity }} : {{ timesheet.invoice.client.getFormattedSIRENNumber() }}
       </div>
+      <div *ngIf="timesheet.invoice.client.tradeAndCompaniesRegisterExemption">
+          SIREN :&#160;{{ timesheet.invoice.client.getFormattedSIRENNumber() }}
+      </div>
       <div *ngIf="timesheet.invoice.client.siren.length >= 14 ">
         SIRET :&#160;{{ timesheet.invoice.client.siren }}
       </div>
       <div *ngIf="timesheet.invoice.client.tradeAndCompaniesRegisterExemption">
-        Dispensé d’immatriculation au registre du commerce et des sociétés (RCS) et au répertoire des métiers (RM)
+        Dispensé d'immatriculation au registre du commerce et des sociétés (RCS)&#160;et au répertoire des métiers (RM)
       </div>
     </div>
   </div>
