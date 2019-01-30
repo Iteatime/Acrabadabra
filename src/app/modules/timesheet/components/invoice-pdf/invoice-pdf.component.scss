@@ -115,6 +115,19 @@
     right: 244px;
     top:465px;
 
+    &__label {
+      padding-right: 20px;
+    }
+
+    &__value {
+      width:1%;
+      white-space:nowrap;
+    }
+
+    &__no-vat {
+        font-weight: normal;
+    }
+
     tr {
       text-align: right;
       font-weight: bold;
@@ -125,10 +138,6 @@
       span {
         font-weight: normal;
         font-size: 11.1px;
-      }
-
-      td:first-of-type {
-        padding-right: 20px;
       }
     }
   }

@@ -126,14 +126,15 @@
   <div class="invoice__total">
     <table>
       <tr>
-        <td>
+        <td class="invoice__total__label">
           Total HT
           <br/>
           <span *ngIf="!timesheet.invoice.provider.vatExemption">
-            Montant TVA {{ vatRate }}%
+            Montant TVA&#160;{{ vatRate }}%
           </span>
         </td>
-        <td>
+        <td></td>
+        <td class="invoice__total__value">
           {{ totalHT | currency:'EUR':"symbol":'1.0-3':local }}
           <br/>
           <span *ngIf="!timesheet.invoice.provider.vatExemption">
@@ -143,11 +144,15 @@
       </tr>
       <tr></tr>
       <tr *ngIf="!timesheet.invoice.provider.vatExemption">
-        <td>Total TTC</td>
+        <td class="invoice__total__label">Total TTC</td>
+        <td></td>
         <td>{{ totalTTC | currency:'EUR':"symbol":'1.0-3':local }}</td>
       </tr>
       <tr *ngIf="timesheet.invoice.provider.vatExemption">
-        <td colspan="2">
+        <td
+          class="invoice__total__no-vat"
+          colspan="3"
+        >
           TVA non applicable, art 293 B du CGI
         </td>
       </tr>
