@@ -380,18 +380,10 @@
                     <div class="invoice-form__block__input-wrapper__item__input">
                         <input
                         type="text"
-                        required
                         class="form-control"
                         name="invoicePaymentModalityInput"
                         [(ngModel)]="invoice.paymentModality"
-                        #paymentModality="ngModel"
                         >
-                        <div *ngIf="paymentModality.invalid && (paymentModality.dirty || paymentModality.touched)" class="alert alert-danger">
-
-                          <div *ngIf="paymentModality.errors['required']">
-                            Ce champ est obligatoire.
-                          </div>
-                        </div>
                     </div>
                 </div>
                 <div class="invoice-form__block__input-wrapper__item">
