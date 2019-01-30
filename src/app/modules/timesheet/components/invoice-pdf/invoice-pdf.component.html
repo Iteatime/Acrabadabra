@@ -21,7 +21,7 @@
         SIRET :&#160;{{ timesheet.invoice.provider.siren }}
       </div>
       <div *ngIf="timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">
-        Dispensé d’immatriculation au registre du commerce et des sociétés (RCS) et au répertoire des métiers (RM)
+        Dispensé d'immatriculation au registre du commerce et des sociétés (RCS)&#160;et au répertoire des métiers (RM)
       </div>
     </div>
     <div class="invoice__header__client">
@@ -38,11 +38,14 @@
       <div *ngIf="!timesheet.invoice.client.tradeAndCompaniesRegisterExemption">
         R.C. {{ timesheet.invoice.client.tradeAndCompaniesRegisterCity }} : {{ timesheet.invoice.client.getFormattedSIRENNumber() }}
       </div>
+      <div *ngIf="timesheet.invoice.client.tradeAndCompaniesRegisterExemption">
+          SIREN :&#160;{{ timesheet.invoice.client.getFormattedSIRENNumber() }}
+      </div>
       <div *ngIf="timesheet.invoice.client.siren.length >= 14 ">
         SIRET :&#160;{{ timesheet.invoice.client.siren }}
       </div>
       <div *ngIf="timesheet.invoice.client.tradeAndCompaniesRegisterExemption">
-        Dispensé d’immatriculation au registre du commerce et des sociétés (RCS) et au répertoire des métiers (RM)
+        Dispensé d'immatriculation au registre du commerce et des sociétés (RCS)&#160;et au répertoire des métiers (RM)
       </div>
     </div>
   </div>
@@ -126,14 +129,15 @@
   <div class="invoice__total">
     <table>
       <tr>
-        <td>
+        <td class="invoice__total__label">
           Total HT
           <br/>
           <span *ngIf="!timesheet.invoice.provider.vatExemption">
-            Montant TVA {{ vatRate }}%
+            Montant TVA&#160;{{ vatRate }}%
           </span>
         </td>
-        <td>
+        <td></td>
+        <td class="invoice__total__value">
           {{ totalHT | currency:'EUR':"symbol":'1.0-3':local }}
           <br/>
           <span *ngIf="!timesheet.invoice.provider.vatExemption">
@@ -143,11 +147,15 @@
       </tr>
       <tr></tr>
       <tr *ngIf="!timesheet.invoice.provider.vatExemption">
-        <td>Total TTC</td>
+        <td class="invoice__total__label">Total TTC</td>
+        <td></td>
         <td>{{ totalTTC | currency:'EUR':"symbol":'1.0-3':local }}</td>
       </tr>
       <tr *ngIf="timesheet.invoice.provider.vatExemption">
-        <td colspan="2">
+        <td
+          class="invoice__total__no-vat"
+          colspan="3"
+        >
           TVA non applicable, art 293 B du CGI
         </td>
       </tr>

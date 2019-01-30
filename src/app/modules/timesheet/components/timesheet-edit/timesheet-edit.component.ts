@@ -32,7 +32,7 @@ export class TimesheetEditComponent implements OnInit {
     private calendarService: CalendarService,
     private route: ActivatedRoute,
     private router: Router,
-    protected timesheetService: TimesheetService,
+    public timesheetService: TimesheetService,
     private titleService: Title,
   ) {}
 
@@ -90,7 +90,7 @@ export class TimesheetEditComponent implements OnInit {
       this.timesheetService.timesheet,
       this.calendarService.getWorkedTime(this.timesheetService.timesheet),
       this.timesheetService.getReviewToken(),
-      this.originUrl + '/timesheet/edit/'
+      this.originUrl + '/timesheet/review/'
     );
   }
 
