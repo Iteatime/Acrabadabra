@@ -32,7 +32,7 @@ export class TimesheetEditComponent implements OnInit {
     private calendarService: CalendarService,
     private route: ActivatedRoute,
     private router: Router,
-    protected timesheetService: TimesheetService,
+    public timesheetService: TimesheetService,
     private titleService: Title,
   ) {}
 
