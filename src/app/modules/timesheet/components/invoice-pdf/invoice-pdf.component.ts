@@ -60,8 +60,6 @@ export class InvoicePDFComponent implements OnInit {
   }
 
   formatDuration(): string {
-    console.log(this.calendarService.getLastWorkingDay(this.timesheet));
-
     const start = this.formatDate(this.calendarService.getFirstWorkingDay(this.timesheet).toString());
     const end = this.formatDate(this.calendarService.getLastWorkingDay(this.timesheet).toString());
 
