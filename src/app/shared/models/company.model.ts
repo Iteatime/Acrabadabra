@@ -83,7 +83,12 @@ export class Company {
         }
         return newSiren.join(' ');
       case 15:
-        return `${this.siren[0]} ${this.siren.substring(1, 10)}`;
+        for (let index = 1; index <= 10; index++) {
+          if (index % 3 === 0 && index !== 0) {
+            newSiren.push(this.siren.substring(index - 2, index + 1));
+          }
+        }
+        return `${this.siren[0]} ${newSiren.join(' ')}`;
       default:
         return this.siren;
     }
