@@ -1,6 +1,6 @@
 var Api2Pdf = require('api2pdf');
 
-var a2pClient = new Api2Pdf('a1a44906-b78d-44d6-847f-f98e7c38b6dc');
+var a2pClient = new Api2Pdf(process.env.API2PF_KEY);
 var options = {
   landscape: false,
   scale: 2,
