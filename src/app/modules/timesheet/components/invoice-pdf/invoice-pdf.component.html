@@ -9,16 +9,16 @@
         Tel : {{ timesheet.invoice.provider.getFormattedTelephoneNumber() }}
       </div>
       <div *ngIf="!timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">
-          {{ timesheet.invoice.provider.getFormattedSIRENNumber() }} R.C.S. {{ timesheet.invoice.provider.tradeAndCompaniesRegisterCity }}
+        {{ timesheet.invoice.provider.getFormattedSIRENNumber() }} R.C.S. {{ timesheet.invoice.provider.tradeAndCompaniesRegisterCity }}
       </div>
-      <div *ngIf="timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">
-          SIREN : {{ timesheet.invoice.provider.getFormattedSIRENNumber() }}
+      <div *ngIf="timesheet.invoice.provider.tradeAndCompaniesRegisterExemption && timesheet.invoice.provider.siren.length <= 10">
+        SIREN : {{ timesheet.invoice.provider.getFormattedSIRENNumber() }}
+      </div>
+      <div *ngIf="timesheet.invoice.provider.siren.length >= 14">
+        SIRET : {{ timesheet.invoice.provider.siren }}
       </div>
       <div *ngIf="!timesheet.invoice.provider.vatExemption">
         N° TVA intra-communautaire : {{ timesheet.invoice.provider.vatNumber }}
-      </div>
-      <div *ngIf="timesheet.invoice.provider.siren.length >= 14 ">
-        SIRET : {{ timesheet.invoice.provider.siren }}
       </div>
       <div *ngIf="timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">
         Dispensé d'immatriculation au registre du commerce et des sociétés (RCS) et au répertoire des métiers (RM)
@@ -33,16 +33,16 @@
         Tel : {{ timesheet.invoice.client.getFormattedTelephoneNumber() }}
       </div>
       <div *ngIf="!timesheet.invoice.client.tradeAndCompaniesRegisterExemption">
-          {{ timesheet.invoice.client.getFormattedSIRENNumber() }} R.C.S. {{ timesheet.invoice.client.tradeAndCompaniesRegisterCity }}
+        {{ timesheet.invoice.client.getFormattedSIRENNumber() }} R.C.S. {{ timesheet.invoice.client.tradeAndCompaniesRegisterCity }}
       </div>
-      <div *ngIf="timesheet.invoice.client.tradeAndCompaniesRegisterExemption">
-          SIREN : {{ timesheet.invoice.client.getFormattedSIRENNumber() }}
+      <div *ngIf="timesheet.invoice.client.tradeAndCompaniesRegisterExemption && timesheet.invoice.client.siren.length <= 10">
+        SIREN : {{ timesheet.invoice.client.getFormattedSIRENNumber() }}
+      </div>
+      <div *ngIf="timesheet.invoice.client.siren.length >= 14">
+        SIRET : {{ timesheet.invoice.client.siren }}
       </div>
       <div *ngIf="!timesheet.invoice.client.vatExemption">
         N° TVA intra-communautaire : {{ timesheet.invoice.client.vatNumber }}
-      </div>
-      <div *ngIf="timesheet.invoice.client.siren.length >= 14 ">
-        SIRET : {{ timesheet.invoice.client.siren }}
       </div>
       <div *ngIf="timesheet.invoice.client.tradeAndCompaniesRegisterExemption">
         Dispensé d'immatriculation au registre du commerce et des sociétés (RCS) et au répertoire des métiers (RM)

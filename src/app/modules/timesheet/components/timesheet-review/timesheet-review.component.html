@@ -51,7 +51,7 @@
           data-text="Télécharger a facture"
           class="review__wrapper__fields__invoice__button"
           target="_blank"
-          [routerLink]="['/invoice/' + invoiceToken]"
+          [href]="'/.netlify/functions/invoice/' + timesheet.invoice.number + '/' + invoiceToken"
           >
             <span>Télécharger la facture</span>
           </a>

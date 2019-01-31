@@ -1,4 +1,5 @@
 var Api2Pdf = require('api2pdf');
+
 var a2pClient = new Api2Pdf('a1a44906-b78d-44d6-847f-f98e7c38b6dc');
 var options = {
   landscape: false,
@@ -12,13 +13,15 @@ var options = {
 };
 
 exports.handler = async (event, context) => {
-  path = event.path.split('/');
+  var path = event.path.split('/');
+  var token = path[path.length - 1];
+  var number = path[path.length - 2];
 
-  if (path.length > 2 && event.path.indexOf('invoice/eyJ') > 0) {
+  if (path.length > 2 && token.indexOf('eyJ') >= 0) {
     return a2pClient.headlessChromeFromUrl(
-        `https://cpont-test-pdf--acrabadabra.netlify.com/invoice/${ path[path.length - 1] }`,
+        `https://cpont-test-pdf--acrabadabra.netlify.com/invoice/${ token }`,
         inline = true,
-        filename = 'test.pdf',
+        filename = `${ number }.pdf`,
         options = options
      )
      .then(response => {
