@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import * as html2canvas from 'html2canvas';
@@ -19,7 +19,8 @@ import { Timesheet } from 'src/app/shared/models/timesheet.model';
 @Component({
   selector: 'app-invoice-pdf',
   templateUrl: './invoice-pdf.component.html',
-  styleUrls: ['./invoice-pdf.component.scss']
+  styleUrls: ['./invoice-pdf.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 
 export class InvoicePDFComponent implements OnInit {

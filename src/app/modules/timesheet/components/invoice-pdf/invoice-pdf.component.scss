@@ -1,29 +1,47 @@
 @import 'src/app/style/vars';
 
-h1 {
-  font-size: 32px;
+body {
+  width: 827px;
+  height: 1170px;
 }
+
+.invoice {
+  position:absolute;
+  top:0px;
+  width: 827px;
+  height: 1170px;
+  overflow:hidden;
+
+  &__header {
+    line-height: 13px;
+    font-size: 14.14px;
+
+    &__provider {
+      position: absolute;
+      left: 43px;
+      top: 52px;
+      width: calc(50% - 43px);
+
+      &__name {
+        font-weight: bold;
+        font-size: 15.5px;
+      }
 
 h2 {
   font-size: 19px;
 }
 
-#invoice {
-  width: 21cm;
-  min-height: 29.7cm;
-  padding: 1.5cm;
-  margin: 1cm auto;
-  border: 1px #D3D3D3 solid;
-  background: white;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  position:relative;
-  font-size: 12px;
-}
+    &__client {
+      position: absolute;
+      right: 43px;
+      top: 52px;
+      text-align: right;
+      width: calc(50% - 43px);
 
-.headers-table, .price-details-table {
-	width: 100%;
-  margin-bottom: 50px;
-}
+      &__name {
+        font-weight: bold;
+        font-size: 15.5px;
+      }
 
 .headers-table {
   tr {
@@ -32,52 +50,119 @@ h2 {
   }
 }
 
-.fifty {
-  width: 49%;
-  padding: 5px;
-}
+  &__reference {
+    position: absolute;
+    left:43px;
+    top:300px;
+    font-size: 27px;
+    height: 150px;
 
-#client {
-	text-align: right;
-}
+    &__number {
+      font-weight: bold;
+      font-size: 32px;
+    }
+
+    &__order {
+      padding-top: 5px;
+    }
+
+    &__date {
+      position: absolute !important;
+      bottom: 10px;
+      font-weight: bold;
+      font-size: 14.14px;
+    }
+
+    div {
+      position: relative;
+    }
+  }
+
+  &__table {
+    position: absolute;
+    left: 43px;
+    top: 450px;
+    font-size: 13px;
+    width: calc(100% - 86px);
 
 .invoice-date {
 	margin-top: 50px;
 	margin-bottom: 5px;
 }
 
-.price-details-table {
-  border: 1px solid;
-  .separator {
-    border-bottom: 1px solid;
+    table, th, td {
+      text-align: center;
+      vertical-align: middle;
+      border: 1px solid $grey_mine_shaft;
+      border-collapse: collapse;
+      height: 24px;
+    }
   }
 }
 
-.summary {
-  p {
-    margin-bottom: 5px;
+  &__additional-information {
+    position: absolute;
+    left:43px;
+    top:575px;
+    width: calc(60% - 86px);
+
+    #penalty {
+      font-size: 13px;
+    }
+
+    div {
+      position: relative;
+      padding-bottom: 10px;
+      font-size: 14.14px;
+      line-height: 13px;
+    }
   }
 }
 
-.empty_spacer {
-  width: 16%;
-}
+  &__total {
+    position:absolute;
+    right: 43px;
+    top:575px;
 
-.total {
-  text-align: right;
-  vertical-align: initial;
-  width: 34%;
-}
+    &__label {
+      padding-right: 20px;
+    }
 
-.bigger {
-  font-weight: bold;
-  font-size: 15pt;
-}
+    &__value {
+      width:1%;
+      white-space:nowrap;
+    }
 
-.footer{
-  position:absolute;
-  bottom: 10px;
-  width: calc(100% - 3cm);
-  font-size: 8px;
-  text-align: center;
+    &__no-vat {
+        font-weight: normal;
+    }
+
+    tr {
+      text-align: right;
+      font-weight: bold;
+      font-size: 17px;
+      line-height: 16px;
+      height: 15px;
+
+      span {
+        font-weight: normal;
+        font-size: 15.5px;
+      }
+
+      p {
+        margin-bottom: 0px;
+        position: relative;
+        right: -1px;
+        margin-right: 1px;
+      }
+    }
+  }
+
+  &__footer {
+    position: absolute;
+    bottom: 52px;
+    text-align: center;
+    font-size: 14.14px;
+    width: 100%;
+  }
 }

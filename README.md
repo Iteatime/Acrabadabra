@@ -37,6 +37,10 @@ We use the inspector protocol to ease lambda debugging. You can get diagnostic i
 
 Details [here](https://nodejs.org/en/docs/guides/debugging-getting-started/)
 
+#### 3.3 PDF api
+
+We use the Api2PDF service to build pdf from HTML template. To use it you have to export your API key as `API2PF_KEY` environment variable.
+
 ### 4 Unit tests:
 
  To perform unit tests run:

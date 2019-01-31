@@ -5,6 +5,7 @@
       class="homepage__header__container__logo"
       src="assets/images/logo.white.svg"
       alt="logo {{ title }}"
+      (error)="$event.target.removeAttribute('onerror'); $event.target.src = 'assets/images/logo.white.png';"
       >
     </div>
   </div>

@@ -2,7 +2,11 @@
     <div class="review__header">
         <div class="review__header__container">
             <a href="" title="Retour à l'accueil">
-                <img class="review__header__container__logo" src="assets/images/logo.white.svg" alt="logo acrabadabra" onerror="this.removeAttribute('onerror'); this.src='//assets/images/logo.white.png'">
+                <img
+                  class="review__header__container__logo"
+                  src="assets/images/logo.white.svg" alt="logo acrabadabra"
+                  (error)="$event.target.removeAttribute('onerror'); $event.target.src = 'assets/images/logo.white.png';"
+                >
             </a>
         </div>
     </div>
@@ -51,7 +55,7 @@
           data-text="Télécharger a facture"
           class="review__wrapper__fields__invoice__button"
           target="_blank"
-          [routerLink]="['/invoice/' + invoiceToken]"
+          [href]="'/.netlify/functions/invoice/' + timesheet.invoice.number + '/' + invoiceToken"
           >
             <span>Télécharger la facture</span>
           </a>
