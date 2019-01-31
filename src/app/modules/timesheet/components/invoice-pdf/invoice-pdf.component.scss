@@ -1,26 +1,30 @@
 @import 'src/app/style/vars';
 
+body {
+  width: 827px;
+  height: 1170px;
+}
+
 .invoice {
   position:absolute;
   top:0px;
-  width:795px;
-  height:865px;
+  width: 827px;
+  height: 1170px;
   overflow:hidden;
 
   &__header {
-    line-height: 12px;
-    font-size: 10.1px;
+    line-height: 13px;
+    font-size: 14.14px;
 
     &__provider {
       position: absolute;
       left: 47px;
       top: 52px;
-      width: 250px;
+      width: calc(50% - 90px);
 
       &__name {
         font-weight: bold;
-        font-size: 11.1px;
-        word-spacing: 5px;
+        font-size: 15.5px;
       }
 
       div {
@@ -31,14 +35,14 @@
 
     &__client {
       position: absolute;
-      right: 244px;
+      right: 47px;
       top: 52px;
       text-align: right;
-      width: 250px;
+      width: calc(50% - 90px);
 
       &__name {
         font-weight: bold;
-        font-size: 11.1px;
+        font-size: 15.5px;
       }
 
       div {
@@ -51,12 +55,12 @@
   &__reference {
     position: absolute;
     left:43.00px;
-    top:242.00px;
-    font-size: 19.1px;
+    top:300px;
+    font-size: 27px;
 
     &__number {
       font-weight: bold;
-      font-size: 22.1px;
+      font-size: 32px;
     }
 
     &__order {
@@ -64,9 +68,10 @@
     }
 
     &__date {
-      padding-top: 26px;
+      position: absolute !important;
+      bottom: -50px;
       font-weight: bold;
-      font-size: 11.1px;
+      font-size: 14.14px;
     }
 
     div {
@@ -77,9 +82,9 @@
   &__table {
     position: absolute;
     left: 43px;
-    top: 360px;
-    font-size: 9.1px;
-    width: 509px;
+    top: 450px;
+    font-size: 13px;
+    width: calc(100% - 90px);
 
     table {
       width: 100%;
@@ -90,32 +95,32 @@
       vertical-align: middle;
       border: 1px solid $grey_mine_shaft;
       border-collapse: collapse;
-      height: 19px;
+      height: 24px;
     }
   }
 
   &__additional-information {
     position: absolute;
     left:43px;
-    top:465px;
-    width: 255px;
+    top:575px;
+    width: calc(60% - 90px);
 
     #penalty {
-      font-size: 9.1px;
+      font-size: 13px;
     }
 
     div {
       position: relative;
-      padding-bottom: 6px;
-      font-size: 10.1px;
-      line-height: 10px;
+      padding-bottom: 10px;
+      font-size: 14.14px;
+      line-height: 13px;
     }
   }
 
   &__total {
     position:absolute;
-    right: 244px;
-    top:465px;
+    right: 43px;
+    top:575px;
 
     &__label {
       padding-right: 20px;
@@ -133,31 +138,22 @@
     tr {
       text-align: right;
       font-weight: bold;
-      font-size: 12.1px;
-      line-height: 12px;
+      font-size: 17px;
+      line-height: 16px;
       height: 15px;
 
       span {
         font-weight: normal;
-        font-size: 11.1px;
+        font-size: 15.5px;
       }
     }
   }
 
   &__footer {
-    position:absolute;
-    top:794px;
+    position: absolute;
+    bottom: 52px;
     text-align: center;
-    font-size: 10.1px;
-    width: 595px;
-    word-spacing: 2px;
-
-    &__content {
-      div {
-        text-align: center;
-        width: 509px;
-        margin: 0px auto;
-      }
-    }
+    font-size: 14.14px;
+    width: 100%;
   }
 }
