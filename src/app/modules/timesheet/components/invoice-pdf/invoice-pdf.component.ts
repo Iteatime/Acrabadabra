@@ -47,11 +47,11 @@ export class InvoicePDFComponent implements OnInit {
   }
 
   ngOnInit() {
-    const pdf = new jsPDF('p', 'pt', 'A4');
-          pdf.html(document.querySelector('.invoice'), {callback: pdf => {
-            pdf.deletePage(2);
-            pdf.save(`${this.timesheet.invoice.number}.pdf`);
-          }});
+    // const pdf = new jsPDF('p', 'pt', 'A4');
+    //       pdf.html(document.querySelector('.invoice'), {callback: pdf => {
+    //         pdf.deletePage(2);
+    //         pdf.save(`${this.timesheet.invoice.number}.pdf`);
+    //       }});
   }
 
   formatDate(date: string): string {
