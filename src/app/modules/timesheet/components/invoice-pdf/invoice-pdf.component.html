@@ -11,11 +11,8 @@
       <div *ngIf="!timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">
         {{ timesheet.invoice.provider.getFormattedSIRENNumber() }} R.C.S. {{ timesheet.invoice.provider.tradeAndCompaniesRegisterCity }}
       </div>
-      <div *ngIf="timesheet.invoice.provider.tradeAndCompaniesRegisterExemption && timesheet.invoice.provider.siren.length <= 10">
+      <div *ngIf="timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">
         SIREN : {{ timesheet.invoice.provider.getFormattedSIRENNumber() }}
-      </div>
-      <div *ngIf="timesheet.invoice.provider.siren.length >= 14">
-        SIRET : {{ timesheet.invoice.provider.siren }}
       </div>
       <div *ngIf="!timesheet.invoice.provider.vatExemption">
         N° TVA intra-communautaire : {{ timesheet.invoice.provider.vatNumber }}
@@ -35,11 +32,8 @@
       <div *ngIf="!timesheet.invoice.client.tradeAndCompaniesRegisterExemption">
         {{ timesheet.invoice.client.getFormattedSIRENNumber() }} R.C.S. {{ timesheet.invoice.client.tradeAndCompaniesRegisterCity }}
       </div>
-      <div *ngIf="timesheet.invoice.client.tradeAndCompaniesRegisterExemption && timesheet.invoice.client.siren.length <= 10">
+      <div *ngIf="timesheet.invoice.client.tradeAndCompaniesRegisterExemption">
         SIREN : {{ timesheet.invoice.client.getFormattedSIRENNumber() }}
-      </div>
-      <div *ngIf="timesheet.invoice.client.siren.length >= 14">
-        SIRET : {{ timesheet.invoice.client.siren }}
       </div>
       <div *ngIf="!timesheet.invoice.client.vatExemption">
         N° TVA intra-communautaire : {{ timesheet.invoice.client.vatNumber }}
@@ -93,7 +87,9 @@
   </div>
 
   <div class="invoice__additional-information">
-    <div>Date de règlement : {{ formatDate(timesheet.invoice.paymentDate) }}</div>
+    <div>
+      <p>Date de règlement : {{ formatDate(timesheet.invoice.paymentDate) }}</p>
+    </div>
     <div
       *ngIf="timesheet.invoice.paymentModality"
     >
@@ -104,15 +100,19 @@
       <br/>
       ou de la prestation : {{ formatDuration() }}
     </div>
+    <br/>
     <div>
       Consultant chargé de la prestation : {{ timesheet.consultant.name }}
     </div>
+    <br/>
     <div
       *ngIf="timesheet.invoice.paymentLatePenalty"
       id="penalty"
     >
       Tout retard de paiement donnera lieu, en plus des pénalités de retard (10 % par an), au versement d'une indemnité forfaitaire de 40€ pour frais de recouvrement.
     </div>
+
+    <br/>
 
     <div *ngIf="timesheet.invoice.isBankingDetails()">
       <div>Coordonnées bancaires :</div>
