@@ -16,11 +16,10 @@ function untokenize(a: string): any {
   providedIn: 'root'
 })
 export class TimesheetService {
+  public timesheet: Timesheet;
+  public mode: string;
 
-  timesheet: Timesheet;
-  mode: string;
-
-  constructor() {
+  public constructor() {
     this.timesheet = new Timesheet();
   }
 
@@ -47,5 +46,12 @@ export class TimesheetService {
       this.timesheet = Object.assign(this.timesheet, a.timesheet);
       return true;
     }
+  }
+
+  public getInvoiceLink() {
+    return  'https://url-to-pdf.acrabadabra.com/' +
+            '?url=http://cpont-invoice-pdf--acrabadabra.netlify.com/invoice/' + this.getReviewToken() +
+            '&format=A4&scale=2&marginTop=15px&marginLeft=10px&marginBottom=10px&marginRight=10px' +
+            '&title=' + this.timesheet.invoice.number;
   }
 }

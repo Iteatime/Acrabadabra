@@ -166,8 +166,8 @@
           <div *ngIf="showLinks" class="edit-cra__wrapper__form__icons">
             <div *ngIf="generateInvoice" class="edit-cra__wrapper__form__icons__item">
               <a
-                target="_blank"
-                [href]="'/.netlify/functions/invoice/' + timesheetService.timesheet.invoice.number + '/' + timesheetService.getReviewToken()"
+                target="_self"
+                [href]="timesheetService.getInvoiceLink()"
               >
                 <i class="material-icons">picture_as_pdf</i>
                 <p>Télécharger la facture</p>
