@@ -8,8 +8,9 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "watch:front": "ng serve",
-    "watch:back": "npx --node-arg=--inspect netlify-lambda serve src/functions",
-    "dev": "concurrently --names \"FRONT,BACK\" --prefix-colors \"reset.bgBlue.bold,reset.bgRed.bold\"  \"npm:watch:front\" \"npm:watch:back\""
+    "watch:back": "ENV=development concurrently --names \"LAMBDA,SERVICES\" \"netlify-lambda serve src/functions\" \"node src/web-services/launch.js\"",
+    "dev": "concurrently --names \"FRONT,BACK\" --prefix-colors \"reset.bgBlue.bold,reset.bgRed.bold\"  \"npm:watch:front\" \"npm:watch:back\"",
+    "postinstall": "node src/web-services/install.js"
   },
   "private": true,
   "dependencies": {

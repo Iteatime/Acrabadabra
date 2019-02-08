@@ -1,49 +1,42 @@
-var Api2Pdf = require('api2pdf');
-
-var a2pClient = new Api2Pdf(process.env.API2PF_KEY);
-var options = {
-  landscape: false,
-  scale: 2,
-  paperWidth: 8.27,
-  paperHeight: 11.69,
-  marginBottom: 0,
-  marginLeft: 0,
-  marginRight: 0,
-  marginTop: 0
-};
+var options = [
+  "scale=" + 2,
+  "margin.bottom=" + 10,
+  "margin.left=" + 10,
+  "margin.right=" + 10,
+  "margin.top=" + 15,
+  "format:" + 'A4'
+];
 
 exports.handler = async (event, context) => {
-  var path = event.path.split('/');
-  var token = path[path.length - 1];
-  var number = path[path.length - 2];
+  const path = event.path.split('/');
+  const token = path[path.length - 1];
 
-  if (path.length > 2 && token.indexOf('eyJ') >= 0) {
-    return a2pClient.headlessChromeFromUrl(
-        `https://cpont-test-pdf--acrabadabra.netlify.com/invoice/${ token }`,
-        inline = true,
-        filename = `${ number }.pdf`,
-        options = options
-     )
-     .then(response => {
-       return {
-         statusCode: 307,
-         body: '',
-         headers: {
-           Location: response.pdf
-         }
-       };
-     }).catch(error => {
-       console.log(error);
-       return {
-         statusCode: 500,
-         body: 'An error occured during the generation of the PDF'
-       };
-     });
+  if (path.length > 2 && token.indexOf('eyJ') >= 0 && (process.env.ENV === 'development' || !!event.headers.referer)) {
+
+    let url;
+    if (process.env.ENV === 'development') {
+      url = 'http://localhost:8080/' +
+            `?url=http://${ event.headers.host }/invoice/${ token }` +
+            '&' + options.join('&');
+    } else {
+      url = 'https://url-to-pdf.acrabadabra.com/' +
+            `?url=http://${ event.headers.referer.split('/')[2] }/invoice/${ token }` +
+            '&' + options.join('&') + '&api=' + process.env.PDF_API_KEY;
+    }
+    console.log(url);
+
+    return {
+      statusCode: 307,
+      body: '',
+      headers: {
+        Location: url
+      }
+    }
   } else {
     console.log(path);
     return {
       statusCode: 500,
-      body: `malformed URL`
+      body: JSON.stringify(event, undefined, 2) //`malformed URL`
     };
   }
 };
