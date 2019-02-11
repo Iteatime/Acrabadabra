@@ -27,9 +27,11 @@ body {
         font-size: 15.5px;
       }
 
-h2 {
-  font-size: 19px;
-}
+      div {
+        position: relative;
+        padding: 5px 0px;
+      }
+    }
 
     &__client {
       position: absolute;
@@ -43,12 +45,12 @@ h2 {
         font-size: 15.5px;
       }
 
-.headers-table {
-  tr {
-    vertical-align: initial;
-    font-size: 10pt;
+      div {
+        position: relative;
+        padding: 5px 0px;
+      }
+    }
   }
-}
 
   &__reference {
     position: absolute;
@@ -85,10 +87,9 @@ h2 {
     font-size: 13px;
     width: calc(100% - 86px);
 
-.invoice-date {
-	margin-top: 50px;
-	margin-bottom: 5px;
-}
+    table {
+      width: 100%;
+    }
 
     table, th, td {
       text-align: center;
@@ -98,7 +99,6 @@ h2 {
       height: 24px;
     }
   }
-}
 
   &__additional-information {
     position: absolute;
@@ -117,7 +117,6 @@ h2 {
       line-height: 13px;
     }
   }
-}
 
   &__total {
     position:absolute;
