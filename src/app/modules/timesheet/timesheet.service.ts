@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+
+import { environment } from 'src/environments/environment';
+
 import { Timesheet } from 'src/app/shared/models/timesheet.model';
 
 function tokenize(a: any): string {
@@ -49,9 +52,10 @@ export class TimesheetService {
   }
 
   public getInvoiceLink() {
-    return  'https://url-to-pdf.acrabadabra.com/' +
-            '?url=http://cpont-invoice-pdf--acrabadabra.netlify.com/invoice/' + this.getReviewToken() +
-            '&format=A4&scale=2&marginTop=15px&marginLeft=10px&marginBottom=10px&marginRight=10px' +
+    return  environment.pdf_api_url +
+            '?url=' + window.location.origin + '/invoice/' + this.getReviewToken() +
+            '&format=A4&scale=2&margin.top=15px&margin.left=10px&margin.bottom=10px&margin.right=10px' +
+            '&api=' + environment.pdf_api_key +
             '&title=' + this.timesheet.invoice.number;
   }
 }

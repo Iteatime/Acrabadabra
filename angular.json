@@ -58,6 +58,19 @@
                   "maximumError": "5mb"
                 }
               ]
+            },
+            "developpement": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev.ts"
+                }
+              ],
+              "optimization": false,
+              "sourceMap": true,
+              "extractCss": true,
+              "namedChunks": true,
+              "vendorChunk": true
             }
           }
         },
@@ -70,6 +83,9 @@
           "configurations": {
             "production": {
               "browserTarget": "acrabadabra:build:production"
+            },
+            "developpement": {
+              "browserTarget": "acrabadabra:build:developpement"
             }
           }
         },

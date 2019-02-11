@@ -41,6 +41,7 @@ Details [here](https://nodejs.org/en/docs/guides/debugging-getting-started/)
 
 We use the our url-to-pdf service to build pdf from HTML template.
 > To install it locally you can run: `git submodule init` and `git submodule update` then:`npm install`
+> You also have to set : `PDF_API_KEY`and `PDF_API_URL` as environment variable.
 
 ### 4 Unit tests:
 
