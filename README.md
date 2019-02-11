@@ -12,8 +12,8 @@ This repo contains the sources of the app, netlify functions and configuration f
     
 ### 2 Installation:
 
-* Here you have to clone this repo then run: 
-    `npm install`
+* Here you have to clone this repo then you can run: 
+`npm install`
     
 ### 3 Dev server:
 
@@ -39,7 +39,8 @@ Details [here](https://nodejs.org/en/docs/guides/debugging-getting-started/)
 
 #### 3.3 PDF api
 
-We use the Api2PDF service to build pdf from HTML template. To use it you have to export your API key as `API2PF_KEY` environment variable.
+We use the our url-to-pdf service to build pdf from HTML template.
+> To install it locally you can run: `git submodule init` and `git submodule update` then:`npm install`
 
 ### 4 Unit tests:
 
