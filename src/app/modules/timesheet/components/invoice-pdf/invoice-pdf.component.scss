@@ -54,8 +54,8 @@ body {
 
   &__reference {
     position: absolute;
-    left:43px;
-    top:300px;
+    left: 43px;
+    top: 300px;
     font-size: 27px;
     height: 150px;
 
@@ -102,8 +102,8 @@ body {
 
   &__additional-information {
     position: absolute;
-    left:43px;
-    top:575px;
+    left: 43px;
+    top: 575px;
     width: calc(60% - 86px);
 
     #penalty {
@@ -119,17 +119,17 @@ body {
   }
 
   &__total {
-    position:absolute;
+    position: absolute;
     right: 43px;
-    top:575px;
+    top: 575px;
 
     &__label {
       padding-right: 20px;
     }
 
     &__value {
-      width:1%;
-      white-space:nowrap;
+      width: 1%;
+      white-space: nowrap;
     }
 
     &__no-vat {

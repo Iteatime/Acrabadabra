@@ -1,5 +1,5 @@
-@import 'src/app/style/vars';
-@import 'src/app/style/mixins';
+@import "src/app/style/vars";
+@import "src/app/style/mixins";
 
 .calendar {
   &__header {
@@ -56,7 +56,7 @@
         background: $dark_blue;
         color: $white;
         cursor: pointer;
-        transition: background .2s ease-in-out;
+        transition: background 0.2s ease-in-out;
 
         &:hover {
           background: $darker_blue;
@@ -69,7 +69,7 @@
         font-weight: 700;
         font-size: 18px;
         background: none;
-        min-width : 160px;
+        min-width: 160px;
         text-align: center;
       }
     }
@@ -94,7 +94,7 @@
         font-size: 11px;
         font-weight: 700;
         cursor: pointer;
-        transition: background .2s ease-in-out;
+        transition: background 0.2s ease-in-out;
 
         &:hover {
           background: $darker_blue;
@@ -155,7 +155,7 @@
             background: $main_blue;
             box-shadow: 0px 0px 3px 0px rgba($black, 0.35);
             transform: translateX(-50%);
-            transition: all .3s ease-in-out;
+            transition: all 0.3s ease-in-out;
 
             &__options {
               @media (min-width: $screen_sm_min) {
@@ -165,7 +165,7 @@
 
               opacity: 0;
               visibility: hidden;
-              position : absolute;
+              position: absolute;
               top: 0;
               left: 50%;
               width: 100px;
@@ -194,7 +194,7 @@
                 border-radius: 24px;
                 border: 1px solid rgba($white, 0);
                 line-height: 26px;
-                transition: all .2s ease-in-out;
+                transition: all 0.2s ease-in-out;
 
                 &:hover {
                   border-color: rgba($white, 1);
@@ -219,7 +219,7 @@
 
               & > span {
                 font-size: 0.7em;
-                display:block;
+                display: block;
                 color: rgba($white, 0.95);
               }
             }
@@ -251,7 +251,7 @@
 
       & .cal-weekend.cal-day-cell,
       & .cal-month-view .cal-cell-row .cal-cell.cal-weekend.cal-out-month:hover {
-        background: rgba($black, .02);
+        background: rgba($black, 0.02);
       }
 
       & .cal-month-view .cal-day-cell {
@@ -276,7 +276,7 @@
       }
 
       & .cal-month-view .cal-cell-row .cal-cell {
-        transition: background .2s ease-in-out
+        transition: background 0.2s ease-in-out;
       }
 
       & .cal-month-view .cal-cell-row .cal-cell:hover {
@@ -302,7 +302,7 @@
           border-bottom: 1px solid $grey_border;
         }
 
-        border:1px solid $grey_border;
+        border: 1px solid $grey_border;
         border-bottom: 0;
       }
     }
@@ -314,13 +314,11 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-
 }
 
 .cal-disabled {
   background-color: #eee;
   pointer-events: none;
-
 }
 
 .cal-disabled .cal-day-number {
