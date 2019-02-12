@@ -3,11 +3,10 @@ import { Title } from '@angular/platform-browser';
 import { Params, ActivatedRoute } from '@angular/router';
 
 import { Timesheet } from 'src/app/shared/models/timesheet.model';
+import { Commute } from '../../../../shared/models/commute';
 
 import { CalendarService } from 'src/app/modules/calendar/calendar.service';
-
-import { TimesheetService } from '../../timesheet.service';
-
+import { TimesheetService } from '../../services/timesheet.service';
 
 @Component({
   selector: 'app-review',
@@ -22,6 +21,7 @@ export class TimesheetReviewComponent implements OnInit {
   date: Date;
   locale = 'fr';
   workingTime: number;
+  expenses: Commute[];
 
   constructor(
     private calendarManager: CalendarService,

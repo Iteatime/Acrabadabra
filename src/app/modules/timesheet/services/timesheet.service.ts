@@ -58,4 +58,12 @@ export class TimesheetService {
             '&api=' + environment.pdf_api_key +
             '&title=' + this.timesheet.invoice.number;
   }
+
+  public getTotalAllowance() {
+    let totalAllowance = 0;
+    for (let i = 0; i < this.timesheet.expenses.length; i++) {
+      totalAllowance += this.timesheet.expenses[i].mileageAllowance;
+    }
+    return totalAllowance;
+  }
 }

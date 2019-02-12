@@ -1,23 +1,21 @@
-import { ComponentFixture, TestBed} from '@angular/core/testing';
-import { FormsModule, NgForm } from '@angular/forms';
+import { Timesheet } from 'src/app/shared/models/timesheet.model';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { FormsModule, NgModel, FormControl, AbstractControl, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Title } from '@angular/platform-browser';
 
 import { MockComponent, MockDirective } from 'ng-mocks';
 
-import { CalendarSelectorComponent } from 'src/app/modules/calendar/components/calendar-selector/calendar-selector.component';
-
-import { InvoiceFormComponent } from '../invoice-form/invoice-form.component';
 import { TimesheetEditComponent } from './timesheet-edit.component';
-import { TimesheetService } from '../../timesheet.service';
 
-import { CopyToClipboardDirective } from 'src/app/shared/directives/copy-to-clipboard/copy-to-clipboard.directive';
-import { MailtoDirective } from 'src/app/shared/directives/mailto/mailto.directive';
-
-import { Timesheet } from 'src/app/shared/models/timesheet.model';
+import { TimesheetService } from '../../services/timesheet.service';
 import { Invoice } from 'src/app/shared/models/invoice.model';
 import { ReviewMail } from 'src/app/shared/models/review-mail.model';
+import { InvoiceFormComponent } from '../invoice-form/invoice-form.component';
+import { MailtoDirective } from 'src/app/shared/directives/mailto/mailto.directive';
+import { CopyToClipboardDirective } from 'src/app/shared/directives/copy-to-clipboard/copy-to-clipboard.directive';
+import { CalendarSelectorComponent } from 'src/app/modules/calendar/components/calendar-selector/calendar-selector.component';
 import { CalendarService } from 'src/app/modules/calendar/calendar.service';
 
 let testTimesheet = new Timesheet('test');

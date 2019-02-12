@@ -2,6 +2,7 @@ import { TimesheetService } from './timesheet.service';
 
 import { Timesheet } from 'src/app/shared/models/timesheet.model';
 
+
 describe('TimesheetService', () => {
 
   let service = new TimesheetService();
@@ -26,6 +27,10 @@ describe('TimesheetService', () => {
     it('should return false if the token is undefined', () => {
       expect(service.openTimesheet(undefined, 'edit')).toBeFalsy();
     });
+
+  // describe('getTotalAllowance()'), () => {
+
+  // }
 
     describe('if the "mode" argument matches the "mode" stored in the token', () => {
       let returnValue;

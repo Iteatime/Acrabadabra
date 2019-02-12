@@ -1,15 +1,16 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ReviewMail } from 'src/app/shared/models/review-mail.model';
 
-import { TimesheetService } from '../../timesheet.service';
 import { InvoiceFormComponent } from '../invoice-form/invoice-form.component';
 
 import { CalendarSelectorComponent } from 'src/app/modules/calendar/components/calendar-selector/calendar-selector.component';
 import { CalendarService } from 'src/app/modules/calendar/calendar.service';
+import { TimesheetService } from '../../services/timesheet.service';
+import { ExpenseMileageFormComponent } from '../expense-mileage-form/expense-mileage-form.component';
 
 @Component({
   selector: 'app-timesheet-edit',
@@ -20,18 +21,20 @@ import { CalendarService } from 'src/app/modules/calendar/calendar.service';
 export class TimesheetEditComponent implements OnInit {
   @ViewChild (CalendarSelectorComponent) calendar: CalendarSelectorComponent;
   @ViewChild (InvoiceFormComponent) invoiceForm: InvoiceFormComponent;
+  @ViewChild (ExpenseMileageFormComponent) expensesForm: ExpenseMileageFormComponent;
   @ViewChild ('form') form: NgForm;
   originUrl = window.location.origin;
   submitMessage: any = null;
   reviewMail: ReviewMail;
   generateInvoice = false;
+  generateExpenses = false;
   showLinks = false;
 
   constructor(
+    public timesheetService: TimesheetService,
     private calendarService: CalendarService,
     private route: ActivatedRoute,
     private router: Router,
-    public timesheetService: TimesheetService,
     private titleService: Title,
   ) {}
 
@@ -40,7 +43,8 @@ export class TimesheetEditComponent implements OnInit {
       this.router.navigate(['timesheet', 'create']);
     } else {
       this.showLinks = true;
-      this.generateInvoice = this.timesheetService.timesheet.invoice ? true : false;
+      this.generateInvoice = !!this.timesheetService.timesheet.invoice;
+      this.generateExpenses = this.timesheetService.timesheet.expenses.length > 0;
       this.updateMailtoLink();
     }
     this.form.valueChanges.subscribe(() => {
@@ -89,7 +93,7 @@ export class TimesheetEditComponent implements OnInit {
       this.timesheetService.timesheet,
       this.calendarService.getWorkedTime(this.timesheetService.timesheet),
       this.timesheetService.getReviewToken(),
-      this.originUrl + '/timesheet/review/'
+      this.originUrl + '/timesheet/edit/'
     );
   }
 
@@ -97,6 +101,9 @@ export class TimesheetEditComponent implements OnInit {
     let valid = this.form.valid;
     if (this.generateInvoice) {
       valid = valid && this.invoiceForm.form.valid;
+    }
+    if (this.generateExpenses) {
+      valid = valid && this.timesheetService.timesheet.expenses.length > 0;
     }
     return valid;
   }

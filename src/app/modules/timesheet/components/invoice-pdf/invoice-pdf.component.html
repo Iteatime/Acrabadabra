@@ -66,9 +66,15 @@
       <tbody>
         <tr>
           <td>Journée d’intervention {{ timesheet.mission.title }}</td>
-          <td>{{ timesheet.invoice.dailyRate | currency:currencyCode:"symbol":'1.0-3':local }}</td>
+          <td>{{ timesheet.invoice.dailyRate | currency:currencyCode:"symbol":'1.0-2':local }}</td>
           <td>{{ workedTime }}</td>
-          <td>{{ totalHT | currency:currencyCode:"symbol":'1.0-3':local }}</td>
+          <td>{{ performanceTotal | currency:currencyCode:"symbol":'1.0-2':local }}</td>
+        </tr>
+        <tr *ngIf="expenseTotal > 0">
+          <td>{{expenseTitle}}</td>
+          <td></td>
+          <td>{{expenseQuantity}}</td>
+          <td>{{expenseTotal | currency:currencyCode:"symbol":'1.0-2':local}}</td>
         </tr>
         <tr>
           <td></td>
@@ -79,7 +85,7 @@
         <tr>
           <td></td>
           <td></td>
-          <td></td>
+          <td></td>  
           <td></td>
         </tr>
       </tbody>
@@ -136,9 +142,9 @@
         </td>
         <td></td>
         <td class="invoice__total__value">
-          <p>{{ totalHT | currency:'EUR':"symbol":'1.0-3':local }}</p>
+          <p>{{ totalHT | currency:'EUR':"symbol":'1.0-2':local }}</p>
           <span *ngIf="!timesheet.invoice.provider.vatExemption">
-            {{ (totalTTC - totalHT) | currency:'EUR':"symbol":'1.0-3':local }}
+            {{ totalVat | currency:'EUR':"symbol":'1.0-2':local }}
           </span>
         </td>
       </tr>
@@ -146,7 +152,7 @@
       <tr *ngIf="!timesheet.invoice.provider.vatExemption">
         <td class="invoice__total__label">Total TTC</td>
         <td></td>
-        <td>{{ totalTTC | currency:'EUR':"symbol":'1.0-3':local }}</td>
+        <td>{{ totalTTC | currency:'EUR':"symbol":'1.0-2':local }}</td>
       </tr>
       <tr *ngIf="timesheet.invoice.provider.vatExemption">
         <td
