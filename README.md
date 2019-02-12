@@ -12,13 +12,12 @@ This repo contains the sources of the app, netlify functions and configuration f
     
 ### 2 Installation:
 
-* Here you have to clone this repo then you can run: 
-`npm install`
+* Here you have to clone this repo then you can run `npm install`.
+* Then you have to set `PDF_API_KEY`and `PDF_API_URL` as environment variable.
     
 ### 3 Dev server:
 
-* To test your code you can run:
-    `npm run dev`
+* To test your code you can run `npm run dev`.
    
  By default, the front runs on `localhost:4200/`.
 
@@ -41,7 +40,6 @@ Details [here](https://nodejs.org/en/docs/guides/debugging-getting-started/)
 
 We use the our url-to-pdf service to build pdf from HTML template.
 > To install it locally you can run: `git submodule init` and `git submodule update` then:`npm install`
-> You also have to set : `PDF_API_KEY`and `PDF_API_URL` as environment variable.
 
 ### 4 Unit tests:
 
