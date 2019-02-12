@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "build": "ENV=prod node scripts/set-env.js && ng build",
+    "build": "ENV=prod node scripts/set-env.js && ng build --prod",
     "test": "ENV=dev node scripts/set-env.js && ng test",
     "lint": "ng lint",
     "e2e": "ENV=prod node scripts/set-env.js && ng e2e",
