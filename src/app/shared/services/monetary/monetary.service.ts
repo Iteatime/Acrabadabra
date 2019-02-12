@@ -7,11 +7,11 @@ export class MonetaryService {
 
   constructor() { }
 
-  getCurrency(): string {
-    return '€';
+  get  currencyCode(): string {
+    return 'EUR';
   }
 
-  getVat(): number {
+  get vatRate(): number {
     return 20;
   }
 }

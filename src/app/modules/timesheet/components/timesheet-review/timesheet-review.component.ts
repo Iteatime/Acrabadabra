@@ -18,7 +18,7 @@ import { TimesheetService } from '../../timesheet.service';
 export class TimesheetReviewComponent implements OnInit {
   timesheet = new Timesheet();
   generateInvoice = false;
-  invoiceToken: string;
+  invoiceLink: string;
   date: Date;
   locale = 'fr';
   workingTime: number;
@@ -38,7 +38,7 @@ export class TimesheetReviewComponent implements OnInit {
         this.workingTime = this.calendarManager.getWorkedTime(this.timesheet);
 
         if (this.timesheet.invoice) {
-           this.invoiceToken = params['data'];
+           this.invoiceLink = this.timesheetService.getInvoiceLink();
            this.generateInvoice = true;
         }
       }

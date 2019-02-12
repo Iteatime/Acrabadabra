@@ -1,120 +1,174 @@
-<div id="invoice">
+<div class="invoice">
+  <div class="invoice__header">
+    <div class="invoice__header__provider">
+      <div class="invoice__header__provider__name">
+        {{ timesheet.invoice.provider.name }}
+      </div>
+      <div [innerHTML]="timesheet.invoice.provider.getFormattedAddress()"></div>
+      <div *ngIf="timesheet.invoice.provider.telephone">
+        Tel : {{ timesheet.invoice.provider.getFormattedTelephoneNumber() }}
+      </div>
+      <div *ngIf="!timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">
+        {{ timesheet.invoice.provider.getFormattedSIRENNumber() }} R.C.S. {{ timesheet.invoice.provider.tradeAndCompaniesRegisterCity }}
+      </div>
+      <div *ngIf="timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">
+        SIREN : {{ timesheet.invoice.provider.getFormattedSIRENNumber() }}
+      </div>
+      <div *ngIf="!timesheet.invoice.provider.vatExemption">
+        N° TVA intra-communautaire : {{ timesheet.invoice.provider.vatNumber }}
+      </div>
+      <div *ngIf="timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">
+        Dispensé d'immatriculation au registre du commerce et des sociétés (RCS) et au répertoire des métiers (RM)
+      </div>
+    </div>
+    <div class="invoice__header__client">
+      <div class="invoice__header__client__name">
+        {{ timesheet.invoice.client.name }}
+      </div>
+      <div [innerHTML]="timesheet.invoice.client.getFormattedAddress()"></div>
+      <div *ngIf="timesheet.invoice.client.telephone">
+        Tel : {{ timesheet.invoice.client.getFormattedTelephoneNumber() }}
+      </div>
+      <div *ngIf="!timesheet.invoice.client.tradeAndCompaniesRegisterExemption">
+        {{ timesheet.invoice.client.getFormattedSIRENNumber() }} R.C.S. {{ timesheet.invoice.client.tradeAndCompaniesRegisterCity }}
+      </div>
+      <div *ngIf="timesheet.invoice.client.tradeAndCompaniesRegisterExemption">
+        SIREN : {{ timesheet.invoice.client.getFormattedSIRENNumber() }}
+      </div>
+      <div *ngIf="!timesheet.invoice.client.vatExemption">
+        N° TVA intra-communautaire : {{ timesheet.invoice.client.vatNumber }}
+      </div>
+      <div *ngIf="timesheet.invoice.client.tradeAndCompaniesRegisterExemption">
+        Dispensé d'immatriculation au registre du commerce et des sociétés (RCS) et au répertoire des métiers (RM)
+      </div>
+    </div>
+  </div>
 
-	<table class="headers-table">
-		<tr>
-      <td class="fifty" id="provider">
-        <h2>{{ timesheet.invoice.provider.name }}</h2>
-        <p>{{ timesheet.invoice.provider.address }}</p>
-        <p>Tel: {{ timesheet.invoice.provider.getFormattedTelephoneNumber() }}</p>
-        <ng-container *ngIf="timesheet.invoice.provider.tradeAndCompaniesRegisterExemption; then providerTradeAndCompaniesRegisterExemption; else providerTradeAndCompaniesRegisterCity"></ng-container>
-        <ng-template #providerTradeAndCompaniesRegisterExemption>
-          <p>SIREN : {{ timesheet.invoice.provider.getFormattedSIRENNumber() }}</p>
-          <p *ngIf="!timesheet.invoice.provider.vatExemption">N° TVA intra-communautaire : {{ timesheet.invoice.provider.getFormattedVATNumber() }}</p>
-          <p>Dispensé d’immatriculation au registre du commerce et des sociétés (RCS) et au répertoire des métiers (RM)</p>
-        </ng-template>
-        <ng-template #providerTradeAndCompaniesRegisterCity>
-          <p>SIREN : {{ timesheet.invoice.provider.getFormattedSIRENNumber() }} R.C.S {{ timesheet.invoice.provider.tradeAndCompaniesRegisterCity }}</p>
-          <p *ngIf="!timesheet.invoice.provider.vatExemption">N° TVA intra-communautaire : {{ timesheet.invoice.provider.getFormattedVATNumber() }}</p>
-        </ng-template>
-      </td>
-			<td class="fifty" id="client">
-          <h2>{{ timesheet.invoice.client.name }}</h2>
-          <p>{{ timesheet.invoice.client.address }}</p>
-          <p>Tel: {{ timesheet.invoice.client.getFormattedTelephoneNumber() }}</p>
-          <ng-container *ngIf="timesheet.invoice.client.tradeAndCompaniesRegisterExemption; then clientTradeAndCompaniesRegisterExemption; else clientTradeAndCompaniesRegisterCity"></ng-container>
-          <ng-template #clientTradeAndCompaniesRegisterExemption>
-            <p>SIREN : {{ timesheet.invoice.client.getFormattedSIRENNumber() }}</p>
-            <p *ngIf="!timesheet.invoice.client.vatExemption">N° TVA intra-communautaire : {{ timesheet.invoice.client.getFormattedVATNumber() }}</p>
-            <p>Dispensé d’immatriculation au registre du commerce et des sociétés (RCS) et au répertoire des métiers (RM)</p>
-          </ng-template>
-          <ng-template #clientTradeAndCompaniesRegisterCity>
-            <p>SIREN : {{ timesheet.invoice.client.getFormattedSIRENNumber() }} R.C.S {{ timesheet.invoice.client.tradeAndCompaniesRegisterCity }}</p>
-            <p *ngIf="!timesheet.invoice.client.vatExemption">N° TVA intra-communautaire : {{ timesheet.invoice.client.getFormattedVATNumber() }}</p>
-          </ng-template>
-      </td>
-		</tr>
-	</table>
+  <div class="invoice__reference">
+    <div class="invoice__reference__number">FACTURE N° {{ timesheet.invoice.number }}</div>
+    <div
+      class="invoice__reference__order"
+      *ngIf="timesheet.invoice.clientRef"
+    >
+      <b>Référence client :</b> {{ timesheet.invoice.clientRef }}
+    </div>
+    <div class="invoice__reference__date">Date : {{ formatDate(timesheet.invoice.date) }}</div>
+  </div>
 
-	<h1>Facture n° {{ timesheet.invoice.number }}</h1>
-	<h2 *ngIf="timesheet.invoice.clientRef !== ''">Référence client : {{ timesheet.invoice.clientRef }}</h2>
+  <div class="invoice__table">
+    <table>
+      <thead>
+        <th>DESIGNATION DES PRODUITS OU PRESTATIONS</th>
+        <th>PRIX UNITAIRE HT</th>
+        <th>QUANTITE</th>
+        <th>TOTAL HT</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Journée d’intervention {{ timesheet.mission.title }}</td>
+          <td>{{ timesheet.invoice.dailyRate | currency:currencyCode:"symbol":'1.0-3':local }}</td>
+          <td>{{ workedTime }}</td>
+          <td>{{ totalHT | currency:currencyCode:"symbol":'1.0-3':local }}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-	<p class="invoice-date">Date : {{ formatDate(timesheet.invoice.date) }}</p>
+  <div class="invoice__additional-information">
+    <div>
+      <p>Date de règlement : {{ formatDate(timesheet.invoice.paymentDate) }}</p>
+    </div>
+    <div
+      *ngIf="timesheet.invoice.paymentModality"
+    >
+      Modalités de paiement : {{ timesheet.invoice.paymentModality }}
+    </div>
+    <div>
+      Date d’exécution de la vente
+      <br/>
+      ou de la prestation : {{ formatDuration() }}
+    </div>
+    <br/>
+    <div>
+      Consultant chargé de la prestation : {{ timesheet.consultant.name }}
+    </div>
+    <br/>
+    <div
+      *ngIf="timesheet.invoice.paymentLatePenalty"
+      id="penalty"
+    >
+      Tout retard de paiement donnera lieu, en plus des pénalités de retard (10 % par an), au versement d'une indemnité forfaitaire de 40€ pour frais de recouvrement.
+    </div>
 
-	<table class="price-details-table">
-		<tr class="separator">
-			<th>Désignation des prestations</th>
-			<th>Prix unitataire HT</th>
-			<th>Quantité</th>
-			<th>Total HT</th>
-		</tr>
-		<tr>
-			<td>{{ timesheet.mission.title }}</td>
-			<td>{{ timesheet.invoice.dailyRate + currency}}</td>
-			<td>{{ workedTime }}</td>
-			<td>{{ totalHT + currency }}</td>
-		</tr>
-  </table>
+    <br/>
 
-  <table class="summary">
-    <tr>
-      <td class="additional-information">
-        <p>Date de règlement : {{ formatDate(timesheet.invoice.paymentDate) }}</p>
-        <p>Modalités de paiement : {{ timesheet.invoice.paymentModality }}</p>
-        <p>
-          Date d’exécution de la vente
-          <br>
-          ou de la prestation : {{ formatDuration(period) }}
-        </p>
-        <p>Consultant chargé de la prestation : {{ timesheet.consultant.name }}</p>
-        <p *ngIf="timesheet.invoice.paymentLatePenalty">
-          Tout retard de paiement donnera lieu, en plus des pénalités de retard (10 % par an), au versement d'une indemnité forfaitaire de 40 € pour frais de recouvrement.
-        </p>
-      </td>
-      <td class="empty_spacer">
-      </td>
-      <td class="total">
-        <table>
-          <tr class="bigger">
-            <td>Total HT :</td>
-            <td>{{ totalHT + currency }}</td>
-          </tr>
-          <ng-container *ngIf="timesheet.invoice.provider.vatExemption; then withoutVAT; else withVAT"></ng-container>
-          <ng-template #withoutVAT>
-            <tr>
-              <td colspan="2">TVA non applicable, art 293 B du CGI</td>
-            </tr>
-          </ng-template>
-          <ng-template #withVAT>
-            <tr>
-              <td>Montant TVA {{ vat }}% :</td>
-              <td>{{ (totalTTC - totalHT).toFixed(2) }}{{ currency }}</td>
-            </tr>
-            <tr class="bigger">
-              <td>Total TTC :</td>
-              <td>{{ totalTTC }}{{ currency }}</td>
-            </tr>
-          </ng-template>
-        </table>
-      </td>
-    </tr>
-    <tr *ngIf="timesheet.invoice.isBankingDetails()">
-      <td>
-        <p>Coordonnées bancaires :</p>
-        <p>Titulaire du compte : {{ timesheet.invoice.bankAccountHolder }}</p>
-        <p>Banque : {{ timesheet.invoice.bankingDomiciliation }}</p>
-        <p>Agence : {{ timesheet.invoice.bankingAgency }}</p>
-        <p>Code banque : {{ timesheet.invoice.bankIBAN.substr(4, 5) }}</p>
-        <p>Code guichet : {{ timesheet.invoice.bankIBAN.substr(9, 5) }}</p>
-        <p>Numéro de compte : {{ timesheet.invoice.bankIBAN.substr(14, 11)}}</p>
-        <p>Clé RIB : {{ timesheet.invoice.bankIBAN.substr(25, 2) }}</p>
-      </td>
-    </tr>
-  </table>
+    <div *ngIf="timesheet.invoice.isBankingDetails()">
+      <div>Coordonnées bancaires :</div>
+      <div>Titulaire du compte : {{ timesheet.invoice.bankAccountHolder }}</div>
+      <div>Banque : {{ timesheet.invoice.bankingDomiciliation }}</div>
+      <div>Agence : {{ timesheet.invoice.bankingAgency }}</div>
+      <div>IBAN : {{ timesheet.invoice.bankIBAN }}</div>
+      <div>SWIFT : {{ timesheet.invoice.bankSWIFT }}</div>
+    </div>
+  </div>
 
-  <div class="footer">
-    {{ timesheet.invoice.provider.name }} – {{ timesheet.invoice.provider.address }} -  {{ timesheet.invoice.provider.getFormattedTelephoneNumber() }} –
-    <span *ngIf="!timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">R.C.S. {{ timesheet.invoice.provider.tradeAndCompaniesRegisterCity }}</span>
-    <span *ngIf="timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">SIREN : </span>
-    {{ timesheet.invoice.provider.getFormattedSIRENNumber() }}
+  <div class="invoice__total">
+    <table>
+      <tr>
+        <td class="invoice__total__label">
+          Total HT
+          <br/>
+          <span *ngIf="!timesheet.invoice.provider.vatExemption">
+            Montant TVA {{ vatRate }}%
+          </span>
+        </td>
+        <td></td>
+        <td class="invoice__total__value">
+          <p>{{ totalHT | currency:'EUR':"symbol":'1.0-3':local }}</p>
+          <span *ngIf="!timesheet.invoice.provider.vatExemption">
+            {{ (totalTTC - totalHT) | currency:'EUR':"symbol":'1.0-3':local }}
+          </span>
+        </td>
+      </tr>
+      <tr></tr>
+      <tr *ngIf="!timesheet.invoice.provider.vatExemption">
+        <td class="invoice__total__label">Total TTC</td>
+        <td></td>
+        <td>{{ totalTTC | currency:'EUR':"symbol":'1.0-3':local }}</td>
+      </tr>
+      <tr *ngIf="timesheet.invoice.provider.vatExemption">
+        <td
+          class="invoice__total__no-vat"
+          colspan="3"
+        >
+          TVA non applicable, art 293 B du CGI
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="invoice__footer">
+    <div>
+      {{ timesheet.invoice.provider.name }}
+      -
+      {{ timesheet.invoice.provider.address.replace(';', '') }}
+      Tel : {{ timesheet.invoice.provider.getFormattedTelephoneNumber() }}
+      -
+      <span *ngIf="!timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">R.C.S. {{ timesheet.invoice.provider.tradeAndCompaniesRegisterCity }} </span>
+      <span *ngIf="timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">SIREN : </span>
+      {{ timesheet.invoice.provider.getFormattedSIRENNumber() }}
+    </div>
   </div>
 </div>

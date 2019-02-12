@@ -1,93 +1,93 @@
-@import 'src/app/style/vars';
-@import 'src/app/style/mixins';
+@import "src/app/style/vars";
+@import "src/app/style/mixins";
 
 .invoice-form {
-    width: 100%;
+  width: 100%;
 
-    &__block {
-        @media (min-width: $screen-sm-min) {
-            margin: 30px 0px;
-        }
-        margin: 20px 0px;
+  &__block {
+    @media (min-width: $screen-sm-min) {
+      margin: 30px 0px;
+    }
+    margin: 20px 0px;
 
-        &__title {
-            @include header-form;
-        }
-
-        &__input-wrapper {
-            @include form-input;
-            display: flex;
-            flex-wrap: wrap;
-
-            &__item {
-                width: calc(50% - 10px);
-                margin: 0 5px;
-            }
-
-            &__sub-block {
-                @media (min-width: $screen-sm-min) {
-                    margin-bottom: 30px;
-                }
-                margin-bottom: 20px;
-                width: 100%;
-
-                &__title {
-                    @include header-form;
-                }
-
-                &__input-wrapper {
-                    @include form-input;
-                    display: flex;
-                    flex-wrap: wrap;
-                    background: $white;
-                    border-bottom: none;
-
-                    &:first-of-type {
-                        border-top: 1px solid $grey_border_dark;
-                    }
-
-                    &:last-of-type {
-                      border-bottom: 1px solid $grey_border_dark;
-                    }
-
-                    &__item {
-                        width: 100%;
-                        margin: 0px;
-                    }
-                }
-            }
-        }
+    &__title {
+      @include header-form;
     }
 
-    &__half-block {
-        @media (min-width: $screen-sm-min) {
-            width: calc(50% - 20px);
-        }
+    &__input-wrapper {
+      @include form-input;
+      display: flex;
+      flex-wrap: wrap;
 
-        display: inline-table;
-        width: 100%;
+      &__item {
+        width: calc(50% - 10px);
+        margin: 0 5px;
+      }
+
+      &__sub-block {
+        @media (min-width: $screen-sm-min) {
+          margin-bottom: 30px;
+        }
         margin-bottom: 20px;
+        width: 100%;
 
         &__title {
-            @include header-form;
+          @include sub-heading;
         }
 
         &__input-wrapper {
-            @include form-input;
+          @include form-input;
+          display: flex;
+          flex-wrap: wrap;
+          background: $white;
+          border-bottom: none;
 
-            &__item {
-                &__button {
-                    border: none;
-                    background: $dark_blue;
-                    cursor: pointer;
-                    width: 100%;
-                    height: 38px;
-                    color: $white;
-                    font-weight: 700;
-                }
-            }
+          &:first-of-type {
+            border-top: 1px solid $grey_border_dark;
+          }
+
+          &:last-of-type {
+            border-bottom: 1px solid $grey_border_dark;
+          }
+
+          &__item {
+            width: 100%;
+            margin: 0px;
+          }
         }
+      }
     }
+  }
+
+  &__half-block {
+    @media (min-width: $screen-sm-min) {
+      width: calc(50% - 20px);
+    }
+
+    display: inline-table;
+    width: 100%;
+    margin-bottom: 20px;
+
+    &__title {
+      @include header-form;
+    }
+
+    &__input-wrapper {
+      @include form-input;
+
+      &__item {
+        &__button {
+          border: none;
+          background: $dark_blue;
+          cursor: pointer;
+          width: 100%;
+          height: 38px;
+          color: $white;
+          font-weight: 700;
+        }
+      }
+    }
+  }
 }
 
 #client {
@@ -95,4 +95,3 @@
     margin-left: 40px;
   }
 }
-

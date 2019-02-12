@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -31,7 +31,7 @@ export class TimesheetEditComponent implements OnInit {
     private calendarService: CalendarService,
     private route: ActivatedRoute,
     private router: Router,
-    protected timesheetService: TimesheetService,
+    public timesheetService: TimesheetService,
     private titleService: Title,
   ) {}
 
@@ -89,7 +89,7 @@ export class TimesheetEditComponent implements OnInit {
       this.timesheetService.timesheet,
       this.calendarService.getWorkedTime(this.timesheetService.timesheet),
       this.timesheetService.getReviewToken(),
-      this.originUrl + '/timesheet/edit/'
+      this.originUrl + '/timesheet/review/'
     );
   }
 
