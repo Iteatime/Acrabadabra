@@ -14,6 +14,9 @@ import { TimesheetReviewComponent } from './components/timesheet-review/timeshee
 import { CopyToClipboardDirective } from 'src/app/shared/directives/copy-to-clipboard/copy-to-clipboard.directive';
 import { MailtoDirective } from 'src/app/shared/directives/mailto/mailto.directive';
 
+import { ExpenseMileageTableComponent } from './components/expense-mileage-table/expense-mileage-table.component';
+import { ExpenseMileageFormComponent } from './components/expense-mileage-form/expense-mileage-form.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -26,9 +29,11 @@ import { MailtoDirective } from 'src/app/shared/directives/mailto/mailto.directi
     InvoicePDFComponent,
     TimesheetEditComponent,
     TimesheetReviewComponent,
+    ExpenseMileageFormComponent,
 
     CopyToClipboardDirective,
     MailtoDirective,
+    ExpenseMileageTableComponent,
   ]
 })
 export class TimesheetModule { }

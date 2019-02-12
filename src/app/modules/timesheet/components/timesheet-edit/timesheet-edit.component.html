@@ -136,13 +136,30 @@
                 [(ngModel)]="generateInvoice"
                 #invoiceToggle
                 >
-                Générer une facture
-              </label>
-              <app-invoice-form
-              *ngIf="generateInvoice"
-              [invoice]="timesheetService.timesheet.invoice"
-              (changed)="onUserInput($event)"
-              ></app-invoice-form>
+                Ajouter des frais
+                </label>
+                <app-expense-mileage-form
+                *ngIf="generateExpenses"
+                [expenses]="timesheetService.timesheet.expenses"
+                (changed)="onUserInput($event)"
+                ></app-expense-mileage-form>
+            </div>
+
+            <div class="edit-cra__wrapper__form__component">
+                <label class="edit-cra__wrapper__form__component__toggle">
+                    <input
+                    name="invoiceToggle"
+                    type="checkbox"
+                    [(ngModel)]="generateInvoice"
+                    #invoiceToggle
+                    >
+                    Générer une facture
+                </label>    
+                <app-invoice-form
+                *ngIf="generateInvoice"
+                [invoice]="timesheetService.timesheet.invoice"
+                (changed)="onUserInput($event)"
+                ></app-invoice-form>
           </div>
 
           <div

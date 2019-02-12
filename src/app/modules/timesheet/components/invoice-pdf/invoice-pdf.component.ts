@@ -2,14 +2,14 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { CalendarService } from 'src/app/modules/calendar/calendar.service';
-
-import { TimesheetService } from '../../timesheet.service';
-
+import { TimesheetService } from '../../services/timesheet.service';
 import { MonetaryService } from 'src/app/shared/services/monetary/monetary.service';
+
 import { Invoice } from 'src/app/shared/models/invoice.model';
 import { Company } from 'src/app/shared/models/company.model';
 import { Timesheet } from 'src/app/shared/models/timesheet.model';
 import { Title } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-invoice-pdf',
