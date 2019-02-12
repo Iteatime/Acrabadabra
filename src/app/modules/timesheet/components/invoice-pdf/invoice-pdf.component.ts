@@ -26,26 +26,30 @@ export class InvoicePDFComponent {
   public vatRate: number;
   public currencyCode: string;
   public workedTime: number;
+  public expenseTitle = 'Indémnités kilométriques';
+  public expenseQuantity = '1';
+  public expenseTotal: number;
+  public totalVat: number;
+  public performanceTotal: number;
 
   constructor(
     public calendarService: CalendarService,
+    public timesheetService: TimesheetService,
     private _monetaryService: MonetaryService,
     private _route: ActivatedRoute,
-    private _timesheetService: TimesheetService,
     private _titleService: Title
   ) {
-    this._timesheetService.openTimesheet(this._route.snapshot.paramMap.get('data'), 'review');
-    this.timesheet = this._timesheetService.timesheet;
+    this.timesheetService.openTimesheet(this._route.snapshot.paramMap.get('data'), 'review');
+    this.timesheet = this.timesheetService.timesheet;
     this.timesheet.invoice = Object.assign(new Invoice(), this.timesheet.invoice);
     this.timesheet.invoice.provider = Object.assign(new Company(), this.timesheet.invoice.provider);
     this.timesheet.invoice.client = Object.assign(new Company(), this.timesheet.invoice.client);
     this.workedTime = this.calendarService.getWorkedTime(this.timesheet);
+    this.expenseTotal = timesheetService.getTotalAllowance();
     this.vatRate = this._monetaryService.vatRate;
-    this.totalHT = this.workedTime * this.timesheet.invoice.dailyRate;
-    this.totalTTC = this.totalHT + (this.vatRate * this.totalHT / 100);
     this.currencyCode = this._monetaryService.currencyCode;
-
     this._titleService.setTitle(this.timesheet.invoice.number);
+    this._sumCalcul();
   }
 
   public formatDate(date: string): string {
@@ -64,6 +68,13 @@ export class InvoicePDFComponent {
     } else {
       return `le ${start}`;
     }
+  }
+
+  private _sumCalcul(): void {
+    this.performanceTotal = this.workedTime * this.timesheet.invoice.dailyRate;
+    this.totalVat = (this.vatRate * this.performanceTotal) / 100;
+    this.totalHT = this.performanceTotal + this.expenseTotal;
+    this.totalTTC = this.totalHT + this.totalVat;
   }
 
 }

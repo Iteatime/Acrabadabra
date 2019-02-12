@@ -21,5 +21,6 @@ export class Timesheet {
     this.consultant = new Consultant(consultantEmail, consultantName) || consultant;
     this.mission = new Mission(missionClient, missionTitle) || mission;
     this.workingDays = {};
+    this.expenses = [];
   }
 }
