@@ -10,18 +10,18 @@ import { TimesheetService } from '../../services/timesheet.service';
 export class ExpenseMileageTableComponent implements OnInit {
 
   @Output() changed: EventEmitter<boolean> = new EventEmitter();
-  @Input() showDeleteButton = false;
+  @Input() hideDeleteButton = false;
 
   constructor(public timesheetService: TimesheetService) { }
-  expenses;
+  commutes;
 
   ngOnInit() {
-    this.expenses = this.timesheetService.timesheet.expenses;
+    this.commutes = this.timesheetService.timesheet.commutes;
 
   }
 
-  delete(expense) {
-    this.expenses.splice(this.expenses.indexOf(expense), 1);
+  delete(commute) {
+    this.commutes.splice(this.commutes.indexOf(commute), 1);
     this.changed.emit(true);
   }
 }

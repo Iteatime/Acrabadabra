@@ -21,7 +21,7 @@ export class TimesheetReviewComponent implements OnInit {
   date: Date;
   locale = 'fr';
   workingTime: number;
-  expenses: Commute[];
+  commutes: Commute[];
 
   constructor(
     private calendarManager: CalendarService,

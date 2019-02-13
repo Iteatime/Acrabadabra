@@ -9,20 +9,20 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor = "let expense of timesheetService.timesheet.expenses">
-            <td data-text="Date:">{{expense.date | date: 'dd/MM/yyyy'}}</td>
-            <td data-text="Destination:">{{expense.destination}}</td>
-            <td data-text="Distance:">{{expense.distance}}</td>
-            <td data-text="Taux:">{{expense.allowance}}</td>
-            <td data-text="Indemnités kilométriques:">{{expense.mileageAllowance | number : '1.2-2'}}</td>
-            <td *ngIf="!showDeleteButton"><a (click)="delete(expense)"><i class="material-icons">delete</i></a></td>
+        <tr *ngFor = "let commute of timesheetService.timesheet.commutes">
+            <td data-text="Date:">{{commute.date | date: 'dd/MM/yyyy'}}</td>
+            <td data-text="Destination:">{{commute.destination}}</td>
+            <td data-text="Distance:">{{commute.distance}}</td>
+            <td data-text="Taux:">{{commute.allowance}}</td>
+            <td data-text="Indemnités kilométriques:">{{commute.mileageAllowance | number : '1.2-2'}}</td>
+            <td *ngIf="!hideDeleteButton"><a (click)="delete(commute)"><i class="material-icons">delete</i></a></td>
         </tr>
         <tr>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
-            <td class="totalOfAllowances">total: {{timesheetService.getTotalAllowance() | number : '1.2-2'}} €</td>
+            <td class="totalOfAllowances">Total: {{timesheetService.getTotalAllowance() | number : '1.2-2'}} €</td>
         </tr>
     </tbody>
 </table>

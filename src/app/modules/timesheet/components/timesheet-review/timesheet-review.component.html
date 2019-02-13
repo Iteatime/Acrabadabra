@@ -13,11 +13,11 @@
 
     <div class="review__wrapper">
         <div class="review__wrapper__title">
-            <h2>Consulter un compte rendu d'activité</h2>
+            <h2>Compte rendu d'activité</h2>
         </div>
       <div class="review__wrapper__fields">
         <div class="review__wrapper__fields__block">
-          <h3 class="review__wrapper__fields__block__title">Informations</h3>
+          <h3 class="review__wrapper__fields__block__title">Résumé</h3>
           <div class="review__wrapper__fields__block__item-wrapper">
             <div id="left-part" class="review__wrapper__fields__block__item-wrapper__part">
               <div class="review__wrapper__fields__block__item-wrapper__part__text">
@@ -52,7 +52,7 @@
         class="review__wrapper__fields__invoice"
         >
           <a
-          data-text="Télécharger a facture"
+          data-text="Télécharger la facture"
           class="review__wrapper__fields__invoice__button"
           target="_self"
           [href]="invoiceLink"
@@ -62,7 +62,7 @@
         </div>
 
         <div class="review__wrapper__fields__calendar">
-          <h3 class="review__wrapper__fields__calendar__title">Journées de travail</h3>
+          <h3 class="review__wrapper__fields__calendar__title">Journées d'intervention</h3>
           <app-calendar-selector
           [minifiedTimesheet]="timesheet.workingDays"
           [picking]="false"
@@ -70,15 +70,12 @@
           </app-calendar-selector>
         </div>
 
-        <div class="review__wrapper__fields">
-          <div class="review__wrapper__fields__allowance">
-            <h3 class="review__wrapper__fields__allowance__title">Tableau des frais kilométriques</h3>
-            <app-expense-mileage-table
-            [showDeleteButton]="true">
-            </app-expense-mileage-table>
-          </div>
+        <div class="review__wrapper__fields__allowance" *ngIf="timesheet.commutes.length > 0">
+          <h3 class="review__wrapper__fields__allowance__title">Détail des indemnités kilométriques</h3>
+          <app-expense-mileage-table
+          [hideDeleteButton]="true">
+          </app-expense-mileage-table>
         </div>
-
       </div>
     </div>
 </div>

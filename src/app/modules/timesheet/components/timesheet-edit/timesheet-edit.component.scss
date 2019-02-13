@@ -51,7 +51,6 @@
       }
 
       margin-top: 10px;
-      margin-bottom: 50px;
       background: $white;
       padding: 20px;
       box-shadow: 0 0 8px rgba($black, .2);
@@ -164,7 +163,7 @@
             }
 
             &__message {
-              height: 50px;
+              min-height: 50px;
               line-height: 50px;
               width: 100%;
               border-radius: 5px;

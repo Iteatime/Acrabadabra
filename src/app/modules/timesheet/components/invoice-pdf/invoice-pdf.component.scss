@@ -1,8 +1,8 @@
-@import 'src/app/style/vars';
+@import "src/app/style/vars";
 
 .invoice {
-  position:absolute;
-  top:0px;
+  position: absolute;
+  top: 0px;
   width: 827px;
   height: 1170px;
 
@@ -85,7 +85,9 @@
       width: 100%;
     }
 
-    table, th, td {
+    table,
+    th,
+    td {
       text-align: center;
       vertical-align: middle;
       border: 1px solid $grey_mine_shaft;
@@ -94,28 +96,10 @@
     }
   }
 
-  &__additional-information {
-    position: relative;
-    left: 43px;
-    top: 330px;
-    width: calc(60% - 86px);
-
-    #penalty {
-      font-size: 13px;
-    }
-
-    div {
-      position: relative;
-      padding-bottom: 10px;
-      font-size: 14.14px;
-      line-height: 13px;
-    }
-  }
-
   &__total {
     position: relative;
     right: 43px;
-    top: 85px;
+    top: 330px;
 
     &__label {
       padding-right: 20px;
@@ -127,7 +111,7 @@
     }
 
     &__no-vat {
-        font-weight: normal;
+      font-weight: normal;
     }
 
     tr {
@@ -151,6 +135,24 @@
     }
   }
 
+  &__additional-information {
+    position: relative;
+    left: 43px;
+    top: 350px;
+    width: calc(60% - 86px);
+
+    #penalty {
+      font-size: 13px;
+    }
+
+    div {
+      position: relative;
+      padding-bottom: 15px;
+      font-size: 14.14px;
+      line-height: 13px;
+    }
+  }
+
   &__footer {
     position: absolute;
     top: 1118px;
@@ -162,7 +164,41 @@
   &__expense-mileage {
     position: absolute;
     top: 1222px;
-    width: calc(100% - 86px);
     left: 43px;
+    font-size: 13px;
+    width: calc(100% - 86px);
+
+    & > app-expense-mileage-table {
+      & > table {
+        width: 100% !important;
+
+      }
+
+      & > table, td, th, tr {
+        height: 24px !important;
+        padding: 1px !important;
+        white-space: nowrap !important;
+        max-width: 100% !important;
+        min-width: 1% !important;
+      }
+    }
+
+    th {
+      text-transform: uppercase !important;
+      background: white !important;
+      color: black !important;
+    }
+    td,
+    th {
+      border: 1px solid black !important;
+    }
+    th:empty,
+    td:empty {
+      border-width: 0px !important;
+    }
+
+    p {
+      text-decoration: underline;
+    }
   }
 }

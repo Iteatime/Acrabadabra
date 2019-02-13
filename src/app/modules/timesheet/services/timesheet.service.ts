@@ -61,8 +61,8 @@ export class TimesheetService {
 
   public getTotalAllowance() {
     let totalAllowance = 0;
-    for (let i = 0; i < this.timesheet.expenses.length; i++) {
-      totalAllowance += this.timesheet.expenses[i].mileageAllowance;
+    for (let i = 0; i < this.timesheet.commutes.length; i++) {
+      totalAllowance += this.timesheet.commutes[i].mileageAllowance;
     }
     return totalAllowance;
   }
