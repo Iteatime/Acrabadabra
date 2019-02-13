@@ -1,16 +1,10 @@
 @import 'src/app/style/vars';
 
-body {
-  width: 827px;
-  height: 1170px;
-}
-
 .invoice {
   position:absolute;
   top:0px;
   width: 827px;
   height: 1170px;
-  overflow:hidden;
 
   &__header {
     line-height: 13px;
@@ -53,7 +47,7 @@ body {
   }
 
   &__reference {
-    position: absolute;
+    position: relative;
     left: 43px;
     top: 300px;
     font-size: 27px;
@@ -81,9 +75,9 @@ body {
   }
 
   &__table {
-    position: absolute;
+    position: relative;
     left: 43px;
-    top: 450px;
+    top: 300px;
     font-size: 13px;
     width: calc(100% - 86px);
 
@@ -101,9 +95,9 @@ body {
   }
 
   &__additional-information {
-    position: absolute;
+    position: relative;
     left: 43px;
-    top: 575px;
+    top: 330px;
     width: calc(60% - 86px);
 
     #penalty {
@@ -119,9 +113,9 @@ body {
   }
 
   &__total {
-    position: absolute;
+    position: relative;
     right: 43px;
-    top: 575px;
+    top: 85px;
 
     &__label {
       padding-right: 20px;
@@ -159,9 +153,16 @@ body {
 
   &__footer {
     position: absolute;
-    bottom: 52px;
+    top: 1118px;
     text-align: center;
     font-size: 14.14px;
     width: 100%;
+  }
+
+  &__expense-mileage {
+    position: absolute;
+    top: 1222px;
+    width: calc(100% - 86px);
+    left: 43px;
   }
 }
