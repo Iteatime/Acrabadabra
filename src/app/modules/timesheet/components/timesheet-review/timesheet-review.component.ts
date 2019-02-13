@@ -22,6 +22,8 @@ export class TimesheetReviewComponent implements OnInit {
   locale = 'fr';
   workingTime: number;
   commutes: Commute[];
+  showAllowanceTable = false;
+  showMiscellaneousTable = false;
 
   constructor(
     private calendarManager: CalendarService,
@@ -40,6 +42,14 @@ export class TimesheetReviewComponent implements OnInit {
         if (this.timesheet.invoice) {
            this.invoiceLink = this.timesheetService.getInvoiceLink();
            this.generateInvoice = true;
+        }
+
+        if (this.timesheetService.timesheet.commutes.length > 0) {
+          this.showAllowanceTable = true;
+        }
+
+        if (this.timesheetService.timesheet.miscellaneous.length > 0) {
+          this.showMiscellaneousTable = true;
         }
       }
     });
