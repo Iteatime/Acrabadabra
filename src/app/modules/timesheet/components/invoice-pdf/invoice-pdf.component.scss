@@ -1,8 +1,8 @@
-@import 'src/app/style/vars';
+@import "src/app/style/vars";
 
 .invoice {
-  position:absolute;
-  top:0px;
+  position: absolute;
+  top: 0px;
   width: 827px;
   height: 1170px;
 
@@ -85,7 +85,9 @@
       width: 100%;
     }
 
-    table, th, td {
+    table,
+    th,
+    td {
       text-align: center;
       vertical-align: middle;
       border: 1px solid $grey_mine_shaft;
@@ -127,7 +129,7 @@
     }
 
     &__no-vat {
-        font-weight: normal;
+      font-weight: normal;
     }
 
     tr {
@@ -164,5 +166,20 @@
     top: 1222px;
     width: calc(100% - 86px);
     left: 43px;
+    p {
+      text-decoration: underline;
+    }
+    th {
+      background: white !important;
+      color: black !important;
+    }
+    td,
+    th {
+      border: 1px solid black !important;
+    }
+    th:empty,
+    td:empty {
+      border: 0 !important;
+    }
   }
 }

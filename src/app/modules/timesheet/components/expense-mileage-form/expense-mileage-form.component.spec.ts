@@ -4,7 +4,7 @@ import { ExpenseMileageFormComponent } from './expense-mileage-form.component';
 import { DomEventsPlugin } from '@angular/platform-browser/src/dom/events/dom_events';
 import { TestabilityRegistry } from '@angular/core';
 
-fdescribe('ExpensesFormComponent', () => {
+describe('ExpensesFormComponent', () => {
   let component: ExpenseMileageFormComponent;
   let fixture: ComponentFixture<ExpenseMileageFormComponent>;
 
@@ -28,7 +28,7 @@ fdescribe('ExpensesFormComponent', () => {
   describe('onSubmit', () => {
 
     beforeEach(() => {
-      component.expense = {
+      component.commute = {
         date: '',
         destination: '',
         distance: 6,
@@ -43,7 +43,7 @@ fdescribe('ExpensesFormComponent', () => {
     });
 
     it('should return the result of multiplication `distance` by `allowance`', () => {
-      expect(component.expense.mileageAllowance).toBe(12);
+      expect(component.commute.mileageAllowance).toBe(12);
     });
   });
 });

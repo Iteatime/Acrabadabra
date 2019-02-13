@@ -11,7 +11,7 @@
                         pattern="\d{4}-\d{2}-\d{2}"
                         class="form-control"
                         name="date"
-                        [(ngModel)]="expense.date"
+                        [(ngModel)]="commute.date"
                         required
                         id="date"
                         #date="ngModel"                        
@@ -37,7 +37,7 @@
                         pattern="^\S[A-zÀ-ÿ\s'-]+$"
                         class="form-control"
                         name="destination"     
-                        [(ngModel)]="expense.destination"
+                        [(ngModel)]="commute.destination"
                         required
                         id="destination"
                         #destination="ngModel"                     
@@ -61,7 +61,7 @@
                         pattern="[0-9]+"
                         class="form-control"
                         name = "distance"
-                        [(ngModel)]="expense.distance"
+                        [(ngModel)]="commute.distance"
                         required
                         id="distance"
                         #distance="ngModel"
@@ -82,7 +82,7 @@
                         <select
                         class="form-control"
                         name="vehicle"
-                        [(ngModel)]="expense.allowance"
+                        [(ngModel)]="commute.allowance"
                         required
                         id="vehicle"
                         #vehicle="ngModel"

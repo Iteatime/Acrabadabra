@@ -15,10 +15,10 @@ import { NgForm } from '@angular/forms';
 export class ExpenseMileageFormComponent implements OnInit {
 
   @ViewChild('expenseForm') form: NgForm;
-  @Input() expenses: Commute[];
+  @Input() commutes: Commute[];
   @Output() changed: EventEmitter<boolean> = new EventEmitter();
 
-  expense = new Commute('', '', null, '', null);
+  commute = new Commute('', '', null, '', null);
   submitted = false;
   vehicles: any[];
 
@@ -27,7 +27,7 @@ export class ExpenseMileageFormComponent implements OnInit {
 
   ngOnInit() {
     this.vehicles = this.vehiclesService.vehicles;
-    this.expenses = this.timesheetService.timesheet.expenses;
+    this.commutes = this.timesheetService.timesheet.commutes;
 
     this.form.valueChanges.subscribe(() => {
       if (this.form.dirty) {
@@ -39,8 +39,8 @@ export class ExpenseMileageFormComponent implements OnInit {
   onSubmit() {
     if (this.form.valid) {
       this.submitted = true;
-      this.expense.mileageAllowance = this.expense.distance * this.expense.allowance;
-      this.expenses.push({...this.expense});
+      this.commute.mileageAllowance = this.commute.distance * this.commute.allowance;
+      this.commutes.push({...this.commute});
       this.changed.emit(true);
     } else {
       Object.keys(this.form.controls).forEach(field => {

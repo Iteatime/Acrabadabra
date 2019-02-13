@@ -131,16 +131,16 @@
           <div class="edit-cra__wrapper__form__component">
               <label class="edit-cra__wrapper__form__component__toggle">
                 <input
-                name="expensesToggle"
+                name="commutesToggle"
                 type="checkbox"
                 [(ngModel)]="generateExpenses"
-                #expensesToggle
+                #commutesToggle
                 >
                 Ajouter des frais
                 </label>
                 <app-expense-mileage-form
                 *ngIf="generateExpenses"
-                [expenses]="timesheetService.timesheet.expenses"
+                [commutes]="timesheetService.timesheet.commutes"
                 (changed)="onUserInput()"
                 ></app-expense-mileage-form>
             </div>

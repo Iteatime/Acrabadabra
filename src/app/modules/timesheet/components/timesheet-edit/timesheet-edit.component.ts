@@ -21,7 +21,7 @@ import { ExpenseMileageFormComponent } from '../expense-mileage-form/expense-mil
 export class TimesheetEditComponent implements OnInit {
   @ViewChild (CalendarSelectorComponent) calendar: CalendarSelectorComponent;
   @ViewChild (InvoiceFormComponent) invoiceForm: InvoiceFormComponent;
-  @ViewChild (ExpenseMileageFormComponent) expensesForm: ExpenseMileageFormComponent;
+  @ViewChild (ExpenseMileageFormComponent) commutesForm: ExpenseMileageFormComponent;
   @ViewChild ('form') form: NgForm;
   originUrl = window.location.origin;
   submitMessage: any = null;
@@ -44,7 +44,7 @@ export class TimesheetEditComponent implements OnInit {
     } else {
       this.showLinks = true;
       this.generateInvoice = !!this.timesheetService.timesheet.invoice;
-      this.generateExpenses = this.timesheetService.timesheet.expenses.length > 0;
+      this.generateExpenses = this.timesheetService.timesheet.commutes.length > 0;
       this.updateMailtoLink();
     }
     this.form.valueChanges.subscribe(() => {
@@ -71,8 +71,8 @@ export class TimesheetEditComponent implements OnInit {
       this.updateMailtoLink();
       this.reactToSubmition(false);
     } else {
-      this.showValidationMessages();
       this.reactToSubmition(true);
+      this.showValidationMessages();
     }
   }
 
@@ -103,7 +103,7 @@ export class TimesheetEditComponent implements OnInit {
       valid = valid && this.invoiceForm.form.valid;
     }
     if (this.generateExpenses) {
-      valid = valid && this.timesheetService.timesheet.expenses.length > 0;
+      valid = valid && this.timesheetService.timesheet.commutes.length > 0;
     }
     return valid;
   }
@@ -116,6 +116,9 @@ export class TimesheetEditComponent implements OnInit {
       Object.keys(this.invoiceForm.form.controls).forEach(field => {
         this.invoiceForm.form.controls[field].markAsTouched();
       });
+    }
+    if (this.timesheetService.timesheet.commutes.length === 0 && this.generateExpenses) {
+      this.submitMessage.text += ', vous n\'avez ajouté aucun frais';
     }
   }
 }
