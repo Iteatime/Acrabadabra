@@ -16,6 +16,8 @@ import { MailtoDirective } from 'src/app/shared/directives/mailto/mailto.directi
 
 import { ExpenseMileageTableComponent } from './components/expense-mileage-table/expense-mileage-table.component';
 import { ExpenseMileageFormComponent } from './components/expense-mileage-form/expense-mileage-form.component';
+import { ExpenseMiscellaneousFormComponent } from './components/expense-miscellaneous-form/expense-miscellaneous-form.component';
+import { ExpenseMiscellaneousTableComponent } from './components/expense-miscellaneous-table/expense-miscellaneous-table.component';
 
 @NgModule({
   imports: [
@@ -34,6 +36,8 @@ import { ExpenseMileageFormComponent } from './components/expense-mileage-form/e
     CopyToClipboardDirective,
     MailtoDirective,
     ExpenseMileageTableComponent,
+    ExpenseMiscellaneousFormComponent,
+    ExpenseMiscellaneousTableComponent,
   ]
 })
 export class TimesheetModule { }
