@@ -1,74 +1,94 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
-import * as html2canvas from 'html2canvas';
-
-import * as jsPDF from 'jspdf';
-
-import { startOfMonth, endOfMonth } from 'date-fns';
+import { Title } from '@angular/platform-browser';
 
 import { CalendarService } from 'src/app/modules/calendar/calendar.service';
-
-import { TimesheetService } from '../../timesheet.service';
-
+import { TimesheetService } from '../../services/timesheet.service';
 import { MonetaryService } from 'src/app/shared/services/monetary/monetary.service';
+
 import { Invoice } from 'src/app/shared/models/invoice.model';
 import { Company } from 'src/app/shared/models/company.model';
 import { Timesheet } from 'src/app/shared/models/timesheet.model';
 
+import * as moment from 'moment';
+
+
 @Component({
   selector: 'app-invoice-pdf',
   templateUrl: './invoice-pdf.component.html',
-  styleUrls: ['./invoice-pdf.component.scss']
+  styleUrls: ['./invoice-pdf.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 
-export class InvoicePDFComponent implements OnInit {
-
-  timesheet: Timesheet;
-  local = 'fr';
-  workedTime: number;
-  totalHT: number;
-  totalTTC: number;
-  vat: number;
-  period: Date;
-  currency: string;
+export class InvoicePDFComponent {
+  public local = 'fr';
+  public totalHT: number;
+  public totalTTC: number;
+  public vatRate: number;
+  public currencyCode: string;
+  public workedTime: number;
+  public expenseTitle = 'Indémnités kilométriques';
+  public expenseQuantity = '1';
+  public expenseTotal: number;
+  public totalVat: number;
+  public performanceTotal: number;
 
   constructor(
-    private calendarManager: CalendarService,
-    private currencyService: MonetaryService,
-    private route: ActivatedRoute,
-    private timesheetService: TimesheetService,
+    public calendarService: CalendarService,
+    public timesheetService: TimesheetService,
+    private _monetaryService: MonetaryService,
+    private _route: ActivatedRoute,
+    private _titleService: Title
   ) {
-    this.timesheetService.openTimesheet(this.route.snapshot.paramMap.get('data'), 'review');
-    this.timesheet = this.timesheetService.timesheet;
-    this.timesheet.invoice = Object.assign(new Invoice(), this.timesheet.invoice);
-    this.timesheet.invoice.provider = Object.assign(new Company(), this.timesheet.invoice.provider);
-    this.timesheet.invoice.client = Object.assign(new Company(), this.timesheet.invoice.client);
-    this.workedTime = this.calendarManager.getWorkedTime(this.timesheet);
-    this.period = this.calendarManager.getDate(this.timesheet);
-    this.vat = this.currencyService.getVat();
-    this.totalHT = this.workedTime * this.timesheet.invoice.dailyRate;
-    this.totalTTC = this.totalHT + (this.vat * this.totalHT / 100);
-    this.currency = this.currencyService.getCurrency();
+    this.timesheetService.openTimesheet(this._route.snapshot.paramMap.get('data'), 'review');
+    this.timesheetService.timesheet.invoice = Object.assign(new Invoice(), this.timesheetService.timesheet.invoice);
+    this.timesheetService.timesheet.invoice.provider = Object.assign(new Company(), this.timesheetService.timesheet.invoice.provider);
+    this.timesheetService.timesheet.invoice.client = Object.assign(new Company(), this.timesheetService.timesheet.invoice.client);
+    this.workedTime = this.calendarService.getWorkedTime(this.timesheetService.timesheet);
+    this.expenseTotal = timesheetService.getTotalAllowance();
+    this.vatRate = this._monetaryService.vatRate;
+    this.currencyCode = this._monetaryService.currencyCode;
+    this._titleService.setTitle(this.timesheetService.timesheet.invoice.number);
+    this._sumCalcul();
   }
 
-  ngOnInit() {
-    html2canvas(document.getElementById('invoice')).then(canvas => {
-      const pdf = new jsPDF('p', 'mm', 'a4');
-            pdf.addImage(canvas.toDataURL('image/jpeg', 1.0), 'JPG', 0, 0);
-            pdf.save(this.timesheet.invoice.number + '.pdf');
-    });
+  public formatDate(date: string): string {
+    let momentDate = moment(date);
+
+    if (!momentDate.isValid()) {
+      momentDate = moment(date, 'DD/MM/YYYY');
+    }
+
+    return momentDate.format('DD/MM/YYYY');
   }
 
-  formatDate(date: string): string {
-    return new Date(date).toLocaleString(this.local, { day: '2-digit', month: '2-digit', year: 'numeric'});
+  public formatDuration(): string {
+    let start;
+    let end;
+
+    if (this.workedTime > 0) {
+      start = this.formatDate(this.calendarService.getFirstWorkingDay(this.timesheetService.timesheet).toString());
+      end = this.formatDate(this.calendarService.getLastWorkingDay(this.timesheetService.timesheet).toString());
+    } else if (this.timesheetService.timesheet.commutes.length > 0) {
+      const orderedCummutes = [ ...this.timesheetService.timesheet.commutes ].sort((a, b) => {
+        return +moment(a.date).isBefore(b.date);
+        // return compareAsc(a.date, b.date);
+      });
+      start = orderedCummutes[0].date;
+      end = orderedCummutes[ orderedCummutes.length - 1 ].date;
+    }
+
+    if (start !== end) {
+      return  `du ${this.formatDate(start)} au  ${this.formatDate(end)}`;
+    } else {
+      return `le ${start.toString()}`;
+    }
   }
 
-  formatDuration(month: Date): string {
-    return 'du ' +
-          startOfMonth(month).toLocaleString(this.local, { day: '2-digit', month: '2-digit', year: 'numeric'}) +
-          ' au ' +
-          endOfMonth(month).toLocaleString(this.local, { day: '2-digit', month: '2-digit', year: 'numeric'});
+  private _sumCalcul(): void {
+    this.performanceTotal = this.workedTime * this.timesheetService.timesheet.invoice.dailyRate;
+    this.totalVat = (this.vatRate * this.performanceTotal) / 100;
+    this.totalHT = this.performanceTotal + this.expenseTotal;
+    this.totalTTC = this.totalHT + this.totalVat;
   }
-
 }

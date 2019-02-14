@@ -2,18 +2,22 @@
     <div class="review__header">
         <div class="review__header__container">
             <a href="" title="Retour à l'accueil">
-                <img class="review__header__container__logo" src="assets/images/logo.white.svg" alt="logo acrabadabra" onerror="this.removeAttribute('onerror'); this.src='//assets/images/logo.white.png'">
+                <img
+                  class="review__header__container__logo"
+                  src="assets/images/logo.white.svg" alt="logo acrabadabra"
+                  (error)="$event.target.removeAttribute('onerror'); $event.target.src = 'assets/images/logo.white.png';"
+                >
             </a>
         </div>
     </div>
 
     <div class="review__wrapper">
         <div class="review__wrapper__title">
-            <h2>Consulter un compte rendu d'activité</h2>
+            <h2>Compte rendu d'activité</h2>
         </div>
       <div class="review__wrapper__fields">
         <div class="review__wrapper__fields__block">
-          <h3 class="review__wrapper__fields__block__title">Informations</h3>
+          <h3 class="review__wrapper__fields__block__title">Résumé</h3>
           <div class="review__wrapper__fields__block__item-wrapper">
             <div id="left-part" class="review__wrapper__fields__block__item-wrapper__part">
               <div class="review__wrapper__fields__block__item-wrapper__part__text">
@@ -48,22 +52,29 @@
         class="review__wrapper__fields__invoice"
         >
           <a
-          data-text="Télécharger a facture"
+          data-text="Télécharger la facture"
           class="review__wrapper__fields__invoice__button"
-          target="_blank"
-          [routerLink]="['/invoice/' + invoiceToken]"
+          target="_self"
+          [href]="invoiceLink"
           >
             <span>Télécharger la facture</span>
           </a>
         </div>
 
         <div class="review__wrapper__fields__calendar">
-          <h3 class="review__wrapper__fields__calendar__title">Journées de travail</h3>
+          <h3 class="review__wrapper__fields__calendar__title">Journées d'intervention</h3>
           <app-calendar-selector
           [minifiedTimesheet]="timesheet.workingDays"
           [picking]="false"
           >
           </app-calendar-selector>
+        </div>
+
+        <div class="review__wrapper__fields__allowance" *ngIf="timesheet.commutes.length > 0">
+          <h3 class="review__wrapper__fields__allowance__title">Détail des indemnités kilométriques</h3>
+          <app-expense-mileage-table
+          [hideDeleteButton]="true">
+          </app-expense-mileage-table>
         </div>
       </div>
     </div>

@@ -1,7 +1,11 @@
 @import "src/app/style/vars";
 @import "src/app/style/mixins";
 
-.invoice-form {
+i:hover {
+  cursor: pointer;
+}
+
+.mileage-allowance-form {
   width: 100%;
 
   &__block {
@@ -12,6 +16,28 @@
 
     &__title {
       @include header-form;
+    }
+
+    &__submit {
+      margin-top: 40px;
+      width: 100%;
+      text-align: center;
+
+      &__button {
+        @include hoveranim_glow($darker_blue);
+        border: none;
+        display: inline-block;
+        background: $dark_blue;
+        padding: 0;
+        cursor: pointer;
+        width: 15%;
+        height: 40px;
+        min-width: 100px;
+        line-height: 40px;
+        color: $white;
+        font-size: 16px;
+        font-weight: 700;
+      }
     }
 
     &__input-wrapper {
@@ -32,7 +58,7 @@
         width: 100%;
 
         &__title {
-          @include sub-heading;
+          @include header-form;
         }
 
         &__input-wrapper {
@@ -56,42 +82,11 @@
           }
         }
       }
-    }
-  }
 
-  &__half-block {
-    @media (min-width: $screen-sm-min) {
-      width: calc(50% - 20px);
-    }
-
-    display: inline-table;
-    width: 100%;
-    margin-bottom: 20px;
-
-    &__title {
-      @include header-form;
-    }
-
-    &__input-wrapper {
-      @include form-input;
-
-      &__item {
-        &__button {
-          border: none;
-          background: $dark_blue;
-          cursor: pointer;
-          width: 100%;
-          height: 38px;
-          color: $white;
-          font-weight: 700;
-        }
+      app-expense-mileage-table {
+        width: 100%;
+        margin-top: 40px;
       }
     }
-  }
-}
-
-#client {
-  @media (min-width: $screen-sm-min) {
-    margin-left: 40px;
   }
 }

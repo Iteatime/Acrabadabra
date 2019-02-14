@@ -5,11 +5,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { ReviewMail } from 'src/app/shared/models/review-mail.model';
 
-import { TimesheetService } from '../../timesheet.service';
 import { InvoiceFormComponent } from '../invoice-form/invoice-form.component';
 
 import { CalendarSelectorComponent } from 'src/app/modules/calendar/components/calendar-selector/calendar-selector.component';
 import { CalendarService } from 'src/app/modules/calendar/calendar.service';
+import { TimesheetService } from '../../services/timesheet.service';
+import { ExpenseMileageFormComponent } from '../expense-mileage-form/expense-mileage-form.component';
 
 @Component({
   selector: 'app-timesheet-edit',
@@ -20,18 +21,20 @@ import { CalendarService } from 'src/app/modules/calendar/calendar.service';
 export class TimesheetEditComponent implements OnInit {
   @ViewChild (CalendarSelectorComponent) calendar: CalendarSelectorComponent;
   @ViewChild (InvoiceFormComponent) invoiceForm: InvoiceFormComponent;
+  @ViewChild (ExpenseMileageFormComponent) commutesForm: ExpenseMileageFormComponent;
   @ViewChild ('form') form: NgForm;
   originUrl = window.location.origin;
   submitMessage: any = null;
   reviewMail: ReviewMail;
   generateInvoice = false;
+  generateExpenses = false;
   showLinks = false;
 
   constructor(
+    public timesheetService: TimesheetService,
     private calendarService: CalendarService,
     private route: ActivatedRoute,
     private router: Router,
-    protected timesheetService: TimesheetService,
     private titleService: Title,
   ) {}
 
@@ -40,7 +43,8 @@ export class TimesheetEditComponent implements OnInit {
       this.router.navigate(['timesheet', 'create']);
     } else {
       this.showLinks = true;
-      this.generateInvoice = this.timesheetService.timesheet.invoice ? true : false;
+      this.generateInvoice = !!this.timesheetService.timesheet.invoice;
+      this.generateExpenses = this.timesheetService.timesheet.commutes.length > 0;
       this.updateMailtoLink();
     }
     this.form.valueChanges.subscribe(() => {
@@ -67,8 +71,8 @@ export class TimesheetEditComponent implements OnInit {
       this.updateMailtoLink();
       this.reactToSubmition(false);
     } else {
-      this.showValidationMessages();
       this.reactToSubmition(true);
+      this.showValidationMessages();
     }
   }
 
@@ -98,6 +102,9 @@ export class TimesheetEditComponent implements OnInit {
     if (this.generateInvoice) {
       valid = valid && this.invoiceForm.form.valid;
     }
+    if (this.generateExpenses) {
+      valid = valid && this.timesheetService.timesheet.commutes.length > 0;
+    }
     return valid;
   }
 
@@ -109,6 +116,9 @@ export class TimesheetEditComponent implements OnInit {
       Object.keys(this.invoiceForm.form.controls).forEach(field => {
         this.invoiceForm.form.controls[field].markAsTouched();
       });
+    }
+    if (this.timesheetService.timesheet.commutes.length === 0 && this.generateExpenses) {
+      this.submitMessage.text += ', vous n\'avez ajouté aucun frais';
     }
   }
 }

@@ -2,7 +2,8 @@ import { TimesheetService } from './timesheet.service';
 
 import { Timesheet } from 'src/app/shared/models/timesheet.model';
 
-describe('TimesheetService', () => {
+
+fdescribe('TimesheetService', () => {
 
   let service = new TimesheetService();
   const testTimesheet = new Timesheet('test');
@@ -26,6 +27,10 @@ describe('TimesheetService', () => {
     it('should return false if the token is undefined', () => {
       expect(service.openTimesheet(undefined, 'edit')).toBeFalsy();
     });
+
+  // describe('getTotalAllowance()'), () => {
+
+  // }
 
     describe('if the "mode" argument matches the "mode" stored in the token', () => {
       let returnValue;
@@ -57,6 +62,20 @@ describe('TimesheetService', () => {
   describe('getReviewToken())', () => {
     it('should return a base64 encoded json object containing the timesheet property, and a "mode" property set to "review"', () => {
       expect(service.getReviewToken()).toBe(reviewToken);
+    });
+  });
+
+  describe('getTotalAllowance()', () => {
+    beforeEach(() => {
+      service.timesheet.commutes = [
+        {date: '', destination: '', distance: 1, allowance: '', mileageAllowance: 120 },
+        {date: '', destination: '', distance: 1, allowance: '', mileageAllowance: 45 },
+        {date: '', destination: '', distance: 1, allowance: '', mileageAllowance: 55 }
+      ];
+    });
+
+    it('should return "totalAllowance" of mileage allowances in the array of "commutes"', () => {
+      expect(service.getTotalAllowance()).toBe(220);
     });
   });
 });

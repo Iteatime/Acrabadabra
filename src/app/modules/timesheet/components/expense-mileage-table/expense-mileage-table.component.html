@@ -1,0 +1,28 @@
+<table>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Destination</th>
+            <th>Distance (km)</th>
+            <th>Taux (€/km)</th>
+            <th>IK (€)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor = "let commute of timesheetService.timesheet.commutes">
+            <td data-text="Date:">{{commute.date | date: 'dd/MM/yyyy'}}</td>
+            <td data-text="Destination:">{{commute.destination}}</td>
+            <td data-text="Distance:">{{commute.distance}}</td>
+            <td data-text="Taux:">{{commute.allowance}}</td>
+            <td data-text="Indemnités kilométriques:">{{commute.mileageAllowance | number : '1.2-2'}}</td>
+            <td *ngIf="!hideDeleteButton"><a (click)="delete(commute)"><i class="material-icons">delete</i></a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="totalOfAllowances">Total: {{timesheetService.getTotalAllowance() | number : '1.2-2'}} €</td>
+        </tr>
+    </tbody>
+</table>
