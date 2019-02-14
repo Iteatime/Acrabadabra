@@ -4,6 +4,49 @@
             <h4 class="expense-miscellaneous-form__block__title">Frais sur justificatifs</h4>
             <div class="expense-miscellaneous-form__block__input-wrapper">
                 <div class="expense-miscellaneous-form__block__input-wrapper__item form-group" >
+                    <label for="expenseType" class="expense-miscellaneous-form__block__input-wrapper__item__label">Type</label>
+                    <div class="expense-miscellaneous-form__block__input-wrapper__item__input">
+                        <select
+                        class="form-control"
+                        name="expenseType"
+                        [(ngModel)]="misc.miscellaneousType"
+                        required
+                        id="expenseType"
+                        #expenseType="ngModel"
+                        >
+                            <option value="" disabled selected>Type de frais</option>
+                            <option *ngFor="let miscellaneousType of miscellaneousTypes">
+                                {{miscellaneousType}}
+                            </option>
+                        </select>
+                        <div *ngIf="expenseType.invalid && (expenseType.dirty || expenseType.touched)" class="alert alert-danger">
+                            <div *ngIf="expenseType.errors['required']">
+                                Ce champ est obligatoire.
+                            </div>
+                        </div>        
+                    </div>
+                </div>
+                <div class="expense-miscellaneous-form__block__input-wrapper__item form-group" >
+                    <label for="wording" class="expense-miscellaneous-form__block__input-wrapper__item__label">Libellé</label>
+                    <div class="expense-miscellaneous-form__block__input-wrapper__item__input">
+                        <input
+                        placeholder="ex: Bordeaux"
+                        type="text"
+                        pattern="^\S[A-zÀ-ÿ\s'-]+$"
+                        class="form-control"
+                        name="wording"     
+                        [(ngModel)]="misc.wording"
+                        id="wording"
+                        #wording="ngModel"                     
+                        >
+                        <div *ngIf="wording.invalid && (wording.dirty || wording.touched)" class="alert alert-danger">
+                            <div *ngIf="wording.errors['pattern']">
+                                Le nom ne doit contenir que des lettres.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="expense-miscellaneous-form__block__input-wrapper__item form-group" >
                     <label for="date" class="expense-miscellaneous-form__block__input-wrapper__item__label">Date</label>
                     <div class="expense-miscellaneous-form__block__input-wrapper__item__input">
                         <input
@@ -28,29 +71,6 @@
                         </div>
                     </div>
                 </div>                
-                <div class="expense-miscellaneous-form__block__input-wrapper__item form-group" >
-                    <label for="expenseType" class="expense-miscellaneous-form__block__input-wrapper__item__label">Type</label>
-                    <div class="expense-miscellaneous-form__block__input-wrapper__item__input">
-                        <select
-                        class="form-control"
-                        name="expenseType"
-                        [(ngModel)]="misc.miscellaneousType"
-                        required
-                        id="expenseType"
-                        #expenseType="ngModel"
-                        >
-                            <option value="" disabled selected>Type de frais</option>
-                            <option *ngFor="let miscellaneousType of miscellaneousTypes">
-                                {{miscellaneousType}}
-                            </option>
-                        </select>
-                        <div *ngIf="expenseType.invalid && (expenseType.dirty || expenseType.touched)" class="alert alert-danger">
-                            <div *ngIf="expenseType.errors['required']">
-                                Ce champ est obligatoire.
-                            </div>
-                        </div>        
-                    </div>
-                </div>
                 <div class="expense-miscellaneous-form__block__input-wrapper__item form-group" >
                     <label for="amount" class="expense-miscellaneous-form__block__input-wrapper__item__label">Montant TTC (€)</label>
                     <div class="expense-miscellaneous-form__block__input-wrapper__item__input">

@@ -1,8 +1,9 @@
 export class Miscellaneous {
 
     constructor(
-        public date?: string,
         public miscellaneousType?: string,
+        public wording?: string,
+        public date?: string,
         public amount?: number,
     ) { }
 

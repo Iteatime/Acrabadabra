@@ -8,9 +8,11 @@ export class MiscellaneousExpensesService {
   constructor() { }
 
   miscellaneousTypes = [
-    'Péage',
-    'Stationnement',
     'Repas',
+    'Déplacement',
     'Hébergement',
+    'Télétravail',
+    'Location matériel numérique',
+    'Autres'
   ];
 }

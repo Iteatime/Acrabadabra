@@ -75,6 +75,12 @@
           <td>{{expenseQuantity}}</td>
           <td>{{expenseTotal | currency:currencyCode:"symbol":'1.2-2':local}}</td>
         </tr>
+        <tr *ngIf="expenseTotal > 0">
+          <td>{{expenseTitle}}</td>
+          <td></td>
+          <td>{{expenseQuantity}}</td>
+          <td>{{expenseTotal | currency:currencyCode:"symbol":'1.2-2':local}}</td>
+        </tr>
         <tr>
           <td></td>
           <td></td>

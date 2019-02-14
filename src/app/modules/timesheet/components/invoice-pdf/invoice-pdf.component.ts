@@ -26,9 +26,12 @@ export class InvoicePDFComponent {
   public vatRate: number;
   public currencyCode: string;
   public workedTime: number;
-  public expenseTitle = 'Indémnités kilométriques';
-  public expenseQuantity = '1';
-  public expenseTotal: number;
+  public expenseMileageTitle = 'Indémnités kilométriques';
+  public expenseMileageQuantity = '1';
+  public expenseMileageTotal: number;
+  public expenseMiscellaneousTitle = 'Frais sur justificatifs';
+  public expenseMiscellaneousQuantity = '1';
+  public expenseMiscellaneousTotal: number;
   public totalVat: number;
   public performanceTotal: number;
 
@@ -45,7 +48,8 @@ export class InvoicePDFComponent {
     this.timesheet.invoice.provider = Object.assign(new Company(), this.timesheet.invoice.provider);
     this.timesheet.invoice.client = Object.assign(new Company(), this.timesheet.invoice.client);
     this.workedTime = this.calendarService.getWorkedTime(this.timesheet);
-    this.expenseTotal = timesheetService.getTotalAllowance();
+    this.expenseMileageTotal = timesheetService.getTotalAllowance();
+    this.expenseMileageTotal = timesheetService.getTotalMiscellaneous();
     this.vatRate = this._monetaryService.vatRate;
     this.currencyCode = this._monetaryService.currencyCode;
     this._titleService.setTitle(this.timesheet.invoice.number);
@@ -73,7 +77,7 @@ export class InvoicePDFComponent {
   private _sumCalcul(): void {
     this.performanceTotal = this.workedTime * this.timesheet.invoice.dailyRate;
     this.totalVat = (this.vatRate * this.performanceTotal) / 100;
-    this.totalHT = this.performanceTotal + this.expenseTotal;
+    this.totalHT = this.performanceTotal + this.expenseMileageTotal;
     this.totalTTC = this.totalHT + this.totalVat;
   }
 
