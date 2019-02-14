@@ -3,6 +3,7 @@ import { MiscellaneousExpensesService } from '../../services/miscellaneous-expen
 import { NgForm } from '@angular/forms';
 import { Miscellaneous } from 'src/app/shared/models/miscellaneous.model';
 import { TimesheetService } from '../../services/timesheet.service';
+import { MonetaryService } from 'src/app/shared/services/monetary/monetary.service';
 
 @Component({
   selector: 'app-expense-miscellaneous-form',
@@ -17,13 +18,16 @@ export class ExpenseMiscellaneousFormComponent implements OnInit {
   misc: Miscellaneous;
   submitted = false;
   miscellaneousTypes = [];
+  tvaRates = [];
 
   constructor(private miscellaneousExpenses: MiscellaneousExpensesService,
+              private vatRateList: MonetaryService,
               public timesheetService: TimesheetService) { }
 
   ngOnInit() {
     this.misc = new Miscellaneous();
     this.miscellaneousTypes = this.miscellaneousExpenses.miscellaneousTypes;
+    this.tvaRates = this.vatRateList.vatRateList;
     this.miscellaneous = this.timesheetService.timesheet.miscellaneous;
 
     this.form.valueChanges.subscribe(() => {

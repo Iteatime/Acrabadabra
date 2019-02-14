@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { TimesheetService } from '../../services/timesheet.service';
+import { MonetaryService } from 'src/app/shared/services/monetary/monetary.service';
+import { Miscellaneous } from 'src/app/shared/models/miscellaneous.model';
 
 @Component({
   selector: 'app-expense-miscellaneous-table',
@@ -11,8 +13,15 @@ export class ExpenseMiscellaneousTableComponent implements OnInit {
   @Output() changed: EventEmitter<boolean> = new EventEmitter();
   @Input() hideDeleteButton = false;
 
-  constructor(public timesheetService: TimesheetService) { }
-  miscellaneous;
+  public local = 'fr';
+  public currencyCode: string;
+  miscellaneous: Miscellaneous[];
+
+  constructor(public timesheetService: TimesheetService,
+              private _monetaryService: MonetaryService
+  ) {
+    this.currencyCode = this._monetaryService.currencyCode;
+    }
 
   ngOnInit() {
     this.miscellaneous = this.timesheetService.timesheet.miscellaneous;

@@ -4,7 +4,7 @@
             <h4 class="expense-miscellaneous-form__block__title">Frais sur justificatifs</h4>
             <div class="expense-miscellaneous-form__block__input-wrapper">
                 <div class="expense-miscellaneous-form__block__input-wrapper__item form-group" >
-                    <label for="expenseType" class="expense-miscellaneous-form__block__input-wrapper__item__label">Type</label>
+                    <label for="expenseType" class="expense-miscellaneous-form__block__input-wrapper__item__label">Type de frais</label>
                     <div class="expense-miscellaneous-form__block__input-wrapper__item__input">
                         <select
                         class="form-control"
@@ -23,8 +23,31 @@
                             <div *ngIf="expenseType.errors['required']">
                                 Ce champ est obligatoire.
                             </div>
-                        </div>        
+                        </div>
                     </div>
+                </div>
+                <div class="expense-miscellaneous-form__block__input-wrapper__item form-group" >
+                  <label for="expenseType" class="expense-miscellaneous-form__block__input-wrapper__item__label">Taux de TVA (%)</label>
+                  <div class="expense-miscellaneous-form__block__input-wrapper__item__input">
+                      <select
+                      class="form-control"
+                      name="tvaRate"
+                      [(ngModel)]="misc.tvaRate"
+                      required
+                      id="expenseType"
+                      #tvaRate="ngModel"
+                      >
+                          <option value="" disabled selected>Taux de TVA</option>
+                          <option *ngFor="let tvaRate of tvaRates">
+                              {{tvaRate}}
+                          </option>
+                      </select>
+                      <div *ngIf="tvaRate.invalid && (tvaRate.dirty || tvaRate.touched)" class="alert alert-danger">
+                          <div *ngIf="tvaRate.errors['required']">
+                              Ce champ est obligatoire.
+                          </div>
+                      </div>
+                  </div>
                 </div>
                 <div class="expense-miscellaneous-form__block__input-wrapper__item form-group" >
                     <label for="wording" class="expense-miscellaneous-form__block__input-wrapper__item__label">Libellé</label>
@@ -34,10 +57,10 @@
                         type="text"
                         pattern="^\S[A-zÀ-ÿ\s'-]+$"
                         class="form-control"
-                        name="wording"     
+                        name="wording"
                         [(ngModel)]="misc.wording"
                         id="wording"
-                        #wording="ngModel"                     
+                        #wording="ngModel"
                         >
                         <div *ngIf="wording.invalid && (wording.dirty || wording.touched)" class="alert alert-danger">
                             <div *ngIf="wording.errors['pattern']">
@@ -57,7 +80,7 @@
                         [(ngModel)]="misc.date"
                         required
                         id="date"
-                        #date="ngModel"                        
+                        #date="ngModel"
                         >
                         <div *ngIf="date.invalid && (date.dirty || date.touched)" class="alert alert-danger">
 
@@ -70,7 +93,7 @@
                             </div>
                         </div>
                     </div>
-                </div>                
+                </div>
                 <div class="expense-miscellaneous-form__block__input-wrapper__item form-group" >
                     <label for="amount" class="expense-miscellaneous-form__block__input-wrapper__item__label">Montant TTC (€)</label>
                     <div class="expense-miscellaneous-form__block__input-wrapper__item__input">
