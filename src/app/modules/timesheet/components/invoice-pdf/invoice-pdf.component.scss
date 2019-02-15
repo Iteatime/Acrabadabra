@@ -96,28 +96,10 @@
     }
   }
 
-  &__additional-information {
-    position: relative;
-    left: 43px;
-    top: 330px;
-    width: calc(60% - 86px);
-
-    #penalty {
-      font-size: 13px;
-    }
-
-    div {
-      position: relative;
-      padding-bottom: 10px;
-      font-size: 14.14px;
-      line-height: 13px;
-    }
-  }
-
   &__total {
     position: relative;
     right: 43px;
-    top: 85px;
+    top: 330px;
 
     &__label {
       padding-right: 20px;
@@ -153,6 +135,24 @@
     }
   }
 
+  &__additional-information {
+    position: relative;
+    left: 43px;
+    top: 350px;
+    width: calc(60% - 86px);
+
+    #penalty {
+      font-size: 13px;
+    }
+
+    div {
+      position: relative;
+      padding-bottom: 15px;
+      font-size: 14.14px;
+      line-height: 13px;
+    }
+  }
+
   &__footer {
     position: absolute;
     top: 1118px;
@@ -164,12 +164,27 @@
   &__expense-mileage {
     position: absolute;
     top: 1222px;
-    width: calc(100% - 86px);
     left: 43px;
-    p {
-      text-decoration: underline;
+    font-size: 13px;
+    width: calc(100% - 86px);
+
+    & > app-expense-mileage-table {
+      & > table {
+        width: 100% !important;
+
+      }
+
+      & > table, td, th, tr {
+        height: 24px !important;
+        padding: 1px !important;
+        white-space: nowrap !important;
+        max-width: 100% !important;
+        min-width: 1% !important;
+      }
     }
+
     th {
+      text-transform: uppercase !important;
       background: white !important;
       color: black !important;
     }
@@ -179,7 +194,11 @@
     }
     th:empty,
     td:empty {
-      border: 0 !important;
+      border-width: 0px !important;
+    }
+
+    p {
+      text-decoration: underline;
     }
   }
 }

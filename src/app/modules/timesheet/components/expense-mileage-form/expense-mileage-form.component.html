@@ -14,7 +14,7 @@
                         [(ngModel)]="commute.date"
                         required
                         id="date"
-                        #date="ngModel"                        
+                        #date="ngModel"
                         >
                         <div *ngIf="date.invalid && (date.dirty || date.touched)" class="alert alert-danger">
 
@@ -27,7 +27,7 @@
                             </div>
                         </div>
                     </div>
-                </div>                
+                </div>
                 <div class="mileage-allowance-form__block__input-wrapper__item form-group" >
                     <label for="destination" class="mileage-allowance-form__block__input-wrapper__item__label">Destination</label>
                     <div class="mileage-allowance-form__block__input-wrapper__item__input">
@@ -36,11 +36,11 @@
                         type="text"
                         pattern="^\S[A-zÀ-ÿ\s'-]+$"
                         class="form-control"
-                        name="destination"     
+                        name="destination"
                         [(ngModel)]="commute.destination"
                         required
                         id="destination"
-                        #destination="ngModel"                     
+                        #destination="ngModel"
                         >
                         <div *ngIf="destination.invalid && (destination.dirty || destination.touched)" class="alert alert-danger">
                             <div *ngIf="destination.errors['required']">
@@ -96,7 +96,7 @@
                             <div *ngIf="vehicle.errors['required']">
                                 Ce champ est obligatoire.
                             </div>
-                        </div>        
+                        </div>
                     </div>
                 </div>
                 <div class="mileage-allowance-form__block__submit">

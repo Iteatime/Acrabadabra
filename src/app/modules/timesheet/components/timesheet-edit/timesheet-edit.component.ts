@@ -105,12 +105,6 @@ export class TimesheetEditComponent implements OnInit {
     if (this.generateInvoice) {
       valid = valid && this.invoiceForm.form.valid;
     }
-    if (this.generateExpenses) {
-      valid = valid ;
-    }
-    if (this.generateExpenses) {
-      valid = valid ;
-    }
     return valid;
   }
 

@@ -47,7 +47,6 @@
     }
 
     margin-top: 10px;
-    margin-bottom: 50px;
     background: $white;
     padding: 20px;
     box-shadow: 0 0 8px rgba($black, .2);
@@ -177,6 +176,16 @@
 
         &__title {
           @include header-form;
+        }
+      }
+
+      &__allowance {
+        margin-top: 30px;
+        width: 100%;
+
+        &__title {
+          @include header-form;
+          margin-bottom: 30px;
         }
       }
     }

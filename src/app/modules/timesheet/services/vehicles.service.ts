@@ -9,7 +9,7 @@ export class VehiclesService {
 
   vehicles = [
     {
-      horsepower: '3',
+      horsepower: '3 -',
       allowance: '0.41'
     },
     {
@@ -25,7 +25,7 @@ export class VehiclesService {
       allowance: '0.568'
     },
     {
-      horsepower: '7',
+      horsepower: '7 +',
       allowance: '0.595'
     },
   ];
