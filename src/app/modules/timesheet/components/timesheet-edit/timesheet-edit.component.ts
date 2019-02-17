@@ -16,6 +16,9 @@ import { CalendarSelectorComponent } from 'src/app/modules/calendar/components/c
 
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 
+import { LocalSaveService } from 'src/app/shared/services/localSave/local-save.service';
+import { Timesheet } from 'src/app/shared/models/timesheet.model';
+
 @Component({
   selector: 'app-timesheet-edit',
   templateUrl: './timesheet-edit.component.html',
@@ -59,6 +62,10 @@ export class TimesheetEditComponent implements OnInit {
       }
     });
     this.titleService.setTitle(`Acrabadabra - ${this.getModeTitle()} un compte rendu d'activité`);
+
+    if (LocalSaveService.checkCRAInfos()) {
+      this.timesheetService.openTimesheet(LocalSaveService.getCRAInfos(), 'edit');
+    }
   }
 
   getModeTitle() {
