@@ -70,7 +70,7 @@ export class TimesheetService {
   public getTotalMiscellaneous() {
     let totalMisc = 0;
     for (let i = 0; i < this.timesheet.miscellaneous.length; i++) {
-      totalMisc += +this.timesheet.miscellaneous[i].amount.toString().replace(',', '.');
+      totalMisc += +this.timesheet.miscellaneous[i].amount;
     }
     return totalMisc;
   }

@@ -7,5 +7,4 @@ export class Miscellaneous {
         public date?: string,
         public amount?: number,
     ) { }
-
 }

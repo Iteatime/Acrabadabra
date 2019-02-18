@@ -42,8 +42,6 @@ export class ExpenseMiscellaneousFormComponent implements OnInit {
       this.submitted = true;
       this.miscellaneous.push(Object.assign(new Miscellaneous(), this.misc));
       this.changed.emit(true);
-      console.log(this.misc);
-      console.log(this.miscellaneous);
     } else {
       Object.keys(this.form.controls).forEach(field => {
         this.form.controls[field].markAsTouched();

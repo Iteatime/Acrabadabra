@@ -8,15 +8,9 @@
       <div *ngIf="timesheetService.timesheet.invoice.provider.telephone">
         Tel : {{ timesheetService.timesheet.invoice.provider.getFormattedTelephoneNumber() }}
       </div>
-<<<<<<< HEAD
-      <div *ngIf="!timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">
-        {{ timesheet.invoice.provider.getFormattedSIRENNumber() }} R.C.S.
-        {{ timesheet.invoice.provider.tradeAndCompaniesRegisterCity }}
-=======
       <div *ngIf="!timesheetService.timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">
         {{ timesheetService.timesheet.invoice.provider.getFormattedSIRENNumber() }} R.C.S.
         {{ timesheetService.timesheet.invoice.provider.tradeAndCompaniesRegisterCity }}
->>>>>>> 20f1ca0c4f419f739fab9f250e74ae04186da700
       </div>
       <div *ngIf="timesheetService.timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">
         SIREN : {{ timesheetService.timesheet.invoice.provider.getFormattedSIRENNumber() }}
@@ -36,15 +30,9 @@
       <div *ngIf="timesheetService.timesheet.invoice.client.telephone">
         Tel : {{ timesheetService.timesheet.invoice.client.getFormattedTelephoneNumber() }}
       </div>
-<<<<<<< HEAD
-      <div *ngIf="!timesheet.invoice.client.tradeAndCompaniesRegisterExemption">
-        {{ timesheet.invoice.client.getFormattedSIRENNumber() }} R.C.S.
-        {{ timesheet.invoice.client.tradeAndCompaniesRegisterCity }}
-=======
       <div *ngIf="!timesheetService.timesheet.invoice.client.tradeAndCompaniesRegisterExemption">
         {{ timesheetService.timesheet.invoice.client.getFormattedSIRENNumber() }} R.C.S.
         {{ timesheetService.timesheet.invoice.client.tradeAndCompaniesRegisterCity }}
->>>>>>> 20f1ca0c4f419f739fab9f250e74ae04186da700
       </div>
       <div *ngIf="timesheetService.timesheet.invoice.client.tradeAndCompaniesRegisterExemption">
         SIREN : {{ timesheetService.timesheet.invoice.client.getFormattedSIRENNumber() }}
@@ -73,8 +61,7 @@
         <th>PRIX UNITAIRE HT</th>
         <th>QUANTITE</th>
         <th *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">TAUX DE TVA</th>
-        <th *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">TOTAL HT</th>
-        <th *ngIf="timesheetService.timesheet.invoice.provider.vatExemption">TOTAL TTC</th>
+        <th>TOTAL HT</th>
       </thead>
       <tbody>
         <tr *ngIf="workedTime > 0">
@@ -88,17 +75,31 @@
           <td>{{expenseMileageTitle}}</td>
           <td></td>
           <td>{{expenseMileageQuantity}}</td>
-          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ 0 | percent:"1.2-2":local  }}</td>
+          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ 0 | percent:"1.1-1":local  }}</td>
           <td>{{expenseMileageTotal | currency:currencyCode:"symbol":'1.2-2':local}}</td>
         </tr>
-        <tr>
+        <tr *ngFor="let value of miscsTotal.vat; let i = index">
+          <td>{{expenseMiscellaneousTitle}}</td>
+          <td></td>
+          <td>{{expenseMiscellaneousQuantity}}</td>
+          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ value / 100 | percent:"1.2-2":local  }}</td>
+          <td>{{miscsTotal.amounts[i] | currency:currencyCode:"symbol":"1.2-2":local}}</td>
+        </tr>
+        <tr *ngIf="(workedTime > 0 ? 1 : 0) + (expenseMileageTotal > 0 ? 1 : 0) +  miscsTotal.vat.length < 2">
           <td></td>
           <td></td>
           <td></td>
           <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption"></td>
           <td></td>
         </tr>
-        <tr>
+        <tr *ngIf="(workedTime > 0 ? 1 : 0) + (expenseMileageTotal > 0 ? 1 : 0) +  miscsTotal.vat.length < 3">
+          <td></td>
+          <td></td>
+          <td></td>
+          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption"></td>
+          <td></td>
+        </tr>
+        <tr *ngIf="(workedTime > 0 ? 1 : 0) + (expenseMileageTotal > 0 ? 1 : 0) +  miscsTotal.vat.length < 4">
           <td></td>
           <td></td>
           <td></td>
@@ -183,10 +184,21 @@
       {{ timesheetService.timesheet.invoice.provider.getFormattedSIRENNumber() }}
     </div>
   </div>
+  <div class="invoice__tables">
+    <div class="invoice__tables__expenses" *ngIf="timesheetService.timesheet.commutes.length > 0">
+      <p>Détail des indemnités kilométriques :</p>
+      <app-expense-mileage-table
+      [hideDeleteButton]="true"
+      >
+      </app-expense-mileage-table>
+    </div>
 
-  <div class="invoice__expense-mileage" *ngIf="timesheetService.timesheet.commutes.length > 0">
-    <p>Détail des indemnités kilométriques :</p>
-    <app-expense-mileage-table [hideDeleteButton]="true">
-    </app-expense-mileage-table>
+    <div class="invoice__tables__expenses" *ngIf="timesheetService.timesheet.miscellaneous.length > 0">
+      <p>Détail des frais sur justificatif :</p>
+      <app-expense-miscellaneous-table
+      [hideDeleteButton]="true"
+      >
+      </app-expense-miscellaneous-table>
+    </div>
   </div>
 </div>

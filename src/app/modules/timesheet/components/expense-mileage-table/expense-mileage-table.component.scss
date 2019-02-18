@@ -9,6 +9,9 @@ table {
     width: 100%;
     border-collapse: collapse;
     empty-cells: hide;
+    & .amount{
+      width:250px;
+    }
   }
   tr:nth-of-type(odd) {
     background: #eee;

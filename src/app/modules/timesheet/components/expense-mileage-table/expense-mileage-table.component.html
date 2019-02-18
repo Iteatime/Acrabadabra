@@ -5,7 +5,7 @@
             <th>Destination</th>
             <th>Distance (km)</th>
             <th>Taux (€/km)</th>
-            <th>IK (€)</th>
+            <th class="amount">IK (€)</th>
         </tr>
     </thead>
     <tbody>
@@ -14,7 +14,7 @@
             <td data-text="Destination:">{{commute.destination}}</td>
             <td data-text="Distance:">{{commute.distance}}</td>
             <td data-text="Taux:">{{commute.allowance}}</td>
-            <td data-text="Indemnités kilométriques:">{{commute.mileageAllowance | number : '1.2-2'}}</td>
+            <td data-text="Indemnités kilométriques:">{{commute.mileageAllowance | currency:currencyCode:"symbol":'1.2-2':local}}</td>
             <td *ngIf="!hideDeleteButton"><a (click)="delete(commute)"><i class="material-icons">delete</i></a></td>
         </tr>
         <tr>
@@ -22,7 +22,7 @@
             <td></td>
             <td></td>
             <td></td>
-            <td class="totalOfAllowances">Total: {{timesheetService.getTotalAllowance() | number : '1.2-2'}} €</td>
+            <td class="totalOfAllowances">Total: {{timesheetService.getTotalAllowance() | currency:currencyCode:"symbol":'1.2-2':local}}</td>
         </tr>
     </tbody>
 </table>

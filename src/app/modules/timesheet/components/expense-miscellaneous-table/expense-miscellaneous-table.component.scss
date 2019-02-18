@@ -5,12 +5,15 @@ i:hover{
   cursor:pointer;
 }
 
-table { 
-    width: 100%; 
+table {
+    width: 100%;
     border-collapse: collapse;
     empty-cells: hide;
+    & .amount{
+      width:250px;
+    }
   }
-  tr:nth-of-type(odd) { 
+  tr:nth-of-type(odd) {
     background: #eee;
     td {
         border-bottom-color: white;
@@ -19,15 +22,15 @@ table {
         border-bottom-color: none;
     }
   }
-  th { 
-    background: $dark_blue; 
-    color: white; 
-    font-weight: bold; 
+  th {
+    background: $dark_blue;
+    color: white;
+    font-weight: bold;
   }
-  td, th { 
-    padding: 6px; 
-    border: 1px solid #ccc; 
-    text-align: center; 
+  td, th {
+    padding: 6px;
+    border: 1px solid #ccc;
+    text-align: center;
   }
 th:empty, td:empty {
     border: 0;
@@ -38,36 +41,36 @@ th:empty, td:empty {
   font-weight: bold;
 }
 
-  @media 
+  @media
 only screen and (max-width: 599px),
 (min-device-width: 350px) and (max-device-width: 599px)  {
 
-	table, thead, tbody, th, td, tr { 
+	table, thead, tbody, th, td, tr {
         display: block;
-        empty-cells: show; 
+        empty-cells: show;
 	}
-	
-	thead tr { 
+
+	thead tr {
 		position: absolute;
 		top: -9999px;
 		left: -9999px;
 	}
-	
+
 	tr { border: 1px solid #ccc; }
-	
-	td { 
+
+	td {
 		border: none;
-		border-bottom: 1px solid #eee; 
+		border-bottom: 1px solid #eee;
 		position: relative;
-		padding-left: 50%; 
+		padding-left: 50%;
     }
 
-	td:before { 
+	td:before {
 		position: absolute;
 		top: 6px;
 		left: 6px;
-		width: 45%; 
-		padding-right: 10px; 
+		width: 45%;
+		padding-right: 10px;
 		white-space: nowrap;
 	}
 

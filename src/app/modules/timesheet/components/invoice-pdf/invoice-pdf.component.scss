@@ -161,44 +161,48 @@
     width: 100%;
   }
 
-  &__expense-mileage {
+  &__tables {
+
     position: absolute;
-    top: 1222px;
-    left: 43px;
-    font-size: 13px;
-    width: calc(100% - 86px);
+      top: 1222px;
+      left: 43px;
+      font-size: 13px;
+      width: calc(100% - 86px);
 
-    & > app-expense-mileage-table {
-      & > table {
-        width: 100% !important;
+    &__expenses {
 
+      & > app-expense-mileage-table, & > app-expense-miscellaneous-table {
+        & > table {
+          width: 100% !important;
+
+        }
+
+        & > table, td, th, tr {
+          height: 24px !important;
+          padding: 1px !important;
+          white-space: nowrap !important;
+          max-width: 100% !important;
+          min-width: 1% !important;
+        }
+      }
       }
 
-      & > table, td, th, tr {
-        height: 24px !important;
-        padding: 1px !important;
-        white-space: nowrap !important;
-        max-width: 100% !important;
-        min-width: 1% !important;
+      th {
+        text-transform: uppercase !important;
+        background: white !important;
+        color: black !important;
       }
-    }
+      td,
+      th {
+        border: 1px solid black !important;
+      }
+      th:empty,
+      td:empty {
+        border-width: 0px !important;
+      }
 
-    th {
-      text-transform: uppercase !important;
-      background: white !important;
-      color: black !important;
-    }
-    td,
-    th {
-      border: 1px solid black !important;
-    }
-    th:empty,
-    td:empty {
-      border-width: 0px !important;
-    }
-
-    p {
-      text-decoration: underline;
-    }
+      p {
+        text-decoration: underline;
+      }
   }
 }

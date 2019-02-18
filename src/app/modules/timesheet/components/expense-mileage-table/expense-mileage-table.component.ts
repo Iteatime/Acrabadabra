@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { MonetaryService } from 'src/app/shared/services/monetary/monetary.service';
 
 import { TimesheetService } from '../../services/timesheet.service';
 
@@ -12,7 +13,14 @@ export class ExpenseMileageTableComponent implements OnInit {
   @Output() changed: EventEmitter<boolean> = new EventEmitter();
   @Input() hideDeleteButton = false;
 
-  constructor(public timesheetService: TimesheetService) { }
+  public local = 'fr';
+  public currencyCode: string;
+  constructor(public timesheetService: TimesheetService,
+    private _monetaryService: MonetaryService
+    ) {
+      this.currencyCode = this._monetaryService.currencyCode;
+
+    }
   commutes;
 
   ngOnInit() {

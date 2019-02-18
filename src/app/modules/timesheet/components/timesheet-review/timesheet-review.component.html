@@ -45,17 +45,23 @@
         <span>Télécharger la facture</span>
       </a>
     </div>
-  </div>
 
-  <div class="review__wrapper__fields__calendar">
-    <h3 class="review__wrapper__fields__calendar__title">Journées d'intervention</h3>
-    <app-calendar-selector [minifiedTimesheet]="timesheet.workingDays" [picking]="false">
-    </app-calendar-selector>
-  </div>
+    <div class="review__wrapper__fields__calendar">
+      <h3 class="review__wrapper__fields__calendar__title">Journées d'intervention</h3>
+      <app-calendar-selector [minifiedTimesheet]="timesheet.workingDays" [picking]="false">
+      </app-calendar-selector>
+    </div>
 
-  <div class="review__wrapper__fields__allowance" *ngIf="timesheet.commutes.length > 0">
-    <h3 class="review__wrapper__fields__allowance__title">Détail des indemnités kilométriques</h3>
-    <app-expense-mileage-table [hideDeleteButton]="true">
-    </app-expense-mileage-table>
+    <div class="review__wrapper__fields__allowance" *ngIf="timesheet.commutes.length > 0">
+      <h3 class="review__wrapper__fields__allowance__title">Détail des indemnités kilométriques</h3>
+      <app-expense-mileage-table [hideDeleteButton]="true">
+      </app-expense-mileage-table>
+    </div>
+
+    <div class="review__wrapper__fields__allowance" *ngIf="timesheet.miscellaneous.length > 0">
+      <h3 class="review__wrapper__fields__allowance__title">Détail des frais sur justificatif</h3>
+      <app-expense-miscellaneous-table [hideDeleteButton]="true">
+      </app-expense-miscellaneous-table>
+    </div>
   </div>
 </div>

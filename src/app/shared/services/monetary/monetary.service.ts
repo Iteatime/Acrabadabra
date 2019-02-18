@@ -16,4 +16,5 @@ export class MonetaryService {
   get vatRate(): number {
     return this.vatRateList[this.vatRateList.length - 1];
   }
+
 }
