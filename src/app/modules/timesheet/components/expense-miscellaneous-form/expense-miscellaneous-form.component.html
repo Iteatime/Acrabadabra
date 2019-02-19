@@ -100,7 +100,7 @@
                         <input
                         placeholder="ex: 25,50"
                         type="text"
-                        pattern="[0-9,.]+"
+                        pattern="([0-9]+(\.[0-9]+)?)"
                         class="form-control"
                         name = "amount"
                         [(ngModel)]="misc.amount"
@@ -113,7 +113,7 @@
                                 Ce champ est obligatoire.
                             </div>
                             <div *ngIf="amount.errors['pattern']">
-                                Seul des chiffres sont acceptés
+                                Seul des chiffres et des points sont acceptés
                             </div>
                         </div>
                     </div>
