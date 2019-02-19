@@ -14,7 +14,7 @@
                         id="expenseType"
                         #expenseType="ngModel"
                         >
-                            <option value="" disabled selected>Type de frais</option>
+                            <option [ngValue]="undefined" disabled  selected>Type de frais</option>
                             <option *ngFor="let miscellaneousType of miscellaneousTypes">
                                 {{miscellaneousType}}
                             </option>
@@ -37,7 +37,7 @@
                       id="expenseType"
                       #tvaRate="ngModel"
                       >
-                          <option value="" disabled selected>Taux de TVA</option>
+                          <option [ngValue]="undefined" disabled selected>Taux de TVA</option>
                           <option *ngFor="let tvaRate of tvaRates">
                               {{tvaRate}}
                           </option>

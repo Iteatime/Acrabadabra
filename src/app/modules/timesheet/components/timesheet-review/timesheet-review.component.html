@@ -31,37 +31,43 @@
               <b>{{ timesheet.mission.client }}</b>
             </div>
           </div>
-          <div class="review__wrapper__fields__block__item-wrapper__part__text">
-            <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Période : </span>
-            <b>{{ date.toLocaleString(locale, { month: 'long', year: 'numeric' }) }}</b>
+          <hr>
+          <div id="right-part" class="review__wrapper__fields__block__item-wrapper__part">
+            <div class="review__wrapper__fields__block__item-wrapper__part__text">
+              <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Nombre de journées : </span>
+              <b>{{ workingTime }}</b>
+            </div>
+            <div class="review__wrapper__fields__block__item-wrapper__part__text">
+              <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Période : </span>
+              <b>{{ date.toLocaleString(locale, { month: 'long', year: 'numeric' }) }}</b>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div *ngIf="generateInvoice" class="review__wrapper__fields__invoice">
-      <a data-text="Télécharger la facture" class="review__wrapper__fields__invoice__button" target="_self"
-        [href]="invoiceLink">
-        <span>Télécharger la facture</span>
-      </a>
-    </div>
+      <div *ngIf="generateInvoice" class="review__wrapper__fields__invoice">
+        <a data-text="Télécharger la facture" class="review__wrapper__fields__invoice__button" target="_self"
+          [href]="invoiceLink">
+          <span>Télécharger la facture</span>
+        </a>
+      </div>
 
-    <div class="review__wrapper__fields__calendar">
-      <h3 class="review__wrapper__fields__calendar__title">Journées d'intervention</h3>
-      <app-calendar-selector [minifiedTimesheet]="timesheet.workingDays" [picking]="false">
-      </app-calendar-selector>
-    </div>
+      <div class="review__wrapper__fields__calendar">
+        <h3 class="review__wrapper__fields__calendar__title">Journées d'intervention</h3>
+        <app-calendar-selector [minifiedTimesheet]="timesheet.workingDays" [picking]="false">
+        </app-calendar-selector>
+      </div>
 
-    <div class="review__wrapper__fields__allowance" *ngIf="timesheet.commutes.length > 0">
-      <h3 class="review__wrapper__fields__allowance__title">Détail des indemnités kilométriques</h3>
-      <app-expense-mileage-table [hideDeleteButton]="true">
-      </app-expense-mileage-table>
-    </div>
+      <div class="review__wrapper__fields__allowance" *ngIf="timesheet.commutes.length > 0">
+        <h3 class="review__wrapper__fields__allowance__title">Détail des indemnités kilométriques</h3>
+        <app-expense-mileage-table [hideDeleteButton]="true">
+        </app-expense-mileage-table>
+      </div>
 
-    <div class="review__wrapper__fields__allowance" *ngIf="timesheet.miscellaneous.length > 0">
-      <h3 class="review__wrapper__fields__allowance__title">Détail des frais sur justificatif</h3>
-      <app-expense-miscellaneous-table [hideDeleteButton]="true">
-      </app-expense-miscellaneous-table>
+      <div class="review__wrapper__fields__allowance" *ngIf="timesheet.miscellaneous.length > 0">
+        <h3 class="review__wrapper__fields__allowance__title">Détail des frais sur justificatif</h3>
+        <app-expense-miscellaneous-table [hideDeleteButton]="true">
+        </app-expense-miscellaneous-table>
+      </div>
     </div>
   </div>
-</div>

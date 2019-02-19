@@ -71,6 +71,8 @@ export class TimesheetEditComponent implements OnInit {
     if (this.checkFormsValidity()) {
       this.timesheetService.timesheet.workingDays = this.calendarService.getWorkingDays(this.calendar.timesheet);
       this.timesheetService.timesheet.invoice = this.generateInvoice ? this.invoiceForm.invoice : null;
+      this.timesheetService.timesheet.miscellaneous = this.generateExpenses ? this.miscellaneousForm.miscellaneous : [];
+      this.timesheetService.timesheet.commutes = this.generateExpenses ? this.commutesForm.commutes : [];
       this.updateMailtoLink();
       this.reactToSubmition(false);
     } else {
