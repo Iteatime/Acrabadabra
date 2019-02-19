@@ -5,7 +5,7 @@
             <th>Destination</th>
             <th>Distance (km)</th>
             <th>Taux (€/km)</th>
-            <th class="amount">IK (€)</th>
+            <th class="amount">IK</th>
         </tr>
     </thead>
     <tbody>
@@ -17,7 +17,7 @@
             <td data-text="Indemnités kilométriques:">{{commute.mileageAllowance | currency:currencyCode:"symbol":'1.2-2':local}}</td>
             <td *ngIf="!hideDeleteButton"><a (click)="delete(commute)"><i class="material-icons">delete</i></a></td>
         </tr>
-        <tr>
+        <tr class="no-background">
             <td></td>
             <td></td>
             <td></td>

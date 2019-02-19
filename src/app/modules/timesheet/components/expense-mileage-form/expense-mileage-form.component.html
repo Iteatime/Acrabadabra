@@ -107,12 +107,12 @@
                         <span>Ajouter</span>
                     </button>
                 </div>
+                <app-expense-mileage-table
+                (changed)="changed.emit(true)">
+                </app-expense-mileage-table>
             </div>
         </div>
     </div>
-    <app-expense-mileage-table
-    (changed)="changed.emit(true)">
-    </app-expense-mileage-table>
 </form>
 
 

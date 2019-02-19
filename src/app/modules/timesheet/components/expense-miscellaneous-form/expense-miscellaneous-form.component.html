@@ -126,10 +126,10 @@
                         <span>Ajouter</span>
                     </button>
                 </div>
+                <app-expense-miscellaneous-table
+                (changed)="changed.emit(true)">
+                </app-expense-miscellaneous-table>
             </div>
         </div>
     </div>
-    <app-expense-miscellaneous-table
-    (changed)="changed.emit(true)">
-    </app-expense-miscellaneous-table>
 </form>

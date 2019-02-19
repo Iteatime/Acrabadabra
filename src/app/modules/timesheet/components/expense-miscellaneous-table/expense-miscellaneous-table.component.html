@@ -4,7 +4,7 @@
             <th>Date</th>
             <th>Type</th>
             <th>Taux de TVA</th>
-            <th class="amount">Montant TTC (€)</th>
+            <th class="amount">Montant TTC</th>
         </tr>
     </thead>
     <tbody>
@@ -12,13 +12,13 @@
             <td data-text="Date:">{{miscellaneous.date | date: 'dd/MM/yyyy'}}</td>
             <td data-text="Destination:">{{miscellaneous.miscellaneousType}}
               <span *ngIf="miscellaneous.wording">{{"&mdash; " + miscellaneous.wording[0].toUpperCase()
-                 + miscellaneous.wording.substring(1,miscellaneous.wording.length-1)}}</span>
+                 + miscellaneous.wording.substring(1,miscellaneous.wording.length)}}</span>
             </td>
             <td date-text="Taux de TVA">{{miscellaneous.tvaRate}} %</td>
             <td data-text="Indemnités kilométriques:">{{miscellaneous.amount | currency:currencyCode:"symbol":'1.2-2':local}}</td>
             <td *ngIf="!hideDeleteButton"><a (click)="delete(miscellaneous)"><i class="material-icons">delete</i></a></td>
         </tr>
-        <tr>
+        <tr class="no-background">
             <td></td>
             <td></td>
             <td></td>
