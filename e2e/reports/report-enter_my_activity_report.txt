@@ -1,0 +1,29 @@
+Feature: Enter my activity report
+
+
+I can fill the inputs
+-pass
+
+I can validate my seizures
+-pass
+
+I made a mistake filling the form and I try to validate it
+-pass
+
+I change the value of an input after a form validation
+-pass
+
+I can select the month i worked
+-pass
+
+I can indicate how many days I worked in the month
+-pass
+
+I want delete a worked day on the calendar
+-pass
+
+I worked only a half day
+-pass
+
+I can go back to the homepage
+-pass
