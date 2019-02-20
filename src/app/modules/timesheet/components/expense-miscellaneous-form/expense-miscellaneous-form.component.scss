@@ -46,6 +46,11 @@
                 margin: 0 5px;
             }
 
+            &__item2 {
+                width: calc(33.33% - 10px);
+                margin: 0 5px;
+            }
+
             &__sub-block {
                 @media (min-width: $screen-sm-min) {
                     margin-bottom: 30px;

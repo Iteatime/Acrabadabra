@@ -7,7 +7,7 @@ export class MonetaryService {
 
   constructor() { }
 
-  public vatRateList = [0, 2.1, 5.5, 10.0, 20.0];
+  public vatRateList = [0, 5.5, 10.0, 20.0];
 
   get  currencyCode(): string {
     return 'EUR';

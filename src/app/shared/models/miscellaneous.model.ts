@@ -6,5 +6,6 @@ export class Miscellaneous {
         public wording?: string,
         public date?: string,
         public amount?: number,
+        public selectedType?: number
     ) { }
 }

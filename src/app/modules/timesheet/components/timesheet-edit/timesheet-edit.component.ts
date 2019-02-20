@@ -77,6 +77,7 @@ export class TimesheetEditComponent implements OnInit {
       this.reactToSubmition(false);
     } else {
       this.reactToSubmition(true);
+      this.showValidationMessages();
     }
   }
 
