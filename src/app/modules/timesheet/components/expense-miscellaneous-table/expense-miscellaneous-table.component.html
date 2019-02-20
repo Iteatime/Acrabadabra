@@ -14,7 +14,7 @@
               <span *ngIf="miscellaneous.wording">{{"&mdash; " + miscellaneous.wording[0].toUpperCase()
                  + miscellaneous.wording.substring(1,miscellaneous.wording.length)}}</span>
             </td>
-            <td data-text="Taux de TVA:">{{miscellaneous.tvaRate}} %</td>
+            <td data-text="Taux de TVA:">{{+miscellaneous.tvaRate}} %</td>
             <td data-text="Montant TTC:">{{miscellaneous.amount | currency:currencyCode:"symbol":'1.2-2':local}}</td>
             <td *ngIf="!hideDeleteButton"><a (click)="delete(miscellaneous)"><i class="material-icons">delete</i></a></td>
         </tr>

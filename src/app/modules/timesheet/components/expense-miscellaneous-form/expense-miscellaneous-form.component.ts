@@ -39,7 +39,9 @@ export class ExpenseMiscellaneousFormComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      this.misc.tvaRate = this.miscellaneousExpenses.miscellaneousTypes[this.misc.selectedType].vat;
+      if (this.misc.selectedType !== 4) {
+        this.misc.tvaRate = this.miscellaneousExpenses.miscellaneousTypes[this.misc.selectedType].vat;
+      }
       this.misc.miscellaneousType = this.miscellaneousExpenses.miscellaneousTypes[this.misc.selectedType].type;
       this.submitted = true;
       this.miscellaneous.push(Object.assign(new Miscellaneous(), this.misc));

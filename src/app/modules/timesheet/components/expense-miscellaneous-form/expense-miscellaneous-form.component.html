@@ -39,8 +39,8 @@
         </div>
 
         <div [ngClass]="{
-          'expense-miscellaneous-form__block__input-wrapper__item form-group':this.misc.miscellaneousType !== 'Autres',
-          'expense-miscellaneous-form__block__input-wrapper__item2 form-group2':this.misc.miscellaneousType === 'Autres'
+          'expense-miscellaneous-form__block__input-wrapper__item form-group':this.misc.selectedType !== 4,
+          'expense-miscellaneous-form__block__input-wrapper__item2 form-group2':this.misc.selectedType === 4
         }">
           <label for="expenseType" class="expense-miscellaneous-form__block__input-wrapper__item__label">Type de
             frais</label>
@@ -60,10 +60,10 @@
           </div>
         </div>
 
-        <div *ngIf="this.misc.miscellaneousType === 'Autres'"
+        <div *ngIf="this.misc.selectedType === 4"
         [ngClass]="{
-          'expense-miscellaneous-form__block__input-wrapper__item form-group':this.misc.miscellaneousType !== 'Autres',
-          'expense-miscellaneous-form__block__input-wrapper__item2 form-group2':this.misc.miscellaneousType === 'Autres'
+          'expense-miscellaneous-form__block__input-wrapper__item form-group':this.misc.selectedType !== 4,
+          'expense-miscellaneous-form__block__input-wrapper__item2 form-group2':this.misc.selectedType === 4
         }">
           <label for="expenseType" class="expense-miscellaneous-form__block__input-wrapper__item__label">Taux de TVA
             (%)</label>
@@ -71,7 +71,7 @@
             <select class="form-control" name="tvaRate" [(ngModel)]="misc.tvaRate" required id="expenseType"
               #tvaRate="ngModel">
               <option [ngValue]="undefined" disabled selected>Taux de TVA</option>
-              <option *ngFor="let tvaRate of vatRates">
+              <option *ngFor="let tvaRate of vatRates; let i = index" [ngValue]="tvaRate">
                 {{tvaRate}}
               </option>
             </select>
@@ -84,8 +84,8 @@
         </div>
 
         <div [ngClass]="{
-          'expense-miscellaneous-form__block__input-wrapper__item form-group':this.misc.miscellaneousType !== 'Autres',
-          'expense-miscellaneous-form__block__input-wrapper__item2 form-group2':this.misc.miscellaneousType === 'Autres'
+          'expense-miscellaneous-form__block__input-wrapper__item form-group':this.misc.selectedType !== 4,
+          'expense-miscellaneous-form__block__input-wrapper__item2 form-group2':this.misc.selectedType === 4
         }">
           <label for="wording" class="expense-miscellaneous-form__block__input-wrapper__item__label">Libellé
             (optionnel)</label>
