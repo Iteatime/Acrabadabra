@@ -58,6 +58,19 @@
                   "maximumError": "5mb"
                 }
               ]
+            },
+            "developpement": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev.ts"
+                }
+              ],
+              "optimization": false,
+              "sourceMap": true,
+              "extractCss": true,
+              "namedChunks": true,
+              "vendorChunk": true
             }
           }
         },
@@ -70,6 +83,9 @@
           "configurations": {
             "production": {
               "browserTarget": "acrabadabra:build:production"
+            },
+            "developpement": {
+              "browserTarget": "acrabadabra:build:developpement"
             }
           }
         },
@@ -86,9 +102,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
-            "styles": [
-              "src/app/style/main.scss"
-            ],
+            "styles": [],
             "scripts": [],
             "assets": [
               "src/favicon.ico",
