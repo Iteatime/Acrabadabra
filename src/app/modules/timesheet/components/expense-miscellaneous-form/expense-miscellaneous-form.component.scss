@@ -1,11 +1,7 @@
 @import 'src/app/style/vars';
 @import 'src/app/style/mixins';
 
-i:hover{
-    cursor:pointer;
-}
-
-.mileage-allowance-form {
+.expense-miscellaneous-form {
     width: 100%;
 
     &__block {
@@ -50,6 +46,11 @@ i:hover{
                 margin: 0 5px;
             }
 
+            &__item2 {
+                width: calc(33.33% - 10px);
+                margin: 0 5px;
+            }
+
             &__sub-block {
                 @media (min-width: $screen-sm-min) {
                     margin-bottom: 30px;
@@ -83,11 +84,10 @@ i:hover{
                 }
             }
 
-            app-expense-mileage-table {
+            app-expense-miscellaneous-table {
               width: 100%;
               margin-top: 40px;
             }
         }
     }
 }
-

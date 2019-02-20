@@ -34,7 +34,7 @@ describe('ExpensesFormComponent', () => {
         distance: 6,
         allowance: 2,
         mileageAllowance: 0
-      }
+      };
       component.onSubmit();
     });
 

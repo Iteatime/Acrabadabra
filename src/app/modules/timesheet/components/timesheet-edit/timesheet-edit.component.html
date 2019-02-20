@@ -101,6 +101,8 @@
         </label>
         <app-expense-mileage-form *ngIf="generateExpenses" [commutes]="timesheetService.timesheet.commutes"
           (changed)="onUserInput()"></app-expense-mileage-form>
+        <app-expense-miscellaneous-form *ngIf="generateExpenses" [miscellaneous]="timesheetService.timesheet.miscellaneous"
+        (changed)="onUserInput()"></app-expense-miscellaneous-form>
       </div>
 
       <div class="edit-cra__wrapper__form__component">

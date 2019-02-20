@@ -61,8 +61,7 @@
         <th>PRIX UNITAIRE HT</th>
         <th>QUANTITE</th>
         <th *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">TAUX DE TVA</th>
-        <th *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">TOTAL HT</th>
-        <th *ngIf="timesheetService.timesheet.invoice.provider.vatExemption">TOTAL TTC</th>
+        <th>TOTAL HT</th>
       </thead>
       <tbody>
         <tr *ngIf="workedTime > 0">
@@ -72,21 +71,35 @@
           <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ vatRate / 100 | percent:"1.2-2":local }}</td>
           <td>{{ performanceTotal | currency:currencyCode:"symbol":"1.2-2":local }}</td>
         </tr>
-        <tr *ngIf="expenseTotal > 0">
-          <td>{{expenseTitle}}</td>
+        <tr *ngIf="expenseMileageTotal > 0">
+          <td>{{expenseMileageTitle}}</td>
           <td></td>
-          <td>{{expenseQuantity}}</td>
-          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ 0 | percent:"1.2-2":local  }}</td>
-          <td>{{expenseTotal | currency:currencyCode:"symbol":'1.2-2':local}}</td>
+          <td>{{expenseMileageQuantity}}</td>
+          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ 0 | percent:"1.1-1":local  }}</td>
+          <td>{{expenseMileageTotal | currency:currencyCode:"symbol":'1.2-2':local}}</td>
         </tr>
-        <tr>
+        <tr *ngFor="let value of miscsTotal.vat; let i = index">
+          <td>{{expenseMiscellaneousTitle}}</td>
+          <td></td>
+          <td>{{expenseMiscellaneousQuantity}}</td>
+          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ value / 100 | percent:"1.2-2":local  }}</td>
+          <td>{{miscsTotal.amounts[i] | currency:currencyCode:"symbol":"1.2-2":local}}</td>
+        </tr>
+        <tr *ngIf="(workedTime > 0 ? 1 : 0) + (expenseMileageTotal > 0 ? 1 : 0) +  miscsTotal.vat.length < 2">
           <td></td>
           <td></td>
           <td></td>
           <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption"></td>
           <td></td>
         </tr>
-        <tr>
+        <tr *ngIf="(workedTime > 0 ? 1 : 0) + (expenseMileageTotal > 0 ? 1 : 0) +  miscsTotal.vat.length < 3">
+          <td></td>
+          <td></td>
+          <td></td>
+          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption"></td>
+          <td></td>
+        </tr>
+        <tr *ngIf="(workedTime > 0 ? 1 : 0) + (expenseMileageTotal > 0 ? 1 : 0) +  miscsTotal.vat.length < 4">
           <td></td>
           <td></td>
           <td></td>
@@ -171,10 +184,21 @@
       {{ timesheetService.timesheet.invoice.provider.getFormattedSIRENNumber() }}
     </div>
   </div>
+  <div class="invoice__tables">
+    <div class="invoice__tables__expenses" *ngIf="timesheetService.timesheet.commutes.length > 0">
+      <p>Détail des indemnités kilométriques :</p>
+      <app-expense-mileage-table
+      [hideDeleteButton]="true"
+      >
+      </app-expense-mileage-table>
+    </div>
 
-  <div class="invoice__expense-mileage" *ngIf="timesheetService.timesheet.commutes.length > 0">
-    <p>Détail des indemnités kilométriques :</p>
-    <app-expense-mileage-table [hideDeleteButton]="true">
-    </app-expense-mileage-table>
+    <div class="invoice__tables__expenses" *ngIf="timesheetService.timesheet.miscellaneous.length > 0">
+      <p>Détail des frais sur justificatif :</p>
+      <app-expense-miscellaneous-table
+      [hideDeleteButton]="true"
+      >
+      </app-expense-miscellaneous-table>
+    </div>
   </div>
 </div>

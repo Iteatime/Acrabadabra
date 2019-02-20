@@ -1,0 +1,28 @@
+<table>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Taux de TVA</th>
+            <th class="amount">Montant TTC</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor = "let miscellaneous of timesheetService.timesheet.miscellaneous">
+            <td data-text="Date:">{{miscellaneous.date | date: 'dd/MM/yyyy'}}</td>
+            <td data-text="Type:">{{miscellaneous.miscellaneousType}}
+              <span *ngIf="miscellaneous.wording">{{"&mdash; " + miscellaneous.wording[0].toUpperCase()
+                 + miscellaneous.wording.substring(1,miscellaneous.wording.length)}}</span>
+            </td>
+            <td data-text="Taux de TVA:">{{+miscellaneous.tvaRate}} %</td>
+            <td data-text="Montant TTC:">{{miscellaneous.amount | currency:currencyCode:"symbol":'1.2-2':local}}</td>
+            <td *ngIf="!hideDeleteButton"><a (click)="delete(miscellaneous)"><i class="material-icons">delete</i></a></td>
+        </tr>
+        <tr class="no-background">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="totalOfAllowances">Total: {{timesheetService.getTotalMiscellaneous() | currency:currencyCode:"symbol":'1.2-2':local}}</td>
+        </tr>
+    </tbody>
+</table>

@@ -2,6 +2,7 @@ import { Mission } from './mission.model';
 import { Consultant } from './consultant.model';
 import { Invoice } from './invoice.model';
 import { Commute } from './commute';
+import { Miscellaneous } from './miscellaneous.model';
 
 export class Timesheet {
   consultant: Consultant;
@@ -9,6 +10,7 @@ export class Timesheet {
   workingDays: {};
   invoice: Invoice;
   commutes: Commute[];
+  miscellaneous: Miscellaneous[];
 
   constructor(
     consultantEmail: string = '',
@@ -22,5 +24,6 @@ export class Timesheet {
     this.mission = new Mission(missionClient, missionTitle) || mission;
     this.workingDays = {};
     this.commutes = [];
+    this.miscellaneous = [];
   }
 }

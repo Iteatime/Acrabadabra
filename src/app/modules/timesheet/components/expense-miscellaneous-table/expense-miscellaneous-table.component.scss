@@ -99,7 +99,6 @@ td:empty {
   td:nth-of-type(4):before {
     content: attr(data-text);
   }
-  td:nth-of-type(5):before {
-    content: attr(data-text);
-  }
+
+
 }

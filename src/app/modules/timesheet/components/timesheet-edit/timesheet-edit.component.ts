@@ -11,6 +11,8 @@ import { CalendarSelectorComponent } from 'src/app/modules/calendar/components/c
 import { CalendarService } from 'src/app/modules/calendar/calendar.service';
 import { TimesheetService } from '../../services/timesheet.service';
 import { ExpenseMileageFormComponent } from '../expense-mileage-form/expense-mileage-form.component';
+import { ExpenseMiscellaneousFormComponent } from '../expense-miscellaneous-form/expense-miscellaneous-form.component';
+
 
 @Component({
   selector: 'app-timesheet-edit',
@@ -22,6 +24,7 @@ export class TimesheetEditComponent implements OnInit {
   @ViewChild (CalendarSelectorComponent) calendar: CalendarSelectorComponent;
   @ViewChild (InvoiceFormComponent) invoiceForm: InvoiceFormComponent;
   @ViewChild (ExpenseMileageFormComponent) commutesForm: ExpenseMileageFormComponent;
+  @ViewChild (ExpenseMiscellaneousFormComponent) miscellaneousForm: ExpenseMiscellaneousFormComponent;
   @ViewChild ('form') form: NgForm;
   originUrl = window.location.origin;
   submitMessage: any = null;
@@ -68,6 +71,8 @@ export class TimesheetEditComponent implements OnInit {
     if (this.checkFormsValidity()) {
       this.timesheetService.timesheet.workingDays = this.calendarService.getWorkingDays(this.calendar.timesheet);
       this.timesheetService.timesheet.invoice = this.generateInvoice ? this.invoiceForm.invoice : null;
+      this.timesheetService.timesheet.miscellaneous = this.generateExpenses ? this.miscellaneousForm.miscellaneous : [];
+      this.timesheetService.timesheet.commutes = this.generateExpenses ? this.commutesForm.commutes : [];
       this.updateMailtoLink();
       this.reactToSubmition(false);
     } else {
@@ -102,9 +107,6 @@ export class TimesheetEditComponent implements OnInit {
     if (this.generateInvoice) {
       valid = valid && this.invoiceForm.form.valid;
     }
-    if (this.generateExpenses) {
-      valid = valid && this.timesheetService.timesheet.commutes.length > 0;
-    }
     return valid;
   }
 
@@ -117,7 +119,9 @@ export class TimesheetEditComponent implements OnInit {
         this.invoiceForm.form.controls[field].markAsTouched();
       });
     }
-    if (this.timesheetService.timesheet.commutes.length === 0 && this.generateExpenses) {
+    if (this.timesheetService.timesheet.commutes.length === 0
+        && this.timesheetService.timesheet.miscellaneous.length === 0
+        && this.generateExpenses) {
       this.submitMessage.text += ', vous n\'avez ajouté aucun frais';
     }
   }
