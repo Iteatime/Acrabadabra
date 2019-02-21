@@ -69,5 +69,11 @@
         <app-expense-miscellaneous-table [hideDeleteButton]="true">
         </app-expense-miscellaneous-table>
       </div>
+
+      <div class="review__wrapper__fields__allowance" *ngIf="timesheet.flatFees.length > 0">
+        <h3 class="review__wrapper__fields__allowance__title">Détail des déplacements forfaitaires</h3>
+        <app-expense-flat-fee-table [hideDeleteButton]="true">
+        </app-expense-flat-fee-table>
+      </div>
     </div>
   </div>

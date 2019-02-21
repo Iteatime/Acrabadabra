@@ -28,10 +28,6 @@ describe('TimesheetService', () => {
       expect(service.openTimesheet(undefined, 'edit')).toBeFalsy();
     });
 
-  // describe('getTotalAllowance()'), () => {
-
-  // }
-
     describe('if the "mode" argument matches the "mode" stored in the token', () => {
       let returnValue;
 
@@ -76,6 +72,20 @@ describe('TimesheetService', () => {
 
     it('should return "totalAllowance" of mileage allowances in the array of "commutes"', () => {
       expect(service.getTotalAllowance()).toBe(220);
+    });
+  });
+
+  describe('getTotalMiscellaneous()', () => {
+    beforeEach(() => {
+      service.timesheet.miscellaneous = [
+        {date: '', wording: '', tvaRate: 0, miscellaneousType: '', amount: 10 },
+        {date: '', wording: '', tvaRate: 0, miscellaneousType: '', amount: 11 },
+        {date: '', wording: '', tvaRate: 0, miscellaneousType: '', amount: 12 }
+      ];
+    });
+
+    it('should return "totalAllowance" of mileage allowances in the array of "commutes"', () => {
+      expect(service.getTotalMiscellaneous()).toBe(33);
     });
   });
 });

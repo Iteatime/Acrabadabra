@@ -15,7 +15,7 @@
             <td data-text="Distance:">{{commute.distance}}</td>
             <td data-text="Taux:">{{commute.allowance}}</td>
             <td data-text="Indemnités kilométriques:">{{commute.mileageAllowance | currency:currencyCode:"symbol":'1.2-2':local}}</td>
-            <td *ngIf="!hideDeleteButton"><a (click)="delete(commute)"><i class="material-icons">delete</i></a></td>
+            <td class="trashCan" *ngIf="!hideDeleteButton"><a (click)="delete(commute)"><i class="material-icons">delete</i></a></td>
         </tr>
         <tr class="no-background">
             <td></td>

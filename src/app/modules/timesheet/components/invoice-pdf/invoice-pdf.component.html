@@ -75,8 +75,15 @@
           <td>{{expenseMileageTitle}}</td>
           <td></td>
           <td>{{expenseMileageQuantity}}</td>
-          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ 0 | percent:"1.1-1":local  }}</td>
+          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ 0 | percent:"1.2-2":local  }}</td>
           <td>{{expenseMileageTotal | currency:currencyCode:"symbol":'1.2-2':local}}</td>
+        </tr>
+        <tr *ngIf="expenseFlatFeeTotal > 0">
+          <td>{{expenseFlatFeeTitle}}</td>
+          <td></td>
+          <td>{{expenseFlatFeeQuantity}}</td>
+          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ vatRate / 100 | percent:"1.2-2":local  }}</td>
+          <td>{{expenseFlatFeeTotal | currency:currencyCode:"symbol":'1.2-2':local}}</td>
         </tr>
         <tr *ngFor="let value of miscsTotal.vat; let i = index">
           <td>{{expenseMiscellaneousTitle}}</td>
@@ -199,6 +206,14 @@
       [hideDeleteButton]="true"
       >
       </app-expense-miscellaneous-table>
+    </div>
+
+    <div class="invoice__tables__expenses" *ngIf="timesheetService.timesheet.flatFees.length > 0">
+      <p>Détail des déplacements forfaitaires :</p>
+      <app-expense-flat-fee-table
+      [hideDeleteButton]="true"
+      >
+      </app-expense-flat-fee-table>
     </div>
   </div>
 </div>

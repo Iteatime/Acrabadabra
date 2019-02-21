@@ -12,6 +12,7 @@ import { CalendarService } from 'src/app/modules/calendar/calendar.service';
 import { TimesheetService } from '../../services/timesheet.service';
 import { ExpenseMileageFormComponent } from '../expense-mileage-form/expense-mileage-form.component';
 import { ExpenseMiscellaneousFormComponent } from '../expense-miscellaneous-form/expense-miscellaneous-form.component';
+import { ExpenseFlatFeeFormComponent } from '../expense-flat-fee-form/expense-flat-fee-form.component';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class TimesheetEditComponent implements OnInit {
   @ViewChild (InvoiceFormComponent) invoiceForm: InvoiceFormComponent;
   @ViewChild (ExpenseMileageFormComponent) commutesForm: ExpenseMileageFormComponent;
   @ViewChild (ExpenseMiscellaneousFormComponent) miscellaneousForm: ExpenseMiscellaneousFormComponent;
+  @ViewChild (ExpenseFlatFeeFormComponent) flatFeesForm: ExpenseFlatFeeFormComponent;
   @ViewChild ('form') form: NgForm;
   originUrl = window.location.origin;
   submitMessage: any = null;
@@ -73,6 +75,7 @@ export class TimesheetEditComponent implements OnInit {
       this.timesheetService.timesheet.invoice = this.generateInvoice ? this.invoiceForm.invoice : null;
       this.timesheetService.timesheet.miscellaneous = this.generateExpenses ? this.miscellaneousForm.miscellaneous : [];
       this.timesheetService.timesheet.commutes = this.generateExpenses ? this.commutesForm.commutes : [];
+      this.timesheetService.timesheet.flatFees = this.generateExpenses ? this.flatFeesForm.flatFees : [];
       this.updateMailtoLink();
       this.reactToSubmition(false);
     } else {
@@ -121,6 +124,7 @@ export class TimesheetEditComponent implements OnInit {
     }
     if (this.timesheetService.timesheet.commutes.length === 0
         && this.timesheetService.timesheet.miscellaneous.length === 0
+        && this.timesheetService.timesheet.flatFees.length === 0
         && this.generateExpenses) {
       this.submitMessage.text += ', vous n\'avez ajouté aucun frais';
     }

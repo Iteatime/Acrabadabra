@@ -16,7 +16,7 @@
             </td>
             <td data-text="Taux de TVA:">{{+miscellaneous.tvaRate}} %</td>
             <td data-text="Montant TTC:">{{miscellaneous.amount | currency:currencyCode:"symbol":'1.2-2':local}}</td>
-            <td *ngIf="!hideDeleteButton"><a (click)="delete(miscellaneous)"><i class="material-icons">delete</i></a></td>
+            <td class="trashCan" *ngIf="!hideDeleteButton"><a (click)="delete(miscellaneous)"><i class="material-icons">delete</i></a></td>
         </tr>
         <tr class="no-background">
             <td></td>

@@ -3,6 +3,7 @@ import { Consultant } from './consultant.model';
 import { Invoice } from './invoice.model';
 import { Commute } from './commute';
 import { Miscellaneous } from './miscellaneous.model';
+import { FlatFee } from './flat-fee.model';
 
 export class Timesheet {
   consultant: Consultant;
@@ -11,6 +12,7 @@ export class Timesheet {
   invoice: Invoice;
   commutes: Commute[];
   miscellaneous: Miscellaneous[];
+  flatFees: FlatFee[];
 
   constructor(
     consultantEmail: string = '',
@@ -25,5 +27,6 @@ export class Timesheet {
     this.workingDays = {};
     this.commutes = [];
     this.miscellaneous = [];
+    this.flatFees = [];
   }
 }

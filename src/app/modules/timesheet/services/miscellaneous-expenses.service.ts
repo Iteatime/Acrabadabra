@@ -11,22 +11,22 @@ export class MiscellaneousExpensesService {
   miscellaneousTypes = [
     {
       type: 'Repas',
-      vat: this.monetaryService.vatRateList[2]
+      vat: this.monetaryService.vatRates.reduced
     },
     {
       type: 'Déplacement',
-      vat: this.monetaryService.vatRateList[3]
+      vat: this.monetaryService.vatRates.normal
     },
     {
       type: 'Hébergement',
-      vat: this.monetaryService.vatRateList[2]
+      vat: this.monetaryService.vatRates.reduced
     },
     {
       type: 'Location matériel numérique',
-      vat: this.monetaryService.vatRateList[3]
+      vat: this.monetaryService.vatRates.normal
     },
     {
       type: 'Autres'
     }
-  ];
+];
 }

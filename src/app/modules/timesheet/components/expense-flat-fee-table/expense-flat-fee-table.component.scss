@@ -48,7 +48,7 @@ td:empty {
   border: 0;
 }
 
-.totalOfAllowances {
+.totalOfFlatFees {
   font-weight: bold;
   background: transparent;
 }
@@ -96,12 +96,4 @@ td:empty {
   td:nth-of-type(2):before {
     content: attr(data-text);
   }
-  td:nth-of-type(3):before {
-    content: attr(data-text);
-  }
-  td:nth-of-type(4):before {
-    content: attr(data-text);
-  }
-
-
 }

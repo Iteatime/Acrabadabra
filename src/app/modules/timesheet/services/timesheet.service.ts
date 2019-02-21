@@ -74,4 +74,12 @@ export class TimesheetService {
     }
     return totalMisc;
   }
+
+  public getTotalFlatFee() {
+    let totalFlatFee = 0;
+    for (let i = 0; i < this.timesheet.flatFees.length; i++) {
+      totalFlatFee += +this.timesheet.flatFees[i].amount;
+    }
+    return totalFlatFee;
+  }
 }
