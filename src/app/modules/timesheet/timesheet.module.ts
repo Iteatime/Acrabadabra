@@ -18,6 +18,7 @@ import { ExpenseMileageTableComponent } from './components/expense-mileage-table
 import { ExpenseMileageFormComponent } from './components/expense-mileage-form/expense-mileage-form.component';
 import { ExpenseMiscellaneousFormComponent } from './components/expense-miscellaneous-form/expense-miscellaneous-form.component';
 import { ExpenseMiscellaneousTableComponent } from './components/expense-miscellaneous-table/expense-miscellaneous-table.component';
+import { ExpenseFlatFeeFormComponent } from './components/expense-flat-fee-form/expense-flat-fee-form.component';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { ExpenseMiscellaneousTableComponent } from './components/expense-miscell
     ExpenseMileageTableComponent,
     ExpenseMiscellaneousFormComponent,
     ExpenseMiscellaneousTableComponent,
+    ExpenseFlatFeeFormComponent,
   ]
 })
 export class TimesheetModule { }
