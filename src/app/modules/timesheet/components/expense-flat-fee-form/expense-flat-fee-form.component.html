@@ -1,4 +1,4 @@
-<form #expenseForm="ngForm" (ngSubmit)="onSubmit()">
+<form #expenseForm="ngForm">
   <div class="flat-fee-form">
     <div class="flat-fee-form__block">
       <h4 class="flat-fee-form__block__title">Déplacements forfaitaires </h4>
@@ -7,9 +7,9 @@
         <div class="flat-fee-form__block__input-wrapper__item form-group">
           <label for="date" class="flat-fee-form__block__input-wrapper__item__label">Date</label>
           <div class="flat-fee-form__block__input-wrapper__item__input">
-            <input type="date" pattern="\d{4}-\d{2}-\d{2}" class="form-control" name="date" [(ngModel)]="commute.date"
-              required id="date" #date="ngModel">
-            <div *ngIf="date.invalid && (date.dirty || date.touched)" class="alert alert-danger">
+            <input type="date" pattern="\d{4}-\d{2}-\d{2}" class="form-control" name="date"
+              required id="date">
+            <!-- <div *ngIf="date.invalid && (date.dirty || date.touched)" class="alert alert-danger">
 
               <div *ngIf="date.errors['required']">
                 Ce champ est obligatoire.
@@ -18,7 +18,7 @@
               <div *ngIf="date.errors['pattern']">
                 La date devrait respecter aaaa-mm-jj.
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
 
@@ -27,15 +27,15 @@
             (€)</label>
           <div class="flat-fee-form__block__input-wrapper__item__input">
             <input placeholder="ex: 25,50" type="text" pattern="([0-9]+(\.[0-9]+)?)" class="form-control" name="amount"
-              [(ngModel)]="misc.amount" required id="amount" #amount="ngModel">
-            <div *ngIf="amount.invalid && (amount.dirty || amount.touched)" class="alert alert-danger">
+              required id="amount">
+            <!-- <div *ngIf="amount.invalid && (amount.dirty || amount.touched)" class="alert alert-danger">
               <div *ngIf="amount.errors['required']">
                 Ce champ est obligatoire.
               </div>
               <div *ngIf="amount.errors['pattern']">
                 Seul des chiffres et un point sont acceptés
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
 
