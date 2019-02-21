@@ -3,7 +3,7 @@ import { TimesheetService } from './timesheet.service';
 import { Timesheet } from 'src/app/shared/models/timesheet.model';
 
 
-fdescribe('TimesheetService', () => {
+describe('TimesheetService', () => {
 
   let service = new TimesheetService();
   const testTimesheet = new Timesheet('test');

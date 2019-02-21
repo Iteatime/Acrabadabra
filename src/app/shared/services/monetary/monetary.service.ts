@@ -9,7 +9,7 @@ export class MonetaryService {
 
   public vatRateList = [0, 5.5, 10.0, 20.0];
 
-  get  currencyCode(): string {
+  get currencyCode(): string {
     return 'EUR';
   }
 
