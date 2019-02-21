@@ -56,7 +56,7 @@ export class CalendarService {
     }
   }
 
-  public getFirstWorkingDay(timesheet: Timesheet): Date {
+  public getFirstWorkingDay(timesheet: Timesheet): Date | boolean {
     let date;
 
     if (Object.keys(timesheet.workingDays).length > 0) {
@@ -71,11 +71,11 @@ export class CalendarService {
       });
     }
 
-    return date;
+    return !!date ? date : false;
   }
 
-  public getLastWorkingDay(timesheet: Timesheet): Date {
-    let date: Date;
+  public getLastWorkingDay(timesheet: Timesheet): Date | boolean {
+    let date;
 
     if (Object.keys(timesheet.workingDays).length > 0) {
       const timesheetDate = Object.keys(timesheet.workingDays)[0];
@@ -89,6 +89,6 @@ export class CalendarService {
       });
     }
 
-    return date;
+    return !!date ? date : false;
   }
 }

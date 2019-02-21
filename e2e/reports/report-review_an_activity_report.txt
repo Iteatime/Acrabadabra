@@ -1,0 +1,16 @@
+Feature: Review an activity report
+
+I can see for witch month it is
+-pass
+
+I can see how many day was worked this month
+-pass
+
+I can download its associated invoice
+-pass
+
+I can see a calendar showing me every day was worked
+-pass
+
+I can have list of its associated expenses
+-pass

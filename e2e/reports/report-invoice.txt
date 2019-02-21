@@ -1,0 +1,27 @@
+generate invoice:
+  I need to generate an invoice:
+    -Pass
+
+  I want close my invoice form:
+    -Pass
+
+  I fill the invoice form:
+    -Pass
+
+  I forgot to fill a required input in the form:
+    -Pass
+
+  I modify an input after a form validation:
+    -Pass
+
+  I want to download my invoice:
+    -Pass
+
+  Exempt provider or customer of RCS/RM:
+    -Pass
+
+  I want apply vta exemption:
+    -Pass
+
+  Late fee apply on customer invoice:
+    -Pass (strange wording)
