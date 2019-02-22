@@ -7,14 +7,18 @@ export class MonetaryService {
 
   constructor() { }
 
-  public vatRateList = [0, 5.5, 10.0, 20.0];
+  public vatRates = { exempt: 0.0,
+                      greatlyReduced: 5.5,
+                      reduced: 10.0,
+                      normal: 20.0
+                    };
 
   get currencyCode(): string {
     return 'EUR';
   }
 
   get vatRate(): number {
-    return this.vatRateList[this.vatRateList.length - 1];
+    return this.vatRates.normal;
   }
 
 }

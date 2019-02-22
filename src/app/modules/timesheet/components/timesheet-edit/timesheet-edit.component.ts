@@ -47,7 +47,8 @@ export class TimesheetEditComponent implements OnInit {
     } else {
       this.showLinks = true;
       this.generateInvoice = !!this.timesheetService.timesheet.invoice;
-      this.generateExpenses = this.timesheetService.timesheet.commutes.length > 0;
+      this.generateExpenses = this.timesheetService.timesheet.commutes.length > 0 ||
+                              this.timesheetService.timesheet.miscellaneous.length > 0;
       this.updateMailtoLink();
     }
     this.form.valueChanges.subscribe(() => {

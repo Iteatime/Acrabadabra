@@ -20,14 +20,18 @@ export class ExpenseMiscellaneousFormComponent implements OnInit {
   miscellaneousTypes = [];
   vatRates = [];
 
-  constructor(private miscellaneousExpenses: MiscellaneousExpensesService,
-              private vatRateList: MonetaryService,
+  constructor(private miscellaneousExpensesService: MiscellaneousExpensesService,
+              private monetaryService: MonetaryService,
               public timesheetService: TimesheetService) { }
 
   ngOnInit() {
     this.misc = new Miscellaneous();
-    this.miscellaneousTypes = this.miscellaneousExpenses.miscellaneousTypes;
-    this.vatRates = this.vatRateList.vatRateList;
+    this.miscellaneousTypes = this.miscellaneousExpensesService.miscellaneousTypes;
+    this.vatRates = [];
+    Object.values(this.monetaryService.vatRates).forEach(rate => {
+      this.vatRates.push(rate);
+    });
+    console.log(this.vatRates);
     this.miscellaneous = this.timesheetService.timesheet.miscellaneous;
 
     this.form.valueChanges.subscribe(() => {
@@ -40,9 +44,9 @@ export class ExpenseMiscellaneousFormComponent implements OnInit {
   onSubmit() {
     if (this.form.valid) {
       if (this.misc.selectedType !== 4) {
-        this.misc.tvaRate = this.miscellaneousExpenses.miscellaneousTypes[this.misc.selectedType].vat;
+        this.misc.tvaRate = this.miscellaneousExpensesService.miscellaneousTypes[this.misc.selectedType].vat;
       }
-      this.misc.miscellaneousType = this.miscellaneousExpenses.miscellaneousTypes[this.misc.selectedType].type;
+      this.misc.miscellaneousType = this.miscellaneousExpensesService.miscellaneousTypes[this.misc.selectedType].type;
       this.submitted = true;
       this.miscellaneous.push(Object.assign(new Miscellaneous(), this.misc));
       this.changed.emit(true);
