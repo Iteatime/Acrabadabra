@@ -19,13 +19,8 @@ describe('CurrencyService', () => {
   });
 
   describe('vatRate', () => {
-    beforeEach(() => {
-      service.vatRateList = [
-      2.0, 4.5, 10.8, 40, 75.4, 99.0
-      ];
-    });
-    it('should return last value of "vatRateList" array', () => {
-      expect(service.vatRate).toBe(99.0);
+    it('should return "normal" value of "vatRates" object', () => {
+      expect(service.vatRate).toBe(20.0);
     });
   });
 });
