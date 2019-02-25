@@ -20,7 +20,7 @@
   publish = "./dist/acrabadabra/"
 
   # Default build command.
-  command = "ng build acrabadabra"
+  command = "npm run build"
 
   # Directory with the lambda functions to deploy to AWS.
   functions = "./functions/"
@@ -28,14 +28,14 @@
 # Production context: All deploys to the main
 # repository branch will inherit these settings.
 [context.production]
-  command = "ng build acrabadabra --prod"
+  command = "npm run build"
 #  [context.production.environment]
 #    ACCESS_TOKEN = "super secret"
 
 # Deploy Preview context: all deploys resulting from a pull/merge request will
 # inherit these settings.
 [context.deploy-preview]
-  command = "ng build acrabadabra"
+  command = "npm run build"
 
 # Deploy Preview context: All Deploy Previews
 # will inherit these settings.
@@ -45,12 +45,12 @@
 # Branch Deploy context: All deploys that are not in
 # an active Deploy Preview will inherit these settings.
 [context.branch-deploy]
-  command = "ng build acrabadabra"
+  command = "npm run build"
 
 # Specific branch context: all deploys from this specific branch will inherit
 # these settings.
 [context.staging] # 'staging' is a branch name
-  command = "ng build acrabadabra"
+  command = "npm run build"
 #  base = "staging"
 
 # A redirect rule with all the supported properties
