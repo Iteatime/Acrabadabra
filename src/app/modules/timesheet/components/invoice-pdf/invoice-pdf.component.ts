@@ -54,7 +54,7 @@ export class InvoicePDFComponent {
     this.workedTime = this.calendarService.getWorkedTime(this.timesheetService.timesheet);
     this.expenseMileageTotal = timesheetService.getTotalAllowance();
     this.expenseMiscellaneousTotal = timesheetService.getTotalMiscellaneous();
-    this.expenseFlatFeeTotal = timesheetService.getTotalFlatFee() / (1 + this.monetaryService.vatRates.normal / 100);
+    this.expenseFlatFeeTotal = timesheetService.getTotalFlatFee();
     this.expenseFlatFeeQuantity = this.getNumberOfFlatFees();
     this.vatRate = this.monetaryService.vatRate;
     this.currencyCode = this.monetaryService.currencyCode;
