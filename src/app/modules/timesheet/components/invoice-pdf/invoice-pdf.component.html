@@ -75,7 +75,7 @@
           <td>{{expenseMileageTitle}}</td>
           <td></td>
           <td>{{expenseMileageQuantity}}</td>
-          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ 0 | percent:"1.2-2":local  }}</td>
+          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ vatRate / 100 | percent:"1.2-2":local  }}</td>
           <td>{{expenseMileageTotal | currency:currencyCode:"symbol":'1.2-2':local}}</td>
         </tr>
         <tr *ngIf="expenseFlatFeeTotal > 0">
