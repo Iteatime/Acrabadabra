@@ -25,7 +25,7 @@
           <label for="amount" class="expense-miscellaneous-form__block__input-wrapper__item__label">Montant TTC
             (€)</label>
           <div class="expense-miscellaneous-form__block__input-wrapper__item__input">
-            <input placeholder="ex: 25,50" type="text" pattern="([0-9]+(\.[0-9]+)?)" class="form-control" name="amount"
+            <input placeholder="ex: 25.50" type="text" pattern="([0-9]+(\.[0-9]+)?)" class="form-control" name="amount"
               [(ngModel)]="misc.amount" required id="amount" #amount="ngModel">
             <div *ngIf="amount.invalid && (amount.dirty || amount.touched)" class="alert alert-danger">
               <div *ngIf="amount.errors['required']">
@@ -90,7 +90,7 @@
           <label for="wording" class="expense-miscellaneous-form__block__input-wrapper__item__label">Libellé
             (optionnel)</label>
           <div class="expense-miscellaneous-form__block__input-wrapper__item__input">
-            <input placeholder="ex: Bordeaux" type="text" class="form-control"
+            <input placeholder="ex: Restaurant Bourget du Lac" type="text" class="form-control"
               name="wording" [(ngModel)]="misc.wording" id="wording" #wording="ngModel">
             <div *ngIf="wording.invalid && (wording.dirty || wording.touched)" class="alert alert-danger">
             </div>

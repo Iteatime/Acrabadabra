@@ -12,6 +12,9 @@ table {
   & .amount {
     width: 250px;
   }
+  & .trashCan {
+    width: 60px;
+  }
 }
 tr:nth-of-type(odd) {
   background: $grey_border;

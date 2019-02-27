@@ -32,6 +32,9 @@ export class InvoicePDFComponent {
   public expenseMiscellaneousTitle = 'Frais sur justificatifs';
   public expenseMiscellaneousQuantity = '1';
   public expenseMiscellaneousTotal: any;
+  public expenseFlatFeeTitle = 'Déplacements forfaitaires';
+  public expenseFlatFeeQuantity: number;
+  public expenseFlatFeeTotal: any;
   public totalVat: number;
   public performanceTotal: number;
   public format;
@@ -40,7 +43,7 @@ export class InvoicePDFComponent {
   constructor(
     public calendarService: CalendarService,
     public timesheetService: TimesheetService,
-    private _monetaryService: MonetaryService,
+    public monetaryService: MonetaryService,
     private _route: ActivatedRoute,
     private _titleService: Title
   ) {
@@ -51,8 +54,10 @@ export class InvoicePDFComponent {
     this.workedTime = this.calendarService.getWorkedTime(this.timesheetService.timesheet);
     this.expenseMileageTotal = timesheetService.getTotalAllowance();
     this.expenseMiscellaneousTotal = timesheetService.getTotalMiscellaneous();
-    this.vatRate = this._monetaryService.vatRate;
-    this.currencyCode = this._monetaryService.currencyCode;
+    this.expenseFlatFeeTotal = timesheetService.getTotalFlatFee();
+    this.expenseFlatFeeQuantity = this.getNumberOfFlatFees();
+    this.vatRate = this.monetaryService.vatRate;
+    this.currencyCode = this.monetaryService.currencyCode;
     this._titleService.setTitle(this.timesheetService.timesheet.invoice.number);
     this.miscsTotal = this._sortMiscellaneousTotalByVat();
     this._sumCalcul();
@@ -92,6 +97,10 @@ export class InvoicePDFComponent {
     }
   }
 
+  public getNumberOfFlatFees() {
+    return this.timesheetService.timesheet.flatFees.length;
+  }
+
   private _sortMiscellaneousTotalByVat() {
     let amounts = [];
     let vat = [];
@@ -110,8 +119,8 @@ export class InvoicePDFComponent {
 
   private _sumCalcul(): void {
     this.performanceTotal = this.workedTime * this.timesheetService.timesheet.invoice.dailyRate;
-    this.totalVat = (this.vatRate * this.performanceTotal) / 100;
-    this.totalHT = this.performanceTotal + this.expenseMileageTotal;
+    this.totalVat = ((this.vatRate * this.performanceTotal) / 100) + ((this.vatRate * this.expenseFlatFeeTotal) / 100);
+    this.totalHT = this.performanceTotal + this.expenseMileageTotal + this.expenseFlatFeeTotal;
 
     this.miscsTotal.amounts.forEach((misc, index) => {
       let amountHT = misc / (1 + this.miscsTotal.vat[index] / 100 );
