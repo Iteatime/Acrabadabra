@@ -79,21 +79,16 @@ export class InvoicePDFComponent {
     let end;
 
     if (this.workedTime > 0) {
-      start = this.formatDate(this.calendarService.getFirstWorkingDay(this.timesheetService.timesheet).toString());
-      end = this.formatDate(this.calendarService.getLastWorkingDay(this.timesheetService.timesheet).toString());
-    } else if (this.timesheetService.timesheet.commutes.length > 0) {
-      const orderedCummutes = [ ...this.timesheetService.timesheet.commutes ].sort((a, b) => {
-        return +moment(a.date).isBefore(b.date);
-        // return compareAsc(a.date, b.date);
-      });
-      start = orderedCummutes[0].date;
-      end = orderedCummutes[ orderedCummutes.length - 1 ].date;
+      start = this.calendarService.getFirstWorkingDay(this.timesheetService.timesheet);
+      end = this.calendarService.getLastWorkingDay(this.timesheetService.timesheet);
+    } else {
+      start = this.timesheetService.timesheet.invoice.date;
     }
 
-    if (start !== end) {
+    if (end && <Date>start.getDate() !== <Date>end.getDate()) {
       return  `du ${this.formatDate(start)} au  ${this.formatDate(end)}`;
     } else {
-      return `le ${start.toString()}`;
+      return `le ${this.formatDate(start)}`;
     }
   }
 
