@@ -119,7 +119,9 @@ export class InvoicePDFComponent {
 
   private _sumCalcul(): void {
     this.performanceTotal = this.workedTime * this.timesheetService.timesheet.invoice.dailyRate;
-    this.totalVat = ((this.vatRate * this.performanceTotal) / 100) + ((this.vatRate * this.expenseFlatFeeTotal) / 100);
+    this.totalVat = ((this.vatRate * this.performanceTotal) / 100) +
+                    ((this.vatRate * this.expenseMileageTotal) / 100) +
+                    ((this.vatRate * this.expenseFlatFeeTotal) / 100);
     this.totalHT = this.performanceTotal + this.expenseMileageTotal + this.expenseFlatFeeTotal;
 
     this.miscsTotal.amounts.forEach((misc, index) => {
