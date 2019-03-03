@@ -7,37 +7,38 @@ export class LocalSaveService {
   constructor() { }
 
   /**
-   * Saving CRA infos into localStorage
+   * Saving item into localStorage
    *
-   * @param {string} token
+   * @param {string} name
+   * @param {any} item
    */
-  static setCRAInfos(token: string) {
-    localStorage.setItem('CRAInfos', token);
+  static setLocalItem(name: string, item: any) {
+    localStorage.setItem(name, item);
   }
 
   /**
-  * Getting CRA infos from localStorage
+  * Getting item from localStorage
   *
   * @returns {string}
   */
-  static getCRAInfos(): string {
-    return localStorage.getItem('CRAInfos');
+  static getLocalItem(name: string): string {
+    return localStorage.getItem(name);
   }
 
   /**
-  * Check if there is existing informations into LocalStorage
+  * Check if item named is into LocalStorage
   *
   * @returns {boolean}
   */
-  static checkCRAInfos(): boolean {
-    return localStorage.getItem('CRAInfos') !== null;
+  static checkItemExists(name: string): boolean {
+    return localStorage.getItem(name) !== null;
   }
 
   /**
-  * Empty CRA infos into localStorage
+  * Remove item from localStorage
   *
   */
-  static deauthenticateUser(): void {
-    localStorage.removeItem('CRAInfos');
+  static removeLocalItem(name: string): void {
+    localStorage.removeItem(name);
   }
 }

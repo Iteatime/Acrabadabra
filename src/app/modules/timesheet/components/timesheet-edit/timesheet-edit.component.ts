@@ -63,8 +63,13 @@ export class TimesheetEditComponent implements OnInit {
     });
     this.titleService.setTitle(`Acrabadabra - ${this.getModeTitle()} un compte rendu d'activité`);
 
-    if (LocalSaveService.checkCRAInfos()) {
-      this.timesheetService.openTimesheet(LocalSaveService.getCRAInfos(), 'edit');
+    if (LocalSaveService.checkItemExists('CRAInfos')) {
+      this.timesheetService.openTimesheet(LocalSaveService.getLocalItem('CRAInfos'), 'edit');
+      this.timesheetService.timesheet.workingDays = 0;
+      this.timesheetService.timesheet.invoice.date = '';
+      this.timesheetService.timesheet.invoice.number = '';
+      this.timesheetService.timesheet.invoice.paymentDate = '';
+      this.timesheetService.timesheet.invoice.paymentLatePenalty = false;
     }
   }
 
