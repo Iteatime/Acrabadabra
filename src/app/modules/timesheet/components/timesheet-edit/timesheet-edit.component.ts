@@ -85,6 +85,7 @@ export class TimesheetEditComponent implements OnInit {
       this.timesheetService.timesheet.miscellaneous = this.generateExpenses ? this.miscellaneousForm.miscellaneous : [];
       this.timesheetService.timesheet.commutes = this.generateExpenses ? this.commutesForm.commutes : [];
       this.timesheetService.timesheet.flatFees = this.generateExpenses ? this.flatFeesForm.flatFees : [];
+      this.timesheetService.saveTimesheetInfos();
       this.updateMailtoLink();
       this.reactToSubmition(false);
     } else {
