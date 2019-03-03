@@ -4,6 +4,8 @@ import { environment } from 'src/environments/environment';
 
 import { Timesheet } from 'src/app/shared/models/timesheet.model';
 
+import { LocalSaveService } from 'src/app/shared/services/localSave/local-save.service';
+
 function tokenize(a: any): string {
   return btoa(unescape(encodeURIComponent(JSON.stringify(a))));
 }
@@ -86,5 +88,20 @@ export class TimesheetService {
       totalFlatFee += +this.timesheet.flatFees[i].amount;
     }
     return totalFlatFee;
+  }
+
+  public saveTimesheetInfos() {
+    LocalSaveService.setLocalItem('CRAInfos', this.getEditToken());
+  }
+
+  public setTimesheetInfos() {
+    if (LocalSaveService.checkItemExists('CRAInfos')) {
+      this.openTimesheet(LocalSaveService.getLocalItem('CRAInfos'), 'edit');
+      this.timesheet.workingDays = 0;
+      this.timesheet.invoice.date = '';
+      this.timesheet.invoice.number = '';
+      this.timesheet.invoice.paymentDate = '';
+      this.timesheet.invoice.paymentLatePenalty = false;
+    }
   }
 }
