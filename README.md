@@ -12,8 +12,11 @@ This repo contains the sources of the app, netlify functions and configuration f
     
 ### 2 Installation:
 
-* Here you have to clone this repo then you can run `npm install`.
-* Then you have to set `PDF_API_KEY`and `PDF_API_URL` as environment variable.
+Here you have to:
+* clone this repo
+* init the _pdf-to-url_ submodule by running `git submodule init ; git submodule update` (cf. [section 3.3](#3.3-pdf-api))
+* run `npm install`
+* finally you have to set `PDF_API_KEY` and `PDF_API_URL` as environment variables.
     
 ### 3 Dev server:
 

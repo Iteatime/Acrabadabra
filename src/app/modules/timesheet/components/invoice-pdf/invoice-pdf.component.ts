@@ -11,6 +11,7 @@ import { Company } from 'src/app/shared/models/company.model';
 import { Timesheet } from 'src/app/shared/models/timesheet.model';
 
 import * as moment from 'moment';
+import { MiscellaneousExpensesService } from '../../services/miscellaneous-expenses.service';
 
 @Component({
   selector: 'app-invoice-pdf',
@@ -18,12 +19,10 @@ import * as moment from 'moment';
   styleUrls: ['./invoice-pdf.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-
 export class InvoicePDFComponent {
   public local = 'fr';
   public totalHT: number;
   public totalTTC: number;
-  public vatRate: number;
   public currencyCode: string;
   public workedTime: number;
   public expenseMileageTitle = 'Indémnités kilométriques';
@@ -35,15 +34,17 @@ export class InvoicePDFComponent {
   public expenseFlatFeeTitle = 'Déplacements forfaitaires';
   public expenseFlatFeeQuantity: number;
   public expenseFlatFeeTotal: any;
-  public totalVat: number;
+  public totalVat: any;
   public performanceTotal: number;
   public format;
   public miscsTotal;
+  public flatFeesTotal;
 
   constructor(
     public calendarService: CalendarService,
     public timesheetService: TimesheetService,
     public monetaryService: MonetaryService,
+    public miscellaneousService: MiscellaneousExpensesService,
     private _route: ActivatedRoute,
     private _titleService: Title
   ) {
@@ -56,13 +57,11 @@ export class InvoicePDFComponent {
     this.expenseMiscellaneousTotal = timesheetService.getTotalMiscellaneous();
     this.expenseFlatFeeTotal = timesheetService.getTotalFlatFee();
     this.expenseFlatFeeQuantity = this.getNumberOfFlatFees();
-    this.vatRate = this.monetaryService.vatRate;
     this.currencyCode = this.monetaryService.currencyCode;
     this._titleService.setTitle(this.timesheetService.timesheet.invoice.number);
-    this.miscsTotal = this._sortMiscellaneousTotalByVat();
+    this.flatFeesTotal = this._sortFlatFeesAmounts();
     this._sumCalcul();
   }
-
 
   public formatDate(date: string): string {
     let momentDate = moment(date);
@@ -101,41 +100,106 @@ export class InvoicePDFComponent {
     return this.timesheetService.timesheet.flatFees.length;
   }
 
-  private _sortMiscellaneousTotalByVat() {
+  private _sortFlatFeesAmounts() {
     let amounts = [];
-    let vat = [];
+    let quantity : number[] = [];
 
-    this.timesheetService.timesheet.miscellaneous.forEach(misc => {
-      const index = vat.indexOf(misc.tvaRate);
+    this.timesheetService.timesheet.flatFees.forEach(( flatFee ) => {
+      let index = amounts.indexOf(flatFee.amount);
       if (index === -1) {
-        vat.push(misc.tvaRate);
-        amounts.push(+misc.amount);
+        amounts.push(flatFee.amount);
+        quantity.push(1);
       } else {
-        amounts[index] += +misc.amount;
+        quantity[index] ++;
       }
     });
-    return { amounts, vat };
+    return { amounts, quantity };
   }
 
-  private _sumCalcul(): void {
-    this.performanceTotal = this.workedTime * this.timesheetService.timesheet.invoice.dailyRate;
-    this.totalVat = ((this.vatRate * this.performanceTotal) / 100) + ((this.vatRate * this.expenseFlatFeeTotal) / 100);
-    this.totalHT = this.performanceTotal + this.expenseMileageTotal + this.expenseFlatFeeTotal;
-
-    this.miscsTotal.amounts.forEach((misc, index) => {
-      let amountHT = misc / (1 + this.miscsTotal.vat[index] / 100 );
-      if (this.timesheetService.timesheet.invoice.provider.vatExemption) {
-        this.totalHT += +misc;
+  public sortByMiscsVatState() {
+    let deductible = [];
+    let nondeductible = {
+      quantity: 0,
+      amount: 0
+    };
+    this.timesheetService.timesheet.miscellaneous.forEach(misc => {
+      if (this.miscellaneousService.vatDeductible(misc)) {
+        const index = deductible.indexOf(this._searchMiscVatIndex(misc.tvaRate, deductible));
+        if (index > -1) {
+          deductible[index].amount += +misc.amount;
+          deductible[index].quantity++;
+        } else {
+          deductible.push({
+            amount: +misc.amount,
+            quantity: 1,
+            vatRate: misc.tvaRate
+          });
+        }
       } else {
-        this.miscsTotal.amounts[index] = amountHT;
-        this.totalVat += misc - amountHT;
-        this.totalHT += amountHT;
+        nondeductible.amount += +misc.amount;
+        nondeductible.quantity++;
       }
     });
+    return { deductible, nondeductible };
+  }
+
+  private _searchMiscVatIndex(vat: number, miscTable: any) {
+    return miscTable.find(element => {
+      return element['vatRate'] === vat;
+    });
+  }
+
+  private _totalDeductible() {
+    let total = 0;
+
+    this.sortByMiscsVatState().deductible.forEach(miscVat => {
+      total += miscVat.amount / ( 1 + miscVat.vatRate / 100);
+      if (miscVat.vatRate !== 0) {
+        if (miscVat.vatRate !== this.monetaryService.vatRates.normal) {
+          this.totalVat.push({
+            rate: miscVat.vatRate,
+            amount: miscVat.amount - miscVat.amount / (1 + miscVat.vatRate / 100)
+          });
+        } else {
+          this.totalVat[0].amount += miscVat.amount - miscVat.amount / (1 + miscVat.vatRate / 100);
+        }
+      }
+    });
+    return total;
+  }
+  private _sortVatTable() {
+    this.totalVat.sort( (a, b) => {
+      return +(a.rate - b.rate);
+    });
+  }
+  private _sumCalcul(): void {
+    this.performanceTotal = this.workedTime * this.timesheetService.timesheet.invoice.dailyRate;
+    this.totalVat = [
+      {
+        rate: this.monetaryService.vatRates.normal,
+        amount: (
+            this.performanceTotal +
+            this.expenseFlatFeeTotal +
+            this.expenseMileageTotal +
+            this.sortByMiscsVatState().nondeductible.amount
+          ) * (this.monetaryService.vatRates.normal / 100)
+      }
+    ];
+    this.totalHT = this.performanceTotal +
+      this._totalDeductible() +
+      this.sortByMiscsVatState().nondeductible.amount +
+      this.expenseMileageTotal +
+      this.expenseFlatFeeTotal;
+    this._sortVatTable();
     if (this.timesheetService.timesheet.invoice.provider.vatExemption ) {
       this.totalTTC = this.totalHT;
+      this.totalVat = [];
     } else {
-      this.totalTTC = this.totalHT + this.totalVat;
+      let sumVat = 0;
+      this.totalVat.forEach(vat => {
+        sumVat += vat.amount;
+      });
+      this.totalTTC = this.totalHT + sumVat;
     }
   }
 }
