@@ -91,12 +91,12 @@ export class TimesheetService {
   }
 
   public saveTimesheetInfos() {
-    LocalSaveService.setLocalItem('CRAInfos', this.getEditToken());
+    LocalSaveService.setLocalItem('timesheetInfos', this.getEditToken());
   }
 
   public setTimesheetInfos() {
-    if (LocalSaveService.checkItemExists('CRAInfos')) {
-      this.openTimesheet(LocalSaveService.getLocalItem('CRAInfos'), 'edit');
+    if (LocalSaveService.checkItemExists('timesheetInfos')) {
+      this.openTimesheet(LocalSaveService.getLocalItem('timesheetInfos'), 'edit');
       this.timesheet.workingDays = 0;
       this.timesheet.invoice.date = '';
       this.timesheet.invoice.number = '';
