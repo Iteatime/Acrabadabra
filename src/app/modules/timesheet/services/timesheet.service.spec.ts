@@ -84,8 +84,22 @@ describe('TimesheetService', () => {
       ];
     });
 
-    it('should return "totalAllowance" of mileage allowances in the array of "commutes"', () => {
+    it('should return "totalMiscellaneous" of miscellaneous expenses in the array of "miscellaneous"', () => {
       expect(service.getTotalMiscellaneous()).toBe(33);
+    });
+  });
+
+  fdescribe('getTotalFlatFee()', () => {
+    beforeEach(() => {
+      service.timesheet.flatFees = [
+        {date: '', amount: 4 },
+        {date: '', amount: 5 },
+        {date: '', amount: 6 }
+      ];
+    });
+
+    it('should return "totalFlatFee" of flat fees expenses in the array of "flatFees"', () => {
+      expect(service.getTotalFlatFee()).toBe(15);
     });
   });
 });
