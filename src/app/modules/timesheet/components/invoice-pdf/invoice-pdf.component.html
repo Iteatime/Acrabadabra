@@ -77,7 +77,7 @@
 
         <tr *ngIf="expenseMileageTotal > 0">
           <td>{{ expenseMileageTitle }}</td>
-          <td></td>
+          <td>{{ expenseMileageTotal | currency:currencyCode:"symbol":"1.2-2":local }}</td>
           <td>{{ expenseMileageQuantity }}</td>
           <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ monetaryService.vatRates.normal / 100 | percent:"1.2-2":local  }}</td>
           <td>{{ expenseMileageTotal | currency:currencyCode:"symbol":'1.2-2':local }}</td>
@@ -97,19 +97,19 @@
                 * ( 1 + monetaryService.vatRates.normal / 100 ) | currency:currencyCode:"symbol":"1.2-2":local }}</td>
         </tr>
 
-        <tr *ngFor="let miscDeduble of sortByMiscsVatState().deductible">
-          <td>Frais sur justificatifs &mdash; deductible</td>
-          <td></td>
-          <td>{{ miscDeduble.quantity }}</td>
-          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ miscDeduble.vatRate / 100 | percent:"1.2-2":local }}</td>
-          <td>{{ miscDeduble.amount / ( 1 + miscDeduble.vatRate / 100) | currency:currencyCode:"symbol":"1.2-2":local }}</td>
-          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ miscDeduble.amount | currency:currencyCode:"symbol":"1.2-2":local }}</td>
+        <tr *ngFor="let miscDeductible of sortByMiscsVatState().deductible">
+          <td>Frais sur justificatifs &mdash; TVA déductible</td>
+          <td>{{ miscDeductible.amount / ( 1 + miscDeductible.vatRate / 100) | currency:currencyCode:"symbol":"1.2-2":local }}</td>
+          <td> 1 </td>
+          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ miscDeductible.vatRate / 100 | percent:"1.2-2":local }}</td>
+          <td>{{ miscDeductible.amount / ( 1 + miscDeductible.vatRate / 100) | currency:currencyCode:"symbol":"1.2-2":local }}</td>
+          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ miscDeductible.amount | currency:currencyCode:"symbol":"1.2-2":local }}</td>
         </tr>
 
         <tr *ngIf="sortByMiscsVatState().nondeductible.amount > 0">
-          <td>Frais sur justificatifs</td>
-          <td></td>
-          <td>{{ sortByMiscsVatState().nondeductible.quantity }}</td>
+          <td>Frais sur justificatifs &mdash; TVA non déductible</td>
+          <td> {{ sortByMiscsVatState().nondeductible.amount | currency:currencyCode:"symbol":"1.2-2":local }} </td>
+          <td> 1 </td>
           <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ monetaryService.vatRates.normal / 100 | percent:"1.2-2":local }}</td>
           <td>{{ sortByMiscsVatState().nondeductible.amount | currency:currencyCode:"symbol":"1.2-2":local }}</td>
           <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ sortByMiscsVatState().nondeductible.amount * (1 + monetaryService.vatRates.normal / 100) | currency:currencyCode:"symbol":"1.2-2":local }}</td>
@@ -152,6 +152,7 @@
           <p>
             Total HT
           </p>
+          <br>
           <p *ngFor="let vat of totalVat">
             <span>
               Montant TVA {{ vat.rate / 100 | percent:"1.2-2":local }}
@@ -161,6 +162,7 @@
         <td></td>
         <td class="invoice__total__value">
           <p>{{ totalHT | currency:currencyCode:"symbol":'1.2-2':local }}</p>
+          <br>
           <p *ngFor="let vat of totalVat">
             <span>
               {{ vat.amount | currency:currencyCode:"symbol":'1.2-2':local }}

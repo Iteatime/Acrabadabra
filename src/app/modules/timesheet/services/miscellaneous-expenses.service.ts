@@ -14,25 +14,25 @@ export class MiscellaneousExpensesService {
     },
     {
       type: 'Péage',
-      vatDeductible: true,
+      vatDeductible: true
     },
     {
       type: 'Transports',
       vat: this.monetaryService.vatRates.reduced,
-      vatDeductible: false,
+      vatDeductible: false
     },
     {
       type: 'Hébergement',
       vat: this.monetaryService.vatRates.reduced,
-      vatDeductible: false,
-    },
-    {
-      type: 'Location matériel numérique',
-      vatDeductible: true,
+      vatDeductible: false
     },
     {
       type: 'Autres',
       vatDeductible: true
+    },
+    {
+      type: 'Autres',
+      vatDeductible: false
     }
 ];
 
