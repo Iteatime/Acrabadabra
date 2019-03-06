@@ -98,7 +98,7 @@
         </tr>
 
         <tr *ngFor="let miscDeductible of sortByMiscsVatState().deductible">
-          <td>Frais sur justificatifs &mdash; TVA déductible</td>
+          <td>Frais sur justificatifs - TVA déductible</td>
           <td>{{ miscDeductible.amount / ( 1 + miscDeductible.vatRate / 100) | currency:currencyCode:"symbol":"1.2-2":local }}</td>
           <td> 1 </td>
           <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ miscDeductible.vatRate / 100 | percent:"1.2-2":local }}</td>
@@ -107,7 +107,7 @@
         </tr>
 
         <tr *ngIf="sortByMiscsVatState().nondeductible.amount > 0">
-          <td>Frais sur justificatifs &mdash; TVA non déductible</td>
+          <td>Frais sur justificatifs - TVA non déductible</td>
           <td> {{ sortByMiscsVatState().nondeductible.amount | currency:currencyCode:"symbol":"1.2-2":local }} </td>
           <td> 1 </td>
           <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ monetaryService.vatRates.normal / 100 | percent:"1.2-2":local }}</td>
@@ -184,7 +184,7 @@
     </table>
   </div>
 
-  <div class="invoice__additional-information">
+  <!-- <div class="invoice__additional-information">
     <div>
       Consultant chargé de la prestation : {{ timesheetService.timesheet.consultant.name }}
     </div>
@@ -211,7 +211,44 @@
       <div>IBAN : {{ timesheetService.timesheet.invoice.bankIBAN }}</div>
       <div>SWIFT : {{ timesheetService.timesheet.invoice.bankSWIFT }}</div>
     </div>
-  </div>
+  </div> -->
+  <div class="invoice__additional-information">
+  <table>
+    <tr>
+      <td id="global-information">
+        <div>
+          Consultant chargé de la prestation : {{ timesheetService.timesheet.consultant.name }}
+        </div>
+        <div>
+          Date d’exécution de la vente
+          <br />
+          ou de la prestation : {{ formatDuration() }}
+        </div>
+        <div>
+          Date de règlement : {{ formatDate(timesheetService.timesheet.invoice.paymentDate) }}
+        </div>
+        <div *ngIf="timesheetService.timesheet.invoice.paymentLatePenalty" id="penalty">
+          Tout retard de paiement donnera lieu, en plus des pénalités de retard (10 % par an), au versement d'une indemnité
+          forfaitaire de 40€ pour frais de recouvrement.
+        </div>
+        <div *ngIf="timesheetService.timesheet.invoice.paymentModality">
+          Modalités de paiement : {{ timesheetService.timesheet.invoice.paymentModality }}
+        </div>
+      </td>
+      <td></td>
+      <td id="bank-information">
+      <div *ngIf="timesheetService.timesheet.invoice.isBankingDetails()">
+          <div>Coordonnées bancaires :</div>
+          <div>Titulaire du compte : {{ timesheetService.timesheet.invoice.bankAccountHolder }}</div>
+          <div>Banque : {{ timesheetService.timesheet.invoice.bankingDomiciliation }}</div>
+          <div>Agence : {{ timesheetService.timesheet.invoice.bankingAgency }}</div>
+          <div>IBAN : {{ timesheetService.timesheet.invoice.bankIBAN }}</div>
+          <div>SWIFT : {{ timesheetService.timesheet.invoice.bankSWIFT }}</div>
+        </div>
+      </td>
+      </tr>
+    </table>
+    </div>
 
   <div class="invoice__footer">
     <div>

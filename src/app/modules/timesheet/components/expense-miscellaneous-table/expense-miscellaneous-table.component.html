@@ -13,7 +13,7 @@
             <td data-text="Type:">{{miscellaneous.miscellaneousType}}
               <span *ngIf="miscellaneousService.vatDeductible(miscellaneous)">(TVA déductible) </span>
               <span *ngIf="!miscellaneousService.vatDeductible(miscellaneous)">(TVA non déductible) </span>
-              <span *ngIf="miscellaneous.wording">{{"&mdash; " + miscellaneous.wording[0].toUpperCase()
+              <span *ngIf="miscellaneous.wording">{{"- " + miscellaneous.wording[0].toUpperCase()
                  + miscellaneous.wording.substring(1,miscellaneous.wording.length)}}</span>
             </td>
             <td data-text="Taux de TVA:">{{+miscellaneous.tvaRate}} %</td>
