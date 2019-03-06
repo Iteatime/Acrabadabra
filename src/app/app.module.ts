@@ -9,6 +9,8 @@ import { HomeComponent } from './components/home/home.component';
 import { TimesheetModule } from './modules/timesheet/timesheet.module';
 import { ExpenseModule } from './modules/expense/expense.module';
 
+import {HttpClient} from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import { ExpenseModule } from './modules/expense/expense.module';
     BrowserModule,
     TimesheetModule,
     ExpenseModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

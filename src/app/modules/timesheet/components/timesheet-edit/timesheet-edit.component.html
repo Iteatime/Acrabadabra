@@ -140,16 +140,14 @@
             <p>Envoyer le CRA par mail</p>
           </a>
         </div>
-        <div class="edit-cra__wrapper__form__icons__item">
-          <a href="#" [copyToClipboard]="originUrl + '/timesheet/edit/' + timesheetService.getEditToken()"
-            [copyToClipboardMessage]="'Lien copié'" [copyToClipboardMessageParent]="editLink.parentNode" #editLink>
+        <div id="edit" class="edit-cra__wrapper__form__icons__item">
+          <a href="#" (click)="onClickCopy($event, 'edit')">
             <i class="material-icons">edit</i>
             <p>Copier le lien de modification</p>
           </a>
         </div>
-        <div class="edit-cra__wrapper__form__icons__item">
-          <a href="#" [copyToClipboard]="originUrl + '/timesheet/review/' + timesheetService.getReviewToken()"
-            [copyToClipboardMessage]="'Lien copié'" [copyToClipboardMessageParent]="shareLink.parentNode" #shareLink>
+        <div id="review" class="edit-cra__wrapper__form__icons__item">
+          <a href="#" (click)="onClickCopy($event, 'review')">
             <i class="material-icons">remove_red_eye</i>
             <p>Copier le lien de partage</p>
           </a>

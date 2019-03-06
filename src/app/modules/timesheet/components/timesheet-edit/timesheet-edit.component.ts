@@ -15,7 +15,6 @@ import { ExpenseFlatFeeFormComponent } from 'src/app/modules/expense/components/
 import { CalendarSelectorComponent } from 'src/app/modules/calendar/components/calendar-selector/calendar-selector.component';
 
 
-
 @Component({
   selector: 'app-timesheet-edit',
   templateUrl: './timesheet-edit.component.html',
@@ -70,6 +69,36 @@ export class TimesheetEditComponent implements OnInit {
     this.submitMessage = null;
   }
 
+  onClickCopy($event: any, action: string) {
+    $event.preventDefault();
+    const getToken = (action === 'edit') ? this.timesheetService.getEditToken() : this.timesheetService.getReviewToken();
+      this.timesheetService.shortenUrl(this.originUrl + '/timesheet/${action}/' + getToken)
+        .then ((res) => {
+          this.onCopyAlert(action);
+          this.copyToClipboard(res);
+        });
+  }
+
+  onCopyAlert(action): void {
+    const element: HTMLElement = document.getElementById(action);
+    const message: HTMLElement = element.appendChild(document.createElement('div'));
+    message.className = 'alert alert-success';
+    message.innerText = 'Lien copié !';
+
+    setTimeout(() => {
+      element.removeChild(message);
+    }, 5000);
+  }
+
+  copyToClipboard(item) {
+    document.addEventListener('copy', (e: ClipboardEvent) => {
+      e.clipboardData.setData('text/plain', (item));
+      e.preventDefault();
+      document.removeEventListener('copy', null);
+    });
+    document.execCommand('copy');
+  }
+
   onSubmit() {
     if (this.checkFormsValidity()) {
       this.timesheetService.timesheet.workingDays = this.calendarService.getWorkingDays(this.calendar.timesheet);
@@ -98,12 +127,14 @@ export class TimesheetEditComponent implements OnInit {
   }
 
   updateMailtoLink(): void {
-    this.reviewMail = new ReviewMail(
-      this.timesheetService.timesheet,
-      this.calendarService.getWorkedTime(this.timesheetService.timesheet),
-      this.timesheetService.getReviewToken(),
-      this.originUrl + '/timesheet/edit/'
-    );
+    this.timesheetService.shortenUrl(this.originUrl + '/timesheet/review/' + this.timesheetService.getReviewToken())
+      .then ((url) => {
+        this.reviewMail = new ReviewMail(
+          this.timesheetService.timesheet,
+          this.calendarService.getWorkedTime(this.timesheetService.timesheet),
+          url
+        );
+      });
   }
 
   checkFormsValidity(): boolean {
