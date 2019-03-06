@@ -1,7 +1,8 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-import { TimesheetService } from '../../services/timesheet.service';
+import { TimesheetService } from 'src/app/modules/timesheet/services/timesheet.service';
 import { MonetaryService } from 'src/app/shared/services/monetary/monetary.service';
 import { FlatFee } from 'src/app/shared/models/flat-fee.model';
+
 
 @Component({
   selector: 'app-expense-flat-fee-table',

@@ -11,7 +11,7 @@ import { Company } from 'src/app/shared/models/company.model';
 import { Timesheet } from 'src/app/shared/models/timesheet.model';
 
 import * as moment from 'moment';
-import { MiscellaneousExpensesService } from '../../services/miscellaneous-expenses.service';
+import { MiscellaneousExpensesService } from '../../../expense/services/miscellaneous-expenses.service';
 
 @Component({
   selector: 'app-invoice-pdf',
