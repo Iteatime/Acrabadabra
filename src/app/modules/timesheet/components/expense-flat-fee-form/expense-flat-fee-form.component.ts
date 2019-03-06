@@ -33,7 +33,6 @@ export class ExpenseFlatFeeFormComponent implements OnInit {
       this.submitted = true;
       this.flatFees.push(Object.assign(new FlatFee(), this.flatFee));
       this.changed.emit(true);
-      console.log(this.flatFees);
     } else {
       Object.keys(this.form.controls).forEach(field => {
         this.form.controls[field].markAsTouched();

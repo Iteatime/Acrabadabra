@@ -39,8 +39,10 @@
         </div>
 
         <div [ngClass]="{
-          'expense-miscellaneous-form__block__input-wrapper__item form-group':this.misc.selectedType !== 4,
-          'expense-miscellaneous-form__block__input-wrapper__item2 form-group2':this.misc.selectedType === 4
+          'expense-miscellaneous-form__block__input-wrapper__item form-group':!miscellaneousExpensesService.vatDeductible(this.misc),
+          'expense-miscellaneous-form__block__input-wrapper__item2 form-group2':miscellaneousExpensesService.vatDeductible(this.misc) ||
+                                                                                misc.selectedType ===
+                                                                                miscellaneousExpensesService.miscellaneousTypes.length - 1
         }">
           <label for="expenseType" class="expense-miscellaneous-form__block__input-wrapper__item__label">Type de
             frais</label>
@@ -49,7 +51,9 @@
               id="expenseType" #expenseType="ngModel">
               <option [ngValue]="undefined" disabled selected>Type de frais</option>
               <option *ngFor="let miscellaneousType of miscellaneousTypes; let i = index" [ngValue]="i">
-                {{miscellaneousType.type}}
+                {{ miscellaneousType.type }}
+                <span *ngIf="miscellaneousType.vatDeductible">(TVA déductible) </span>
+                <span *ngIf="!miscellaneousType.vatDeductible">(TVA non déductible) </span>
               </option>
             </select>
             <div *ngIf="expenseType.invalid && (expenseType.dirty || expenseType.touched)" class="alert alert-danger">
@@ -60,11 +64,9 @@
           </div>
         </div>
 
-        <div *ngIf="this.misc.selectedType === 4"
-        [ngClass]="{
-          'expense-miscellaneous-form__block__input-wrapper__item form-group':this.misc.selectedType !== 4,
-          'expense-miscellaneous-form__block__input-wrapper__item2 form-group2':this.misc.selectedType === 4
-        }">
+        <div *ngIf="miscellaneousExpensesService.vatDeductible(misc) ||
+                    misc.selectedType === miscellaneousExpensesService.miscellaneousTypes.length - 1"
+        class="expense-miscellaneous-form__block__input-wrapper__item2 form-group2">
           <label for="expenseType" class="expense-miscellaneous-form__block__input-wrapper__item__label">Taux de TVA
             (%)</label>
           <div class="expense-miscellaneous-form__block__input-wrapper__item__input">
@@ -84,13 +86,15 @@
         </div>
 
         <div [ngClass]="{
-          'expense-miscellaneous-form__block__input-wrapper__item form-group':this.misc.selectedType !== 4,
-          'expense-miscellaneous-form__block__input-wrapper__item2 form-group2':this.misc.selectedType === 4
-        }">
+          'expense-miscellaneous-form__block__input-wrapper__item form-group':!this.miscellaneousExpensesService.vatDeductible(this.misc),
+          'expense-miscellaneous-form__block__input-wrapper__item2 form-group2':this.miscellaneousExpensesService.vatDeductible(this.misc) ||
+                                                                                misc.selectedType ===
+                                                                                miscellaneousExpensesService.miscellaneousTypes.length - 1
+          }">
           <label for="wording" class="expense-miscellaneous-form__block__input-wrapper__item__label">Libellé
             (optionnel)</label>
           <div class="expense-miscellaneous-form__block__input-wrapper__item__input">
-            <input placeholder="ex: Restaurant Bourget du Lac" type="text" class="form-control"
+            <input type="text" class="form-control"
               name="wording" [(ngModel)]="misc.wording" id="wording" #wording="ngModel">
             <div *ngIf="wording.invalid && (wording.dirty || wording.touched)" class="alert alert-danger">
             </div>
@@ -101,6 +105,9 @@
           <button data-text="Ajouter" class="expense-miscellaneous-form__block__submit__button">
             <span>Ajouter</span>
           </button>
+          <div class="expense-miscellaneous-form__block__submit__reminder" *ngIf="this.timesheetService.timesheet.miscellaneous.length > 0">
+            * Pensez à transmettre les justificatifs de frais en annexe de votre facture
+          </div>
         </div>
         <app-expense-miscellaneous-table (changed)="changed.emit(true)">
         </app-expense-miscellaneous-table>

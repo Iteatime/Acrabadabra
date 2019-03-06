@@ -62,56 +62,84 @@
         <th>QUANTITE</th>
         <th *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">TAUX DE TVA</th>
         <th>TOTAL HT</th>
+        <th *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">TOTAL TTC</th>
       </thead>
       <tbody>
         <tr *ngIf="workedTime > 0">
           <td>Journée d’intervention {{ timesheetService.timesheet.mission.title }}</td>
           <td>{{ timesheetService.timesheet.invoice.dailyRate | currency:currencyCode:"symbol":"1.2-2":local }}</td>
           <td>{{ workedTime }}</td>
-          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ vatRate / 100 | percent:"1.2-2":local }}</td>
+          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ monetaryService.vatRates.normal / 100 | percent:"1.2-2":local }}</td>
           <td>{{ performanceTotal | currency:currencyCode:"symbol":"1.2-2":local }}</td>
+          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">
+              {{ performanceTotal * ( 1 + monetaryService.vatRates.normal / 100 ) | currency:currencyCode:"symbol":"1.2-2":local }}</td>
         </tr>
+
         <tr *ngIf="expenseMileageTotal > 0">
-          <td>{{expenseMileageTitle}}</td>
-          <td></td>
-          <td>{{expenseMileageQuantity}}</td>
-          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ vatRate / 100 | percent:"1.2-2":local  }}</td>
-          <td>{{expenseMileageTotal | currency:currencyCode:"symbol":'1.2-2':local}}</td>
+          <td>{{ expenseMileageTitle }}</td>
+          <td>{{ expenseMileageTotal | currency:currencyCode:"symbol":"1.2-2":local }}</td>
+          <td>{{ expenseMileageQuantity }}</td>
+          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ monetaryService.vatRates.normal / 100 | percent:"1.2-2":local  }}</td>
+          <td>{{ expenseMileageTotal | currency:currencyCode:"symbol":'1.2-2':local }}</td>
+          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">
+              {{ expenseMileageTotal * ( 1 + monetaryService.vatRates.normal / 100 ) | currency:currencyCode:"symbol":"1.2-2":local }}</td>
         </tr>
-        <tr *ngIf="expenseFlatFeeTotal > 0">
-          <td>{{expenseFlatFeeTitle}}</td>
-          <td></td>
-          <td>{{expenseFlatFeeQuantity}}</td>
-          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ vatRate / 100 | percent:"1.2-2":local  }}</td>
-          <td>{{expenseFlatFeeTotal | currency:currencyCode:"symbol":'1.2-2':local}}</td>
+
+        <tr *ngFor="let value of flatFeesTotal.amounts; let i = index">
+          <td>{{ expenseFlatFeeTitle }}</td>
+          <td>{{ flatFeesTotal.amounts[i] | currency:currencyCode:"symbol":'1.2-2':local }}</td>
+          <td>{{ flatFeesTotal.quantity[i] }}</td>
+          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ monetaryService.vatRates.normal / 100 | percent:"1.2-2":local  }}</td>
+          <td> {{ flatFeesTotal.amounts[i] * flatFeesTotal.quantity[i] | currency:currencyCode:"symbol":'1.2-2':local}}</td>
+          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">
+              {{ flatFeesTotal.amounts[i]
+                * flatFeesTotal.quantity[i]
+                * ( 1 + monetaryService.vatRates.normal / 100 ) | currency:currencyCode:"symbol":"1.2-2":local }}</td>
         </tr>
-        <tr *ngFor="let value of miscsTotal.vat; let i = index">
-          <td>{{expenseMiscellaneousTitle}}</td>
-          <td></td>
-          <td>{{expenseMiscellaneousQuantity}}</td>
-          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ value / 100 | percent:"1.2-2":local  }}</td>
-          <td>{{miscsTotal.amounts[i] | currency:currencyCode:"symbol":"1.2-2":local}}</td>
+
+        <tr *ngFor="let miscDeductible of sortByMiscsVatState().deductible">
+          <td>Frais sur justificatifs - TVA déductible</td>
+          <td>{{ miscDeductible.amount / ( 1 + miscDeductible.vatRate / 100) | currency:currencyCode:"symbol":"1.2-2":local }}</td>
+          <td> 1 </td>
+          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ miscDeductible.vatRate / 100 | percent:"1.2-2":local }}</td>
+          <td>{{ miscDeductible.amount / ( 1 + miscDeductible.vatRate / 100) | currency:currencyCode:"symbol":"1.2-2":local }}</td>
+          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ miscDeductible.amount | currency:currencyCode:"symbol":"1.2-2":local }}</td>
         </tr>
-        <tr *ngIf="(workedTime > 0 ? 1 : 0) + (expenseMileageTotal > 0 ? 1 : 0) + (expenseFlatFeeTotal > 0 ? 1 : 0) + miscsTotal.vat.length < 2">
+
+        <tr *ngIf="sortByMiscsVatState().nondeductible.amount > 0">
+          <td>Frais sur justificatifs - TVA non déductible</td>
+          <td> {{ sortByMiscsVatState().nondeductible.amount | currency:currencyCode:"symbol":"1.2-2":local }} </td>
+          <td> 1 </td>
+          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ monetaryService.vatRates.normal / 100 | percent:"1.2-2":local }}</td>
+          <td>{{ sortByMiscsVatState().nondeductible.amount | currency:currencyCode:"symbol":"1.2-2":local }}</td>
+          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">{{ sortByMiscsVatState().nondeductible.amount * (1 + monetaryService.vatRates.normal / 100) | currency:currencyCode:"symbol":"1.2-2":local }}</td>
+        </tr>
+
+        <tr *ngIf="(workedTime > 0 ? 1 : 0) + (expenseMileageTotal > 0 ? 1 : 0) + (expenseFlatFeeTotal > 0 ? 1 : 0) + sortByMiscsVatState().deductible.length  + (sortByMiscsVatState().nondeductible.amount > 0 ? 1 : 0) < 2">
           <td></td>
           <td></td>
           <td></td>
           <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption"></td>
           <td></td>
+          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption"></td>
         </tr>
-        <tr *ngIf="(workedTime > 0 ? 1 : 0) + (expenseMileageTotal > 0 ? 1 : 0) + (expenseFlatFeeTotal > 0 ? 1 : 0) +  miscsTotal.vat.length < 3">
+
+        <tr *ngIf="(workedTime > 0 ? 1 : 0) + (expenseMileageTotal > 0 ? 1 : 0) + (expenseFlatFeeTotal > 0 ? 1 : 0) + sortByMiscsVatState().deductible.length  + (sortByMiscsVatState().nondeductible.amount > 0 ? 1 : 0) < 3">
           <td></td>
           <td></td>
           <td></td>
           <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption"></td>
           <td></td>
+          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption"></td>
         </tr>
-        <tr *ngIf="(workedTime > 0 ? 1 : 0) + (expenseMileageTotal > 0 ? 1 : 0) + (expenseFlatFeeTotal > 0 ? 1 : 0) +  miscsTotal.vat.length < 4">
+
+        <tr *ngIf="(workedTime > 0 ? 1 : 0) + (expenseMileageTotal > 0 ? 1 : 0) + (expenseFlatFeeTotal > 0 ? 1 : 0) + sortByMiscsVatState().deductible.length  + (sortByMiscsVatState().nondeductible.amount > 0 ? 1 : 0) < 4">
           <td></td>
           <td></td>
           <td></td>
           <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption"></td>
           <td></td>
+          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption"></td>
         </tr>
       </tbody>
     </table>
@@ -119,24 +147,31 @@
 
   <div class="invoice__total">
     <table>
-      <tr *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption  && totalVat > 0">
+      <tr>
         <td class="invoice__total__label">
-          Total HT
-          <br />
-          <span *ngIf="totalTTC">
-            Montant TVA {{ vatRate }}%
-          </span>
+          <p>
+            Total HT
+          </p>
+          <br>
+          <p *ngFor="let vat of totalVat">
+            <span>
+              Montant TVA {{ vat.rate / 100 | percent:"1.2-2":local }}
+            </span>
+          </p>
         </td>
         <td></td>
         <td class="invoice__total__value">
           <p>{{ totalHT | currency:currencyCode:"symbol":'1.2-2':local }}</p>
-          <span *ngIf="totalTTC">
-            {{ totalVat | currency:currencyCode:"symbol":'1.2-2':local }}
-          </span>
+          <br>
+          <p *ngFor="let vat of totalVat">
+            <span>
+              {{ vat.amount | currency:currencyCode:"symbol":'1.2-2':local }}
+            </span>
+          </p>
         </td>
       </tr>
-      <tr *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption  && totalVat > 0"></tr>
-      <tr>
+      <tr *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption"></tr>
+      <tr *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">
         <td class="invoice__total__label">Total TTC</td>
         <td></td>
         <td class="invoice__total__value">{{ totalTTC | currency:currencyCode:"symbol":'1.2-2':local }}</td>
@@ -149,7 +184,7 @@
     </table>
   </div>
 
-  <div class="invoice__additional-information">
+  <!-- <div class="invoice__additional-information">
     <div>
       Consultant chargé de la prestation : {{ timesheetService.timesheet.consultant.name }}
     </div>
@@ -176,7 +211,44 @@
       <div>IBAN : {{ timesheetService.timesheet.invoice.bankIBAN }}</div>
       <div>SWIFT : {{ timesheetService.timesheet.invoice.bankSWIFT }}</div>
     </div>
-  </div>
+  </div> -->
+  <div class="invoice__additional-information">
+  <table>
+    <tr>
+      <td id="global-information">
+        <div>
+          Consultant chargé de la prestation : {{ timesheetService.timesheet.consultant.name }}
+        </div>
+        <div>
+          Date d’exécution de la vente
+          <br />
+          ou de la prestation : {{ formatDuration() }}
+        </div>
+        <div>
+          Date de règlement : {{ formatDate(timesheetService.timesheet.invoice.paymentDate) }}
+        </div>
+        <div *ngIf="timesheetService.timesheet.invoice.paymentLatePenalty" id="penalty">
+          Tout retard de paiement donnera lieu, en plus des pénalités de retard (10 % par an), au versement d'une indemnité
+          forfaitaire de 40€ pour frais de recouvrement.
+        </div>
+        <div *ngIf="timesheetService.timesheet.invoice.paymentModality">
+          Modalités de paiement : {{ timesheetService.timesheet.invoice.paymentModality }}
+        </div>
+      </td>
+      <td></td>
+      <td id="bank-information">
+      <div *ngIf="timesheetService.timesheet.invoice.isBankingDetails()">
+          <div>Coordonnées bancaires :</div>
+          <div>Titulaire du compte : {{ timesheetService.timesheet.invoice.bankAccountHolder }}</div>
+          <div>Banque : {{ timesheetService.timesheet.invoice.bankingDomiciliation }}</div>
+          <div>Agence : {{ timesheetService.timesheet.invoice.bankingAgency }}</div>
+          <div>IBAN : {{ timesheetService.timesheet.invoice.bankIBAN }}</div>
+          <div>SWIFT : {{ timesheetService.timesheet.invoice.bankSWIFT }}</div>
+        </div>
+      </td>
+      </tr>
+    </table>
+    </div>
 
   <div class="invoice__footer">
     <div>

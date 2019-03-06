@@ -139,17 +139,26 @@
     position: relative;
     left: 43px;
     top: 350px;
-    width: calc(60% - 86px);
+    width: calc(100% - 86px);
+    font-size:14.14px;
 
-    #penalty {
-      font-size: 13px;
+    td {
+      width:1%;
+      white-space:nowrap;
     }
 
-    div {
-      position: relative;
-      padding-bottom: 15px;
-      font-size: 14.14px;
-      line-height: 13px;
+    #global-information {
+      width:50%;
+      white-space: initial;
+      border-right: solid 1px black;
+    }
+
+    #bank-information {
+      text-align:left;
+      vertical-align: top;
+    }
+    #penalty {
+      font-size: 13px;
     }
   }
 
