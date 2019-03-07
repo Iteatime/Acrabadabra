@@ -89,7 +89,7 @@ describe('TimesheetService', () => {
     });
   });
 
-  fdescribe('getTotalFlatFee()', () => {
+  describe('getTotalFlatFee()', () => {
     beforeEach(() => {
       service.timesheet.flatFees = [
         {date: '', amount: 4 },
