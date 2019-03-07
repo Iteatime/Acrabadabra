@@ -19,9 +19,6 @@ import { NotificationService } from 'src/app/modules/notification/services/notif
 import { LocalSaveService } from 'src/app/shared/services/localSave/local-save.service';
 import { Timesheet } from 'src/app/shared/models/timesheet.model';
 
-import { LocalSaveService } from 'src/app/shared/services/localSave/local-save.service';
-import { Timesheet } from 'src/app/shared/models/timesheet.model';
-
 @Component({
   selector: 'app-timesheet-edit',
   templateUrl: './timesheet-edit.component.html',
