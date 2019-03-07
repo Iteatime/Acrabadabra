@@ -1,8 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { TimesheetService } from '../../services/timesheet.service';
-import { MonetaryService } from 'src/app/shared/services/monetary/monetary.service';
 import { Miscellaneous } from 'src/app/shared/models/miscellaneous.model';
 import { MiscellaneousExpensesService } from '../../services/miscellaneous-expenses.service';
+import { MonetaryService } from 'src/app/shared/services/monetary/monetary.service';
+import { TimesheetService } from 'src/app/modules/timesheet/services/timesheet.service';
 
 @Component({
   selector: 'app-expense-miscellaneous-table',

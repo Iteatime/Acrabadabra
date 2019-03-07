@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { FlatFee } from 'src/app/shared/models/flat-fee.model';
-import { TimesheetService } from '../../services/timesheet.service';
+import { TimesheetService } from 'src/app/modules/timesheet/services/timesheet.service';
 
 @Component({
   selector: 'app-expense-flat-fee-form',

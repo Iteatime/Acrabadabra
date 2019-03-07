@@ -1,7 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { MonetaryService } from 'src/app/shared/services/monetary/monetary.service';
-
-import { TimesheetService } from '../../services/timesheet.service';
+import { TimesheetService } from 'src/app/modules/timesheet/services/timesheet.service';
 import { Commute } from 'src/app/shared/models/commute';
 
 @Component({

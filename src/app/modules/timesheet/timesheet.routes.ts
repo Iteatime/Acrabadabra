@@ -4,7 +4,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { InvoicePDFComponent } from './components/invoice-pdf/invoice-pdf.component';
 import { TimesheetEditComponent } from './components/timesheet-edit/timesheet-edit.component';
 import { TimesheetReviewComponent } from './components/timesheet-review/timesheet-review.component';
-import { ExpenseFlatFeeFormComponent } from './components/expense-flat-fee-form/expense-flat-fee-form.component';
 
 const routes: Routes = [
   { path: 'timesheet/create', component: TimesheetEditComponent },
