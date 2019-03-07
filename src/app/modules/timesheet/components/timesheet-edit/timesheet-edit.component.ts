@@ -19,9 +19,6 @@ import { NotificationService } from 'src/app/modules/notification/services/notif
 import { LocalSaveService } from 'src/app/shared/services/localSave/local-save.service';
 import { Timesheet } from 'src/app/shared/models/timesheet.model';
 
-import { LocalSaveService } from 'src/app/shared/services/localSave/local-save.service';
-import { Timesheet } from 'src/app/shared/models/timesheet.model';
-
 @Component({
   selector: 'app-timesheet-edit',
   templateUrl: './timesheet-edit.component.html',
@@ -66,7 +63,7 @@ export class TimesheetEditComponent implements OnInit {
     });
     this.titleService.setTitle(`Acrabadabra - ${this.getModeTitle()} un compte rendu d'activité`);
 
-    this.timesheetService.setTimesheetInfos();
+    this.timesheetService.setTimesheet();
   }
 
   getModeTitle() {
@@ -85,7 +82,7 @@ export class TimesheetEditComponent implements OnInit {
       this.timesheetService.timesheet.miscellaneous = this.generateExpenses ? this.miscellaneousForm.miscellaneous : [];
       this.timesheetService.timesheet.commutes = this.generateExpenses ? this.commutesForm.commutes : [];
       this.timesheetService.timesheet.flatFees = this.generateExpenses ? this.flatFeesForm.flatFees : [];
-      this.timesheetService.saveTimesheetInfos();
+      this.timesheetService.saveTimesheet();
       this.updateMailtoLink();
       this.reactToSubmition(false);
     } else {

@@ -44,28 +44,12 @@ export class LocalSaveService {
   }
 
   /**
-   * Private method to check if type of the serializable
-   *
-   * @param {any} o
-   * @returns {boolean}
-   */
-  private static isSerializableObject(o: any): boolean {
-    if (typeof o !== 'object') {
-      return false;
-    }
-    return true;
-  }
-
-  /**
    * Private method to serialize an object
    *
    * @param {any} o
    * @returns {string}
    */
   private static serializeObject(o: any): string {
-    if (!this.isSerializableObject(o)) {
-      return '';
-    }
     return btoa(unescape(encodeURIComponent(JSON.stringify(o))));
   }
 

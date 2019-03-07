@@ -90,14 +90,15 @@ export class TimesheetService {
     return totalFlatFee;
   }
 
-  public saveTimesheetInfos() {
+  public saveTimesheet() {
     LocalSaveService.setLocalItem('timesheet', this.timesheet);
   }
 
-  public setTimesheetInfos() {
+  public setTimesheet() {
     if (LocalSaveService.checkItemExists('timesheet')) {
       this.timesheet = Object.assign(this.timesheet, LocalSaveService.getLocalItem('timesheet'));
       this.timesheet.workingDays = 0;
+      this.timesheet.commutes = [];
       this.timesheet.invoice.date = '';
       this.timesheet.invoice.number = '';
       this.timesheet.invoice.paymentDate = '';
