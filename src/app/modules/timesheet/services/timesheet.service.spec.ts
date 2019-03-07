@@ -64,9 +64,9 @@ describe('TimesheetService', () => {
   describe('getTotalAllowance()', () => {
     beforeEach(() => {
       service.timesheet.commutes = [
-        {date: '', destination: '', distance: 1, allowance: '', mileageAllowance: 120 },
-        {date: '', destination: '', distance: 1, allowance: '', mileageAllowance: 45 },
-        {date: '', destination: '', distance: 1, allowance: '', mileageAllowance: 55 }
+        {date: '', journey: '', distance: 1, allowance: '', mileageAllowance: 120 },
+        {date: '', journey: '', distance: 1, allowance: '', mileageAllowance: 45 },
+        {date: '', journey: '', distance: 1, allowance: '', mileageAllowance: 55 }
       ];
     });
 

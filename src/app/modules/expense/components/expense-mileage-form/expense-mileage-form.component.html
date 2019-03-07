@@ -29,24 +29,24 @@
                     </div>
                 </div>
                 <div class="mileage-allowance-form__block__input-wrapper__item form-group" >
-                    <label for="destination" class="mileage-allowance-form__block__input-wrapper__item__label">Trajet</label>
+                    <label for="journey" class="mileage-allowance-form__block__input-wrapper__item__label">Trajet</label>
                     <div class="mileage-allowance-form__block__input-wrapper__item__input">
                         <input
                         placeholder="ex: AR Annecy-Grenoble"
                         type="text"
                         pattern="^\S[A-zÀ-ÿ\s'-]+$"
                         class="form-control"
-                        name="destination"
-                        [(ngModel)]="commute.destination"
+                        name="journey"
+                        [(ngModel)]="commute.journey"
                         required
-                        id="destination"
-                        #destination="ngModel"
+                        id="journey"
+                        #journey="ngModel"
                         >
-                        <div *ngIf="destination.invalid && (destination.dirty || destination.touched)" class="alert alert-danger">
-                            <div *ngIf="destination.errors['required']">
+                        <div *ngIf="journey.invalid && (journey.dirty || journey.touched)" class="alert alert-danger">
+                            <div *ngIf="journey.errors['required']">
                                 Ce champ est obligatoire.
                             </div>
-                            <div *ngIf="destination.errors['pattern']">
+                            <div *ngIf="journey.errors['pattern']">
                                 Le nom ne doit contenir que des lettres.
                             </div>
                         </div>

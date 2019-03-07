@@ -16,7 +16,7 @@ When('I fill all inputs in the mileage allowance form', async () => {
   );
 
   await Actions.enterText(
-    Selectors.inputByLabelAndBlockName('Destination', 'Indemnités kilométriques'),
+    Selectors.inputByLabelAndBlockName('Trajet', 'Indemnités kilométriques'),
     'Annecy'
   );
 
