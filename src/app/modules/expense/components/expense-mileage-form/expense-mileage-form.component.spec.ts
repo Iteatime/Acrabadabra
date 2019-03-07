@@ -30,7 +30,7 @@ describe('ExpensesFormComponent', () => {
     beforeEach(() => {
       component.commute = {
         date: '',
-        destination: '',
+        journey: '',
         distance: 6,
         allowance: 2,
         mileageAllowance: 0
