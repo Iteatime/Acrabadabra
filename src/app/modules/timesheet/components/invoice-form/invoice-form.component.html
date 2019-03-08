@@ -36,7 +36,7 @@
         </div>
         <div class="invoice-form__block__input-wrapper__item form-group">
           <label for="invoiceClientRefInput" class="invoice-form__block__input-wrapper__item__label">Référence client
-            (BDC) (optionnel)</label>
+            (BDC) <span class="optional">(optionnel)</span></label>
           <div class="invoice-form__block__input-wrapper__item__input">
             <input type="text" class="form-control" name="invoiceClientRefInput" [(ngModel)]="invoice.clientRef">
           </div>
@@ -95,7 +95,7 @@
         </div>
         <div class="invoice-form__half-block__input-wrapper__item form-group">
           <label for="invoiceProviderTelephoneInput"
-            class="invoice-form__half-block__input-wrapper__item__label">Téléphone</label>
+            class="invoice-form__half-block__input-wrapper__item__label">Téléphone <span class="optional">(optionnel)</span></label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
             <input type="tel" class="form-control" name="invoiceProviderTelephoneInput"
               [(ngModel)]="invoice.provider.telephone">
@@ -204,7 +204,7 @@
         </div>
         <div class="invoice-form__half-block__input-wrapper__item form-group">
           <label for="invoiceClientTelephoneInput"
-            class="invoice-form__half-block__input-wrapper__item__label">Téléphone</label>
+            class="invoice-form__half-block__input-wrapper__item__label">Téléphone <span class="optional">(optionnel)</span></label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
             <input type="tel" class="form-control" name="invoiceClientTelephoneInput"
               [(ngModel)]="invoice.client.telephone">
@@ -295,7 +295,7 @@
         </div>
         <div class="invoice-form__block__input-wrapper__item form-group">
           <label for="invoicePaymentModalityInput" class="invoice-form__block__input-wrapper__item__label">Modalités de
-            paiement (optionnel)</label>
+            paiement <span class="optional">(optionnel)</span></label>
           <div class="invoice-form__block__input-wrapper__item__input">
             <input type="text" class="form-control" name="invoicePaymentModalityInput"
               [(ngModel)]="invoice.paymentModality">
@@ -310,7 +310,7 @@
       </div>
       <div class="invoice-form__block__input-wrapper">
         <div class="invoice-form__block__input-wrapper__sub-block">
-          <h4 class="invoice-form__block__input-wrapper__sub-block__title">Coordonnées bancaires</h4>
+          <h4 class="invoice-form__block__input-wrapper__sub-block__title">Coordonnées bancaires <span class="optional">(optionnel)</span></h4>
           <div class="invoice-form__block__input-wrapper__sub-block__input-wrapper">
             <div class="invoice-form__block__input-wrapper__item form-group">
               <label for="invoiceBankAccountHolderInput"
