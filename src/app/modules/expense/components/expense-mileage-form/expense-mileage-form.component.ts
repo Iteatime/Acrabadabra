@@ -1,10 +1,10 @@
-import { VehiclesService } from '../../services/vehicles.service';
-import { TimesheetService } from '../../services/timesheet.service';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 import { Commute } from '../../../../shared/models/commute';
 
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { TimesheetService } from 'src/app/modules/timesheet/services/timesheet.service';
+import { VehiclesService } from '../../services/vehicles.service';
 
 
 @Component({

@@ -9,12 +9,14 @@ const services = [];
 fs.readdir(folder, (err, elements) => {
   elements.forEach(element => {
     const dir = path.resolve(folder, element);
-    if (fs.lstatSync(dir).isDirectory()) {
+    if (fs.lstatSync(dir).isDirectory() && fs.existsSync(dir + '/package.json')) {
       services.push({ command: `cd ${ dir } && npm install`, name: element, prefixColor: 'reset.bgGreen.bold' });
     }
   });
 
-  concurrently(services, {
-    prefix: 'name'
-  });
+  if (services.length > 0) {
+    concurrently(services, {
+      prefix: 'name'
+    });
+  }
 });

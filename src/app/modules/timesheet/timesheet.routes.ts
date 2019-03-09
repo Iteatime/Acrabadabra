@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: 'timesheet/create', component: TimesheetEditComponent },
   { path: 'timesheet/edit/:data', component: TimesheetEditComponent },
   { path: 'timesheet/review/:data', component: TimesheetReviewComponent },
-  { path: 'invoice/:data', component: InvoicePDFComponent }
+  { path: 'invoice/:data', component: InvoicePDFComponent },
 ];
 
 @NgModule({

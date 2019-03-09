@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, Input, EventEmitter, Output } from '@angular/core';
-import { MiscellaneousExpensesService } from '../../services/miscellaneous-expenses.service';
 import { NgForm } from '@angular/forms';
 import { Miscellaneous } from 'src/app/shared/models/miscellaneous.model';
-import { TimesheetService } from '../../services/timesheet.service';
 import { MonetaryService } from 'src/app/shared/services/monetary/monetary.service';
+import { TimesheetService } from 'src/app/modules/timesheet/services/timesheet.service';
+import { MiscellaneousExpensesService } from '../../services/miscellaneous-expenses.service';
 
 @Component({
   selector: 'app-expense-miscellaneous-form',
@@ -20,19 +20,18 @@ export class ExpenseMiscellaneousFormComponent implements OnInit {
   miscellaneousTypes = [];
   vatRates = [];
 
-  constructor(private miscellaneousExpensesService: MiscellaneousExpensesService,
-              private monetaryService: MonetaryService,
-              public timesheetService: TimesheetService) { }
+  constructor(public miscellaneousExpensesService: MiscellaneousExpensesService,
+              public timesheetService: TimesheetService,
+              private _monetaryService: MonetaryService) { }
 
   ngOnInit() {
     this.misc = new Miscellaneous();
     this.miscellaneousTypes = this.miscellaneousExpensesService.miscellaneousTypes;
     this.vatRates = [];
-    Object.values(this.monetaryService.vatRates).forEach(rate => {
+    Object.values(this._monetaryService.vatRates).forEach(rate => {
       this.vatRates.push(rate);
     });
     this.miscellaneous = this.timesheetService.timesheet.miscellaneous;
-
     this.form.valueChanges.subscribe(() => {
       if (this.form.dirty) {
         this.changed.emit(true);
@@ -42,7 +41,7 @@ export class ExpenseMiscellaneousFormComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      if (this.misc.selectedType !== 4) {
+      if (!this.miscellaneousExpensesService.vatDeductible(this.misc) && this.misc.selectedType !== 5) {
         this.misc.tvaRate = this.miscellaneousExpensesService.miscellaneousTypes[this.misc.selectedType].vat;
       }
       this.misc.miscellaneousType = this.miscellaneousExpensesService.miscellaneousTypes[this.misc.selectedType].type;

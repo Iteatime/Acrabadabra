@@ -7,6 +7,7 @@ import { AppComponent } from './components/app/app.component';
 import { HomeComponent } from './components/home/home.component';
 
 import { TimesheetModule } from './modules/timesheet/timesheet.module';
+import { ExpenseModule } from './modules/expense/expense.module';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { TimesheetModule } from './modules/timesheet/timesheet.module';
     AppRoutingModule,
     BrowserModule,
     TimesheetModule,
+    ExpenseModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

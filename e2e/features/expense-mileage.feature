@@ -16,7 +16,7 @@ Scenario: I want close my expenses form
 
 Scenario Outline: I fill form named "Indemnités kilométriques"
   When I fill the date input with <Date>
-  And I fill the destination input with <Destination>
+  And I fill the journey input with <Trajet>
   And I fill the distance input with <Distance-parcourue>
   And I fill the vehicle input with <Vehicle>
   And I click on "Ajouter" button
@@ -25,7 +25,7 @@ Scenario Outline: I fill form named "Indemnités kilométriques"
   And "Total" cell increment by the value of "IK" of this line
 
   Examples :
-    | Date       | Destination | Distance-parcourue | Vehicle  | IK-Output | Total-Output |
+    | Date       | Trajet      | Distance-parcourue | Vehicle  | IK-Output | Total-Output |
     | unset      | Paris       | 450                | 0.493    | unset     | unset        |
     | 01/01/2019 | unset       | 450                | 0.493    | unset     | unset        |
     | 01/01/2019 | Paris       | unset              | 0.493    | unset     | unset        |

@@ -65,8 +65,8 @@ export class CalendarService {
         date = new Date(
           +Number.parseInt(timesheetDate.split('.')[1], 10),
           +Number.parseInt(timesheetDate.split('.')[0], 10),
-          day + 1
         );
+        date.setDate(day + 1);
         return time > 0;
       });
     }

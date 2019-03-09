@@ -12,6 +12,9 @@ table {
   & .amount {
     width: 250px;
   }
+  & .trashCan {
+    width: 60px;
+  }
 }
 tr:nth-of-type(odd) {
   background: $grey_border;
@@ -21,7 +24,7 @@ tr:nth-of-type(odd) {
   td:last-of-type {
     border-bottom-color: none;
   }
-  .totalOfAllowances {
+  .totalOfFlatFees {
     background: $grey_border;
   }
 }
@@ -45,7 +48,7 @@ td:empty {
   border: 0;
 }
 
-.totalOfAllowances {
+.totalOfFlatFees {
   font-weight: bold;
   background: transparent;
 }
@@ -93,12 +96,4 @@ td:empty {
   td:nth-of-type(2):before {
     content: attr(data-text);
   }
-  td:nth-of-type(3):before {
-    content: attr(data-text);
-  }
-  td:nth-of-type(4):before {
-    content: attr(data-text);
-  }
-
-
 }

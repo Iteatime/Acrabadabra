@@ -12,6 +12,9 @@ table {
   & .amount {
     width: 250px;
   }
+  & .trashCan {
+    width: 60px;
+  }
 }
 tr:nth-of-type(odd) {
   background: $grey_border;
@@ -99,7 +102,6 @@ td:empty {
   td:nth-of-type(4):before {
     content: attr(data-text);
   }
-  td:nth-of-type(5):before {
-    content: attr(data-text);
-  }
+
+
 }
