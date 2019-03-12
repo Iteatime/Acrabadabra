@@ -53,7 +53,7 @@ i:hover {
       }
     }
 
-    &>tr {
+    & > tr {
       &:not(:last-of-type):nth-of-type(odd) {
         background-color: $grey_border;
       }
