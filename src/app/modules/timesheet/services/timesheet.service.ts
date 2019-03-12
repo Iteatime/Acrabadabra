@@ -13,7 +13,7 @@ function untokenize(a: string): any {
     try {
       return JSON.parse(decodeURIComponent(escape(atob(a))));
     } catch {
-      alert('Votre URL est érroné');
+      alert('Données invalides');
       return false;
     }
   }
