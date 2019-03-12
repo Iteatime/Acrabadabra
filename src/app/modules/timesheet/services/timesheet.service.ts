@@ -10,7 +10,12 @@ function tokenize(a: any): string {
  ​
 function untokenize(a: string): any {
   if (a) {
-    return JSON.parse(decodeURIComponent(escape(atob(a))));
+    try {
+      return JSON.parse(decodeURIComponent(escape(atob(a))));
+    } catch {
+      alert('Votre URL est érroné');
+      return false;
+    }
   }
   return false;
 }
