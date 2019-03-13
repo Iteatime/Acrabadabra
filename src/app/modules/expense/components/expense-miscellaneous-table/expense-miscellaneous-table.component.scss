@@ -10,7 +10,7 @@ table {
   border-collapse: collapse;
   empty-cells: hide;
   & .amount {
-    width: 250px;
+    width: 200px;
   }
   & .trashCan {
     width: 60px;
@@ -46,6 +46,11 @@ tr.no-background {
 th:empty,
 td:empty {
   border: 0;
+}
+
+.left-text{
+  text-align: left;
+  padding-left: 15px !important;
 }
 
 .totalOfAllowances {
