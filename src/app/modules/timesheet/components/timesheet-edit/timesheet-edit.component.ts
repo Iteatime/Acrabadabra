@@ -7,14 +7,13 @@ import { ReviewMail } from 'src/app/shared/models/review-mail.model';
 
 import { CalendarService } from 'src/app/modules/calendar/calendar.service';
 import { TimesheetService } from '../../services/timesheet.service';
+import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
 
 import { InvoiceFormComponent } from '../invoice-form/invoice-form.component';
 import { ExpenseMileageFormComponent } from 'src/app/modules/expense/components/expense-mileage-form/expense-mileage-form.component';
 import { ExpenseMiscellaneousFormComponent } from 'src/app/modules/expense/components/expense-miscellaneous-form/expense-miscellaneous-form.component';
 import { ExpenseFlatFeeFormComponent } from 'src/app/modules/expense/components/expense-flat-fee-form/expense-flat-fee-form.component';
 import { CalendarSelectorComponent } from 'src/app/modules/calendar/components/calendar-selector/calendar-selector.component';
-
-
 
 @Component({
   selector: 'app-timesheet-edit',
@@ -38,6 +37,7 @@ export class TimesheetEditComponent implements OnInit {
 
   constructor(
     public timesheetService: TimesheetService,
+    public auth: AuthenticationService,
     private calendarService: CalendarService,
     private route: ActivatedRoute,
     private router: Router,
@@ -59,6 +59,10 @@ export class TimesheetEditComponent implements OnInit {
       }
     });
     this.titleService.setTitle(`Acrabadabra - ${this.getModeTitle()} un compte rendu d'activité`);
+  }
+
+  openAuth() {
+    this.auth.widget.open();
   }
 
   getModeTitle() {

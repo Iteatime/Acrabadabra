@@ -24,6 +24,7 @@
     "@angular/platform-browser": "^7.2.2",
     "@angular/platform-browser-dynamic": "^7.2.2",
     "@angular/router": "^7.2.2",
+    "@types/netlify-identity-widget": "^1.4.1",
     "angular-calendar": "^0.26.6",
     "babel-cli": "^6.26.0",
     "bootstrap": "^4.3.1",

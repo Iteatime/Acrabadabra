@@ -36,6 +36,20 @@
                   left: 20px;
           height: 100%;
         }
+        &__message {
+
+          @media (min-width: $screen-sm-min) {
+            line-height: 60px;
+            font-size: 18px;
+          }
+          position: absolute;
+          right: 20px;
+          cursor: pointer;
+          line-height: 40px;
+          color: white;
+          font-weight: bold;
+          font-size: 12px;
+        }
 		  }
 	  }
 

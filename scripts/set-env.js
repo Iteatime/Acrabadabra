@@ -2,7 +2,7 @@ const fs = require('fs');
 
 const replacer = require('replace-in-file');
 
-const env = process.env.ENV
+const env = process.env.ENV;
 
 const placeHolders = [
   /'PROD_ENV'/g,
@@ -19,7 +19,7 @@ const replacements = [
 const options = {
   files: 'src/environments/environment.*.ts',
   from: placeHolders,
-  to: replacements,
+  to: replacements
 };
 
 change = async() => {
