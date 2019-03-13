@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation} from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
@@ -15,7 +15,7 @@ export class HomeComponent {
   public constructor(
     public auth: AuthenticationService,
     public router: Router
-  ) {}
+  ) { }
 
   public onClick() {
     this.auth.widget.open();

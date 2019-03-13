@@ -44,6 +44,20 @@
     }
   }
 
+  &__auth__link {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+
+    &:visited, &:link {
+      color: white;
+    }
+
+    &:active {
+      color: $grey_mid;
+    }
+  }
+
   &__main {
     @include container;
 
