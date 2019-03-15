@@ -1,10 +1,20 @@
 @import "src/app/style/vars";
+@import url("https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700");
 
 .invoice {
   position: absolute;
   top: 0px;
   width: 827px;
   height: 1170px;
+
+  .adress-height{
+    line-height: 20px;
+    margin-bottom: -4px;
+  }
+
+  #QuantityColSize {
+    min-width: 30px;
+  }
 
   &__header {
     line-height: 13px;
@@ -49,24 +59,43 @@
   &__reference {
     position: relative;
     left: 43px;
-    top: 300px;
-    font-size: 27px;
+    top: 250px;
+    font-size: 24px;
     height: 150px;
 
-    &__number {
-      font-weight: bold;
+    &__invoice {
       font-size: 32px;
+
+      &__number {
+        font-weight: bold;
+      }
     }
 
     &__order {
       padding-top: 5px;
+
+      &__left {
+        display: inline-block;
+        width: calc(50% - 43px);
+      }
+
+      &__right {
+        display: inline-block;
+        text-align: right;
+        width: calc(50% - 43px);
+      }
+
+      &__number {
+        font-weight: bold;
+      }
     }
 
     &__date {
-      position: absolute !important;
-      bottom: 10px;
-      font-weight: bold;
-      font-size: 14.14px;
+      position: relative;
+      left: 43px;
+      top: 300px;
+      font-size: 27px;
+      height: 150px;
     }
 
     div {
@@ -75,14 +104,32 @@
   }
 
   &__table {
+    font-family: "Open Sans Condensed", sans-serif;
     position: relative;
     left: 43px;
-    top: 300px;
+    top: 230px;
     font-size: 13px;
     width: calc(100% - 86px);
 
+    &__left-text {
+      text-align: left !important;
+      padding-left: 10px !important;
+    }
+
     table {
       width: 100%;
+    }
+
+    thead {
+      background-color: $dark_blue;
+      color: white;
+      font-weight: bold !important;
+      border-collapse: collapse !important;
+      border-style: hidden !important;
+    }
+
+    thead th {
+      border: 1px solid white;
     }
 
     table,
@@ -93,13 +140,30 @@
       border: 1px solid $grey_mine_shaft;
       border-collapse: collapse;
       height: 24px;
+      border: none;
+    }
+
+    td {
+      border-right: 1px solid $grey_mine_lighter !important;
+      border-left: 1px solid $grey_mine_lighter !important;
+    }
+
+    tr:nth-of-type(odd) {
+      background: $grey_border;
+      td:last-of-type {
+        border-bottom-color: none;
+      }
+      .totalOfAllowances {
+        background: $grey_border;
+      }
     }
   }
 
   &__total {
     position: relative;
     right: 43px;
-    top: 330px;
+    top: 250px;
+    font-family: "Open Sans Condensed", sans-serif;
 
     &__label {
       padding-right: 20px;
@@ -108,15 +172,27 @@
     &__value {
       width: 1%;
       white-space: nowrap;
+      font-weight: bold;
+    }
+
+    &__vat {
+      font-weight: bold !important;
     }
 
     &__no-vat {
       font-weight: normal;
     }
 
+    #totalTTC {
+      font-size: 20px;
+    }
+
+    #valueTotalTTC {
+      font-size: 20px;
+    }
+
     tr {
       text-align: right;
-      font-weight: bold;
       font-size: 17px;
       line-height: 16px;
       height: 15px;
@@ -138,27 +214,44 @@
   &__additional-information {
     position: relative;
     left: 43px;
-    top: 350px;
+    top: 300px;
     width: calc(100% - 86px);
-    font-size:14.14px;
+    font-size: 15px;
+    font-family: "Open Sans Condensed", sans-serif;
 
+    table {
+      background-color: $grey_border;
+      border-radius: 1px;
+    }
     td {
-      width:1%;
-      white-space:nowrap;
+      padding: 5px;
+      width: 1%;
+      white-space: nowrap;
     }
 
     #global-information {
-      width:50%;
+      width: 50%;
       white-space: initial;
-      border-right: solid 1px black;
+      border-right: solid 1px white;
     }
 
     #bank-information {
-      text-align:left;
+      text-align: left;
       vertical-align: top;
     }
     #penalty {
-      font-size: 13px;
+      font-size: 12px;
+      font-style: italic;
+      line-height: 11px;
+    }
+
+    &__title {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    &__bolding {
+      font-weight: bold;
     }
   }
 
@@ -171,22 +264,25 @@
   }
 
   &__tables {
-
     position: absolute;
-      top: 1222px;
-      left: 43px;
-      font-size: 13px;
-      width: calc(100% - 86px);
+    top: 1222px;
+    left: 43px;
+    font-size: 13px;
+    width: calc(100% - 86px);
 
     &__expenses {
-
-      & > app-expense-mileage-table, & > app-expense-miscellaneous-table, & > app-expense-flat-fee-table {
+      & > app-expense-mileage-table,
+      & > app-expense-miscellaneous-table,
+      & > app-expense-flat-fee-table {
         & > table {
           width: 100% !important;
-
+          font-family: "Open Sans Condensed", sans-serif !important;
         }
 
-        & > table, td, th, tr {
+        & > table,
+        td,
+        th,
+        tr {
           height: 24px !important;
           padding: 1px !important;
           white-space: nowrap !important;
@@ -194,24 +290,47 @@
           min-width: 1% !important;
         }
       }
-      }
+    }
 
-      th {
-        text-transform: uppercase !important;
-        background: white !important;
-        color: black !important;
+    tr:nth-of-type(even):nth-last-child(2) {
+      td:not(:last-of-type) {
+        border-bottom: 1px solid $grey_mid !important;
       }
-      td,
-      th {
-        border: 1px solid black !important;
-      }
-      th:empty,
-      td:empty {
-        border-width: 0px !important;
-      }
+    }
 
-      p {
-        text-decoration: underline;
+    tr:nth-of-type(odd):not(:nth-last-child(2)) {
+      td {
+        border-bottom: hidden !important;
       }
+    }
+
+    thead {
+      border-collapse: collapse !important;
+      border-style: hidden !important;
+    }
+
+    thead th {
+      border: 1px solid white !important;
+    }
+
+    #left-text {
+      td:nth-child(2){
+        padding-left:15px !important;
+      }
+    }
+
+    td,
+    th {
+      border-left: 1px solid $grey_mid !important;
+      border-right: 1px solid $grey_mid !important;
+    }
+    th:empty,
+    td:empty {
+      border-width: 0px !important;
+    }
+
+    p {
+      text-decoration: underline;
+    }
   }
 }
