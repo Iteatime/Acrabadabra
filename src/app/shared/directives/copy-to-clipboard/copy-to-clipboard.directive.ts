@@ -1,4 +1,5 @@
 import { Directive, Input, Output, EventEmitter, HostListener, OnChanges} from '@angular/core';
+import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 
 @Directive({
 
@@ -42,13 +43,9 @@ export class CopyToClipboardDirective {
       this.message = 'Copied';
     }
 
-    const message: HTMLElement = this.parent.appendChild(document.createElement('div'));
-          message.className = 'alert alert-success';
-          message.innerText = this.message;
-
-    setTimeout(() => {
-      this.parent.removeChild(message);
-    }, 5000);
+    this.notificationService.push(this.message, 'info');
   }
+
+  constructor(private notificationService: NotificationService) { }
 
 }
