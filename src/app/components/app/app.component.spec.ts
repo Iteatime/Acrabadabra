@@ -1,6 +1,7 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { NotificationsComponent } from 'src/app/modules/notification/components/notifications/notifications.component';
 
 describe('AppComponent', () => {
 
@@ -14,7 +15,8 @@ describe('AppComponent', () => {
         RouterTestingModule
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        NotificationsComponent
       ],
     }).compileComponents();
   }));

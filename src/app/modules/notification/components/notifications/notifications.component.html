@@ -1,0 +1,15 @@
+<div *ngIf="notifications" id="notifications" class="notifications">
+  <div *ngFor="let n of notifications"
+    id="{{ n.id }}"
+    class="notifications__item notifications__item--{{ n.type }} {{ animationInClass }}"
+    [ngClass]="{'dismissible': n.options.isDismissible}"
+    (click)="dismiss(n)">
+    <div class="notifications__item__content">
+      <span class="notifications__item__content__message" [innerHTML]="n.message"></span>
+    </div>
+    <div *ngIf="n.options.isDismissible"
+      class="notifications__item__close">
+      <em class="notifications__item__close__icon material-icons">close</em>
+    </div>
+  </div>
+</div>

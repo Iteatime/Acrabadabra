@@ -1,0 +1,147 @@
+@import "src/app/style/vars";
+
+/* Notifications Vars */
+$notifications-bg-opacity: .9;
+
+$notifications-default-bg: $grey_mine_lighter;
+$notifications-default-color: $white;
+$notifications-default-close-color: $white;
+
+$notifications-info-bg: $dark_blue;
+$notifications-info-color: $white;
+$notifications-info-close-color: $white;
+
+$notifications-warning-bg: $red_error;
+$notifications-warning-color: $white;
+$notifications-warning-close-color: $white;
+
+$notifications-success-bg: $green_valid;
+$notifications-success-color: $white;
+$notifications-success-close-color: $white;
+
+/* Notifications Animations */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translate3d(0, -100%, 0);
+    }
+  
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 100%, 0);
+    }
+  
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes fadeOutRight {
+    from {
+        opacity: 1;
+    }
+  
+    to {
+        opacity: 0;
+        transform: translate3d(100%, 0, 0);
+    }
+}
+
+/* Notifications Style */
+.notifications {
+    @media (min-width: $screen_sm_min) {
+        top: 20px;
+        bottom: initial;
+        right: 20px;
+        flex-direction: column;
+        width: calc(50% - 20px);
+    }
+
+    @media (min-width: $screen_lg_min) {
+        width: calc(30% - 20px);
+    }
+
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: calc(100% - 20px);
+
+    &__item {
+        position: relative;
+        margin-bottom: 5px;
+        border-radius: 10px;
+        padding: 10px 25px 10px 20px;
+        background-color: rgba($notifications-default-bg, $notifications-bg-opacity);
+        width: 100%;
+        color: $notifications-default-color;
+        animation-duration: .7s;
+        animation-fill-mode: both;
+
+        &.dismissible {
+            cursor: pointer;
+        }
+
+        &.fade-in {
+            @media (min-width: $screen_sm_min) {
+                animation-name: fadeInDown;
+            }
+    
+            animation-delay: 1s;
+            animation-name: fadeInUp;
+        }
+
+        &.fade-out {
+            animation-delay: 0s;
+            animation-name: fadeOutRight;
+        }
+
+        &__close {
+            position: absolute;
+            top: 5px;
+            right: 6px;
+            color: $notifications-default-close-color;
+
+            &__icon {
+                font-size: 16px;
+            }
+        }
+
+        &--info {
+            background-color: rgba($notifications-info-bg, $notifications-bg-opacity);
+            color: $notifications-info-color;
+
+            &__close {
+                color: $notifications-info-close-color;
+            }
+        }
+
+        &--warning {
+            background-color: rgba($notifications-warning-bg, $notifications-bg-opacity);
+            color: $notifications-warning-color;
+
+            &__close {
+                color: $notifications-warning-close-color;
+            }
+        }
+
+        &--success {
+            background-color: rgba($notifications-success-bg, $notifications-bg-opacity);
+            color: $notifications-success-color;
+
+            &__close {
+                color: $notifications-success-close-color;
+            }
+        }
+    }
+}
