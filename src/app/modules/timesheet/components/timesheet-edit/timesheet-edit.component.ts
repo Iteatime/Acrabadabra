@@ -72,11 +72,11 @@ export class TimesheetEditComponent implements OnInit {
   onClickCopy($event: any, action: string) {
     $event.preventDefault();
     const getToken = (action === 'edit') ? this.timesheetService.getEditToken() : this.timesheetService.getReviewToken();
-      this.timesheetService.shortenUrl(this.originUrl + '/timesheet/${action}/' + getToken)
+      this.timesheetService.shortenUrl(this.originUrl + `/timesheet/${action}/` + getToken)
         .then ((res) => {
           this.onCopyAlert(action);
           this.copyToClipboard(res);
-        });
+        });``
   }
 
   onCopyAlert(action): void {
