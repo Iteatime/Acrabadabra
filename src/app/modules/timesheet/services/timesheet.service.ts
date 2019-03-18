@@ -96,9 +96,12 @@ export class TimesheetService {
 
   public setTimesheet() {
     if (LocalSaveService.checkItemExists('timesheet')) {
+      console.log(this.timesheet);
       this.timesheet = Object.assign(this.timesheet, LocalSaveService.getLocalItem('timesheet'));
       this.timesheet.workingDays = 0;
       this.timesheet.commutes = [];
+      this.timesheet.flatFees = [];
+      this.timesheet.miscellaneous = [];
       this.timesheet.invoice.date = '';
       this.timesheet.invoice.number = '';
       this.timesheet.invoice.paymentDate = '';
