@@ -76,6 +76,7 @@
 
       &__left {
         display: inline-block;
+        text-align:left;
         width: calc(50% - 43px);
       }
 
@@ -83,6 +84,11 @@
         display: inline-block;
         text-align: right;
         width: calc(50% - 43px);
+      }
+      &__right-alone {
+        display: inline-block;
+        text-align: right;
+        width: calc(100% - 86px);
       }
 
       &__number {
@@ -237,6 +243,7 @@
       vertical-align: top;
     }
     #penalty {
+      margin-top:4px;
       font-size: 12px;
       font-style: italic;
       line-height: 11px;

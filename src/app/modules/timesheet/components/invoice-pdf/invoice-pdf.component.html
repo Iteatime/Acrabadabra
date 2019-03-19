@@ -55,8 +55,8 @@
         <span class="invoice__reference__order__number">{{ timesheetService.timesheet.invoice.clientRef }}</span>
       </div>
       <div [ngClass]="{'invoice__reference__order__right': timesheetService.timesheet.invoice.clientRef,
-                      'invoice__reference__order__left' : !timesheetService.timesheet.invoice.clientRef
-                    }">Date :
+                      'invoice__reference__order__right-alone' : !timesheetService.timesheet.invoice.clientRef
+                      }">Date :
         <span class="invoice__reference__order__number">{{ formatDate(timesheetService.timesheet.invoice.date) }}</span>
       </div>
     </div>
@@ -302,7 +302,7 @@
 
     <div class="invoice__tables__expenses" id="left-text" *ngIf="timesheetService.timesheet.miscellaneous.length > 0">
       <p>Détail des frais sur justificatif :</p>
-      <app-expense-miscellaneous-table [hideDeleteButton]="true">
+      <app-expense-miscellaneous-table [hideDeleteButton]="true" [vatExemption]="timesheetService.timesheet.invoice.provider.vatExemption">
       </app-expense-miscellaneous-table>
     </div>
 

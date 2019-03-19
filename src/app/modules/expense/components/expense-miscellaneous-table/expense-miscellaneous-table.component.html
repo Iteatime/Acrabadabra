@@ -4,7 +4,10 @@
             <th class="miscellaneous__header__item">Date</th>
             <th class="miscellaneous__header__item left-text">Type</th>
             <th class="miscellaneous__header__item">Taux de TVA</th>
-            <th class="miscellaneous__header__item">Montant TTC</th>
+            <th class="miscellaneous__header__item">
+              <span *ngIf="vatExemption == false">Montant TTC</span>
+              <span *ngIf="vatExemption == true">Montant HT</span>
+            </th>
         </tr>
     </thead>
     <tbody class="miscellaneous__body">
@@ -24,7 +27,10 @@
           <td></td>
           <td></td>
           <td></td>
-          <td class="miscellaneous__body__item totalOfAllowances">Total TTC: {{timesheetService.getTotalMiscellaneous() | currency:currencyCode:"symbol":'1.2-2':local}}</td>
+          <td class="miscellaneous__body__item totalOfAllowances">
+            <span *ngIf="vatExemption == false">Total TTC:</span>
+            <span *ngIf="vatExemption == true">Total HT:</span>
+            {{timesheetService.getTotalMiscellaneous() | currency:currencyCode:"symbol":'1.2-2':local}}</td>
       </tr>
 </tbody>
 </table>
