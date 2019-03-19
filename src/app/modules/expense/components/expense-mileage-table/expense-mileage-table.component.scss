@@ -5,109 +5,119 @@ i:hover {
   cursor: pointer;
 }
 
-table {
+@media (min-width:$screen_sm_min) {
+  .left-text {
+    text-align: left;
+    padding-left: 15px !important;
+  }
+}
+
+.mileage {
   width: 100%;
-  border-collapse: collapse;
-  empty-cells: hide;
-  & .amount {
-    width: 200px;
-  }
-  & .trashCan {
-    width: 60px;
-  }
-}
-tr:nth-of-type(odd) {
-  background: $grey_border;
-  td {
-    border-bottom-color: white;
-  }
-  td:last-of-type {
-    border-bottom-color: none;
-  }
-  .totalOfAllowances {
-    background: $grey_border;
-  }
-}
-th {
-  background: $dark_blue;
-  color: white;
-  font-weight: bold;
-}
-td,
-th {
-  padding: 6px;
-  border: 1px solid #ccc;
   text-align: center;
-}
+  border-collapse: collapse;
 
-tr.no-background {
-  background: transparent;
-}
-th:empty,
-td:empty {
-  border: 0;
-}
+  &__header {
+    background-color: $dark_blue;
 
-.left-text{
-  text-align: left;
-  padding-left: 15px !important;
-}
+    &__item {
+      width: auto;
+      padding: 6px;
+      color: white;
+      border: 1px solid $grey_border_dark;
 
-.totalOfAllowances {
-  font-weight: bold;
-  background: transparent;
-}
+      &:not(:first-of-type):not(:last-of-type) {
+        border-right: 1px solid white;
+        border-left: 1px solid white;
+      }
 
-@media only screen and (max-width: 599px), (min-device-width: 350px) and (max-device-width: 599px) {
-  table,
-  thead,
-  tbody,
-  th,
-  td,
-  tr {
-    display: block;
-    empty-cells: show;
+      &:first-of-type {
+        border-right: 1px solid white;
+      }
+
+      &:last-of-type {
+        border-left: 1px solid white;
+        width: 200px;
+      }
+    }
   }
 
-  thead tr {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
+  &__body {
+    &__item {
+      padding: 6px;
+      border: 1px solid $grey_border_dark;
+
+      &:empty:not(.keep-border) {
+        border: 0px;
+      }
+
+      &.trashCan {
+        width: 60px;
+      }
+
+      &:last-of-type {
+        font-weight: bold;
+      }
+    }
+
+    &>tr {
+      &:not(:last-of-type):nth-of-type(odd) {
+        background-color: $grey_border;
+      }
+    }
   }
 
-  tr {
-    border: 1px solid #ccc;
-  }
+  @media only screen and (max-width: 599px), (min-device-width: 350px) and (max-device-width: 599px) {
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+      display: block;
+      empty-cells: show;
+    }
 
-  td {
-    border: none;
-    border-bottom: 1px solid #eee;
-    position: relative;
-    padding-left: 50%;
-  }
+    thead tr {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
 
-  td:before {
-    position: absolute;
-    top: 6px;
-    left: 6px;
-    width: 45%;
-    padding-right: 10px;
-    white-space: nowrap;
-  }
+    tr {
+      border: 1px solid #ccc;
+    }
 
-  td:nth-of-type(1):before {
-    content: attr(data-text);
-  }
-  td:nth-of-type(2):before {
-    content: attr(data-text);
-  }
-  td:nth-of-type(3):before {
-    content: attr(data-text);
-  }
-  td:nth-of-type(4):before {
-    content: attr(data-text);
-  }
-  td:nth-of-type(5):before {
-    content: attr(data-text);
+    td {
+      border: none;
+      border-bottom: 1px solid #eee;
+      position: relative;
+      padding-left: 50%;
+    }
+
+    td:before {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      width: 45%;
+      padding-right: 10px;
+      white-space: nowrap;
+    }
+
+    td:nth-of-type(1):before {
+      content: attr(data-text);
+    }
+    td:nth-of-type(2):before {
+      content: attr(data-text);
+    }
+    td:nth-of-type(3):before {
+      content: attr(data-text);
+    }
+    td:nth-of-type(4):before {
+      content: attr(data-text);
+    }
+    td:nth-of-type(5):before {
+      content: attr(data-text);
+    }
   }
 }

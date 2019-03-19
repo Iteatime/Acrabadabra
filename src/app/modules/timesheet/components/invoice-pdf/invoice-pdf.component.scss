@@ -147,16 +147,13 @@
       border-right: 1px solid $grey_mine_lighter !important;
       border-left: 1px solid $grey_mine_lighter !important;
     }
-
+    tr:nth-of-type(even):nth-last-of-type(1) {
+      border-bottom: 1px solid $grey_mine_lighter !important;
+    }
     tr:nth-of-type(odd) {
       background: $grey_border;
-      td:last-of-type {
-        border-bottom-color: none;
-      }
-      .totalOfAllowances {
-        background: $grey_border;
-      }
     }
+
   }
 
   &__total {
@@ -263,6 +260,14 @@
     width: 100%;
   }
 
+  &__footer__second-page {
+    position: absolute;
+    top: 2288px;
+    text-align: center;
+    font-size: 14.14px;
+    width: 100%;
+  }
+
   &__tables {
     position: absolute;
     top: 1222px;
@@ -298,12 +303,6 @@
       }
     }
 
-    tr:nth-of-type(odd):not(:nth-last-child(2)) {
-      td {
-        border-bottom: hidden !important;
-      }
-    }
-
     thead {
       border-collapse: collapse !important;
       border-style: hidden !important;
@@ -319,15 +318,15 @@
       }
     }
 
-    td,
-    th {
-      border-left: 1px solid $grey_mid !important;
-      border-right: 1px solid $grey_mid !important;
-    }
-    th:empty,
-    td:empty {
-      border-width: 0px !important;
-    }
+    // td,
+    // th {
+    //   border-left: 1px solid $grey_mid !important;
+    //   border-right: 1px solid $grey_mid !important;
+    // }
+    // th:nth-last-child():empty,
+    // td:nth-last-of-type(3):empty {
+    //   border-width: 0px !important;
+    // }
 
     p {
       text-decoration: underline;
