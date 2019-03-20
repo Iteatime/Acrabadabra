@@ -53,10 +53,10 @@ export class Invoice {
   }
 
   isBankingDetails(): boolean {
-    return  !_.isEmpty(this.bankAccountHolder) &&
-            !_.isEmpty(this.bankingAgency) &&
-            !_.isEmpty(this.bankingDomiciliation) &&
-            !_.isEmpty(this.bankIBAN) &&
+    return  !_.isEmpty(this.bankAccountHolder) ||
+            !_.isEmpty(this.bankingAgency) ||
+            !_.isEmpty(this.bankingDomiciliation) ||
+            !_.isEmpty(this.bankIBAN) ||
             !_.isEmpty(this.bankSWIFT);
   }
 }
