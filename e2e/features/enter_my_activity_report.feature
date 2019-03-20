@@ -28,15 +28,15 @@ Scenario: I can validate my seizures
   Given I have filed the form
   When I click on "Valider mon CRA" button
   Then a success message appears
-  And a link to send by mail appear
-  And a link to copy a modification link appear
-  And a share link appear
+  And a link to send by mail appears
+  And a link to copy a modification link appears
+  And a share link appears
 
 Scenario: I made a mistake filling the form and I try to validate it
   When I click on "Valider mon CRA" button
   And I have not filed the form correctly
-  Then a fail message appear
-  And an error message appear near the input
+  Then a fail message appears
+  And an error message appears near the input
   And I can't validate my form
 
 Scenario: I change the value of an input after a form validation
@@ -45,7 +45,7 @@ Scenario: I change the value of an input after a form validation
   Then the Links and success message are hiden
   And I need to validate again the form
 
-Scenario Outline: I can select the month i worked
+Scenario Outline: I can select the month I worked
   Given the selected month is January 2019
   And I have selected the first day
   When I click the <action> button
