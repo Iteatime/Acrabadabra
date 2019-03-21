@@ -293,6 +293,7 @@
       {{ timesheetService.timesheet.invoice.provider.siren }}
     </div>
   </div>
+
   <div class="invoice__tables">
     <div class="invoice__tables__expenses" id="left-text" *ngIf="timesheetService.timesheet.commutes.length > 0">
       <p>Détail des indemnités kilométriques :</p>
@@ -310,20 +311,6 @@
       <p>Détail des déplacements forfaitaires :</p>
       <app-expense-flat-fee-table [hideDeleteButton]="true">
       </app-expense-flat-fee-table>
-    </div>
-  </div>
-  <div class="invoice__footer__second-page">
-    <div>
-      {{ timesheetService.timesheet.invoice.provider.name }}
-      -
-      {{ timesheetService.timesheet.invoice.provider.address }}
-      -
-      <span *ngIf="timesheetService.timesheet.invoice.provider.telephone">Tel :
-        {{ timesheetService.timesheet.invoice.provider.telephone }} - </span>
-      <span *ngIf="!timesheetService.timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">R.C.S.
-        {{ timesheetService.timesheet.invoice.provider.tradeAndCompaniesRegisterCity }} </span>
-      <span *ngIf="timesheetService.timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">SIREN : </span>
-      {{ timesheetService.timesheet.invoice.provider.siren }}
     </div>
   </div>
 </div>

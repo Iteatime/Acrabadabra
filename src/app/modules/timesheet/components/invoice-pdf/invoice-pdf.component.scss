@@ -260,19 +260,11 @@
   }
 
   &__footer {
-    position: absolute;
-    top: 1118px;
+    position: fixed;
+    bottom: 52px;
     text-align: center;
+    width: 827px;
     font-size: 14.14px;
-    width: 100%;
-  }
-
-  &__footer__second-page {
-    position: absolute;
-    top: 2288px;
-    text-align: center;
-    font-size: 14.14px;
-    width: 100%;
   }
 
   &__tables {
@@ -324,16 +316,6 @@
         padding-left:15px !important;
       }
     }
-
-    // td,
-    // th {
-    //   border-left: 1px solid $grey_mid !important;
-    //   border-right: 1px solid $grey_mid !important;
-    // }
-    // th:nth-last-child():empty,
-    // td:nth-last-of-type(3):empty {
-    //   border-width: 0px !important;
-    // }
 
     p {
       text-decoration: underline;
