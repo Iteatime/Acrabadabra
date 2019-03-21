@@ -14,6 +14,7 @@ export class MiscellaneousExpensesService {
     },
     {
       type: 'Péage',
+      vat: this.monetaryService.vatRates.normal,
       vatDeductible: true
     },
     {

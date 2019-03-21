@@ -251,22 +251,10 @@
         </div>
         <div class="invoice-form__half-block__input-wrapper__item form-group">
           <label for="invoiceClientVATNumberInput" class="invoice-form__half-block__input-wrapper__item__label">Numéro
-            de TVA intra-communautaire</label>
+            de TVA intra-communautaire<span class="optional"> (optionnel)</span></label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
-            <input type="text" required class="form-control" name="invoiceClientVATNumberInput"
-              [disabled]="clientVATExemption.checked" [(ngModel)]="invoice.client.vatNumber" #clientVATNumber="ngModel">
-            <div *ngIf="clientVATNumber.invalid && (clientVATNumber.dirty || clientVATNumber.touched)"
-              class="alert alert-danger">
-
-              <div *ngIf="clientVATNumber.errors['required']">
-                Ce champ est obligatoire.
-              </div>
-            </div>
-            <label class="invoice-form__half-block__input-wrapper__item__input__toggle">
-              <input type="checkbox" name="invoiceClientVATToggle" [(ngModel)]="invoice.client.vatExemption"
-                (change)="invoice.client.vatNumber = ''" #clientVATExemption>
-              Franchise TVA
-            </label>
+            <input type="text" class="form-control" name="invoiceClientVATNumberInput"
+              [(ngModel)]="invoice.client.vatNumber" #clientVATNumber="ngModel">
           </div>
         </div>
         <div *ngIf="false" class="invoice-form__half-block__input-wrapper__item form-group">

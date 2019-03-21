@@ -41,8 +41,14 @@ export class ExpenseMiscellaneousFormComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
+      if (this.miscellaneousExpensesService.vatDeductible(this.misc) && this.misc.selectedType === 1) {
+        this.misc.tvaRate = this.miscellaneousExpensesService.miscellaneousTypes[this.misc.selectedType].vat;
+      }
       if (!this.miscellaneousExpensesService.vatDeductible(this.misc) && this.misc.selectedType !== 5) {
         this.misc.tvaRate = this.miscellaneousExpensesService.miscellaneousTypes[this.misc.selectedType].vat;
+      }
+      if (!this.miscellaneousExpensesService.vatDeductible(this.misc)) {
+        this.misc.tvaRate = 'NC';
       }
       this.misc.miscellaneousType = this.miscellaneousExpensesService.miscellaneousTypes[this.misc.selectedType].type;
       this.submitted = true;
