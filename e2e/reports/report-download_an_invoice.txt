@@ -1,45 +1,35 @@
-1.1 PASS
-1.2 PASS
-1.3 PASS
-1.4 PASS
-1.5 PASS
-1.6 PASS
-1.7 PASS
+Scenario: I can download my invoice as a PDF
+-PASS
 
+Scenario: I can choose the RCS exemption for me and the client
+-PASS
 
-2.1 PASS
-2.2 PASS
-2.3 PASS
-2.4 PASS
-2.5 PASS
-2.6 PASS
+Scenario: I can choose the VAT exemption
+-PASS
 
-3.1 PASS
-3.2 PASS
-3.3 PASS
-3.4 PASS
-3.5 PASS
-3.6 PASS
-3.7 PASS
-3.8 PASS
-3.9 PASS
-3.10 PASS
+Scenario: I want to see a total incl tax
+-PASS
 
-4.1 PASS
-4.2 PASS
-4.3 PASS
-4.4 PASS
-4.5 PASS
+Scenario: I want to be paid by any paiement method
+-PASS
 
-5.1 PASS
-5.2 PASS
-5.3 PASS
-5.4 PASS
-5.5 PASS
+Scenario: I want to be paid by bank transfer
+-PASS
 
-6.1 PASS
-6.1.1 PASS
+Scenario: I want to inform my client about late fee of paiement
+-PASS
 
-7.1 PASS
-7.2 PASS
-7.3 PASS
+Scenario: I can consult quickly the different costs of my invoice
+-PASS
+
+Scenario: I want consult details of invoiced fees
+-PASS
+
+Scenario: I want consult the total amounts by vat rates
+-PASS
+
+Scenario: I want know details about service delivery
+-PASS
+
+Scenario: I want to see a reminder of my personal informations at the bottom of my invoice
+-PASS

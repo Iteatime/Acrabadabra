@@ -1,5 +1,5 @@
-
 export class Company {
+
   name: string;
   address: string;
   telephone: string;
@@ -10,6 +10,7 @@ export class Company {
   vatExemption: boolean;
 
   constructor(
+
     name?: string,
     address?: string,
     telephone?: string,
@@ -19,6 +20,7 @@ export class Company {
     vatNumber?: string,
     vatExemption?: boolean
   ) {
+
     this.name = name || '';
     this.address = address || '';
     this.telephone = telephone || '';

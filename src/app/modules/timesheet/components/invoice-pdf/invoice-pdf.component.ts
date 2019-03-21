@@ -148,7 +148,11 @@ export class InvoicePDFComponent {
     let total = 0;
 
     this.sortByMiscsVatState().deductible.forEach(miscVat => {
-      total += miscVat.amount / ( 1 + miscVat.vatRate / 100);
+      if (this.timesheetService.timesheet.invoice.provider.vatExemption ) {
+        total += miscVat.amount;
+      } else {
+        total += miscVat.amount / ( 1 + miscVat.vatRate / 100);
+      }
       if (miscVat.vatRate !== 0) {
         if (miscVat.vatRate !== this.monetaryService.vatRates.normal) {
           this.totalVat.push({

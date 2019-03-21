@@ -16,7 +16,7 @@ export class ReviewMail {
   setBody(timesheet: Timesheet, workedTime: number, reviewToken: string, url: string) {
     this.body = 'Bonjour,%0d%0a' +
     '%0d%0a' +
-    'Un compte rendu d\'activité est consultable sur https://Acrabadabra.com .%0d%0a' +
+    'Un compte rendu d\'activité est consultable sur https://www.acrabadabra.com' +
     '%0d%0a' +
     `Consultant : ${timesheet.consultant.name}%0d%0a` +
     `Mission : ${timesheet.mission.title}%0d%0a` +

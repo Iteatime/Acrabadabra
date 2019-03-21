@@ -1,52 +1,81 @@
-TO DO Gherkin test when downloading invoice:
+Feature: generate an invoice
 
+    As a consultant, I want to be able to use an invoice with PDF format
 
+Scenario: I can download my invoice as a PDF
+Given I have filled my timesheet
+And I have entered my billing details
+When I click the download as PDF link
+Then a PDF invoice with the corresponding data downloads to my computer
 
-1.1 La dénomination du prestataire doit apparaitre
-1.2 L'adresse du prestataire doit apparaitre
-1.3 Le numéro de Siren du prestataire doit apparaitre
-1.4 Le numéro de téléphone du prestataire doit apparaitre SI un numéro à été rentré
-1.5 La ville d'immatriculation au RCS du prestataire doit apparaitre SI le prestataire n'est pas dispensé d'immatriculation au RCS et RM
-1.6 Le numéro de TVA du prestataire doit apparaitre doit apparaitre SI le prestataire ne bénéficie pas d'une franchise TVA
-1.7 Un message précisant que le prestataire est dispensé d'immatriculation au RCS doit apparaitre SI il en est dispensé
+Scenario: I can choose the RCS exemption for me and the client
+Given I have chosen RCS exemption for me and the client in my invoice form
+When I click the download as PDF link
+Then RCS city names will not appear in my PDF invoice
+And will not appear in the remind of personal informations at the bottom of the invoice
+But messages about RCS exemption will appear on the top of the invoice
 
+Scenario: I can choose the VAT exemption
+Given I have choosen the VAT exemption
+When I click the download as PDF link
+Then my PDF invoice will not contain a total incl tax
+But only total excl tax
 
-2.1 La dénomination du client doit apparaitre
-2.2 L'adresse du client doit apparaitre
-2.3 Le numéro de Siren du client doit apparaitre
-2.4 Le numéro de téléphone du client doit apparaitre SI un numéro à été entré
-2.5 La ville d'immatriculation au RCS du client doit apparaitre SI une ville à été rentrée
-2.6 Un message précisant que le client est dispensé d'immatriculation au RCS doit apparaitre SI il en est dispensé
+Scenario: What should includ the total excl tax of my invoice with the VAT exemption
+Given I have choosen the VAT exemption
+When my PDF invoice appears
+Then the total excl tax of my invoice will contain the total excl tax of working days
+And the total excl tax of mileage allowance
+And the total excl tax of flat fees
+And the total incl tax of miscellaneous expenses
 
+Scenario: I want to see a total incl tax
+Given I filled my timesheet
+And I didn't choose VAT exemption
+When I click the download as PDF link
+Then my PDF invoice will contain a total excl tax
+And will contain a total incl tax
 
-3.1 Un numéro de facture doit apparaitre
-3.2 Une référence client doit apparaitre
-3.3 Une date de facturation doit apparaitre
-3.4 Un tableau récapitulatif de facturation doit apparaitre
-3.5 Un total HT doit apparaitre
-3.6 Un montant de Tva à 5.5% doit apparaitre SI une tva à 5.5% est présente dans le tableau
-3.7 Un montant de Tva à 10% doit apparaitre SI une tva à 10% est présente dans le tableau
-3.8 Un montant de Tva à 20% doit apparaitre SI une tva à 20% est présente dans le tableau
-3.9 un total TTC doit apparaitre SI le prestaire ne dispose pas de la franchise TVA
-3.10 un message précisent qu'une franchise TVA est appliquée sur cette facture doit apparaitre SI c'est le cas
+Scenario: I want to be paid by any paiement method
+Given I filled the billing form
+When When I click the download as PDF link
+Then a PDF invoice containing the date of billing will appear
 
+Scenario: I want to be paid by bank transfer
+Given I filled at least one information of my bank detail
+When I click the download as PDF link
+Then a PDF invoice containing this bank details will appear
 
-4.1 Le nom du consultant chargé de la prestation doit apparaitre
-4.2 Une période de prestation doit apparaitre
-4.3 Une date de règlement doit apparaitre
-4.4 Une modalité de paiement doit apparaitre SI elle a été rentré
-4.5 Un message précisant les règles de pénalité de retard doit apparaitre SI il a été decidé de le préciser
+Scenario: I want to inform my client about late fee of paiement
+Given I have chosen to inform my client about late fee of paiement in the billing form
+When I click the download as PDF link
+Then a detailed message about late fee of paiement will be present in the PDF invoice
 
-SI des coordonnées bancaire on été rentrées:
-5.1 Un titulaire de compte doit apparaitre
-5.2 Le nom d'un organisme bancaire doit apparaitre
-5.3 Le nom d'une agence doit apparaitre
-5.4 Le numéro IBAN doit apparaitre
-5.5 Le numéro SWIFT doit apparaitre
+Scenario: I can consult quickly the different costs of my invoice
+Given I filled my timesheet
+And other expenses
+When I click the download as PDF link
+Then a summary table of costs will be present on the invoice
+And this table will contain a line for each deductible vat rate and non deductible vat rate by type of expense
 
-6.1 Une ligne contenant les informations sur le prestataire doit apparaitre
-6.1.1 SI il y a dispense de RCS alors seul le numéro de SIREN doit apparaitre
+Scenario: I want consult details of invoiced fees
+Given I filled expense form
+When I click the download as PDF link
+Then a table specific to each type of expense will be present in appendix of the invoice
 
-7.1 SI des frais d'indemnités kilométriques ont été validé alors un tableau des frais kilométriques doit apparaitre sur la page2 du pdf
-7.2 SI des frais avec justificatifs ont été validés alors un tableau des frais sur justificatifs doit apparaitre sur la page2 du pdf
-7.3 SI des frais forfaitaires ont été validés alors un tableau des frais forfaitaires doit apparaitre sur la page2 du pdf
+Scenario: I want consult the total amounts by vat rates
+Given I filled expenses form with different vat rates
+When I click the download as PDF link
+Then a line will be present for each total amount of vat rate
+
+Scenario: I want know details about service delivery
+Given I filled my timesheet
+And filled the invoice form
+When I click the download as PDF link
+Then a line with the period of service delivery will be present
+And the name of the consultant will be present
+
+Scenario: I want to see a reminder of my personal informations at the bottom of my invoice
+Given I filled my invoice form
+When I click the download as PDF
+Then a line at the bottom of each page of my PDF invoice will remind my personal informations

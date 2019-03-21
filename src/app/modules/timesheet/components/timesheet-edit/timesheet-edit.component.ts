@@ -102,7 +102,7 @@ export class TimesheetEditComponent implements OnInit {
       this.timesheetService.timesheet,
       this.calendarService.getWorkedTime(this.timesheetService.timesheet),
       this.timesheetService.getReviewToken(),
-      this.originUrl + '/timesheet/edit/'
+      this.originUrl + '/timesheet/review/'
     );
   }
 

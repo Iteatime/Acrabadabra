@@ -7,7 +7,7 @@ Background:
 
 Scenario: I need to generate an invoice
    When I click on "Generer une facture" checkbox
-   Then the associated form appear
+   Then the associated form appears
 
 Scenario: I want close my invoice form
    Given my invoice form is open
@@ -18,13 +18,13 @@ Scenario: I fill the invoice form
    When I fill all inputs in the form
    And I click on "Valider mon CRA" button
    Then a success appears
-   Then a link to an invoice PDF appear
+   Then a link to an invoice PDF appears
 
 Scenario: I forgot to fill a required input in the form
    When I click on "Valider mon CRA" button
    But I forget to fill an input
-   Then a fail message appear near "Valider mon CRA" button
-   And an error message appear near the input
+   Then a fail message appears near "Valider mon CRA" button
+   And an error message appears near the input
    And I can't validate my form
 
 Scenario: I modify an input after a form validation

@@ -13,6 +13,7 @@ export class ExpenseMiscellaneousTableComponent implements OnInit {
 
   @Output() changed: EventEmitter<boolean> = new EventEmitter();
   @Input() hideDeleteButton = false;
+  @Input() vatExemption = false;
 
   public local = 'fr';
   public currencyCode: string;
