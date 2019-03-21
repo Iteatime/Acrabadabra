@@ -5,6 +5,9 @@ generate an expense report of mileage allowance:
   I want close my expenses generator:
     -Pass
 
+  I want to select a vehicle in a dropdown:
+    -Pass
+
   I fill form named "Indemnités kilométriques":
     -Pass
 
