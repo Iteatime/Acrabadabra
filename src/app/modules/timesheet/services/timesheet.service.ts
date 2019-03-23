@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 import { Timesheet } from 'src/app/shared/models/timesheet.model';
+import {HttpClient, HttpParams, HttpHeaders} from '@angular/common/http';
 
 function tokenize(a: any): string {
   return btoa(unescape(encodeURIComponent(JSON.stringify(a))));
@@ -27,7 +28,7 @@ export class TimesheetService {
   public timesheet: Timesheet;
   public mode: string;
 
-  public constructor() {
+  public constructor(private http: HttpClient) {
     this.timesheet = new Timesheet();
   }
 
@@ -86,5 +87,23 @@ export class TimesheetService {
       totalFlatFee += +this.timesheet.flatFees[i].amount;
     }
     return totalFlatFee;
+  }
+
+  public shortenUrl(url): Promise<string> {
+    const header = new HttpHeaders({'apikey': environment.short_url_api_key,
+      'Content-Type': 'application/json', 'workspace': 'e8989a355dc84230b79bf51d50e07377'});
+
+    const body =  JSON.stringify({
+      destination: url,
+      domain: { fullName: 'link.acrabadabra.com' }
+    });
+
+    return this.http.post<any>('https://api.rebrandly.com/v1/links', body, {headers: header}).toPromise()
+      .then((res) => {
+        return res.shortUrl;
+      })
+      .catch( () => {
+        return url;
+      });
   }
 }

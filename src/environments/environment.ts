@@ -6,7 +6,9 @@ export const environment = {
   production: 'PROD_ENV',
 
   pdf_api_key: 'PDF_API_KEY',
-  pdf_api_url: 'PDF_API_URL'
+  pdf_api_url: 'PDF_API_URL',
+  short_url_api_key: '815cc16fb90f4c5ebd4f07daf7a6f7f8'
+
 };
 
 /*

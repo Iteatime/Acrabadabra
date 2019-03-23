@@ -30,6 +30,9 @@ export class TimesheetEditComponent implements OnInit {
   @ViewChild (ExpenseFlatFeeFormComponent) flatFeesForm: ExpenseFlatFeeFormComponent;
   @ViewChild ('form') form: NgForm;
   originUrl = window.location.origin;
+  editShortUrl = '';
+  reviewShortUrl = '';
+  submitMessage: any = null;
   reviewMail: ReviewMail;
   generateInvoice = false;
   generateExpenses = false;
@@ -67,6 +70,15 @@ export class TimesheetEditComponent implements OnInit {
 
   onUserInput() {
     this.showLinks = false;
+    this.submitMessage = null;
+  }
+
+  setShortUrl(action: string) {
+    const getToken = (action === 'edit') ? this.timesheetService.getEditToken() : this.timesheetService.getReviewToken();
+    this.timesheetService.shortenUrl(this.originUrl + `/timesheet/${action}/` + getToken)
+      .then ((res) => {
+        (action === 'edit') ? this.editShortUrl = res : this.reviewShortUrl = res;
+      });
   }
 
   onSubmit() {
@@ -79,6 +91,8 @@ export class TimesheetEditComponent implements OnInit {
       this.timesheetService.timesheet.flatFees = this.generateExpenses ? this.flatFeesForm.flatFees : [];
       this.updateMailtoLink();
       this.reactToSubmition(false);
+      this.setShortUrl('edit');
+      this.setShortUrl('review');
     } else {
       this.reactToSubmition(true);
       this.showValidationMessages();
@@ -99,12 +113,14 @@ export class TimesheetEditComponent implements OnInit {
   }
 
   updateMailtoLink(): void {
-    this.reviewMail = new ReviewMail(
-      this.timesheetService.timesheet,
-      this.calendarService.getWorkedTime(this.timesheetService.timesheet),
-      this.timesheetService.getReviewToken(),
-      this.originUrl + '/timesheet/review/'
-    );
+    this.timesheetService.shortenUrl(this.originUrl + '/timesheet/review/' + this.timesheetService.getReviewToken())
+      .then ((url) => {
+        this.reviewMail = new ReviewMail(
+          this.timesheetService.timesheet,
+          this.calendarService.getWorkedTime(this.timesheetService.timesheet),
+          url
+        );
+      });
   }
 
   checkFormsValidity(): boolean {
@@ -114,6 +130,8 @@ export class TimesheetEditComponent implements OnInit {
     }
     return valid;
   }
+
+
 
   showValidationMessages(): void {
     Object.keys(this.form.controls).forEach(field => {

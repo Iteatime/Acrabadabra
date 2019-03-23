@@ -9,6 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { TimesheetModule } from './modules/timesheet/timesheet.module';
 import { ExpenseModule } from './modules/expense/expense.module';
 import { NotificationModule } from './modules/notification/notification.module';
+import {HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { NotificationModule } from './modules/notification/notification.module';
     BrowserModule,
     TimesheetModule,
     ExpenseModule,
-    NotificationModule
+    NotificationModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

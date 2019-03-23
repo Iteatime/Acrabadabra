@@ -2,12 +2,29 @@ import { TimesheetService } from './timesheet.service';
 
 import { Timesheet } from 'src/app/shared/models/timesheet.model';
 
+import { TestBed } from '@angular/core/testing';
+
+import { HttpClientTestingModule} from '@angular/common/http/testing';
+import {of} from 'rxjs/internal/observable/of';
+
 
 describe('TimesheetService', () => {
+  let service: TimesheetService;
 
-  let service = new TimesheetService();
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [TimesheetService],
+      imports: [HttpClientTestingModule],
+    });
+
+    service = TestBed.get(TimesheetService);
+
+    service.timesheet = testTimesheet;
+
+  });
+
+
   const testTimesheet = new Timesheet('test');
-  service.timesheet = testTimesheet;
   const editToken = btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'edit', timesheet: testTimesheet }))));
   const reviewToken =  btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'review', timesheet: testTimesheet }))));
 
@@ -101,5 +118,27 @@ describe('TimesheetService', () => {
     it('should return "totalFlatFee" of flat fees expenses in the array of "flatFees"', () => {
       expect(service.getTotalFlatFee()).toBe(15);
     });
+  });
+});
+
+describe('Exertenal URL shortening service:', () => {
+  let service: TimesheetService;
+  let httpClientSpy: { post: jasmine.Spy };
+
+  beforeEach(() => {
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['post']);
+    service = new TimesheetService(<any> httpClientSpy);
+  });
+
+  it ('shortenUrl() should return a shortened URL', () => {
+    const shortUrl = 'https://link.acrabadabra.com/0d3eb'
+    const url ='https://www.youtube.com/watch?v=0Wbc5ZwkAMw&list=PLA6B-rmxykCeq7OKDLUNCrBBjFadmcnFQ';
+
+    httpClientSpy.post.and.returnValue(of({shortUrl: shortUrl}));
+
+    service.shortenUrl(url).then(
+      value => expect(value).toEqual(shortUrl),
+      fail
+    );
   });
 });
