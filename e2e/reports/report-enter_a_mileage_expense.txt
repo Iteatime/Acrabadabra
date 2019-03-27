@@ -1,0 +1,18 @@
+generate an expense report of mileage allowance:
+  I need to generate an expense of type mileage:
+    - Pass
+
+  I want close my expenses generator:
+    -Pass
+
+  I want to select a vehicle in a dropdown:
+    -Pass
+
+  I fill form named "Indemnités kilométriques":
+    -Pass
+
+  I forgot to fill an input in the form:
+    -Pass
+
+  I want to delete a line of table mileage allowance:
+    -Pass

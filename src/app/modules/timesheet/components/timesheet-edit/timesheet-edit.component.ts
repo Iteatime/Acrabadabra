@@ -5,13 +5,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { ReviewMail } from 'src/app/shared/models/review-mail.model';
 
-import { InvoiceFormComponent } from '../invoice-form/invoice-form.component';
-
-import { CalendarSelectorComponent } from 'src/app/modules/calendar/components/calendar-selector/calendar-selector.component';
 import { CalendarService } from 'src/app/modules/calendar/calendar.service';
 import { TimesheetService } from '../../services/timesheet.service';
-import { ExpenseMileageFormComponent } from '../expense-mileage-form/expense-mileage-form.component';
-import { ExpenseMiscellaneousFormComponent } from '../expense-miscellaneous-form/expense-miscellaneous-form.component';
+
+import { InvoiceFormComponent } from '../invoice-form/invoice-form.component';
+import { ExpenseMileageFormComponent } from 'src/app/modules/expense/components/expense-mileage-form/expense-mileage-form.component';
+import { ExpenseMiscellaneousFormComponent } from 'src/app/modules/expense/components/expense-miscellaneous-form/expense-miscellaneous-form.component';
+import { ExpenseFlatFeeFormComponent } from 'src/app/modules/expense/components/expense-flat-fee-form/expense-flat-fee-form.component';
+import { CalendarSelectorComponent } from 'src/app/modules/calendar/components/calendar-selector/calendar-selector.component';
+
 
 
 @Component({
@@ -25,6 +27,7 @@ export class TimesheetEditComponent implements OnInit {
   @ViewChild (InvoiceFormComponent) invoiceForm: InvoiceFormComponent;
   @ViewChild (ExpenseMileageFormComponent) commutesForm: ExpenseMileageFormComponent;
   @ViewChild (ExpenseMiscellaneousFormComponent) miscellaneousForm: ExpenseMiscellaneousFormComponent;
+  @ViewChild (ExpenseFlatFeeFormComponent) flatFeesForm: ExpenseFlatFeeFormComponent;
   @ViewChild ('form') form: NgForm;
   originUrl = window.location.origin;
   submitMessage: any = null;
@@ -73,6 +76,7 @@ export class TimesheetEditComponent implements OnInit {
       this.timesheetService.timesheet.invoice = this.generateInvoice ? this.invoiceForm.invoice : null;
       this.timesheetService.timesheet.miscellaneous = this.generateExpenses ? this.miscellaneousForm.miscellaneous : [];
       this.timesheetService.timesheet.commutes = this.generateExpenses ? this.commutesForm.commutes : [];
+      this.timesheetService.timesheet.flatFees = this.generateExpenses ? this.flatFeesForm.flatFees : [];
       this.updateMailtoLink();
       this.reactToSubmition(false);
     } else {
@@ -98,7 +102,7 @@ export class TimesheetEditComponent implements OnInit {
       this.timesheetService.timesheet,
       this.calendarService.getWorkedTime(this.timesheetService.timesheet),
       this.timesheetService.getReviewToken(),
-      this.originUrl + '/timesheet/edit/'
+      this.originUrl + '/timesheet/review/'
     );
   }
 
@@ -121,6 +125,7 @@ export class TimesheetEditComponent implements OnInit {
     }
     if (this.timesheetService.timesheet.commutes.length === 0
         && this.timesheetService.timesheet.miscellaneous.length === 0
+        && this.timesheetService.timesheet.flatFees.length === 0
         && this.generateExpenses) {
       this.submitMessage.text += ', vous n\'avez ajouté aucun frais';
     }

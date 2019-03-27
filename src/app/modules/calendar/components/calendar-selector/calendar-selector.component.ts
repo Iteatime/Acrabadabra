@@ -6,7 +6,8 @@ import {
   ViewEncapsulation,
   ChangeDetectorRef,
   Output,
-  EventEmitter
+  EventEmitter,
+  OnDestroy
 } from '@angular/core';
 
 import { Subject } from 'rxjs';
@@ -37,7 +38,7 @@ import { CalendarEvent, CalendarMonthViewDay, DAYS_OF_WEEK } from 'angular-calen
   styleUrls: ['./calendar-selector.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class CalendarSelectorComponent implements OnInit {
+export class CalendarSelectorComponent implements OnInit, OnDestroy {
   @Input() public minifiedTimesheet: any;
   @Input() public picking: boolean;
   @Output() public changed = new EventEmitter<boolean>();
@@ -57,7 +58,15 @@ export class CalendarSelectorComponent implements OnInit {
       this.changeDetector.detectChanges();
       this.changed.emit();
     });
-    setTimeout(() => { this.changeDetector.detectChanges(); });
+    setTimeout(() => {
+      if (!this.refresh.isStopped) {
+        this.changeDetector.detectChanges();
+      }
+    });
+  }
+
+  public ngOnDestroy(): void {
+    this.refresh.unsubscribe();
   }
 
   public beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {

@@ -90,6 +90,14 @@
   }
 }
 
+input[name="invoiceClientVATNumberInput"] {
+  margin-bottom: 32px;
+}
+
+.optional{
+  font-size:13px;
+}
+
 #client {
   @media (min-width: $screen-sm-min) {
     margin-left: 40px;

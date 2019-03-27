@@ -103,6 +103,8 @@
           (changed)="onUserInput()"></app-expense-mileage-form>
         <app-expense-miscellaneous-form *ngIf="generateExpenses" [miscellaneous]="timesheetService.timesheet.miscellaneous"
         (changed)="onUserInput()"></app-expense-miscellaneous-form>
+        <app-expense-flat-fee-form *ngIf="generateExpenses" [flatFees]="timesheetService.timesheet.flatFees"
+        (changed)="onUserInput()"></app-expense-flat-fee-form>
       </div>
 
       <div class="edit-cra__wrapper__form__component">

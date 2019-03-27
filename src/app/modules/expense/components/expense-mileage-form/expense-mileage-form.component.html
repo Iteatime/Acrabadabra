@@ -1,0 +1,119 @@
+<form #expenseForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="mileage-allowance-form">
+        <div class="mileage-allowance-form__block">
+            <h4 class="mileage-allowance-form__block__title">Indemnités kilométriques</h4>
+            <div class="mileage-allowance-form__block__input-wrapper">
+                <div class="mileage-allowance-form__block__input-wrapper__item form-group" >
+                    <label for="date" class="mileage-allowance-form__block__input-wrapper__item__label">Date</label>
+                    <div class="mileage-allowance-form__block__input-wrapper__item__input">
+                        <input
+                        type="date"
+                        pattern="\d{4}-\d{2}-\d{2}"
+                        class="form-control"
+                        name="date"
+                        [(ngModel)]="commute.date"
+                        required
+                        id="date"
+                        #date="ngModel"
+                        >
+                        <div *ngIf="date.invalid && (date.dirty || date.touched)" class="alert alert-danger">
+
+                            <div *ngIf="date.errors['required']">
+                                Ce champ est obligatoire.
+                            </div>
+
+                            <div *ngIf="date.errors['pattern']">
+                                La date devrait respecter aaaa-mm-jj.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mileage-allowance-form__block__input-wrapper__item form-group" >
+                    <label for="journey" class="mileage-allowance-form__block__input-wrapper__item__label">Trajet</label>
+                    <div class="mileage-allowance-form__block__input-wrapper__item__input">
+                        <input
+                        placeholder="ex: AR Annecy-Grenoble"
+                        type="text"
+                        pattern="^\S[A-zÀ-ÿ\s'-]+$"
+                        class="form-control"
+                        name="journey"
+                        [(ngModel)]="commute.journey"
+                        required
+                        id="journey"
+                        #journey="ngModel"
+                        >
+                        <div *ngIf="journey.invalid && (journey.dirty || journey.touched)" class="alert alert-danger">
+                            <div *ngIf="journey.errors['required']">
+                                Ce champ est obligatoire.
+                            </div>
+                            <div *ngIf="journey.errors['pattern']">
+                                Le nom ne doit contenir que des lettres.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mileage-allowance-form__block__input-wrapper__item form-group" >
+                    <label for="distance" class="mileage-allowance-form__block__input-wrapper__item__label">Distance parcourue (en km)</label>
+                    <div class="mileage-allowance-form__block__input-wrapper__item__input">
+                        <input
+                        placeholder="ex: 120"
+                        type="text"
+                        pattern="[0-9]+"
+                        class="form-control"
+                        name = "distance"
+                        [(ngModel)]="commute.distance"
+                        required
+                        id="distance"
+                        #distance="ngModel"
+                        >
+                        <div *ngIf="distance.invalid && (distance.dirty || distance.touched)" class="alert alert-danger">
+                            <div *ngIf="distance.errors['required']">
+                                Ce champ est obligatoire.
+                            </div>
+                            <div *ngIf="distance.errors['pattern']">
+                                Seul des chiffres sont acceptés
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mileage-allowance-form__block__input-wrapper__item form-group" >
+                    <label for="vehicle" class="mileage-allowance-form__block__input-wrapper__item__label">Véhicule</label>
+                    <div class="mileage-allowance-form__block__input-wrapper__item__input">
+                        <select
+                        class="form-control"
+                        name="vehicle"
+                        [(ngModel)]="commute.allowance"
+                        required
+                        id="vehicle"
+                        #vehicle="ngModel"
+                        >
+                            <option value="" disabled selected>Votre véhicule</option>
+                            <option *ngFor="let vehicle of vehicles" [ngValue]="vehicle.allowance">
+                                {{vehicle.horsepower}} CV ({{vehicle.allowance}}€/km)
+                            </option>
+                        </select>
+                        <div *ngIf="vehicle.invalid && (vehicle.dirty || vehicle.touched)" class="alert alert-danger">
+                            <div *ngIf="vehicle.errors['required']">
+                                Ce champ est obligatoire.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mileage-allowance-form__block__submit">
+                    <button
+                    data-text="Ajouter"
+                    class="mileage-allowance-form__block__submit__button"
+                    >
+                        <span>Ajouter</span>
+                    </button>
+                </div>
+                <app-expense-mileage-table
+                (changed)="changed.emit(true)">
+                </app-expense-mileage-table>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+

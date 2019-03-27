@@ -1,0 +1,36 @@
+<table class="miscellaneous">
+    <thead class="miscellaneous__header">
+        <tr>
+            <th class="miscellaneous__header__item">Date</th>
+            <th class="miscellaneous__header__item left-text">Type</th>
+            <th class="miscellaneous__header__item">Taux de TVA</th>
+            <th class="miscellaneous__header__item">
+              <span *ngIf="vatExemption == false">Montant TTC</span>
+              <span *ngIf="vatExemption == true">Montant HT</span>
+            </th>
+        </tr>
+    </thead>
+    <tbody class="miscellaneous__body">
+      <tr *ngFor = "let miscellaneous of timesheetService.timesheet.miscellaneous">
+          <td class="miscellaneous__body__item" data-text="Date:">{{miscellaneous.date | date: 'dd/MM/yyyy'}}</td>
+          <td class="miscellaneous__body__item left-text" data-text="Type:">{{miscellaneous.miscellaneousType}}
+            <span class="saut" *ngIf="miscellaneousService.vatDeductible(miscellaneous)">(TVA déductible) </span>
+            <span class="saut" *ngIf="!miscellaneousService.vatDeductible(miscellaneous)">(TVA non déductible) </span>
+            <span class="saut" *ngIf="miscellaneous.wording">{{"- " + miscellaneous.wording[0].toUpperCase()
+               + miscellaneous.wording.substring(1,miscellaneous.wording.length)}}</span>
+          </td>
+          <td class="miscellaneous__body__item keep-border" data-text="Taux de TVA:">{{miscellaneous.tvaRate / 100 | percent: '1.2-2':local}}</td>
+          <td class="miscellaneous__body__item" data-text="Montant TTC:">{{miscellaneous.amount | currency:currencyCode:"symbol":'1.2-2':local}}</td>
+          <td class="miscellaneous__body__item trashCan" *ngIf="!hideDeleteButton"><a (click)="delete(miscellaneous)"><i class="material-icons">delete</i></a></td>
+      </tr>
+      <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="miscellaneous__body__item totalOfAllowances">
+            <span *ngIf="vatExemption == false">Total TTC:</span>
+            <span *ngIf="vatExemption == true">Total HT:</span>
+            {{timesheetService.getTotalMiscellaneous() | currency:currencyCode:"symbol":'1.2-2':local}}</td>
+      </tr>
+</tbody>
+</table>

@@ -1,4 +1,35 @@
-Feature: Download an invoice
+Scenario: I can download my invoice as a PDF
+-PASS
 
-I can download the invoice
--pass
+Scenario: I can choose the RCS exemption for me and the client
+-PASS
+
+Scenario: I can choose the VAT exemption
+-PASS
+
+Scenario: I want to see a total incl tax
+-PASS
+
+Scenario: I want to be paid by any paiement method
+-PASS
+
+Scenario: I want to be paid by bank transfer
+-PASS
+
+Scenario: I want to inform my client about late fee of paiement
+-PASS
+
+Scenario: I can consult quickly the different costs of my invoice
+-PASS
+
+Scenario: I want consult details of invoiced fees
+-PASS
+
+Scenario: I want consult the total amounts by vat rates
+-PASS
+
+Scenario: I want know details about service delivery
+-PASS
+
+Scenario: I want to see a reminder of my personal informations at the bottom of my invoice
+-PASS

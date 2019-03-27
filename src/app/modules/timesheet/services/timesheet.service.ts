@@ -10,7 +10,12 @@ function tokenize(a: any): string {
  ​
 function untokenize(a: string): any {
   if (a) {
-    return JSON.parse(decodeURIComponent(escape(atob(a))));
+    try {
+      return JSON.parse(decodeURIComponent(escape(atob(a))));
+    } catch {
+      alert('Données invalides');
+      return false;
+    }
   }
   return false;
 }
@@ -73,5 +78,13 @@ export class TimesheetService {
       totalMisc += +this.timesheet.miscellaneous[i].amount;
     }
     return totalMisc;
+  }
+
+  public getTotalFlatFee() {
+    let totalFlatFee = 0;
+    for (let i = 0; i < this.timesheet.flatFees.length; i++) {
+      totalFlatFee += +this.timesheet.flatFees[i].amount;
+    }
+    return totalFlatFee;
   }
 }
