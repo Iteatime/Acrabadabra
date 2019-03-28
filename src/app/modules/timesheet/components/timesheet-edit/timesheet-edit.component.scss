@@ -36,12 +36,13 @@
                   left: 20px;
           height: 100%;
         }
-        &__message {
+        &__user {
 
           @media (min-width: $screen-sm-min) {
             line-height: 60px;
             font-size: 18px;
           }
+
           position: absolute;
           right: 20px;
           cursor: pointer;
@@ -49,6 +50,12 @@
           color: white;
           font-weight: bold;
           font-size: 12px;
+          vertical-align: middle;
+
+          i {
+            vertical-align: middle;
+            margin-bottom: 4px;
+          }
         }
 		  }
 	  }

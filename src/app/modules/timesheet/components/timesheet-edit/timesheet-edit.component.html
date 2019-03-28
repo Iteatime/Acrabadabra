@@ -5,7 +5,10 @@
         <img class="edit-cra__header__container__logo" src="assets/images/logo.white.svg" alt="logo acrabadabra"
           (error)="$event.target.removeAttribute('onerror'); $event.target.src = 'assets/images/logo.white.png';">
       </a>
-      <span *ngIf="auth.isAuthenticated" class="edit-cra__header__container__message" (click)="openAuth()">Bonjour {{ auth.username }}</span>
+      <div *ngIf="auth.isAuthenticated" class="edit-cra__header__container__user" (click)="openAuth()">
+        <i class="material-icons">account_circle </i>
+        {{ auth.username }}
+      </div>
     </div>
   </div>
 

@@ -10,14 +10,6 @@
     </div>
   </div>
 
-  <div class="homepage__auth">
-    <a href="#" class="homepage__auth__link" (click)="onClick()">
-      <i class="material-icons">
-        account_circle
-      </i>
-    </a>
-  </div>
-
 
   <div class="homepage__main">
     <div class="homepage__main__title">
@@ -25,8 +17,12 @@
       <h1>Une solution en ligne pour les SSII</h1>
     </div>
 
-    <button type="button" class="homepage__main__btncreate" data-text="Saisir un CRA" [routerLink]="['timesheet','create']">
-      <span>Saisir un CRA</span>
+    <button id="consultant" type="button" class="homepage__main__btn" data-text="Je suis un consultant" [routerLink]="['timesheet','create']">
+      <span>Je suis un consultant</span>
+    </button>
+
+    <button id="provider" type="button" class="homepage__main__btn" data-text="Je suis une société de services" (click)="onClick()">
+      <span>Je suis une société de services</span>
     </button>
   </div>
 </div>

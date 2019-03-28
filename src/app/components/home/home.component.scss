@@ -44,20 +44,6 @@
     }
   }
 
-  &__auth__link {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-
-    &:visited, &:link {
-      color: white;
-    }
-
-    &:active {
-      color: $grey_mid;
-    }
-  }
-
   &__main {
     @include container;
 
@@ -92,11 +78,20 @@
       }
     }
 
-    &__btncreate {
+    &__btn {
       @include hoveranim_glow($darker_blue);
 
       @media (min-width: $screen_sm_min) {
-        width: 500px;
+        width: 350px;
+        font-size: 18px;
+
+        &#consultant {
+          margin-right: 20px;
+        }
+
+        &#provider {
+          margin-left: 20px;
+        }
       }
 
       border: none;
