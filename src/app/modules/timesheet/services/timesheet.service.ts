@@ -48,6 +48,7 @@ export class TimesheetService {
   public openTimesheet(token: string, mode: string): boolean {
     const a = untokenize(token);
     if (!a || a.mode !== mode) {
+      this.timesheet = new Timesheet();
       return false;
     } else {
       this.mode = mode;

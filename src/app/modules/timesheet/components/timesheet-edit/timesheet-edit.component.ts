@@ -37,7 +37,6 @@ export class TimesheetEditComponent implements OnInit {
 
   constructor(
     public timesheetService: TimesheetService,
-    public auth: AuthenticationService,
     private calendarService: CalendarService,
     private route: ActivatedRoute,
     private router: Router,
@@ -59,10 +58,6 @@ export class TimesheetEditComponent implements OnInit {
       }
     });
     this.titleService.setTitle(`Acrabadabra - ${this.getModeTitle()} un compte rendu d'activité`);
-  }
-
-  openAuth() {
-    this.auth.widget.open();
   }
 
   getModeTitle() {

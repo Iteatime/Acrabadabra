@@ -13,6 +13,7 @@ import { TimesheetReviewComponent } from './components/timesheet-review/timeshee
 
 import { CopyToClipboardDirective } from 'src/app/shared/directives/copy-to-clipboard/copy-to-clipboard.directive';
 import { MailtoDirective } from 'src/app/shared/directives/mailto/mailto.directive';
+import { TimesheetComponent } from './components/timesheet/timesheet.component';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { MailtoDirective } from 'src/app/shared/directives/mailto/mailto.directi
     TimesheetReviewComponent,
     CopyToClipboardDirective,
     MailtoDirective,
+    TimesheetComponent,
   ]
 })
 export class TimesheetModule { }
