@@ -105,7 +105,9 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [],
-            "scripts": [],
+            "scripts": [
+              "node_modules/netlify-identity-widget/build/netlify-identity-widget.js"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"

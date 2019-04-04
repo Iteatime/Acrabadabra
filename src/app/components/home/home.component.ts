@@ -17,7 +17,7 @@ export class HomeComponent {
     public router: Router
   ) { }
 
-  public onClick() {
+  public onProviderBtnClick() {
     this.auth.widget.open();
 
     this.auth.widget.on('close', () => {
