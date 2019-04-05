@@ -1,9 +1,8 @@
-import { Timesheet } from 'src/app/shared/models/timesheet.model';
+import { Company, Invoice, Timesheet } from 'src/app/shared/models';
 
 import { TimesheetService } from './timesheet.service';
 import { LocalSaveService } from 'src/app/shared/services/localSave/local-save.service';
 import { SerializationService } from 'src/app/shared/services/serialization/serialization.service';
-
 
 describe('TimesheetService', () => {
   let service: TimesheetService;
@@ -66,6 +65,34 @@ describe('TimesheetService', () => {
   describe('getReviewToken()', () => {
     it('should return a base64 encoded json object containing the timesheet property, and a "mode" property set to "review"', () => {
       expect(service.getReviewToken()).toBe(reviewToken);
+    });
+  });
+
+  describe('getTransferToken())', () => {
+    let transferToken;
+    let token;
+    beforeEach(() => {
+      service.timesheet.invoice = Object.assign({}, new Invoice(), {
+          number: '458789',
+          provider: new Company('Rémy dupont'),
+          client: new Company('Iteatime'),
+        });
+      transferToken = btoa(unescape(encodeURIComponent(JSON.stringify({
+          mode: 'edit',
+          timesheet: Object.assign({ ...service.timesheet }, {
+            invoice: Object.assign(new Invoice(), {
+              provider: new Company('Iteatime')
+            })
+          })
+     }))));
+     token = service.getTransferToken();
+    });
+
+    it('should return a new invoice edit page with the information correctly completed', () => {
+      expect(service.timesheet.invoice.number).toBe(null);
+      expect(service.timesheet.invoice.provider.name).toBe('Iteatime');
+      expect(service.timesheet.invoice.client.name).toBe('');
+      expect(token).toEqual(transferToken);
     });
   });
 

@@ -37,10 +37,13 @@
         </div>
       </div>
 
-      <div *ngIf="generateInvoice" class="review__wrapper__fields__invoice">
-        <a data-text="Télécharger la facture" class="review__wrapper__fields__invoice__button" target="_self"
+      <div class="review__wrapper__fields__invoice">
+        <a *ngIf="generateInvoice" data-text="Télécharger la facture" class="review__wrapper__fields__invoice__button" target="_self"
           [href]="invoiceLink">
           <span>Télécharger la facture</span>
+        </a>
+        <a *ngIf="auth.isAuthenticated" [href]="'/timesheet/edit/' + transferToken" data-text="Facturer ce CRA" class="review__wrapper__fields__invoice__button" target="_self">
+            <span>Facturer ce CRA</span>
         </a>
       </div>
 

@@ -119,16 +119,20 @@
         text-align: center;
 
         &__button {
-          @include hoveranim_glow($darker_blue);
+          @media (min-width: $screen-sm-min) {
+            margin: 0 50px;
+          }
 
+          @include hoveranim_glow($darker_blue);
+          text-align: center;
           border: none;
           display: inline-block;
           background: $dark_blue;
           padding: 0;
           cursor: pointer;
-          width: 40%;
+          width: 30%;
           height: 60px;
-          min-width: 220px;
+          min-width: 270px;
           line-height: 60px;
           color: $white;
           font-size: 20px;

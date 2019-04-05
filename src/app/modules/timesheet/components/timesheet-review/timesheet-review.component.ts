@@ -7,6 +7,7 @@ import { Commute } from '../../../../shared/models/commute';
 
 import { CalendarService } from 'src/app/modules/calendar/calendar.service';
 import { TimesheetService } from '../../services/timesheet.service';
+import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-review',
@@ -24,8 +25,10 @@ export class TimesheetReviewComponent implements OnInit {
   commutes: Commute[];
   showAllowanceTable = false;
   showMiscellaneousTable = false;
+  transferToken: string;
 
   constructor(
+    public auth: AuthenticationService,
     private calendarManager: CalendarService,
     private route: ActivatedRoute,
     private timesheetService: TimesheetService,
@@ -41,6 +44,7 @@ export class TimesheetReviewComponent implements OnInit {
 
         if (this.timesheet.invoice) {
            this.invoiceLink = this.timesheetService.getInvoiceLink();
+           this.transferToken = this.timesheetService.getTransferToken();
            this.generateInvoice = true;
         }
 
