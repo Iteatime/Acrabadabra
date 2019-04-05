@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
+import { HeaderComponent } from 'src/app/components/header/header.component';
+
 import { CalendarModule } from '../calendar/calendar.module';
 import { ExpenseModule } from '../expense/expense.module';
 import { TimesheetRoutingModule } from './timesheet.routes';
@@ -29,6 +31,7 @@ import { MailtoDirective } from 'src/app/shared/directives/mailto/mailto.directi
     TimesheetReviewComponent,
     CopyToClipboardDirective,
     MailtoDirective,
+    HeaderComponent
   ]
 })
 export class TimesheetModule { }

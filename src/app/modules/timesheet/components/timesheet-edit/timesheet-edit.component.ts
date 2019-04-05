@@ -32,12 +32,12 @@ import { Invoice } from 'src/app/shared/models/invoice.model';
   encapsulation: ViewEncapsulation.None
 })
 export class TimesheetEditComponent implements OnInit {
-  @ViewChild (CalendarSelectorComponent) calendar: CalendarSelectorComponent;
-  @ViewChild (InvoiceFormComponent) invoiceForm: InvoiceFormComponent;
-  @ViewChild (ExpenseMileageFormComponent) commutesForm: ExpenseMileageFormComponent;
-  @ViewChild (ExpenseMiscellaneousFormComponent) miscellaneousForm: ExpenseMiscellaneousFormComponent;
-  @ViewChild (ExpenseFlatFeeFormComponent) flatFeesForm: ExpenseFlatFeeFormComponent;
-  @ViewChild ('form') form: NgForm;
+  @ViewChild(CalendarSelectorComponent) calendar: CalendarSelectorComponent;
+  @ViewChild(InvoiceFormComponent) invoiceForm: InvoiceFormComponent;
+  @ViewChild(ExpenseMileageFormComponent) commutesForm: ExpenseMileageFormComponent;
+  @ViewChild(ExpenseMiscellaneousFormComponent) miscellaneousForm: ExpenseMiscellaneousFormComponent;
+  @ViewChild(ExpenseFlatFeeFormComponent) flatFeesForm: ExpenseFlatFeeFormComponent;
+  @ViewChild('form') form: NgForm;
   originUrl = window.location.origin;
   editShortUrl: string = '';
   reviewShortUrl: string = '';
