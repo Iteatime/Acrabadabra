@@ -67,3 +67,12 @@ The code pushed on this repo is continously deployed to [Netlify](https://www.ne
 `master` is the production branch. What you push there is built and sent live [here](https://acrabadabra.netlify.com/).
 
 Any other branch or pull request will be automatically deployed too. Check out [Netlify documentation](https://www.netlify.com/docs/continuous-deployment/) to learn more.
+
+## Environment variables
+
+In order to reduce the test and build times during the local dev and to launch the application in the same way as in production we use the following environment variables:
+
+- `ENV` which defines the environment of execution, for this one we use 'prod' or 'dev'. It is defined in the package.json file in the various scripts.
+
+- `PDF_API_URL` which defines the url of the PDF generation service and must be defined at the system level.
+
