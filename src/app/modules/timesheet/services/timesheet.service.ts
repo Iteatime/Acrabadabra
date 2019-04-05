@@ -91,14 +91,14 @@ export class TimesheetService {
 
   public shortenUrl(url): Promise<string> {
     const header = new HttpHeaders({'apikey': environment.short_url_api_key,
-      'Content-Type': 'application/json', 'workspace': 'e8989a355dc84230b79bf51d50e07377'});
+      'Content-Type': 'application/json', 'workspace': environment.short_url_workspace});
 
     const body =  JSON.stringify({
       destination: url,
       domain: { fullName: 'link.acrabadabra.com' }
     });
 
-    return this.http.post<any>('https://api.rebrandly.com/v1/links', body, {headers: header}).toPromise()
+    return this.http.post<any>(environment.short_url_api, body, {headers: header}).toPromise()
       .then((res) => {
         return res.shortUrl;
       })

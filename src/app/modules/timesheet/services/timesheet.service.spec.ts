@@ -131,8 +131,8 @@ describe('Exertenal URL shortening service:', () => {
   });
 
   it ('shortenUrl() should return a shortened URL', () => {
-    const shortUrl = 'https://link.acrabadabra.com/0d3eb'
-    const url ='https://www.youtube.com/watch?v=0Wbc5ZwkAMw&list=PLA6B-rmxykCeq7OKDLUNCrBBjFadmcnFQ';
+    const shortUrl = 'https://link.acrabadabra.com/8355d'
+    const url ='https://vimeo.com/256549521';
 
     httpClientSpy.post.and.returnValue(of({shortUrl: shortUrl}));
 
