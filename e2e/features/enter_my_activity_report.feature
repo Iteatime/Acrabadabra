@@ -5,45 +5,30 @@ As a consultant
 I want to enter my activity report
 
 Background:
-  Given the create page
+  Given I have navigated to the create page
 
-Scenario Outline: I can fill the inputs
-  When I fill my name <name>
-  And I fill my <email>
-  And I fill my mission <mission>
-  And I fill my <client>
-  And I click on "Valider mon CRA" button
-  Then it should have been a <result>
+Scenario Outline: I can see a message telling me the constraint of a field
+  When I fill in my information in the form without respecting all the constraints
+  Then I can see a message telling me the constraint not met
 
-  Examples:
-    | name          | email             | mission                 | client   | result  |
-    | Clément PONT  | cpont@itetime.fr  | Dev Fullstack Junior    | Iteatime | success |
-    | unset         | cpont@itetime.fr  | Dev Fullstack Junior    | Iteatime | failure |
-    | Clément PONT  | unset             | Dev Fullstack Junior    | Iteatime | failure |
-    | Clément PONT  | not an email      | Dev Fullstack Junior    | Iteatime | failure |
-    | Clément PONT  | cpont@itetime.fr  | unset                   | Iteatime | failure |
-    | Clément PONT  | cpont@itetime.fr  | Dev Fullstack Junior    | unset    | failure |
-
-Scenario: I can validate my seizures
-  Given I have filed the form
+Scenario: I can validate my inputs
+  Given I have filled-out the "Consultant", "Mission" and "Journées d'intervention" forms
   When I click on "Valider mon CRA" button
   Then a success message appears
-  And a link to send by mail appears
-  And a link to copy a modification link appears
-  And a share link appears
+  And the links appears except the invoice one
 
 Scenario: I made a mistake filling the form and I try to validate it
   When I click on "Valider mon CRA" button
-  And I have not filed the form correctly
-  Then a fail message appears
+  And I have not filled-out the form correctly
+  Then a fail notification appears
   And an error message appears near the input
-  And I can't validate my form
+  And my inputs aren't validated
 
 Scenario: I change the value of an input after a form validation
   When I validated the form
   But I change the value of an input
-  Then the Links and success message are hiden
-  And I need to validate again the form
+  Then the Links and success notification are hidden
+  And I have to validate the form
 
 Scenario Outline: I can select the month I worked
   Given the selected month is January 2019
@@ -58,8 +43,8 @@ Scenario Outline: I can select the month I worked
     | previous | December 2018 |
 
 Scenario: I can indicate how many days I worked in the month
-  When select the days I worked
-  Then the "Nombre total de journées :" should be updated aswell
+  When I select the days I worked
+  Then the "Nombre total de journées :" should be updated as well
 
 Scenario: I want delete a worked day on the calendar
   Given I selected one day
@@ -67,12 +52,22 @@ Scenario: I want delete a worked day on the calendar
   Then this day is reset
   And the days selection should have been updated
 
-Scenario: I worked only a half day
-  Given I selected a day
-  When I click on the blue box of this day
-  Then the box size increase
-  And new choice appears
-  And I can click on half day
+Scenario: I want to display working time options for a day
+  Given I have selected a day
+  When I hover on the blue pastille
+  Then new choice appears
+
+Scenario: I select half a day as the working time for a day
+  Given I have displayed time options for a day
+  When I click on half a day
+  Then The blue pastille show "0,5 jour"
+  And the days selection should have been updated
+
+Scenario: I select zero as the working time for a day
+  Given I have displayed time options for a day
+  When I click on zero
+  Then this day is reset
+  And the days selection should have been updated
 
 Scenario: I can go back to the homepage
   When I click the Logo
