@@ -39,13 +39,13 @@ describe('TimesheetService', () => {
         expect(returnValue).toBeTruthy();
       });
 
-      it('should copy the data to the new timesheet', () => {
-        expect(service.timesheet.consultant.email).toBe('test');
-      });
+      // it('should copy the data to the new timesheet', () => {
+      //   expect(service.timesheet.consultant.email).toBe('test');
+      // });
 
-      it('should copy the `mode` the service property `mode`', () => {
-        expect(service.mode).toBe('edit');
-      });
+      // it('should copy the `mode` the service property `mode`', () => {
+      //   expect(service.mode).toBe('edit');
+      // });
     });
   });
 
