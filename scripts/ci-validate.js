@@ -5,7 +5,7 @@ const onTestFail = () => {
   process.exit(1);
 };
 
-(function () {
+(() => {
   concurently(
     [
       'ENV=dev node scripts/set-env.js',
