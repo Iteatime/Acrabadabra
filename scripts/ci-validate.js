@@ -1,6 +1,11 @@
 const concurently = require('concurrently');
 
-const runUnitTest = () => {
+const onTestFail = () => {
+  console.error('This build is not passing the tests...');
+  process.exit(1);
+};
+
+(() => {
   concurently(
     [
       'ENV=dev node scripts/set-env.js',
@@ -10,11 +15,4 @@ const runUnitTest = () => {
       prefix: '[test]',
       successCondition: 'last'
     }).catch(onTestFail);
-};
-
-const onTestFail = () => {
-  console.error('This build is not passing the tests...');
-};
-
-
-runUnitTest();
+})();
