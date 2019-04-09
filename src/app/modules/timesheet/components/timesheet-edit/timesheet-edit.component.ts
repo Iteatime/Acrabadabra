@@ -14,7 +14,7 @@ import { ExpenseMiscellaneousFormComponent } from 'src/app/modules/expense/compo
 import { ExpenseFlatFeeFormComponent } from 'src/app/modules/expense/components/expense-flat-fee-form/expense-flat-fee-form.component';
 import { CalendarSelectorComponent } from 'src/app/modules/calendar/components/calendar-selector/calendar-selector.component';
 
-
+import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 
 @Component({
   selector: 'app-timesheet-edit',
@@ -30,7 +30,6 @@ export class TimesheetEditComponent implements OnInit {
   @ViewChild (ExpenseFlatFeeFormComponent) flatFeesForm: ExpenseFlatFeeFormComponent;
   @ViewChild ('form') form: NgForm;
   originUrl = window.location.origin;
-  submitMessage: any = null;
   reviewMail: ReviewMail;
   generateInvoice = false;
   generateExpenses = false;
@@ -42,6 +41,7 @@ export class TimesheetEditComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private titleService: Title,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -67,10 +67,10 @@ export class TimesheetEditComponent implements OnInit {
 
   onUserInput() {
     this.showLinks = false;
-    this.submitMessage = null;
   }
 
   onSubmit() {
+    this.notificationService.dismissAll();
     if (this.checkFormsValidity()) {
       this.timesheetService.timesheet.workingDays = this.calendarService.getWorkingDays(this.calendar.timesheet);
       this.timesheetService.timesheet.invoice = this.generateInvoice ? this.invoiceForm.invoice : null;
@@ -87,12 +87,13 @@ export class TimesheetEditComponent implements OnInit {
 
   reactToSubmition(error: boolean): void {
     if (error) {
-      this.submitMessage = { text: 'Veuillez vérifier votre saisie', type: 'error' };
+      this.notificationService.push('Veuillez vérifier votre saisie', 'warning', { isSelfClosing: false });
     } else {
-      this.submitMessage = {
-        text: 'Si vous modifiez le CRA, vous devrez le valider à nouveau et utiliser le nouveau lien de partage.',
-        type: 'success'
-      };
+      this.notificationService.push(
+        'Votre CRA est validé<br/>Si vous le modifiez, vous devrez le valider à nouveau et utiliser le nouveau lien de partage.',
+        'success',
+        { duration: 10 }
+      );
     }
     this.showLinks = !error;
   }
@@ -127,7 +128,7 @@ export class TimesheetEditComponent implements OnInit {
         && this.timesheetService.timesheet.miscellaneous.length === 0
         && this.timesheetService.timesheet.flatFees.length === 0
         && this.generateExpenses) {
-      this.submitMessage.text += ', vous n\'avez ajouté aucun frais';
+      this.notificationService.push('Vous n\'avez ajouté aucun frais', 'warning', { isSelfClosing: false });
     }
   }
 }
