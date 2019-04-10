@@ -121,7 +121,7 @@ export class TimesheetService {
   public openLastTimesheetInLocal(): boolean {
     const timesheetsOfLocalStorage = this.getTimesheetsLocal();
     if (timesheetsOfLocalStorage.length > 0) {
-      this.timesheet = this.localSaveService.getLocalItem( timesheetsOfLocalStorage[timesheetsOfLocalStorage.length - 1]);
+      this.setTimesheet(this.localSaveService.getLocalItem( timesheetsOfLocalStorage[timesheetsOfLocalStorage.length - 1]));
       return true;
     }
     return false;

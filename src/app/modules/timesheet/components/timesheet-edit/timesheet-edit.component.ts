@@ -50,7 +50,9 @@ export class TimesheetEditComponent implements OnInit {
   ngOnInit(): void {
     if (!this.timesheetService.openTimesheet(this.route.snapshot.params['data'], 'edit')) {
       this.router.navigate(['timesheet', 'create']);
-      this.timesheetService.openLastTimesheetInLocal();
+      if (this.timesheetService.openLastTimesheetInLocal()) {
+        this.loadTimesheet(this.timesheetService.timesheet);
+      }
     } else {
       this.loadTimesheet(this.timesheetService.timesheet);
     }
