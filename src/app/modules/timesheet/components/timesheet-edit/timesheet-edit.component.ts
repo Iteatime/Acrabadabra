@@ -51,10 +51,7 @@ export class TimesheetEditComponent implements OnInit {
     if (!this.timesheetService.openTimesheet(this.route.snapshot.params['data'], 'edit')) {
       this.router.navigate(['timesheet', 'create']);
     } else {
-      this.showLinks = true;
-      this.generateInvoice = !!this.timesheetService.timesheet.invoice;
-      this.generateExpenses = this.timesheetService.timesheet.commutes.length > 0;
-      this.updateMailtoLink();
+      this.loadTimesheet(this.timesheetService.timesheet);
     }
     this.form.valueChanges.subscribe(() => {
       if (this.form.dirty) {
@@ -62,12 +59,31 @@ export class TimesheetEditComponent implements OnInit {
       }
     });
     this.titleService.setTitle(`Acrabadabra - ${this.getModeTitle()} un compte rendu d'activité`);
-
-    this.timesheetService.setTimesheet();
   }
 
+  set timesheet(timesheet: string) {
+    const localTimesheet = JSON.parse(timesheet);
+    this.timesheetService.setTimesheet(localTimesheet);
+    this.loadTimesheet(localTimesheet);
+  }
+
+  private loadTimesheet(timesheet: Timesheet): void {
+    this.showLinks = true;
+    this.generateInvoice = !!timesheet.invoice;
+    this.generateExpenses = timesheet.commutes.length > 0
+                          || timesheet.flatFees.length > 0
+                          || timesheet.miscellaneous.length > 0;
+    this.updateMailtoLink();
+  }
   getModeTitle() {
     return this.timesheetService.mode === 'edit' ? 'Modifier' : 'Saisir';
+  }
+
+  parseLocalTimesheet(element: any) {
+    const localTimesheet = JSON.parse(element);
+    this.timesheetService.setTimesheet(localTimesheet);
+    this.loadTimesheet(localTimesheet);
+
   }
 
   onUserInput() {

@@ -4,7 +4,9 @@
 .ng-invalid:not(form)  {
   border-left: 5px solid #a94442; /* red */
 }
-
+ .cool2 {
+   display: inline;
+ }
 .edit-cra {
     background: $grey_light;
 
@@ -56,6 +58,8 @@
       box-shadow: 0 0 8px rgba($black, .2);
 
       &__title {
+        display: flex;
+        justify-content: space-between;
         font-size: 22px;
         color: $grey_mine_shaft;
 
@@ -66,6 +70,11 @@
 
           font-weight: 700;
           font-size: 20px;
+        }
+
+        &__select {
+          display: inline;
+          margin-left: 5px;
         }
       }
 

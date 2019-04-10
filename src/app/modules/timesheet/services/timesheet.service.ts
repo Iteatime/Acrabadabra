@@ -5,6 +5,8 @@ import { environment } from 'src/environments/environment';
 import { Timesheet } from 'src/app/shared/models/timesheet.model';
 
 import { LocalSaveService } from 'src/app/shared/services/localSave/local-save.service';
+import { Local } from 'protractor/built/driverProviders';
+import { Invoice } from 'src/app/shared/models/invoice.model';
 
 function tokenize(a: any): string {
   return btoa(unescape(encodeURIComponent(JSON.stringify(a))));
@@ -90,22 +92,83 @@ export class TimesheetService {
     return totalFlatFee;
   }
 
-  public saveTimesheet() {
-    LocalSaveService.setLocalItem('timesheet', this.timesheet);
+  public getTimesheetArray() {
+    let timesheetArray = [];
+
+    Object.keys(localStorage).forEach(function(name) {
+      if ((name.split('.')[0]) === 'timesheet') {
+        timesheetArray.push(name);
+      }
+    });
+
+    return timesheetArray.sort((a, b) => {
+      return a.split('.')[1] - b.split('.')[1];
+    });
   }
 
-  public setTimesheet() {
-    if (LocalSaveService.checkItemExists('timesheet')) {
-      console.log(this.timesheet);
-      this.timesheet = Object.assign(this.timesheet, LocalSaveService.getLocalItem('timesheet'));
-      this.timesheet.workingDays = 0;
-      this.timesheet.commutes = [];
-      this.timesheet.flatFees = [];
-      this.timesheet.miscellaneous = [];
-      this.timesheet.invoice.date = '';
-      this.timesheet.invoice.number = '';
-      this.timesheet.invoice.paymentDate = '';
-      this.timesheet.invoice.paymentLatePenalty = false;
+  // public getLocalTimesheets() {
+  //   const storedTimesheets = [];
+  //   this.getTimesheetArray().forEach(element => {
+  //     // storedTimesheets.push(LocalSaveService.getLocalItem(element));
+  //     storedTimesheets.push(JSON.stringify(LocalSaveService.getLocalItem(element)));
+  //   });
+  //   console.log(storedTimesheets);
+  //   return storedTimesheets;
+  // }
+
+  public saveTimesheet() {
+    let lastTimesheet: number;
+    const timesheetArray = this.getTimesheetArray();
+
+    if (timesheetArray.length === 0 ) {
+      lastTimesheet = 0;
+    } else {
+      lastTimesheet = +(timesheetArray[timesheetArray.length - 1].split('.')[1]);
     }
+    LocalSaveService.setLocalItem(`timesheet.${lastTimesheet + 1}`, this.timesheet);
   }
+
+  public getTimesheetslist() {
+    const array = [];
+    this.getTimesheetArray().forEach(element => {
+      array.push([LocalSaveService.getLocalItem(element).consultant.name, JSON.stringify(LocalSaveService.getLocalItem(element))]);
+    });
+    return array;
+  }
+
+  // public setTimesheet() {
+  //   if (LocalSaveService.checkItemExists('timesheet')) {
+  //     console.log(this.timesheet);
+  //     this.timesheet = Object.assign(this.timesheet, LocalSaveService.getLocalItem('timesheet'));
+  //     this.timesheet.workingDays = 0;
+  //     this.timesheet.commutes = [];
+  //     this.timesheet.flatFees = [];
+  //     this.timesheet.miscellaneous = [];
+  //     this.timesheet.invoice.date = '';
+  //     this.timesheet.invoice.number = '';
+  //     this.timesheet.invoice.paymentDate = '';
+  //     this.timesheet.invoice.paymentLatePenalty = false;
+  //   }
+  // }
+
+  public setTimesheet(timesheet) {
+      this.timesheet = Object.assign(
+        {},
+        new Timesheet(),
+        {
+          ...timesheet,
+          workingDays : 0,
+          commutes : [],
+          flatFees : [],
+          miscellaneous : [],
+          invoice : Object.assign({}, new Invoice(), timesheet.invoice, {
+            date : '',
+            number : '',
+            paymentDate : '',
+            paymentLatePenalty : false
+          })
+        }
+      );
+        console.log(this.timesheet);
+    }
 }
