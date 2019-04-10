@@ -1,3 +1,5 @@
+import { TestBed } from '@angular/core/testing';
+
 import { TimesheetService } from './timesheet.service';
 
 import { Timesheet } from 'src/app/shared/models/timesheet.model';
@@ -7,24 +9,16 @@ import { SerializationService } from 'src/app/shared/services/serialization/seri
 
 
 describe('TimesheetService', () => {
-
   let service: TimesheetService;
   const testTimesheet = new Timesheet('test');
   const editToken = btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'edit', timesheet: testTimesheet }))));
   const reviewToken =  btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'review', timesheet: testTimesheet }))));
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [TimesheetService],
-      imports: [
-        LocalSaveService,
-        SerializationService
-      ]
-    });
     const serializer = new SerializationService();
     service = new TimesheetService(new LocalSaveService(serializer), serializer);
     service.timesheet = testTimesheet;
-  }) ;
+  });
 
   it('should be created', () => {
     expect(service).toBeTruthy();

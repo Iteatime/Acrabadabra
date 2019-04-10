@@ -4,16 +4,16 @@ export class ReviewMail {
   public subject: string;
   public body: string;
 
-  constructor(timesheet: Timesheet, workedTime: number, reviewToken: string, url: string) {
+  constructor(timesheet: Timesheet, workedTime: number, url: string) {
     this.setSubject(timesheet.consultant.name);
-    this.setBody(timesheet, workedTime, reviewToken, url);
+    this.setBody(timesheet, workedTime, url);
   }
 
   setSubject(consultantName: string) {
     this.subject = 'Acrabadabra  - Compte rendu d\'activité de ' + consultantName;
   }
 
-  setBody(timesheet: Timesheet, workedTime: number, reviewToken: string, url: string) {
+  setBody(timesheet: Timesheet, workedTime: number, url: string) {
     this.body = 'Bonjour,%0d%0a' +
     '%0d%0a' +
     'Un compte rendu d\'activité est consultable sur https://www.acrabadabra.com' +
@@ -23,7 +23,7 @@ export class ReviewMail {
     `Journées de prestation : ${workedTime.toLocaleString('fr')}%0d%0a` +
     '%0d%0a' +
     'Vous pouvez le consulter et télécharger la facture ici :%0d%0a ' +
-    `${url}${reviewToken}`;
+    `${url}`;
   }
 }
 
