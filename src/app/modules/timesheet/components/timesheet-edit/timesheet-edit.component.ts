@@ -50,6 +50,7 @@ export class TimesheetEditComponent implements OnInit {
   ngOnInit(): void {
     if (!this.timesheetService.openTimesheet(this.route.snapshot.params['data'], 'edit')) {
       this.router.navigate(['timesheet', 'create']);
+      this.timesheetService.openLastTimesheetInLocal();
     } else {
       this.loadTimesheet(this.timesheetService.timesheet);
     }
@@ -64,6 +65,9 @@ export class TimesheetEditComponent implements OnInit {
   set timesheet(timesheet: string) {
     const localTimesheet = JSON.parse(timesheet);
     this.timesheetService.setTimesheet(localTimesheet);
+    localTimesheet.commutes = [];
+    localTimesheet.flatFees = [];
+    localTimesheet.miscellaneous = [];
     this.loadTimesheet(localTimesheet);
   }
 
@@ -75,15 +79,9 @@ export class TimesheetEditComponent implements OnInit {
                           || timesheet.miscellaneous.length > 0;
     this.updateMailtoLink();
   }
+
   getModeTitle() {
     return this.timesheetService.mode === 'edit' ? 'Modifier' : 'Saisir';
-  }
-
-  parseLocalTimesheet(element: any) {
-    const localTimesheet = JSON.parse(element);
-    this.timesheetService.setTimesheet(localTimesheet);
-    this.loadTimesheet(localTimesheet);
-
   }
 
   onUserInput() {

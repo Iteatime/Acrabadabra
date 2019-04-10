@@ -11,20 +11,6 @@
   <div class="edit-cra__wrapper">
     <div class="edit-cra__wrapper__title">
       <h2>{{ getModeTitle() }} un compte rendu d'activité</h2>
-      <div>
-        <label>Charger un CRA :</label>
-        <div class="edit-cra__wrapper__title__select">
-          <select name = "timesheet"
-                  [(ngModel)]="timesheet"
-                  #timesheetPicked="ngModel"
-                  >
-              <option [ngValue]="undefined" disabled selected>Choix</option>
-              <option *ngFor="let timesheet of timesheetService.getTimesheetslist()" [ngValue]="timesheet[1]">
-                {{ timesheet[0] }}
-              </option>
-          </select>
-        </div>
-      </div>
     </div>
 
     <form class="edit-cra__wrapper__form" #form="ngForm">

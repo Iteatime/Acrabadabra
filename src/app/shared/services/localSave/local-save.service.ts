@@ -12,7 +12,7 @@ export class LocalSaveService {
    * @param {string} name
    * @param {any} item
    */
-  static setLocalItem(name: string, item: any) {
+  public setLocalItem(name: string, item: any) {
     const serialized = this.serializeObject(item);
     localStorage.setItem(name, serialized);
   }
@@ -22,25 +22,8 @@ export class LocalSaveService {
   *
   * @returns {any}
   */
-  static getLocalItem(name: string): any {
+  public getLocalItem(name: string): any {
     return this.deserializeObject(localStorage.getItem(name));
-  }
-
-  /**
-  * Check if item named is into localStorage
-  *
-  * @returns {boolean}
-  */
-  static checkItemExists(name: string): boolean {
-    return localStorage.getItem(name) !== null;
-  }
-
-  /**
-  * Remove item from localStorage
-  *
-  */
-  static removeLocalItem(name: string): void {
-    localStorage.removeItem(name);
   }
 
   /**
@@ -49,7 +32,7 @@ export class LocalSaveService {
    * @param {any} o
    * @returns {string}
    */
-  private static serializeObject(o: any): string {
+  private serializeObject(o: any): string {
     return btoa(unescape(encodeURIComponent(JSON.stringify(o))));
   }
 
@@ -59,7 +42,7 @@ export class LocalSaveService {
    * @param {string} serialized
    * @returns {any}
    */
-  private static deserializeObject(serialized: string): any {
+  private deserializeObject(serialized: string): any {
     if (typeof serialized !== 'string') {
       return;
     }

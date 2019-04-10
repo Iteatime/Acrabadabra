@@ -6,9 +6,9 @@ Scenario: I can save a timesheet
 Given I have filled my timesheet
 And Others fields of the form
 When I click "Valider mon CRA" button
-Then this timesheet
+Then this timesheet will be save in local storage
 
-Scenario: I can choose the RCS exemption for me and the client
+Scenario: I can choose a saved
 Given I have chosen RCS exemption for me and the client in my invoice form
 When I click the download as PDF link
 Then RCS city names will not appear in my PDF invoice
