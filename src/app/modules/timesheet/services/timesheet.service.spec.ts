@@ -3,21 +3,20 @@ import { TestBed } from '@angular/core/testing';
 import { TimesheetService } from './timesheet.service';
 
 import { Timesheet } from 'src/app/shared/models/timesheet.model';
+import { TestBed } from '@angular/core/testing';
+import { LocalSaveService } from 'src/app/shared/services/localSave/local-save.service';
+import { SerializationService } from 'src/app/shared/services/serialization/serialization.service';
 
 
 describe('TimesheetService', () => {
   let service: TimesheetService;
-
   const testTimesheet = new Timesheet('test');
   const editToken = btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'edit', timesheet: testTimesheet }))));
   const reviewToken =  btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'review', timesheet: testTimesheet }))));
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [TimesheetService]
-    });
-
-    service = TestBed.get(TimesheetService);
+    const serializer = new SerializationService();
+    service = new TimesheetService(new LocalSaveService(serializer), serializer);
     service.timesheet = testTimesheet;
   });
 
@@ -59,13 +58,13 @@ describe('TimesheetService', () => {
     });
   });
 
-  describe('getEditToken())', () => {
+  describe('getEditToken()', () => {
     it('should return a base64 encoded json object containing the timesheet property, and a "mode" property set to "edit"', () => {
       expect(service.getEditToken()).toBe(editToken);
     });
   });
 
-  describe('getReviewToken())', () => {
+  describe('getReviewToken()', () => {
     it('should return a base64 encoded json object containing the timesheet property, and a "mode" property set to "review"', () => {
       expect(service.getReviewToken()).toBe(reviewToken);
     });
@@ -110,6 +109,18 @@ describe('TimesheetService', () => {
 
     it('should return "totalFlatFee" of flat fees expenses in the array of "flatFees"', () => {
       expect(service.getTotalFlatFee()).toBe(15);
+    });
+  });
+
+  describe('getTimesheetLocal()', () => {
+    beforeEach(() => {
+      localStorage.setItem('timesheet.5', 'IFgBhdWwgT2gsqgi');
+      localStorage.setItem('timesheet.1', 'IlBhdWwgdgpdmEi');
+      localStorage.setItem('timesheet.4', 'AhgjsfjwgT2xpdmEi');
+    });
+
+    it('should return a sorted array of keys in local storage', () => {
+      expect(service.getTimesheetsLocal()).toEqual(['timesheet.1', 'timesheet.4', 'timesheet.5']);
     });
   });
 });
