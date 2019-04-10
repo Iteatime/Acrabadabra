@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { SerializationService } from '../serialization/serialization.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocalSaveService {
-  constructor() {}
+  constructor(private _serializer: SerializationService) {}
 
   /**
    * Saving item into localStorage
@@ -13,7 +14,7 @@ export class LocalSaveService {
    * @param {any} item
    */
   public setLocalItem(name: string, item: any) {
-    const serialized = this.serializeObject(item);
+    const serialized = this._serializer.serializeObject(item);
     localStorage.setItem(name, serialized);
   }
 
@@ -23,29 +24,7 @@ export class LocalSaveService {
   * @returns {any}
   */
   public getLocalItem(name: string): any {
-    return this.deserializeObject(localStorage.getItem(name));
+    return this._serializer.deserializeObject(localStorage.getItem(name));
   }
 
-  /**
-   * Private method to serialize an object
-   *
-   * @param {any} o
-   * @returns {string}
-   */
-  private serializeObject(o: any): string {
-    return btoa(unescape(encodeURIComponent(JSON.stringify(o))));
-  }
-
-  /**
-   * Private method to deserialize a localStorage item
-   *
-   * @param {string} serialized
-   * @returns {any}
-   */
-  private deserializeObject(serialized: string): any {
-    if (typeof serialized !== 'string') {
-      return;
-    }
-    return JSON.parse(decodeURIComponent(escape(atob(serialized))));
-  }
 }

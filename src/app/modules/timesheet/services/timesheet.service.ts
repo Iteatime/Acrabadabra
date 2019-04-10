@@ -7,22 +7,7 @@ import { Timesheet } from 'src/app/shared/models/timesheet.model';
 import { LocalSaveService } from 'src/app/shared/services/localSave/local-save.service';
 
 import { Invoice } from 'src/app/shared/models/invoice.model';
-
-function tokenize(a: any): string {
-  return btoa(unescape(encodeURIComponent(JSON.stringify(a))));
-}
- ​
-function untokenize(a: string): any {
-  if (a) {
-    try {
-      return JSON.parse(decodeURIComponent(escape(atob(a))));
-    } catch {
-      alert('Données invalides');
-      return false;
-    }
-  }
-  return false;
-}
+import { SerializationService } from 'src/app/shared/services/serialization/serialization.service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,26 +16,27 @@ export class TimesheetService {
   public timesheet: Timesheet;
   public mode: string;
 
-  public constructor( private localSaveService: LocalSaveService) {
+  public constructor( private _localSaveService: LocalSaveService,
+                      private _serializer: SerializationService) {
     this.timesheet = new Timesheet();
   }
 
   public getEditToken(): string {
-    return tokenize({
+    return this._serializer.serializeObject({
         mode: 'edit',
         timesheet: this.timesheet
     });
   }
 
   public getReviewToken(): string {
-    return tokenize({
+    return this._serializer.serializeObject({
         mode: 'review',
         timesheet: this.timesheet
     });
   }
 
   public openTimesheet(token: string, mode: string): boolean {
-    const a = untokenize(token);
+    const a = this._serializer.deserializeObject(token);
     if (!a || a.mode !== mode) {
       return false;
     } else {
@@ -115,18 +101,26 @@ export class TimesheetService {
     } else {
       lastTimesheet = +(timesheetArray[timesheetArray.length - 1].split('.')[1]);
     }
-    this.localSaveService.setLocalItem(`timesheet.${lastTimesheet + 1}`, this.timesheet);
+    this._localSaveService.setLocalItem(`timesheet.${lastTimesheet + 1}`, this.timesheet);
   }
+/* 2 cas min a tester:
+  1. On test quand aucun timesheet ds local storage: celui sauvegardé se nomme timesheet.1
+  2. Dans l'autre cas il incremente le numero du dernier, timesheet.n+1
+ */
+
 
   public openLastTimesheetInLocal(): boolean {
     const timesheetsOfLocalStorage = this.getTimesheetsLocal();
     if (timesheetsOfLocalStorage.length > 0) {
-      this.setTimesheet(this.localSaveService.getLocalItem( timesheetsOfLocalStorage[timesheetsOfLocalStorage.length - 1]));
+      this.setTimesheet(this._localSaveService.getLocalItem( timesheetsOfLocalStorage[timesheetsOfLocalStorage.length - 1]));
       return true;
     }
     return false;
   }
+/*
 
+ voir openTimesheet() sauf que appel de setTimesheet au lieu de la définition direct de la variable timesheet
+*/
   public setTimesheet(timesheet) {
       this.timesheet = Object.assign(
         {},

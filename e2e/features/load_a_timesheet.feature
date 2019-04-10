@@ -4,19 +4,14 @@ Feature: load a timesheet from local storage
 
 Scenario: I can save a timesheet
 Given I have filled my timesheet
-And Others fields of the form
 When I click "Valider mon CRA" button
 Then this timesheet will be save in local storage
 
-Scenario: I can choose a saved
-Given I have chosen RCS exemption for me and the client in my invoice form
-When I click the download as PDF link
-Then RCS city names will not appear in my PDF invoice
-And will not appear in the remind of personal informations at the bottom of the invoice
-But messages about RCS exemption will appear on the top of the invoice
-
-Scenario: I can choose the VAT exemption
-Given I have choosen the VAT exemption
-When I click the download as PDF link
-Then my PDF invoice will not contain a total incl tax
-But only total excl tax
+Scenario: I want have pre-filled fields with my last timesheet informations validated
+Given I have a saved timesheet in local storage
+When I arrive on the create timesheet page
+Then the last informations I saved in local storage are pre-filled
+And expenses are reset
+And workings day are reset
+And invoice date and number are reset
+And billing date is reset
