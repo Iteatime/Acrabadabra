@@ -1,15 +1,25 @@
+import { TestBed } from '@angular/core/testing';
+
 import { TimesheetService } from './timesheet.service';
 
 import { Timesheet } from 'src/app/shared/models/timesheet.model';
 
 
 describe('TimesheetService', () => {
+  let service: TimesheetService;
 
-  let service = new TimesheetService();
   const testTimesheet = new Timesheet('test');
-  service.timesheet = testTimesheet;
   const editToken = btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'edit', timesheet: testTimesheet }))));
   const reviewToken =  btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'review', timesheet: testTimesheet }))));
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [TimesheetService]
+    });
+
+    service = TestBed.get(TimesheetService);
+    service.timesheet = testTimesheet;
+  });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
