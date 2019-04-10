@@ -17,20 +17,20 @@ Scenario: I want close my invoice form
 Scenario: I fill the invoice form
    When I fill all inputs in the form
    And I click on "Valider mon CRA" button
-   Then a success appears
+   Then a success notification appears
    Then a link to an invoice PDF appears
 
 Scenario: I forgot to fill a required input in the form
    When I click on "Valider mon CRA" button
    But I forget to fill an input
-   Then a fail message appears near "Valider mon CRA" button
+   Then a fail notification appears
    And an error message appears near the input
    And I can't validate my form
 
 Scenario: I modify an input after a form validation
    When I validated the form
    But I modify an input
-   Then the links and success message are hidden
+   Then the links and success notification are hidden
    And I need to validate again the form
 
 Scenario: I want to download my invoice
