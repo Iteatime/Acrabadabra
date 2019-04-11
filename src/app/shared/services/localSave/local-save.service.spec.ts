@@ -10,7 +10,7 @@ describe('LocalSaveService', () => {
     service = new LocalSaveService(new SerializationService());
     const store = {};
 
-    spyOn(localStorage, 'getItem').and.callFake( (key: string): String => {
+    spyOn(localStorage, 'getItem').and.callFake((key: string): String => {
       return store[key] || null;
      });
 
