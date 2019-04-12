@@ -1,7 +1,7 @@
 const concurently = require('concurrently');
 
 const onTestFail = () => {
-  console.error('This build is not passing the tests...');
+  console.error('This version does not pass the tests...');
   process.exit(1);
 };
 
