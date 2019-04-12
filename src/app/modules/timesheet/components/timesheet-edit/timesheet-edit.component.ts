@@ -3,10 +3,14 @@ import { NgForm } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import * as _ from 'lodash';
+
 import { ReviewMail } from 'src/app/shared/models/review-mail.model';
 
 import { CalendarService } from 'src/app/modules/calendar/calendar.service';
+
 import { TimesheetService } from '../../services/timesheet.service';
+import { UrlShorteningService } from '../../services/url-shortening.service';
 
 import { InvoiceFormComponent } from '../invoice-form/invoice-form.component';
 import { ExpenseMileageFormComponent } from 'src/app/modules/expense/components/expense-mileage-form/expense-mileage-form.component';
@@ -15,6 +19,11 @@ import { ExpenseFlatFeeFormComponent } from 'src/app/modules/expense/components/
 import { CalendarSelectorComponent } from 'src/app/modules/calendar/components/calendar-selector/calendar-selector.component';
 
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
+
+import { LocalSaveService } from 'src/app/shared/services/localSave/local-save.service';
+
+import { Timesheet } from 'src/app/shared/models/timesheet.model';
+import { Invoice } from 'src/app/shared/models/invoice.model';
 
 @Component({
   selector: 'app-timesheet-edit',
@@ -30,6 +39,9 @@ export class TimesheetEditComponent implements OnInit {
   @ViewChild (ExpenseFlatFeeFormComponent) flatFeesForm: ExpenseFlatFeeFormComponent;
   @ViewChild ('form') form: NgForm;
   originUrl = window.location.origin;
+  editShortUrl: string = '';
+  reviewShortUrl: string = '';
+  submitMessage: any = null;
   reviewMail: ReviewMail;
   generateInvoice = false;
   generateExpenses = false;
@@ -41,24 +53,26 @@ export class TimesheetEditComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private titleService: Title,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private _urlShortener: UrlShorteningService
   ) {}
 
   ngOnInit(): void {
     if (!this.timesheetService.openTimesheet(this.route.snapshot.params['data'], 'edit')) {
       this.router.navigate(['timesheet', 'create']);
+      if (this.timesheetService.openLastTimesheetInLocal()) {
+        this.loadTimesheet(this.timesheetService.timesheet);
+        this.onUserInput();
+      }
     } else {
-      this.showLinks = true;
-      this.generateInvoice = !!this.timesheetService.timesheet.invoice;
-      this.generateExpenses = this.timesheetService.timesheet.commutes.length > 0;
-      this.updateMailtoLink();
+      this.loadTimesheet(this.timesheetService.timesheet);
     }
     this.form.valueChanges.subscribe(() => {
       if (this.form.dirty) {
         this.onUserInput();
       }
     });
-    this.titleService.setTitle(`Acrabadabra - ${this.getModeTitle()} un compte rendu d'activité`);
+    this.titleService.setTitle(`Acrabadabra - ${ this.getModeTitle() } un compte rendu d'activité`);
   }
 
   getModeTitle() {
@@ -69,6 +83,22 @@ export class TimesheetEditComponent implements OnInit {
     this.showLinks = false;
   }
 
+  setShortUrl(action?: string): void {
+    if (!!action) {
+      const getToken = (action === 'edit') ? this.timesheetService.getEditToken() : this.timesheetService.getReviewToken();
+      this._urlShortener.shortenUrl(this.originUrl + `/timesheet/${action}/` + getToken)
+        .then ((res) => {
+          action === 'edit' ? this.editShortUrl = res : this.reviewShortUrl = res;
+          this.updateMailtoLink();
+        });
+      return;
+    }
+
+    ['edit', 'review'].forEach(mode => {
+      this.setShortUrl(mode);
+    });
+  }
+
   onSubmit() {
     this.notificationService.dismissAll();
     if (this.checkFormsValidity()) {
@@ -77,7 +107,8 @@ export class TimesheetEditComponent implements OnInit {
       this.timesheetService.timesheet.miscellaneous = this.generateExpenses ? this.miscellaneousForm.miscellaneous : [];
       this.timesheetService.timesheet.commutes = this.generateExpenses ? this.commutesForm.commutes : [];
       this.timesheetService.timesheet.flatFees = this.generateExpenses ? this.flatFeesForm.flatFees : [];
-      this.updateMailtoLink();
+      this.timesheetService.saveTimesheet();
+      this.setShortUrl();
       this.reactToSubmition(false);
     } else {
       this.reactToSubmition(true);
@@ -102,8 +133,7 @@ export class TimesheetEditComponent implements OnInit {
     this.reviewMail = new ReviewMail(
       this.timesheetService.timesheet,
       this.calendarService.getWorkedTime(this.timesheetService.timesheet),
-      this.timesheetService.getReviewToken(),
-      this.originUrl + '/timesheet/review/'
+      this.reviewShortUrl
     );
   }
 
@@ -130,5 +160,12 @@ export class TimesheetEditComponent implements OnInit {
         && this.generateExpenses) {
       this.notificationService.push('Vous n\'avez ajouté aucun frais', 'warning', { isSelfClosing: false });
     }
+  }
+
+  private loadTimesheet(timesheet: Timesheet): void {
+    this.showLinks = true;
+    this.generateInvoice = !!timesheet.invoice && !_.isEqual(timesheet.invoice, Object.assign({}, new Invoice()));
+    this.generateExpenses = timesheet.commutes.length > 0 || timesheet.flatFees.length > 0 || timesheet.miscellaneous.length > 0;
+    this.setShortUrl();
   }
 }
