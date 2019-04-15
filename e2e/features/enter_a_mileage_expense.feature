@@ -3,7 +3,7 @@ Feature: generate an expense report of mileage allowance
     As a consultant, I want to get a refund, then I declare them.
 
 Background:
-  Given I am on timesheet edit page
+  Given I am editing a timesheet
 
 Scenario: I need to enter an expense of type mileage
   When I click on "Ajouter des frais" checkbox
@@ -19,27 +19,14 @@ Scenario: I want to select a vehicle in a dropdown
   Then a list of each fiscal power appears
   And I can click on the wanted vehicle power
 
-Scenario Outline: I want to see a table of my mileage allowances
-  When I fill the date input with <Date>
-  And I fill the journey input with <Trajet>
-  And I fill the distance input with <Distance-parcourue>
-  And I fill the vehicle input with <Vehicle>
-  And I click on "Ajouter" button
-  Then It should add a line in the table below with all informations that I filled
-  And a cell "IK" is gerated corresponding to <Distance> multiply by <Vehicle> tax rate
-  And "Total" cell increment by the value of "IK" of this line
-  And a trash icon appears at the end of each line with informations
+Scenario: I Add a mileage expense
+  Given I have filled-out the "Date", "Trajet", "Distance parcourue" and "Véhicule" inputs
+  When I click the button "Ajouter"
+  Then a new line containing these informations appears in the chart below
+  And the "Total HT" cell is ubdated
 
-  Examples :
-    | Date       | Trajet      | Distance-parcourue | Vehicle  | IK-Output | Total-Output |
-    | unset      | Paris       | 450                | 0.493    | unset     | unset        |
-    | 01/01/2019 | unset       | 450                | 0.493    | unset     | unset        |
-    | 01/01/2019 | Paris       | unset              | 0.493    | unset     | unset        |
-    | 01/01/2019 | Paris       | 450                | unset    | unset     | unset        |
-    | 01/01/2019 | Paris       | 450                | 0.493    | 221.85    | 221.85       |
-
-Scenario: I forgot to fill an input in the form
-  When I forget to fill an input of the form
+Scenario: I forgot to fill in a form field
+  Given I forgot to fill in a form field
   And I click on "Ajouter" button
   Then an error message appears near the input associated with
   And I can't validate my form
@@ -48,5 +35,5 @@ Scenario: I forgot to fill an input in the form
 Scenario: I want to delete a line of table mileage allowance
   When I click on the trash icon of a line in the table
   Then the line of this table is deleted
-  And "Total" cell decrements with the value of "IK" of this line
+  And the "Total HT" cell is ubdated
 
