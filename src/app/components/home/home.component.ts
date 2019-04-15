@@ -7,8 +7,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent {
-  title = 'Acrabadabra';
+  public title = 'Acrabadabra';
 
-  constructor() {}
-
+  public constructor() { }
 }

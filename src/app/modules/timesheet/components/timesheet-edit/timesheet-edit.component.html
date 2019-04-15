@@ -1,26 +1,18 @@
-<div class="edit-cra">
-  <div class="edit-cra__header">
-    <div class="edit-cra__header__container">
-      <a href="" title="Retour à l'accueil">
-        <img class="edit-cra__header__container__logo" src="assets/images/logo.white.svg" alt="logo acrabadabra"
-          (error)="$event.target.removeAttribute('onerror'); $event.target.src = 'assets/images/logo.white.png';">
-      </a>
-    </div>
-  </div>
-
-  <div class="edit-cra__wrapper">
-    <div class="edit-cra__wrapper__title">
+<app-header></app-header>
+<div class="timesheet-edit">
+  <div class="timesheet-edit__wrapper">
+    <div class="timesheet-edit__wrapper__title">
       <h2>{{ getModeTitle() }} un compte rendu d'activité</h2>
     </div>
 
-    <form class="edit-cra__wrapper__form" #form="ngForm">
-      <div id="prestataire" class="edit-cra__wrapper__form__block">
-        <h4 class="edit-cra__wrapper__form__block__title">Consultant</h4>
-        <div class="edit-cra__wrapper__form__block__input-wrapper">
-          <div class="edit-cra__wrapper__form__block__input-wrapper__item form-group">
+    <form class="timesheet-edit__wrapper__form" #form="ngForm">
+      <div id="consultant" class="timesheet-edit__wrapper__form__block">
+        <h4 class="timesheet-edit__wrapper__form__block__title">Consultant</h4>
+        <div class="timesheet-edit__wrapper__form__block__input-wrapper">
+          <div class="timesheet-edit__wrapper__form__block__input-wrapper__item form-group">
             <label for="consultantNameInput"
-              class="edit-cra__wrapper__form__block__input-wrapper__item__label">Nom</label>
-            <div class="edit-cra__wrapper__form__block__input-wrapper__item__input">
+              class="timesheet-edit__wrapper__form__block__input-wrapper__item__label">Nom</label>
+            <div class="timesheet-edit__wrapper__form__block__input-wrapper__item__input">
               <input type="text" required class="form-control" name="consultantNameInput"
                 [(ngModel)]="timesheetService.timesheet.consultant.name" #consultantNameInput="ngModel">
               <div *ngIf="consultantNameInput.invalid && (consultantNameInput.dirty || consultantNameInput.touched)"
@@ -31,10 +23,10 @@
               </div>
             </div>
           </div>
-          <div class="edit-cra__wrapper__form__block__input-wrapper__item form-group">
+          <div class="timesheet-edit__wrapper__form__block__input-wrapper__item form-group">
             <label for="consultantEmailInput"
-              class="edit-cra__wrapper__form__block__input-wrapper__item__label">Email</label>
-            <div class="edit-cra__wrapper__form__block__input-wrapper__item__input">
+              class="timesheet-edit__wrapper__form__block__input-wrapper__item__label">Email</label>
+            <div class="timesheet-edit__wrapper__form__block__input-wrapper__item__input">
               <input type="email" required email class="form-control" name="consultantEmailInput"
                 [(ngModel)]="timesheetService.timesheet.consultant.email" #consultantEmailInput="ngModel">
               <div *ngIf="consultantEmailInput.invalid && (consultantEmailInput.dirty || consultantEmailInput.touched)"
@@ -51,13 +43,13 @@
         </div>
       </div>
 
-      <div id="mission" class="edit-cra__wrapper__form__block">
-        <h4 class="edit-cra__wrapper__form__block__title">Mission</h4>
-        <div class="edit-cra__wrapper__form__block__input-wrapper">
-          <div class="edit-cra__wrapper__form__block__input-wrapper__item form-group">
+      <div id="mission" class="timesheet-edit__wrapper__form__block">
+        <h4 class="timesheet-edit__wrapper__form__block__title">Mission</h4>
+        <div class="timesheet-edit__wrapper__form__block__input-wrapper">
+          <div class="timesheet-edit__wrapper__form__block__input-wrapper__item form-group">
             <label for="missionTitleInput"
-              class="edit-cra__wrapper__form__block__input-wrapper__item__label">Intitulé</label>
-            <div class="edit-cra__wrapper__form__block__input-wrapper__item__input">
+              class="timesheet-edit__wrapper__form__block__input-wrapper__item__label">Intitulé</label>
+            <div class="timesheet-edit__wrapper__form__block__input-wrapper__item__input">
               <input type="text" required class="form-control" name="missionTitleInput"
                 [(ngModel)]="timesheetService.timesheet.mission.title" #missionTitleInput="ngModel">
               <div *ngIf="missionTitleInput.invalid && (missionTitleInput.dirty || missionTitleInput.touched)"
@@ -69,10 +61,10 @@
             </div>
           </div>
 
-          <div class="edit-cra__wrapper__form__block__input-wrapper__item form-group">
-            <label for="missionFinalClient" class="edit-cra__wrapper__form__block__input-wrapper__item__label">Client
+          <div class="timesheet-edit__wrapper__form__block__input-wrapper__item form-group">
+            <label for="missionFinalClient" class="timesheet-edit__wrapper__form__block__input-wrapper__item__label">Client
               final</label>
-            <div class="edit-cra__wrapper__form__block__input-wrapper__item__input">
+            <div class="timesheet-edit__wrapper__form__block__input-wrapper__item__input">
               <input type="text" required class="form-control" name="missionFinalClientInput"
                 [(ngModel)]="timesheetService.timesheet.mission.client" #missionFinalClientInput="ngModel">
               <div
@@ -87,15 +79,15 @@
         </div>
       </div>
 
-      <div class="edit-cra__wrapper__form__component">
-        <h4 class="edit-cra__wrapper__form__component__title">Journées d'intervention</h4>
+      <div class="timesheet-edit__wrapper__form__component">
+        <h4 class="timesheet-edit__wrapper__form__component__title">Journées d'intervention</h4>
         <app-calendar-selector [minifiedTimesheet]="timesheetService.timesheet.workingDays" [picking]="true"
           (changed)="onUserInput()">
         </app-calendar-selector>
       </div>
 
-      <div class="edit-cra__wrapper__form__component">
-        <label class="edit-cra__wrapper__form__component__toggle">
+      <div class="timesheet-edit__wrapper__form__component">
+        <label class="timesheet-edit__wrapper__form__component__toggle">
           <input name="commutesToggle" type="checkbox" [(ngModel)]="generateExpenses" #commutesToggle>
           Ajouter des frais
         </label>
@@ -107,8 +99,8 @@
         (changed)="onUserInput()"></app-expense-flat-fee-form>
       </div>
 
-      <div class="edit-cra__wrapper__form__component">
-        <label class="edit-cra__wrapper__form__component__toggle">
+      <div class="timesheet-edit__wrapper__form__component">
+        <label class="timesheet-edit__wrapper__form__component__toggle">
           <input name="invoiceToggle" type="checkbox" [(ngModel)]="generateInvoice" #invoiceToggle>
           Générer une facture
         </label>
@@ -116,34 +108,34 @@
           (changed)="onUserInput()"></app-invoice-form>
       </div>
 
-      <div class="edit-cra__wrapper__form__submit">
-        <button data-text="Valider mon CRA" class="edit-cra__wrapper__form__submit__button" (click)="onSubmit()">
+      <div class="timesheet-edit__wrapper__form__submit">
+        <button data-text="Valider mon CRA" class="timesheet-edit__wrapper__form__submit__button" (click)="onSubmit()">
           <span>Valider mon CRA</span>
         </button>
       </div>
 
-      <div *ngIf="showLinks" class="edit-cra__wrapper__form__icons">
-        <div *ngIf="generateInvoice" class="edit-cra__wrapper__form__icons__item">
+      <div *ngIf="showLinks" class="timesheet-edit__wrapper__form__icons">
+        <div *ngIf="generateInvoice" class="timesheet-edit__wrapper__form__icons__item">
           <a target="_self" [href]="timesheetService.getInvoiceLink()">
             <i class="material-icons">picture_as_pdf</i>
             <p>Télécharger la facture</p>
           </a>
         </div>
-        <div class="edit-cra__wrapper__form__icons__item">
+        <div class="timesheet-edit__wrapper__form__icons__item">
           <a href="#" [mailto] [mailContent]="reviewMail">
             <i class="material-icons">email</i>
             <p>Envoyer le CRA par mail</p>
           </a>
         </div>
-        <div class="edit-cra__wrapper__form__icons__item">
-          <a href="#" [copyToClipboard]="editShortUrl"
+        <div class="timesheet-edit__wrapper__form__icons__item">
+          <a href="#" [copyToClipboard]="originUrl + '/timesheet/edit/' + timesheetService.getEditToken()"
             [copyToClipboardMessage]="'Lien de modification copié'" [copyToClipboardMessageParent]="editLink.parentNode" #editLink>
             <i class="material-icons">edit</i>
             <p>Copier le lien de modification</p>
           </a>
         </div>
-        <div class="edit-cra__wrapper__form__icons__item">
-          <a href="#" [copyToClipboard]="reviewShortUrl"
+        <div class="timesheet-edit__wrapper__form__icons__item">
+          <a href="#" [copyToClipboard]="originUrl + '/timesheet/review/' + timesheetService.getReviewToken()"
             [copyToClipboardMessage]="'Lien de partage copié'" [copyToClipboardMessageParent]="shareLink.parentNode" #shareLink>
             <i class="material-icons">remove_red_eye</i>
             <p>Copier le lien de partage</p>
