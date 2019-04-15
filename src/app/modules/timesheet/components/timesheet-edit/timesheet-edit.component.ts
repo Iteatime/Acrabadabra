@@ -11,6 +11,7 @@ import { CalendarService } from 'src/app/modules/calendar/calendar.service';
 
 import { TimesheetService } from '../../services/timesheet.service';
 import { UrlShorteningService } from '../../services/url-shortening.service';
+import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
 
 import { InvoiceFormComponent } from '../invoice-form/invoice-form.component';
 import { ExpenseMileageFormComponent } from 'src/app/modules/expense/components/expense-mileage-form/expense-mileage-form.component';
@@ -49,6 +50,7 @@ export class TimesheetEditComponent implements OnInit {
 
   constructor(
     public timesheetService: TimesheetService,
+    public auth: AuthenticationService,
     private calendarService: CalendarService,
     private route: ActivatedRoute,
     private router: Router,
@@ -73,6 +75,10 @@ export class TimesheetEditComponent implements OnInit {
       }
     });
     this.titleService.setTitle(`Acrabadabra - ${ this.getModeTitle() } un compte rendu d'activité`);
+  }
+
+  openAuth() {
+    this.auth.widget.open();
   }
 
   getModeTitle() {

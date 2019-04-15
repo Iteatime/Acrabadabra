@@ -32,7 +32,9 @@
               "node_modules/bootstrap/scss/bootstrap.scss",
               "src/app/style/main.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/netlify-identity-widget/build/netlify-identity-widget.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -103,7 +105,9 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [],
-            "scripts": [],
+            "scripts": [
+              "node_modules/netlify-identity-widget/build/netlify-identity-widget.js"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
