@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { HeaderComponent } from 'src/app/components/header/header.component';
+import { HomeComponent } from 'src/app/components/home/home.component';
 
 import { InvoicePDFComponent } from './components/invoice-pdf/invoice-pdf.component';
 
