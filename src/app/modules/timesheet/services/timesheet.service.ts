@@ -2,11 +2,10 @@ import { Injectable } from '@angular/core';
 
 import { environment } from 'src/environments/environment';
 
-import { Timesheet } from 'src/app/shared/models/timesheet.model';
+import { Company, Invoice, Timesheet } from 'src/app/shared/models';
 
 import { LocalSaveService } from 'src/app/shared/services/localSave/local-save.service';
 
-import { Invoice } from 'src/app/shared/models/invoice.model';
 import { SerializationService } from 'src/app/shared/services/serialization/serialization.service';
 
 @Injectable({
@@ -33,6 +32,20 @@ export class TimesheetService {
   public getReviewToken(): string {
     return this._serializer.serializeObject({
         mode: 'review',
+        timesheet: this.timesheet
+    });
+  }
+
+  public getTransferToken(): string {
+    this.timesheet = {
+          ...this.timesheet,
+          invoice: Object.assign({}, new Invoice(),  {
+            provider: Object.assign(new Company(), this.timesheet.invoice.client),
+            client: new Company()
+          }),
+    };
+    return this._serializer.serializeObject({
+        mode: 'edit',
         timesheet: this.timesheet
     });
   }
