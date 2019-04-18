@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { SerializationService } from '../serialization/serialization.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LocalSaveService {
   constructor(private _serializer: SerializationService) {}
@@ -19,12 +19,11 @@ export class LocalSaveService {
   }
 
   /**
-  * Getting item from localStorage
-  *
-  * @returns {any}
-  */
+   * Getting item from localStorage
+   *
+   * @returns {any}
+   */
   public getLocalItem(name: string): any {
     return this._serializer.deserializeObject(localStorage.getItem(name));
   }
-
 }

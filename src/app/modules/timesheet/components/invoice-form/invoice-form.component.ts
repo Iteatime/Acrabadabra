@@ -6,10 +6,9 @@ import { Invoice } from 'src/app/shared/models/invoice.model';
 @Component({
   selector: 'app-invoice-form',
   templateUrl: './invoice-form.component.html',
-  styleUrls: ['./invoice-form.component.scss']
+  styleUrls: ['./invoice-form.component.scss'],
 })
 export class InvoiceFormComponent implements OnInit {
-
   @ViewChild('form') form: NgForm;
   @Input() invoice: Invoice;
   @Output() changed: EventEmitter<boolean> = new EventEmitter();

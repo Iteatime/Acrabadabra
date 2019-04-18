@@ -3,21 +3,24 @@ import { LocalSaveService } from './local-save.service';
 import { SerializationService } from '../serialization/serialization.service';
 
 describe('LocalSaveService', () => {
-
   let service: LocalSaveService;
 
   beforeEach(() => {
     service = new LocalSaveService(new SerializationService());
     const store = {};
 
-    spyOn(localStorage, 'getItem').and.callFake((key: string): String => {
-      return store[key] || null;
-     });
+    spyOn(localStorage, 'getItem').and.callFake(
+      (key: string): String => {
+        return store[key] || null;
+      },
+    );
 
-    spyOn(localStorage, 'setItem').and.callFake((key: string, value: string): string =>  {
-      return store[key] = <string>value;
-      });
-    });
+    spyOn(localStorage, 'setItem').and.callFake(
+      (key: string, value: string): string => {
+        return (store[key] = <string>value);
+      },
+    );
+  });
 
   it('should be created', () => {
     expect(service).toBeTruthy();

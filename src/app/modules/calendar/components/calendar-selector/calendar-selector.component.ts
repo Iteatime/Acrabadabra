@@ -7,7 +7,7 @@ import {
   ChangeDetectorRef,
   Output,
   EventEmitter,
-  OnDestroy
+  OnDestroy,
 } from '@angular/core';
 
 import { Subject } from 'rxjs';
@@ -76,7 +76,7 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
       if (!this.picking) {
         day.cssClass = 'cal-disabled';
       }
-      day.events.forEach((event) => {
+      day.events.forEach(event => {
         const dayTime = differenceInMinutes(event.end, event.start) / 60 / 8;
         day.badgeTotal = dayTime;
         this.totalWorkedTime += dayTime;
@@ -107,7 +107,7 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
 
   public selectAllBusinessDays(): void {
     const monthStart = startOfMonth(this.viewDate).getDate(),
-          monthEnd = endOfMonth(this.viewDate).getDate();
+      monthEnd = endOfMonth(this.viewDate).getDate();
 
     for (let date = monthStart; date <= monthEnd; date++) {
       const aDay = setDate(this.viewDate, date);
@@ -128,7 +128,7 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
     event.stopPropagation();
 
     const day = this._getDayWorkingTime(date),
-          end = addMinutes(day.start, 8 * 60 * time);
+      end = addMinutes(day.start, 8 * 60 * time);
 
     if (time !== 0 && end) {
       day.end = end;
@@ -159,13 +159,13 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
   }
 
   private _getDayWorkingTime(day: Date): CalendarEvent {
-    return this.timesheet.find((currenDay) => {
+    return this.timesheet.find(currenDay => {
       return isSameDay(currenDay.start, day);
     });
   }
 
   private _isDayWorked(day: Date): boolean {
-    return this.timesheet.some((currentDay) => {
+    return this.timesheet.some(currentDay => {
       return isSameDay(currentDay.start, day);
     });
   }
@@ -185,9 +185,7 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
     });
   }
 
-  private _deleteDay(day: Date): void  {
-    this.timesheet = this.timesheet.filter(
-      (iEvent) => !isSameDay(day, iEvent.start)
-    );
+  private _deleteDay(day: Date): void {
+    this.timesheet = this.timesheet.filter(iEvent => !isSameDay(day, iEvent.start));
   }
 }

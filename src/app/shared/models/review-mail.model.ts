@@ -1,5 +1,5 @@
-import { Timesheet } from '../@types/timesheet';
 import { CalendarService } from 'src/app/modules/calendar/calendar.service';
+import { Timesheet } from '../@types/timesheet';
 
 export class ReviewMail {
   public subject: string;
@@ -11,22 +11,26 @@ export class ReviewMail {
     this.setBody(timesheet, workedTime, url);
   }
 
-  setSubject(consultantName: string, date) {
-    this.subject = 'Acrabadabra  - Compte rendu d\'activité de ' + consultantName + ', ' + date.toLocaleString(this.locale, { month: 'long', year: 'numeric' });
+  setSubject(consultantName: string, date: Date) {
+    this.subject =
+      'Acrabadabra  - Compte rendu d\'activité de ' +
+      consultantName +
+      ', ' +
+      date.toLocaleString(this.locale, { month: 'long', year: 'numeric' });
   }
 
   setBody(timesheet: Timesheet, workedTime: number, url: string) {
-    this.body = 'Bonjour,%0d%0a' +
-    '%0d%0a' +
-    'Un compte rendu d\'activité est consultable sur https://www.acrabadabra.com' +
-    '%0d%0a' +
-    '%0d%0a' +
-    `Consultant : ${timesheet.consultant.name}%0d%0a` +
-    `Mission : ${timesheet.mission.title}%0d%0a` +
-    `Journées de prestation : ${workedTime.toLocaleString('fr')}%0d%0a` +
-    '%0d%0a' +
-    'Vous pouvez le consulter et télécharger la facture ici :%0d%0a ' +
-    `${url}`;
+    this.body =
+      'Bonjour,%0d%0a' +
+      '%0d%0a' +
+      'Un compte rendu d\'activité est consultable sur https://www.acrabadabra.com' +
+      '%0d%0a' +
+      '%0d%0a' +
+      `Consultant : ${timesheet.consultant.name}%0d%0a` +
+      `Mission : ${timesheet.mission.title}%0d%0a` +
+      `Journées de prestation : ${workedTime.toLocaleString('fr')}%0d%0a` +
+      '%0d%0a' +
+      'Vous pouvez le consulter et télécharger la facture ici :%0d%0a ' +
+      `${url}`;
   }
 }
-

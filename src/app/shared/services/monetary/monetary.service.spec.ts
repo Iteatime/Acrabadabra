@@ -3,7 +3,6 @@ import { TestBed } from '@angular/core/testing';
 import { MonetaryService } from './monetary.service';
 
 describe('CurrencyService', () => {
-
   let service = new MonetaryService();
 
   beforeEach(() => TestBed.configureTestingModule({}));

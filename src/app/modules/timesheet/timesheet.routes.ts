@@ -10,17 +10,18 @@ import { TimesheetReviewComponent } from './components/timesheet-review/timeshee
 
 const routes: Routes = [
   {
-    path: 'timesheet', children: [
+    path: 'timesheet',
+    children: [
       { path: 'create', component: TimesheetEditComponent },
       { path: 'edit/:data', component: TimesheetEditComponent },
       { path: 'review/:data', component: TimesheetReviewComponent },
-    ]
+    ],
   },
   { path: 'invoice/:data', component: InvoicePDFComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class TimesheetRoutingModule { }
+export class TimesheetRoutingModule {}

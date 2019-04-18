@@ -1,12 +1,10 @@
-import { Directive, Input, Output, EventEmitter, HostListener, OnChanges} from '@angular/core';
+import { Directive, Input, Output, EventEmitter, HostListener, OnChanges } from '@angular/core';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 
 @Directive({
-
   selector: '[copyToClipboard]',
 })
 export class CopyToClipboardDirective {
-
   @Input('copyToClipboard')
   public payload: string;
 
@@ -21,7 +19,6 @@ export class CopyToClipboardDirective {
 
   @HostListener('click', ['$event'])
   public onCopy(event: MouseEvent): void {
-
     event.preventDefault();
     if (!this.payload) {
       return;
@@ -46,6 +43,5 @@ export class CopyToClipboardDirective {
     this.notificationService.push(this.message, 'info');
   }
 
-  constructor(private notificationService: NotificationService) { }
-
+  constructor(private notificationService: NotificationService) {}
 }

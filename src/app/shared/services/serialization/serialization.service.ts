@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SerializationService {
-
-  constructor() { }
+  constructor() {}
 
   public serializeObject(o: any): string {
     return btoa(unescape(encodeURIComponent(JSON.stringify(o))));

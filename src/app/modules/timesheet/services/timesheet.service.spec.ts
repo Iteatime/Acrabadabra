@@ -1,8 +1,8 @@
-import { Consultant, Company, Invoice, Timesheet, Mission } from 'src/app/shared/models';
+import { Company, Consultant, Invoice, Mission, Timesheet } from 'src/app/shared/models';
 
-import { TimesheetService } from './timesheet.service';
 import { LocalSaveService } from 'src/app/shared/services/localSave/local-save.service';
 import { SerializationService } from 'src/app/shared/services/serialization/serialization.service';
+import { TimesheetService } from './timesheet.service';
 
 describe('TimesheetService', () => {
   let service: TimesheetService;
@@ -10,7 +10,7 @@ describe('TimesheetService', () => {
   const testTimesheet = new Timesheet('test', 'Simon');
 
   const editToken = btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'edit', timesheet: testTimesheet }))));
-  const reviewToken =  btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'review', timesheet: testTimesheet }))));
+  const reviewToken = btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'review', timesheet: testTimesheet }))));
 
   beforeEach(() => {
     const serializer = new SerializationService();
@@ -69,26 +69,36 @@ describe('TimesheetService', () => {
     });
   });
 
+  // tslint:disable-next-line:no-commented-code
   // describe('getTransferToken())', () => {
   //   let transferToken;
   //   let token;
   //   beforeEach(() => {
   //     service.timesheet.invoice = Object.assign({}, new Invoice(), {
-  //         number: '458789',
-  //         provider: new Company('Rémy dupont'),
-  //         client: new Company('Iteatime'),
-  //       });
-  //     transferToken = btoa(unescape(encodeURIComponent(JSON.stringify({
-  //         mode: 'edit',
-  //         timesheet: Object.assign({ ...service.timesheet }, {
-  //           invoice: Object.assign(new Invoice(), {
-  //             provider: new Company('Iteatime')
-  //           })
-  //         })
-  //    }))));
-  //    token = service.getTransferToken();
+  //       number: '458789',
+  //       provider: new Company('Rémy dupont'),
+  //       client: new Company('Iteatime'),
+  //     });
+  //     transferToken = btoa(
+  //       unescape(
+  //         encodeURIComponent(
+  //           JSON.stringify({
+  //             mode: 'edit',
+  //             timesheet: Object.assign(
+  //               { ...service.timesheet },
+  //               {
+  //                 invoice: Object.assign(new Invoice(), {
+  //                   provider: new Company('Iteatime'),
+  //                 }),
+  //               },
+  //             ),
+  //           }),
+  //         ),
+  //       ),
+  //     );
+  //     token = service.getTransferToken();
   //   });
-
+  //
   //   it('should return a new invoice edit page with the information correctly completed', () => {
   //     expect(service.timesheet.invoice.number).toBe(null);
   //     expect(service.timesheet.invoice.provider.name).toBe('Iteatime');
@@ -100,9 +110,9 @@ describe('TimesheetService', () => {
   describe('getTotalAllowance()', () => {
     beforeEach(() => {
       service.timesheet.commutes = [
-        {date: '', journey: '', distance: 1, allowance: '', mileageAllowance: 120 },
-        {date: '', journey: '', distance: 1, allowance: '', mileageAllowance: 45 },
-        {date: '', journey: '', distance: 1, allowance: '', mileageAllowance: 55 }
+        { date: '', journey: '', distance: 1, allowance: '', mileageAllowance: 120 },
+        { date: '', journey: '', distance: 1, allowance: '', mileageAllowance: 45 },
+        { date: '', journey: '', distance: 1, allowance: '', mileageAllowance: 55 },
       ];
     });
 
@@ -114,9 +124,9 @@ describe('TimesheetService', () => {
   describe('getTotalMiscellaneous()', () => {
     beforeEach(() => {
       service.timesheet.miscellaneous = [
-        {date: '', wording: '', tvaRate: 0, miscellaneousType: '', amount: 10 },
-        {date: '', wording: '', tvaRate: 0, miscellaneousType: '', amount: 11 },
-        {date: '', wording: '', tvaRate: 0, miscellaneousType: '', amount: 12 }
+        { date: '', wording: '', tvaRate: 0, miscellaneousType: '', amount: 10 },
+        { date: '', wording: '', tvaRate: 0, miscellaneousType: '', amount: 11 },
+        { date: '', wording: '', tvaRate: 0, miscellaneousType: '', amount: 12 },
       ];
     });
 
@@ -127,11 +137,7 @@ describe('TimesheetService', () => {
 
   describe('getTotalFlatFee()', () => {
     beforeEach(() => {
-      service.timesheet.flatFees = [
-        {date: '', amount: 4 },
-        {date: '', amount: 5 },
-        {date: '', amount: 6 }
-      ];
+      service.timesheet.flatFees = [{ date: '', amount: 4 }, { date: '', amount: 5 }, { date: '', amount: 6 }];
     });
 
     it('should return "totalFlatFee" of flat fees expenses in the array of "flatFees"', () => {
@@ -173,7 +179,7 @@ describe('TimesheetService', () => {
 
     it('should stock the timesheet in local storage incrementing his name number', () => {
       timesheetArray = ['timesheet.1', 'timesheet.2'];
-      store = {'timesheet.1': 'Oliva', 'timesheet.2': 'Paul'};
+      store = { 'timesheet.1': 'Oliva', 'timesheet.2': 'Paul' };
       service.saveTimesheet();
       expect(Object.keys(store)).toEqual(['timesheet.1', 'timesheet.2', 'timesheet.3']);
     });
@@ -184,7 +190,6 @@ describe('TimesheetService', () => {
     let store;
 
     beforeEach(() => {
-
       spyOn(service, 'getLocalStorageTimesheetsList').and.callFake(() => {
         return timesheetArray;
       });
@@ -194,9 +199,11 @@ describe('TimesheetService', () => {
       spyOn(saveService, 'setLocalItem').and.callFake((key: string, value: any) => {
         store[key] = value || null;
       });
-      spyOn(saveService, 'getLocalItem').and.callFake((key: string): any => {
-        return store[key] || null;
-      });
+      spyOn(saveService, 'getLocalItem').and.callFake(
+        (key: string): any => {
+          return store[key] || null;
+        },
+      );
       store = {};
     });
 
@@ -212,35 +219,35 @@ describe('TimesheetService', () => {
 
     it('should open the last timesheet of the local storage ', () => {
       timesheetArray = ['timesheet.1', 'timesheet.2'];
-      store = {'timesheet.1': 'Oliva', 'timesheet.2': new Timesheet('Paul')};
+      store = { 'timesheet.1': 'Oliva', 'timesheet.2': new Timesheet('Paul') };
       service.openLastTimesheetInLocal();
       expect(service.timesheet).toEqual(new Timesheet('Paul'));
     });
   });
 
   describe('getIfExistAlreadyPresentInvoice()', () => {
-
     const timesheetsOfLocalStorage = {
       'timesheet.1': {
-        consultant: {email: 'no', name: 'Pierre'},
-        invoice: new Invoice('', '' , '', null, new Company('Paul'), new Company('Nathalie'))
+        consultant: { email: 'no', name: 'Pierre' },
+        invoice: new Invoice('', '', '', null, new Company('Paul'), new Company('Nathalie')),
       },
       'timesheet.2': {
-        consultant: {email: 'no', name: 'Simon'},
-        invoice: new Invoice('', '' , '', null, new Company('Marie'), new Company('Romain'))
+        consultant: { email: 'no', name: 'Simon' },
+        invoice: new Invoice('', '', '', null, new Company('Marie'), new Company('Romain')),
       },
       'timesheet.3': {
-        consultant: {email: 'no', name: 'Simon'},
-        invoice: new Invoice('', '' , '1000', null, new Company('Marie'), new Company('Romain'))
-      }
+        consultant: { email: 'no', name: 'Simon' },
+        invoice: new Invoice('', '', '1000', null, new Company('Marie'), new Company('Romain')),
+      },
     };
 
     beforeEach(() => {
-
       testTimesheet.invoice = new Invoice(undefined, undefined, '4000', undefined, new Company('Marie'));
-      spyOn(saveService, 'getLocalItem').and.callFake((key: string): any => {
-        return timesheetsOfLocalStorage[key] || null;
-      });
+      spyOn(saveService, 'getLocalItem').and.callFake(
+        (key: string): any => {
+          return timesheetsOfLocalStorage[key] || null;
+        },
+      );
       spyOn(service, 'getLocalStorageTimesheetsList').and.callFake(() => {
         return ['timesheet.1', 'timesheet.2', 'timesheet.3'];
       });
@@ -251,15 +258,14 @@ describe('TimesheetService', () => {
     });
 
     it('shouldn\'t edit transfered timesheet if neither provider and consultant are associated to a same client in local storage', () => {
-      const timesheetTest: Timesheet = {...testTimesheet, consultant: {name: 'Maurice', email: 'maurice@hl.com'}};
+      const timesheetTest: Timesheet = { ...testTimesheet, consultant: { name: 'Maurice', email: 'maurice@hl.com' } };
       expect(service.getIfExistAlreadyPresentInvoice(timesheetTest).invoice.clientRef).toEqual('4000');
     });
   });
 
   describe('setTimesheet()', () => {
-
     it('should set a new timesheet without unneeded properties', () => {
-      service.setTimesheet({ ...testTimesheet, invoice: { number: 'test' }});
+      service.setTimesheet({ ...testTimesheet, invoice: { number: 'test' } });
       expect(service.timesheet.invoice.number).toEqual(null);
     });
   });

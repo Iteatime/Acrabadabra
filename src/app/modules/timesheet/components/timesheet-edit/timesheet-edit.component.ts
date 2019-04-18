@@ -28,7 +28,7 @@ import { Invoice } from 'src/app/shared/models/invoice.model';
   selector: 'app-timesheet-edit',
   templateUrl: './timesheet-edit.component.html',
   styleUrls: ['./timesheet-edit.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class TimesheetEditComponent implements OnInit {
   @ViewChild(CalendarSelectorComponent) calendar: CalendarSelectorComponent;
@@ -54,7 +54,7 @@ export class TimesheetEditComponent implements OnInit {
     private router: Router,
     private titleService: Title,
     private notificationService: NotificationService,
-    private _urlShortener: UrlShorteningService
+    private _urlShortener: UrlShorteningService,
   ) {}
 
   ngOnInit(): void {
@@ -71,7 +71,7 @@ export class TimesheetEditComponent implements OnInit {
         this.onUserInput();
       }
     });
-    this.titleService.setTitle(`Acrabadabra - ${ this.getModeTitle() } un compte rendu d'activité`);
+    this.titleService.setTitle(`Acrabadabra - ${this.getModeTitle()} un compte rendu d'activité`);
   }
 
   openAuth() {
@@ -88,12 +88,12 @@ export class TimesheetEditComponent implements OnInit {
 
   setShortUrl(action?: string): void {
     if (!!action) {
-      const getToken = (action === 'edit') ? this.timesheetService.getEditToken() : this.timesheetService.getReviewToken();
-      this._urlShortener.shortenUrl(this.originUrl + `/timesheet/${action}/` + getToken)
-        .then ((res) => {
-          action === 'edit' ? this.editShortUrl = res : this.reviewShortUrl = res;
-          this.updateMailtoLink();
-        });
+      const getToken =
+        action === 'edit' ? this.timesheetService.getEditToken() : this.timesheetService.getReviewToken();
+      this._urlShortener.shortenUrl(this.originUrl + `/timesheet/${action}/` + getToken).then(res => {
+        action === 'edit' ? (this.editShortUrl = res) : (this.reviewShortUrl = res);
+        this.updateMailtoLink();
+      });
       return;
     }
 
@@ -127,7 +127,7 @@ export class TimesheetEditComponent implements OnInit {
       this.notificationService.push(
         'Votre CRA est validé<br/>Si vous le modifiez, vous devrez le valider à nouveau et utiliser le nouveau lien de partage.',
         'success',
-        { duration: 10 }
+        { duration: 10 },
       );
     }
     this.showLinks = !error;
@@ -143,7 +143,7 @@ export class TimesheetEditComponent implements OnInit {
       this.timesheetService.timesheet,
       this.calendarService,
       this.calendarService.getWorkedTime(this.timesheetService.timesheet),
-      this.reviewShortUrl
+      this.reviewShortUrl,
     );
   }
 
@@ -164,18 +164,21 @@ export class TimesheetEditComponent implements OnInit {
         this.invoiceForm.form.controls[field].markAsTouched();
       });
     }
-    if (this.timesheetService.timesheet.commutes.length === 0
-        && this.timesheetService.timesheet.miscellaneous.length === 0
-        && this.timesheetService.timesheet.flatFees.length === 0
-        && this.generateExpenses) {
-      this.notificationService.push('Vous n\'avez ajouté aucun frais', 'warning', { isSelfClosing: false });
+    if (
+      this.timesheetService.timesheet.commutes.length === 0 &&
+      this.timesheetService.timesheet.miscellaneous.length === 0 &&
+      this.timesheetService.timesheet.flatFees.length === 0 &&
+      this.generateExpenses
+    ) {
+      this.notificationService.push("Vous n'avez ajouté aucun frais", 'warning', { isSelfClosing: false });
     }
   }
 
   private loadTimesheet(timesheet: Timesheet): void {
     this.showLinks = false;
     this.generateInvoice = !!timesheet.invoice && !_.isEqual(timesheet.invoice, Object.assign({}, new Invoice()));
-    this.generateExpenses = timesheet.commutes.length > 0 || timesheet.flatFees.length > 0 || timesheet.miscellaneous.length > 0;
+    this.generateExpenses =
+      timesheet.commutes.length > 0 || timesheet.flatFees.length > 0 || timesheet.miscellaneous.length > 0;
     this.setShortUrl();
   }
 }

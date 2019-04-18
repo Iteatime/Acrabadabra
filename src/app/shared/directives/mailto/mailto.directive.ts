@@ -2,10 +2,9 @@ import { Directive, Input, HostListener } from '@angular/core';
 import { ReviewMail } from '../../models/review-mail.model';
 
 @Directive({
-  selector: '[mailto]'
+  selector: '[mailto]',
 })
 export class MailtoDirective {
-
   @Input('mailto')
   public recipient: string;
 
@@ -21,11 +20,8 @@ export class MailtoDirective {
     }
 
     window.open(
-      'mailto:' + this.recipient +
-      '?subject=' + this.mailContent.subject +
-      '&body=' + this.mailContent.body,
-      '_self'
+      'mailto:' + this.recipient + '?subject=' + this.mailContent.subject + '&body=' + this.mailContent.body,
+      '_self',
     );
   }
-
 }

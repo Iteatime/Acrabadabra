@@ -14,14 +14,13 @@ describe('CalendarService', () => {
 
     testTimesheet = new Timesheet();
     testTimesheet.workingDays = {
-      '0.1900': [0.5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      '0.1900': [0.5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     };
 
     calendarEvents = [
       { title: '', start: new Date(1900, 0, 1, 8), end: new Date(1900, 0, 1, 12) },
-      { title: '', start: new Date(1900, 0, 2, 8), end: new Date(1900, 0, 2, 16) }
+      { title: '', start: new Date(1900, 0, 2, 8), end: new Date(1900, 0, 2, 16) },
     ];
-
   });
 
   it('should be created', () => {

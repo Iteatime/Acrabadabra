@@ -3,12 +3,11 @@ import { TestBed } from '@angular/core/testing';
 import { SerializationService } from './serialization.service';
 
 describe('SerializationService', () => {
-
   let service: SerializationService;
 
   beforeEach(() => {
     service = new SerializationService();
-    });
+  });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
@@ -31,7 +30,7 @@ describe('SerializationService', () => {
       test = 'eyJ4Ijo1LCJ5Ijo2fQ==';
     });
     it('should deserialize a base-64 encoded ASCII string to an object', () => {
-    expect(service.deserializeObject(test)).toEqual({ x: 5, y: 6 });
+      expect(service.deserializeObject(test)).toEqual({ x: 5, y: 6 });
     });
   });
 });

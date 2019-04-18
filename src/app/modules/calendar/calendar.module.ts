@@ -13,15 +13,10 @@ registerLocaleData(localeFr);
     CommonModule,
     AngularCalendar.forRoot({
       provide: DateAdapter,
-      useFactory: adapterFactory
+      useFactory: adapterFactory,
     }),
   ],
-  exports: [
-    CommonModule,
-    CalendarSelectorComponent,
-  ],
-  declarations: [
-    CalendarSelectorComponent,
-  ]
+  exports: [CommonModule, CalendarSelectorComponent],
+  declarations: [CalendarSelectorComponent],
 })
-export class CalendarModule { }
+export class CalendarModule {}
