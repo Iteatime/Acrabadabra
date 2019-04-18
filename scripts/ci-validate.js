@@ -9,6 +9,7 @@ const onTestFail = () => {
   concurently(
     [
       'ENV=dev node scripts/set-env.js',
+      'npm run lint',
       'ng test --karma-config=scripts/config/karma-phantom.conf.js'
     ],
     {

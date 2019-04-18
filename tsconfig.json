@@ -1,7 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": ".",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -10,6 +10,31 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es5",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "strictPropertyInitialization": false,
+    "paths": {
+      "@components/*": [
+        "src/app/components/*"
+      ],
+      "@env": [
+        "src/environments/environment"
+      ],
+      "@modules/*": [
+        "src/app/modules/*"
+      ],
+      "@shared/*": [
+        "src/app/shared/*"
+      ],
+      "@style/*": [
+        "src/app/style/*"
+      ],
+      "@acrabadabra/*": [
+        "libs/*"
+      ]
+    },
     "typeRoots": [
       "node_modules/@types"
     ],

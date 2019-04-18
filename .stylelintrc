@@ -1,0 +1,28 @@
+{
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-recommended-scss",
+    "stylelint-config-concentric-order",
+    "stylelint-config-prettier"
+  ],
+  "plugins": [
+    "stylelint-scss",
+  ],
+  "rules": {
+    "selector-pseudo-element-colon-notation": "single",
+    "at-rule-empty-line-before": [
+      "always",
+      {
+        "except": ["blockless-after-same-name-blockless", "first-nested"],
+        "ignore": ["after-comment"],
+        "ignoreAtRules": ["else"],
+      },
+    ],
+    "block-closing-brace-newline-after": [
+      "always", {
+        "ignoreAtRules": [ "if", "else" ]
+      }
+    ],
+    "color-no-hex": true
+  }
+}
