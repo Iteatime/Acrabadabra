@@ -4,16 +4,14 @@
       <img class="header__container__logo" src="assets/images/logo.white.svg" alt="logo acrabadabra"
         (error)="$event.target.removeAttribute('onerror'); $event.target.src = 'assets/images/logo.white.png';">
     </a>
-    <div *ngIf="auth.isAuthenticated; else providerBtn" class="header__container__user" (click)="auth.widget.open()">
-      <i class="header__container__user__icon material-icons">account_circle</i>
-      {{ auth.username }}
+    <div class="header__container__user" (click)="auth.widget.open()">
+        <div *ngIf="auth.isAuthenticated; else providerBtn">
+          <i  class="header__container__user__icon material-icons">account_circle</i>
+          {{ auth.username }}
+        </div>
+      <ng-template #providerBtn>
+        Se connecter
+      </ng-template>
     </div>
-    <ng-template #providerBtn>
-      <button type="button" class="header__container__user__btn" data-text="Accèder à mon compte prestataire" data-mobile="Prestataire"
-      (click)="auth.widget.open()">
-        <span class="header__container__user__btn__mobile">Prestataire</span>
-        <span class="header__container__user__btn__desktop">Accèder à mon compte prestataire</span>
-      </button>
-    </ng-template>
   </div>
 </div>
