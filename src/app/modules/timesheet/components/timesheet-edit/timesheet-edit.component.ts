@@ -21,8 +21,6 @@ import { CalendarSelectorComponent } from 'src/app/modules/calendar/components/c
 
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 
-import { LocalSaveService } from 'src/app/shared/services/localSave/local-save.service';
-
 import { Timesheet } from 'src/app/shared/models/timesheet.model';
 import { Invoice } from 'src/app/shared/models/invoice.model';
 
@@ -64,7 +62,6 @@ export class TimesheetEditComponent implements OnInit {
       this.router.navigate(['timesheet', 'create']);
       if (this.timesheetService.openLastTimesheetInLocal()) {
         this.loadTimesheet(this.timesheetService.timesheet);
-        this.onUserInput();
       }
     } else {
       this.loadTimesheet(this.timesheetService.timesheet);
@@ -169,7 +166,7 @@ export class TimesheetEditComponent implements OnInit {
   }
 
   private loadTimesheet(timesheet: Timesheet): void {
-    this.showLinks = true;
+    this.showLinks = false;
     this.generateInvoice = !!timesheet.invoice && !_.isEqual(timesheet.invoice, Object.assign({}, new Invoice()));
     this.generateExpenses = timesheet.commutes.length > 0 || timesheet.flatFees.length > 0 || timesheet.miscellaneous.length > 0;
     this.setShortUrl();
