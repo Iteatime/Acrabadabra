@@ -27,6 +27,11 @@ Scenario: I forgot to fill a required input in the form
    And an error message appears near the input
    And I can't validate my form
 
+Scenario: I fill all required input in the form
+  Given All required fields are completed but not the optional ones
+   When I click on "Valider mon CRA" button
+   Then The form is validated with not any problem
+
 Scenario: I modify an input after a form validation
    When I validated the form
    But I modify an input
