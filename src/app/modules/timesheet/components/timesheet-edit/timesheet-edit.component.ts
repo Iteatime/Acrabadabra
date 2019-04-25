@@ -89,7 +89,7 @@ export class TimesheetEditComponent implements OnInit {
   setShortUrl(action?: string): void {
     if (!!action) {
       const getToken =
-        action === 'edit' ? this.timesheetService.getEditToken() : this.timesheetService.getReviewToken();
+        action === 'edit' ? this.timesheetService.getToken('edit') : this.timesheetService.getToken('review');
       this._urlShortener.shortenUrl(this.originUrl + `/timesheet/${action}/` + getToken).then(res => {
         action === 'edit' ? (this.editShortUrl = res) : (this.reviewShortUrl = res);
         this.updateMailtoLink();

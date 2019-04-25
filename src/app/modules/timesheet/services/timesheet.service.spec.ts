@@ -57,22 +57,24 @@ describe('TimesheetService', () => {
     });
   });
 
-  describe('getEditToken()', () => {
+  describe('getToken()', () => {
     it('should return a base64 encoded json object containing the timesheet property, and a "mode" property set to "edit"', () => {
-      expect(service.getEditToken()).toBe(editToken);
+      expect(service.getToken('edit')).toBe(editToken);
     });
-  });
 
-  describe('getReviewToken()', () => {
     it('should return a base64 encoded json object containing the timesheet property, and a "mode" property set to "review"', () => {
-      expect(service.getReviewToken()).toBe(reviewToken);
+      expect(service.getToken('review')).toBe(editToken);
+    });
+
+    it('should return a base64 encoded json object containing the timesheet property, and a "mode" property set to "review"', () => {
+      expect(service.getToken('unknown')).toBe(unknownToken);
     });
   });
 
   // tslint:disable-next-line:no-commented-code
   // describe('getTransferToken())', () => {
-  //   let transferToken;
-  //   let token;
+  //   let transferToken: any;
+  //   let token: any;
   //   beforeEach(() => {
   //     service.timesheet.invoice = Object.assign({}, new Invoice(), {
   //       number: '458789',

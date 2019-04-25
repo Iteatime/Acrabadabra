@@ -19,16 +19,23 @@ export class TimesheetService {
     this.timesheet = new Timesheet();
   }
 
-  public getEditToken(): string {
-    return this._serializer.serializeObject({
-      mode: 'edit',
-      timesheet: this.timesheet,
-    });
-  }
+  getToken(mode: string): string {
+    let formatedMode: string;
 
-  public getReviewToken(): string {
+    switch (mode) {
+      case 'edit':
+        formatedMode = 'edit';
+        break;
+      case 'review':
+        formatedMode = 'review';
+        break;
+      default:
+        formatedMode = 'unknown';
+        break;
+    }
+
     return this._serializer.serializeObject({
-      mode: 'review',
+      mode: formatedMode,
       timesheet: this.timesheet,
     });
   }
@@ -70,7 +77,7 @@ export class TimesheetService {
       '?url=' +
       window.location.origin +
       '/invoice/' +
-      this.getReviewToken() +
+      this.getToken('review') +
       '&format=A4&scale=2&margin.top=15px&margin.left=10px&margin.bottom=10px&margin.right=10px' +
       '&api=' +
       environment.pdf_api_key +
