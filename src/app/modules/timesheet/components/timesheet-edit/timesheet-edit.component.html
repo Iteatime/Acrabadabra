@@ -114,7 +114,7 @@
         </button>
       </div>
 
-      <div *ngIf="showLinks" class="timesheet-edit__wrapper__form__icons">
+      <div *ngIf="showLinks" id="action-links" class="timesheet-edit__wrapper__form__icons">
         <div *ngIf="generateInvoice" class="timesheet-edit__wrapper__form__icons__item">
           <a target="_self" [href]="timesheetService.getInvoiceLink()">
             <i class="material-icons">cloud_download</i>
