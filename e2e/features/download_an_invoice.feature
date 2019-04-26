@@ -8,6 +8,10 @@ And I have entered my billing details
 When I click the download as PDF link
 Then a PDF invoice with the corresponding data downloads to my computer
 
+Scenario: I had established an invoice without filled optionals fields
+When I click the download as PDF link
+Then all informations about optionals fields are hidden
+
 Scenario: I can choose the RCS exemption for me and the client
 Given I have chosen RCS exemption for me and the client in my invoice form
 When I click the download as PDF link
