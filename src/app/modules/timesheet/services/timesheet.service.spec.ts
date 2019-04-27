@@ -1,14 +1,14 @@
-import { Timesheet } from 'src/app/shared/models/timesheet.model';
+import { Consultant, Company, Invoice, Timesheet, Mission } from 'src/app/shared/models';
 
 import { TimesheetService } from './timesheet.service';
 import { LocalSaveService } from 'src/app/shared/services/localSave/local-save.service';
 import { SerializationService } from 'src/app/shared/services/serialization/serialization.service';
 
-
 describe('TimesheetService', () => {
   let service: TimesheetService;
   let saveService: LocalSaveService;
-  const testTimesheet = new Timesheet('test');
+  const testTimesheet = new Timesheet('test', 'Simon');
+
   const editToken = btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'edit', timesheet: testTimesheet }))));
   const reviewToken =  btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'review', timesheet: testTimesheet }))));
 
@@ -47,13 +47,13 @@ describe('TimesheetService', () => {
         expect(returnValue).toBeTruthy();
       });
 
-      // it('should copy the data to the new timesheet', () => {
-      //   expect(service.timesheet.consultant.email).toBe('test');
-      // });
+      it('should copy the data to the new timesheet', () => {
+        expect(service.timesheet.consultant.email).toBe('test');
+      });
 
-      // it('should copy the `mode` the service property `mode`', () => {
-      //   expect(service.mode).toBe('edit');
-      // });
+      it('should copy the `mode` the service property `mode`', () => {
+        expect(service.mode).toBe('edit');
+      });
     });
   });
 
@@ -68,6 +68,34 @@ describe('TimesheetService', () => {
       expect(service.getReviewToken()).toBe(reviewToken);
     });
   });
+
+  // describe('getTransferToken())', () => {
+  //   let transferToken;
+  //   let token;
+  //   beforeEach(() => {
+  //     service.timesheet.invoice = Object.assign({}, new Invoice(), {
+  //         number: '458789',
+  //         provider: new Company('Rémy dupont'),
+  //         client: new Company('Iteatime'),
+  //       });
+  //     transferToken = btoa(unescape(encodeURIComponent(JSON.stringify({
+  //         mode: 'edit',
+  //         timesheet: Object.assign({ ...service.timesheet }, {
+  //           invoice: Object.assign(new Invoice(), {
+  //             provider: new Company('Iteatime')
+  //           })
+  //         })
+  //    }))));
+  //    token = service.getTransferToken();
+  //   });
+
+  //   it('should return a new invoice edit page with the information correctly completed', () => {
+  //     expect(service.timesheet.invoice.number).toBe(null);
+  //     expect(service.timesheet.invoice.provider.name).toBe('Iteatime');
+  //     expect(service.timesheet.invoice.client.name).toBe('');
+  //     expect(token).toEqual(transferToken);
+  //   });
+  // });
 
   describe('getTotalAllowance()', () => {
     beforeEach(() => {
@@ -111,7 +139,7 @@ describe('TimesheetService', () => {
     });
   });
 
-  describe('getTimesheetsLocal()', () => {
+  describe('getLocalStorageTimesheetsList()', () => {
     beforeEach(() => {
       localStorage.setItem('timesheet.5', 'IFgBhdWwgT2gsqgi');
       localStorage.setItem('test', 'Welcome Home');
@@ -120,29 +148,25 @@ describe('TimesheetService', () => {
     });
 
     it('should return a sorted array of keys in local storage', () => {
-      expect(service.getTimesheetsLocal()).toEqual(['timesheet.1', 'timesheet.4', 'timesheet.5']);
+      expect(service.getLocalStorageTimesheetsList()).toEqual(['timesheet.1', 'timesheet.4', 'timesheet.5']);
     });
   });
 
   describe('saveTimesheet()', () => {
-
     let timesheetArray = [];
     let store;
 
     beforeEach(() => {
-
-      spyOn(service, 'getTimesheetsLocal').and.callFake(() => {
+      spyOn(service, 'getLocalStorageTimesheetsList').and.callFake(() => {
         return timesheetArray;
       });
-
       spyOn(saveService, 'setLocalItem').and.callFake((key: string, value: any) => {
         store[key] = value || null;
       });
-
       store = {};
     });
 
-    it('should stock a timehseet named timesheet.1 if there are no timesheet in local storage', () => {
+    it('should stock a timesheet named timesheet.1 if there are no timesheet in local storage', () => {
       service.saveTimesheet();
       expect(Object.keys(store)).toEqual(['timesheet.1']);
     });
@@ -156,28 +180,23 @@ describe('TimesheetService', () => {
   });
 
   describe('openLastTimesheetInLocal()', () => {
-
     let timesheetArray = [];
     let store;
 
     beforeEach(() => {
 
-      spyOn(service, 'getTimesheetsLocal').and.callFake(() => {
+      spyOn(service, 'getLocalStorageTimesheetsList').and.callFake(() => {
         return timesheetArray;
       });
-
       spyOn(service, 'setTimesheet').and.callFake((value: any) => {
         service.timesheet = value;
       });
-
       spyOn(saveService, 'setLocalItem').and.callFake((key: string, value: any) => {
         store[key] = value || null;
       });
-
       spyOn(saveService, 'getLocalItem').and.callFake((key: string): any => {
         return store[key] || null;
       });
-
       store = {};
     });
 
@@ -191,11 +210,49 @@ describe('TimesheetService', () => {
       expect(service.openLastTimesheetInLocal()).toBeFalsy();
     });
 
-    it('should ', () => {
+    it('should open the last timesheet of the local storage ', () => {
       timesheetArray = ['timesheet.1', 'timesheet.2'];
       store = {'timesheet.1': 'Oliva', 'timesheet.2': new Timesheet('Paul')};
       service.openLastTimesheetInLocal();
       expect(service.timesheet).toEqual(new Timesheet('Paul'));
+    });
+  });
+
+  describe('getIfExistAlreadyPresentTimesheet()', () => {
+
+    const timesheetsOfLocalStorage = {
+      'timesheet.1': {
+        consultant: {email: 'no', name: 'Pierre'},
+        invoice: new Invoice('', '' , '', null, new Company('Paul'), new Company('Nathalie'))
+      },
+      'timesheet.2': {
+        consultant: {email: 'no', name: 'Simon'},
+        invoice: new Invoice('', '' , '', null, new Company('Marie'), new Company('Romain'))
+      },
+      'timesheet.3': {
+        consultant: {email: 'no', name: 'Simon'},
+        invoice: new Invoice('', '' , '1000', null, new Company('Marie'), new Company('Romain'))
+      }
+    };
+
+    beforeEach(() => {
+
+      testTimesheet.invoice = new Invoice(undefined, undefined, '4000', undefined, new Company('Marie'));
+      spyOn(saveService, 'getLocalItem').and.callFake((key: string): any => {
+        return timesheetsOfLocalStorage[key] || null;
+      });
+      spyOn(service, 'getLocalStorageTimesheetsList').and.callFake(() => {
+        return ['timesheet.1', 'timesheet.2', 'timesheet.3'];
+      });
+    });
+
+    it('should edit transfered timesheet with client informations if a provider and a consultant are associated to a same client in local storage', () => {
+      expect(service.getIfExistAlreadyPresentTimesheet(testTimesheet).invoice.clientRef).toEqual('1000');
+    });
+
+    it('shouldn\'t edit transfered timesheet if neither provider and consultant are associated to a same client in local storage', () => {
+      const timesheetTest: Timesheet = {...testTimesheet, consultant: {name: 'Maurice', email: 'maurice@hl.com'}};
+      expect(service.getIfExistAlreadyPresentTimesheet(timesheetTest).invoice.clientRef).toEqual('4000');
     });
   });
 

@@ -11,6 +11,7 @@ import { CalendarService } from 'src/app/modules/calendar/calendar.service';
 
 import { TimesheetService } from '../../services/timesheet.service';
 import { UrlShorteningService } from '../../services/url-shortening.service';
+import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
 
 import { InvoiceFormComponent } from '../invoice-form/invoice-form.component';
 import { ExpenseMileageFormComponent } from 'src/app/modules/expense/components/expense-mileage-form/expense-mileage-form.component';
@@ -19,8 +20,6 @@ import { ExpenseFlatFeeFormComponent } from 'src/app/modules/expense/components/
 import { CalendarSelectorComponent } from 'src/app/modules/calendar/components/calendar-selector/calendar-selector.component';
 
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
-
-import { LocalSaveService } from 'src/app/shared/services/localSave/local-save.service';
 
 import { Timesheet } from 'src/app/shared/models/timesheet.model';
 import { Invoice } from 'src/app/shared/models/invoice.model';
@@ -32,12 +31,12 @@ import { Invoice } from 'src/app/shared/models/invoice.model';
   encapsulation: ViewEncapsulation.None
 })
 export class TimesheetEditComponent implements OnInit {
-  @ViewChild (CalendarSelectorComponent) calendar: CalendarSelectorComponent;
-  @ViewChild (InvoiceFormComponent) invoiceForm: InvoiceFormComponent;
-  @ViewChild (ExpenseMileageFormComponent) commutesForm: ExpenseMileageFormComponent;
-  @ViewChild (ExpenseMiscellaneousFormComponent) miscellaneousForm: ExpenseMiscellaneousFormComponent;
-  @ViewChild (ExpenseFlatFeeFormComponent) flatFeesForm: ExpenseFlatFeeFormComponent;
-  @ViewChild ('form') form: NgForm;
+  @ViewChild(CalendarSelectorComponent) calendar: CalendarSelectorComponent;
+  @ViewChild(InvoiceFormComponent) invoiceForm: InvoiceFormComponent;
+  @ViewChild(ExpenseMileageFormComponent) commutesForm: ExpenseMileageFormComponent;
+  @ViewChild(ExpenseMiscellaneousFormComponent) miscellaneousForm: ExpenseMiscellaneousFormComponent;
+  @ViewChild(ExpenseFlatFeeFormComponent) flatFeesForm: ExpenseFlatFeeFormComponent;
+  @ViewChild('form') form: NgForm;
   originUrl = window.location.origin;
   editShortUrl: string = '';
   reviewShortUrl: string = '';
@@ -49,6 +48,7 @@ export class TimesheetEditComponent implements OnInit {
 
   constructor(
     public timesheetService: TimesheetService,
+    public auth: AuthenticationService,
     private calendarService: CalendarService,
     private route: ActivatedRoute,
     private router: Router,
@@ -62,7 +62,6 @@ export class TimesheetEditComponent implements OnInit {
       this.router.navigate(['timesheet', 'create']);
       if (this.timesheetService.openLastTimesheetInLocal()) {
         this.loadTimesheet(this.timesheetService.timesheet);
-        this.onUserInput();
       }
     } else {
       this.loadTimesheet(this.timesheetService.timesheet);
@@ -73,6 +72,10 @@ export class TimesheetEditComponent implements OnInit {
       }
     });
     this.titleService.setTitle(`Acrabadabra - ${ this.getModeTitle() } un compte rendu d'activité`);
+  }
+
+  openAuth() {
+    this.auth.widget.open();
   }
 
   getModeTitle() {
@@ -163,7 +166,7 @@ export class TimesheetEditComponent implements OnInit {
   }
 
   private loadTimesheet(timesheet: Timesheet): void {
-    this.showLinks = true;
+    this.showLinks = false;
     this.generateInvoice = !!timesheet.invoice && !_.isEqual(timesheet.invoice, Object.assign({}, new Invoice()));
     this.generateExpenses = timesheet.commutes.length > 0 || timesheet.flatFees.length > 0 || timesheet.miscellaneous.length > 0;
     this.setShortUrl();

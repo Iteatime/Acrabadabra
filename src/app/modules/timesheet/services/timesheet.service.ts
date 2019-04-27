@@ -2,11 +2,10 @@ import { Injectable } from '@angular/core';
 
 import { environment } from 'src/environments/environment';
 
-import { Timesheet } from 'src/app/shared/models/timesheet.model';
+import { Company, Invoice, Timesheet } from 'src/app/shared/models';
 
 import { LocalSaveService } from 'src/app/shared/services/localSave/local-save.service';
 
-import { Invoice } from 'src/app/shared/models/invoice.model';
 import { SerializationService } from 'src/app/shared/services/serialization/serialization.service';
 
 @Injectable({
@@ -34,6 +33,20 @@ export class TimesheetService {
     return this._serializer.serializeObject({
         mode: 'review',
         timesheet: this.timesheet
+    });
+  }
+
+  public getTransferToken(): string {
+    const transferedTimesheet = this.getIfExistAlreadyPresentTimesheet({
+          ...this.timesheet,
+          invoice: Object.assign({}, new Invoice(),  {
+            provider: Object.assign(new Company(), this.timesheet.invoice.client),
+            client: new Company()
+          }),
+    });
+    return this._serializer.serializeObject({
+        mode: 'edit',
+        timesheet: transferedTimesheet
     });
   }
 
@@ -80,23 +93,25 @@ export class TimesheetService {
     return totalFlatFee;
   }
 
-  public getTimesheetsLocal() {
+  public getLocalStorageTimesheetsList() {
     let timesheetArray = [];
 
-    Object.keys(localStorage).forEach(function(name) {
-      if ((name.split('.')[0]) === 'timesheet') {
-        timesheetArray.push(name);
+    Object.keys(localStorage).forEach(function(localKey) {
+      if ((localKey.split('.')[0]) === 'timesheet') {
+        timesheetArray.push(localKey);
       }
     });
 
-    return timesheetArray.sort((a, b) => {
-      return a.split('.')[1] - b.split('.')[1];
+    // sort timesheets in timesheetArray by their name.
+
+    return timesheetArray.sort((aTimesheet, anotherTimesheet) => {
+      return aTimesheet.split('.')[1] - anotherTimesheet.split('.')[1];
     });
   }
 
   public saveTimesheet() {
     let lastTimesheet: number;
-    const timesheetArray = this.getTimesheetsLocal();
+    const timesheetArray = this.getLocalStorageTimesheetsList();
 
     if (timesheetArray.length === 0) {
       lastTimesheet = 0;
@@ -107,12 +122,45 @@ export class TimesheetService {
   }
 
   public openLastTimesheetInLocal(): boolean {
-    const timesheetsOfLocalStorage = this.getTimesheetsLocal();
+    const timesheetsOfLocalStorage = this.getLocalStorageTimesheetsList();
     if (timesheetsOfLocalStorage.length > 0) {
       this.setTimesheet(this._localSaveService.getLocalItem(timesheetsOfLocalStorage[timesheetsOfLocalStorage.length - 1]));
       return true;
     }
     return false;
+  }
+
+  public getIfExistAlreadyPresentTimesheet(timesheetToTransfer: Timesheet): Timesheet {
+    const localStorageTimesheetsList = this.getLocalStorageTimesheetsList();
+    const localStorageTimesheetsListSize = this.getLocalStorageTimesheetsList().length;
+    for (let i = localStorageTimesheetsListSize; i >= 0; i--) {
+      const storedTimesheet: Timesheet = Object.assign(
+        {},
+        new Timesheet(),
+        this._localSaveService.getLocalItem(localStorageTimesheetsList[i])
+      );
+
+      if (storedTimesheet.consultant.name === timesheetToTransfer.consultant.name &&
+        storedTimesheet.invoice.provider.name === timesheetToTransfer.invoice.provider.name) {
+
+        return {
+          ...timesheetToTransfer,
+          invoice: Object.assign({}, timesheetToTransfer.invoice, {
+            clientRef: storedTimesheet.invoice.clientRef,
+            dailyRate: storedTimesheet.invoice.dailyRate,
+            client: Object.assign(new Company(), storedTimesheet.invoice.client),
+            paymentLatePenalty: storedTimesheet.invoice.paymentLatePenalty,
+            paymentModality: storedTimesheet.invoice.paymentModality,
+            bankAccountHolder: storedTimesheet.invoice.bankAccountHolder,
+            bankingAgency: storedTimesheet.invoice.bankingAgency,
+            bankingDomiciliation: storedTimesheet.invoice.bankingDomiciliation,
+            bankIBAN: storedTimesheet.invoice.bankIBAN,
+            bankSWIFT: storedTimesheet.invoice.bankSWIFT
+          }),
+        };
+      }
+    }
+    return timesheetToTransfer;
   }
 
   public setTimesheet(timesheet) {
