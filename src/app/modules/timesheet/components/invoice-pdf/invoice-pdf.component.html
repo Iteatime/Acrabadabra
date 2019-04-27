@@ -30,11 +30,15 @@
       <div *ngIf="timesheetService.timesheet.invoice.client.telephone">
         Tel : {{ timesheetService.timesheet.invoice.client.telephone }}
       </div>
-      <div *ngIf="!timesheetService.timesheet.invoice.client.tradeAndCompaniesRegisterExemption">
-        {{ timesheetService.timesheet.invoice.client.siren }} R.C.S.
+      <div *ngIf="!timesheetService.timesheet.invoice.client.tradeAndCompaniesRegisterExemption &&
+                  timesheetService.timesheet.invoice.client.tradeAndCompaniesRegisterCity ||
+                  timesheetService.timesheet.invoice.client.siren">
+        {{ timesheetService.timesheet.invoice.client.siren }}
+        <span *ngIf="timesheetService.timesheet.invoice.client.tradeAndCompaniesRegisterCity">R.C.S.</span>
         {{ timesheetService.timesheet.invoice.client.tradeAndCompaniesRegisterCity }}
       </div>
-      <div *ngIf="timesheetService.timesheet.invoice.client.tradeAndCompaniesRegisterExemption">
+      <div *ngIf="timesheetService.timesheet.invoice.client.tradeAndCompaniesRegisterExemption &&
+                  timesheetService.timesheet.invoice.client.siren">
         SIREN : {{ timesheetService.timesheet.invoice.client.siren }}
       </div>
       <div *ngIf="!!timesheetService.timesheet.invoice.client.vatNumber">
@@ -234,7 +238,7 @@
           </div>
           <div>
             Date de règlement :
-            <span
+            <span *ngIf="timesheetService.timesheet.invoice.paymentDate"
               class="invoice__additional-information__bolding">{{ formatDate(timesheetService.timesheet.invoice.paymentDate) }}</span>
           </div>
           <div *ngIf="timesheetService.timesheet.invoice.paymentModality">
