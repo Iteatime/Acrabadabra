@@ -128,14 +128,14 @@
           </a>
         </div>
         <div class="timesheet-edit__wrapper__form__icons__item">
-          <a href="#" [copyToClipboard]="originUrl + '/timesheet/edit/' + timesheetService.getEditToken()"
+          <a href="#" [copyToClipboard]="editShortUrl"
             [copyToClipboardMessage]="'Lien de modification copié'" [copyToClipboardMessageParent]="editLink.parentNode" #editLink>
             <i class="material-icons">edit</i>
             <p>Copier le lien de modification</p>
           </a>
         </div>
         <div class="timesheet-edit__wrapper__form__icons__item">
-          <a href="#" [copyToClipboard]="originUrl + '/timesheet/review/' + timesheetService.getReviewToken()"
+          <a href="#" [copyToClipboard]="reviewShortUrl"
             [copyToClipboardMessage]="'Lien de partage copié'" [copyToClipboardMessageParent]="shareLink.parentNode" #shareLink>
             <i class="material-icons">remove_red_eye</i>
             <p>Copier le lien de partage</p>
