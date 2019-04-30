@@ -76,3 +76,12 @@ In order to reduce the test and build times during the local dev and to launch t
 
 - `PDF_API_URL` which defines the url of the PDF generation service and must be defined at the system level.
 
+## Used Libraries
+
+
+- [Angular Calendar](https://github.com/mattlewis92/angular-calendar)
+- [Moment](https://momentjs.com/), a date management library
+- [Concurrently](https://www.npmjs.com/package/concurrently), allows to run multiple commands concurrently
+- [Lodash](https://lodash.com/), provides utility functions for common programming tasks
+
+
