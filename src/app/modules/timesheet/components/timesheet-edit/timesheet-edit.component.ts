@@ -111,7 +111,8 @@ export class TimesheetEditComponent implements OnInit {
       this.timesheetService.timesheet.commutes = this.generateExpenses ? this.commutesForm.commutes : [];
       this.timesheetService.timesheet.flatFees = this.generateExpenses ? this.flatFeesForm.flatFees : [];
       this.timesheetService.saveTimesheet();
-      this.setShortUrl();
+      this.setShortUrl('edit');
+      this.setShortUrl('review');
       this.reactToSubmition(false);
     } else {
       this.reactToSubmition(true);
