@@ -7,9 +7,9 @@ export const environment = {
 
   pdf_api_key: 'PDF_API_KEY',
   pdf_api_url: 'PDF_API_URL',
-  short_url_api_key: '820f96d90e4c4c4891f7c1d9c57dbb73',
+  short_url_api_key: '1c936101bd4741938c1bb7d539732d33',
   short_url_api: 'https://api.rebrandly.com/v1/links',
-  short_url_workspace: 'a82300259f354be0bdb501aeb4836567'
+  short_url_workspace: 'e8989a355dc84230b79bf51d50e07377'
 };
 
 /*
@@ -20,3 +20,4 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+// e8989a355dc84230b79bf51d50e07377
