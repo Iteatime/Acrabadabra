@@ -43,9 +43,16 @@ export class TimesheetReviewComponent implements OnInit {
         this.workingTime = this.calendarManager.getWorkedTime(this.timesheet);
 
         if (this.timesheet.invoice) {
+          console.log('IL y a une facture')
            this.invoiceLink = this.timesheetService.getInvoiceLink();
            this.transferToken = this.timesheetService.getTransferToken();
            this.generateInvoice = true;
+        }
+
+        if (!this.timesheet.invoice) {
+          console.log('IL n\'y a  pas de facture')
+          this.transferToken = this.timesheetService.getTransferToken();
+          this.generateInvoice = false;
         }
 
         if (this.timesheetService.timesheet.commutes.length > 0) {

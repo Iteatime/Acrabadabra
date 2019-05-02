@@ -10,7 +10,16 @@ Scenario: I need to re-invoice my consultant invoice to my client
   Then a new timesheet edit page appears with pre-filled informations about consultant
   And a new timesheet edit page appears with pre-filled informations about mission
   And a new timesheet edit page appears with pre-filled working days
+  And a new timesheet edit page appears with pre-filled expenses
   And a new timesheet edit page appears with pre-filled informations of my company in provider side form
+
+Scenario: I transfer a timesheet with no invoice
+  Given I have no invoice in my timesheet
+  When I transfer a timesheet
+  Then a new timesheet edit page appears with pre-filled informations about consultant
+  And a new timesheet edit page appears with pre-filled informations about mission
+  And a new timesheet edit page appears with pre-filled working days
+  And a new timesheet edit page appears with pre-filled expenses
 
 Scenario: I want have client informations pre-filled if I have already saved a timesheet with a consultant and this client in my database when I re-invoice
   Given I already have a timesheet in my local storage with a consultant associated to a provider and a client
@@ -23,3 +32,4 @@ Scenario: I want have client informations pre-filled if I have already saved a t
   And a new timesheet edit page appears with pre-filled informations about banking informations
   And none informations about dates
   And none information about invoice number
+

@@ -37,17 +37,28 @@ export class TimesheetService {
   }
 
   public getTransferToken(): string {
-    const transferedTimesheet = this.getIfExistAlreadyPresentTimesheet({
-          ...this.timesheet,
-          invoice: Object.assign({}, new Invoice(),  {
-            provider: Object.assign(new Company(), this.timesheet.invoice.client),
-            client: new Company()
-          }),
-    });
-    return this._serializer.serializeObject({
+
+    if (this.timesheet.invoice) {
+      const transferedTimesheet = this.getIfExistAlreadyPresentTimesheet({
+            ...this.timesheet,
+            invoice: Object.assign({}, new Invoice(),  {
+              provider: Object.assign(new Company(), this.timesheet.invoice.client),
+              client: new Company()
+            }),
+      });
+      return this._serializer.serializeObject({
+          mode: 'edit',
+          timesheet: transferedTimesheet
+      });
+    }
+
+    if (!this.timesheet.invoice) {
+      const transferedTimesheet = this.timesheet;
+      return this._serializer.serializeObject({
         mode: 'edit',
         timesheet: transferedTimesheet
     });
+    }
   }
 
   public openTimesheet(token: string, mode: string): boolean {
