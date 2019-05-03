@@ -37,30 +37,18 @@ export class TimesheetReviewComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
+
       if (this.timesheetService.openTimesheet(params['data'], 'review')) {
         this.timesheet = this.timesheetService.timesheet;
         this.date = this.calendarManager.getDate(this.timesheet);
         this.workingTime = this.calendarManager.getWorkedTime(this.timesheet);
+        this.transferToken = this.timesheetService.getTransferToken();
+        this.generateInvoice = false;
 
         if (this.timesheet.invoice) {
-          console.log('IL y a une facture')
-           this.invoiceLink = this.timesheetService.getInvoiceLink();
-           this.transferToken = this.timesheetService.getTransferToken();
-           this.generateInvoice = true;
-        }
-
-        if (!this.timesheet.invoice) {
-          console.log('IL n\'y a  pas de facture')
+          this.invoiceLink = this.timesheetService.getInvoiceLink();
           this.transferToken = this.timesheetService.getTransferToken();
-          this.generateInvoice = false;
-        }
-
-        if (this.timesheetService.timesheet.commutes.length > 0) {
-          this.showAllowanceTable = true;
-        }
-
-        if (this.timesheetService.timesheet.miscellaneous.length > 0) {
-          this.showMiscellaneousTable = true;
+          this.generateInvoice = true;
         }
       }
     });

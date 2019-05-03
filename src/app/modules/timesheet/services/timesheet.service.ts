@@ -36,30 +36,67 @@ export class TimesheetService {
     });
   }
 
+  // public getTransferToken(): string {
+
+  //   const transferedTimesheet =  this.getIfExistAlreadyPresentTimesheet(this.timesheet);
+
+  //   if (this.timesheet.invoice) {
+  //     transferedTimesheet.invoice = Object.assign({}, new Invoice(),  {
+  //        provider: Object.assign(new Company(), this.timesheet.invoice.client),
+  //        client: new Company()
+  //     });
+  //   }
+
+  //   return this._serializer.serializeObject({
+  //        mode: 'edit',
+  //        timesheet: transferedTimesheet
+  //   });
+  // }
+
   public getTransferToken(): string {
 
+    let transferedTimesheet = this.timesheet;
+
     if (this.timesheet.invoice) {
-      const transferedTimesheet = this.getIfExistAlreadyPresentTimesheet({
-            ...this.timesheet,
-            invoice: Object.assign({}, new Invoice(),  {
-              provider: Object.assign(new Company(), this.timesheet.invoice.client),
-              client: new Company()
-            }),
-      });
-      return this._serializer.serializeObject({
-          mode: 'edit',
-          timesheet: transferedTimesheet
+      transferedTimesheet = this.getIfExistAlreadyPresentTimesheet({
+        ...this.timesheet,
+        invoice: Object.assign({}, new Invoice(),  {
+        provider: Object.assign(new Company(), this.timesheet.invoice.client),
+        client: new Company()
+        }),
       });
     }
 
-    if (!this.timesheet.invoice) {
-      const transferedTimesheet = this.timesheet;
-      return this._serializer.serializeObject({
-        mode: 'edit',
-        timesheet: transferedTimesheet
+    return this._serializer.serializeObject({
+      mode: 'edit',
+      timesheet: transferedTimesheet
     });
-    }
   }
+
+  // public getTransferToken(): string {
+
+  //   if (this.timesheet.invoice) {
+  //     const transferedTimesheet = this.getIfExistAlreadyPresentTimesheet({
+  //           ...this.timesheet,
+  //           invoice: Object.assign({}, new Invoice(),  {
+  //             provider: Object.assign(new Company(), this.timesheet.invoice.client),
+  //             client: new Company()
+  //           }),
+  //     });
+  //     return this._serializer.serializeObject({
+  //         mode: 'edit',
+  //         timesheet: transferedTimesheet
+  //     });
+  //   }
+
+  //   if (!this.timesheet.invoice) {
+  //     const transferedTimesheet = this.timesheet;
+  //     return this._serializer.serializeObject({
+  //       mode: 'edit',
+  //       timesheet: transferedTimesheet
+  //   });
+  //   }
+  // }
 
   public openTimesheet(token: string, mode: string): boolean {
     const a = this._serializer.deserializeObject(token);
