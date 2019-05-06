@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Commute } from 'src/app/shared/models';
 
 @Injectable({
   providedIn: 'root'
@@ -9,24 +10,43 @@ export class VehiclesService {
 
   vehicles = [
     {
-      horsepower: '3 -',
-      allowance: '0.41'
+      typeOfRate: 'Taux légal:',
+      horsePower: '3 CV et moins',
+      allowance: '0.451',
+      customizable: false
     },
     {
-      horsepower: '4',
-      allowance: '0.493'
+      typeOfRate: 'Taux légal:',
+      horsePower: '4 CV',
+      allowance: '0.518',
+      customizable: false
     },
     {
-      horsepower: '5',
-      allowance: '0.543'
+      typeOfRate: 'Taux légal:',
+      horsePower: '5 CV',
+      allowance: '0.543',
+      customizable: false
     },
     {
-      horsepower: '6',
-      allowance: '0.568'
+      typeOfRate: 'Taux légal:',
+      horsePower: '6 CV',
+      allowance: '0.568',
+      customizable: false
     },
     {
-      horsepower: '7 +',
-      allowance: '0.595'
+      typeOfRate: 'Taux légal:',
+      horsePower: '7 CV et plus',
+      allowance: '0.595',
+      customizable: false
     },
+    {
+      typeOfRate: 'Taux personnalisé',
+      allowance: '',
+      customizable: true
+    }
   ];
+
+  isCustomizable(commute: Commute): boolean {
+      return commute.vehicleSelected !== undefined && this.vehicles[commute.vehicleSelected].customizable;
+  }
 }
