@@ -45,15 +45,15 @@
           <label for="invoiceDailyRateInput" class="invoice-form__block__input-wrapper__item__label">Taux journalier
             (HT)</label>
           <div class="invoice-form__block__input-wrapper__item__input">
-            <input type="text" required pattern="[0-9]+" class="form-control" name="invoiceDailyRateInput"
+            <input type="text" required pattern="([0-9]+(\.[0-9]+)?)" class="form-control" name="invoiceDailyRateInput"
               [(ngModel)]="invoice.dailyRate" #dailyRate="ngModel">
             <div *ngIf="dailyRate.invalid && (dailyRate.dirty || dailyRate.touched)" class="alert alert-danger">
 
               <div *ngIf="dailyRate.errors['required']">
-                Ce champ est obligatoire.
+                Ce champ est obligatoire
               </div>
               <div *ngIf="dailyRate.errors['pattern']">
-                Doit être un nombre correct.
+                Seul des chiffres et un point sont acceptés
               </div>
             </div>
           </div>
