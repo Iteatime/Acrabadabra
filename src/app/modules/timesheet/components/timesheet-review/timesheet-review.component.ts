@@ -37,7 +37,6 @@ export class TimesheetReviewComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-
       if (this.timesheetService.openTimesheet(params['data'], 'review')) {
         this.timesheet = this.timesheetService.timesheet;
         this.date = this.calendarManager.getDate(this.timesheet);
@@ -47,7 +46,6 @@ export class TimesheetReviewComponent implements OnInit {
 
         if (this.timesheet.invoice) {
           this.invoiceLink = this.timesheetService.getInvoiceLink();
-          this.transferToken = this.timesheetService.getTransferToken();
           this.generateInvoice = true;
         }
       }
