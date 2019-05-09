@@ -1,16 +1,18 @@
 import { Timesheet } from '../@types/timesheet';
+import { CalendarService } from 'src/app/modules/calendar/calendar.service';
 
 export class ReviewMail {
   public subject: string;
   public body: string;
+  public locale = 'fr';
 
-  constructor(timesheet: Timesheet, workedTime: number, url: string) {
-    this.setSubject(timesheet.consultant.name);
+  constructor(timesheet: Timesheet, calendar: CalendarService, workedTime: number, url: string) {
+    this.setSubject(timesheet.consultant.name, calendar.getDate(timesheet));
     this.setBody(timesheet, workedTime, url);
   }
 
-  setSubject(consultantName: string) {
-    this.subject = 'Acrabadabra  - Compte rendu d\'activité de ' + consultantName;
+  setSubject(consultantName: string, date) {
+    this.subject = 'Acrabadabra  - Compte rendu d\'activité de ' + consultantName + ', ' + date.toLocaleString(this.locale, { month: 'long', year: 'numeric' });
   }
 
   setBody(timesheet: Timesheet, workedTime: number, url: string) {

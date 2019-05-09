@@ -136,6 +136,7 @@ export class TimesheetEditComponent implements OnInit {
   updateMailtoLink(): void {
     this.reviewMail = new ReviewMail(
       this.timesheetService.timesheet,
+      this.calendarService,
       this.calendarService.getWorkedTime(this.timesheetService.timesheet),
       this.reviewShortUrl
     );
