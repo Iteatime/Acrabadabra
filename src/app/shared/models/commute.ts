@@ -6,5 +6,6 @@ constructor(
     public distance: number,
     public allowance: any,
     public mileageAllowance: number,
+    public vehicleSelected?: number,
 ) {}
 }

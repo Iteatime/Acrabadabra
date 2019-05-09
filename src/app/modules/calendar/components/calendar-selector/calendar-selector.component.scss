@@ -267,6 +267,19 @@
       & .cal-month-view .cal-day-cell.cal-today {
         background: none;
         box-shadow: inset 0px 0px 0px 1px $main_blue;
+
+        &.cal-disabled {
+          background: #fefefe;
+          box-shadow: none;
+
+          &.cal-weekend {
+            background: #fafafa;
+          }
+
+          .cal-day-number {
+            font-size: 1.2em;
+          }
+        }
       }
 
       & .cal-month-view .cal-cell-row:hover,
@@ -317,16 +330,16 @@
 }
 
 .cal-disabled {
-  background-color: #eee;
+  background-color: #fefefe;
   pointer-events: none;
-}
 
-.cal-disabled .cal-day-number {
-  filter: opacity(25%);
-}
+  .cal-day-number {
+    filter: opacity(25%);
+  }
 
-.cal-has-events.cal-disabled .cal-day-number {
-  filter: opacity(100%);
+  &.cal-has-events .cal-day-number {
+    filter: opacity(100%);
+  }
 }
 
 .disabled-element {

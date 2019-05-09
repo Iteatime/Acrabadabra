@@ -131,11 +131,17 @@ export class TimesheetEditComponent implements OnInit {
       );
     }
     this.showLinks = !error;
+    if (this.showLinks) {
+      setTimeout(() => {
+        document.getElementById('action-links').scrollIntoView({behavior:"smooth"});
+      });
+    }
   }
 
   updateMailtoLink(): void {
     this.reviewMail = new ReviewMail(
       this.timesheetService.timesheet,
+      this.calendarService,
       this.calendarService.getWorkedTime(this.timesheetService.timesheet),
       this.reviewShortUrl
     );

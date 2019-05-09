@@ -19,6 +19,12 @@ Scenario: I want to select a vehicle in a dropdown
   Then a list of each fiscal power appears
   And I can click on the wanted vehicle power
 
+Scenario: I want customize my allowance rate
+  When I click on the vehicle selector
+  Then I can choice the customizable rate at the end of the list
+  And a new field named "Taux personnalisé" appears
+  And I can define my own rate
+
 Scenario: I Add a mileage expense
   Given I have filled-out the "Date", "Trajet", "Distance parcourue" and "Véhicule" inputs
   When I click the button "Ajouter"

@@ -60,14 +60,6 @@
             flex-wrap: wrap;
           }
 
-          @media (min-width: $screen_md_min) {
-            padding: 18px 30px;
-          }
-
-          @media (min-width: $screen_lg_min) {
-            padding: 18px 50px;
-          }
-
           border: 1px solid $grey_border_dark;
           border-top: 0;
           background: $grey_light;
@@ -86,7 +78,7 @@
 
           &__part {
             @media (min-width: $screen-sm-min) {
-              width: calc(50% - 20px);
+              width: calc(50% - 11px);
 
               &#left-part {
                 margin-right: 10px;
@@ -101,11 +93,14 @@
 
             &__text {
               height: 30px;
+
               &__label {
                 float: left;
+                font-weight: 700;
+                font-size: 14px;
               }
 
-              & > b {
+              &__value {
                 float: right;
               }
             }
@@ -114,29 +109,49 @@
       }
 
       &__invoice {
-        margin-top: 40px;
-        width: 100%;
-        text-align: center;
+        @media (min-width: $screen-sm-min) {
+          margin-top: 45px;
+        }
 
-        &__button {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        margin-top: 25px;
+
+        &__item {
           @media (min-width: $screen-sm-min) {
-            margin: 0 50px;
+            width: calc(100% / 4 - 40px);
           }
 
-          @include hoveranim_glow($darker_blue);
-          text-align: center;
-          border: none;
-          display: inline-block;
-          background: $dark_blue;
-          padding: 0;
-          cursor: pointer;
-          width: 30%;
-          height: 60px;
-          min-width: 270px;
-          line-height: 60px;
-          color: $white;
-          font-size: 20px;
-          font-weight: 700;
+          margin: 20px;
+          width: calc(100% - 40px);
+
+          &__link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+
+            &:hover,
+            &:focus,
+            &:active {
+              color: initial;
+              text-decoration: none;
+
+              span {
+                text-decoration: underline;
+              }
+            }
+
+            i,
+            span {
+              color: initial;
+            }
+
+            i {
+              font-size: 40px;
+            }
+          }
         }
       }
 

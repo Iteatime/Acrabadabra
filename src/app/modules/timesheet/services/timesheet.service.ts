@@ -37,16 +37,22 @@ export class TimesheetService {
   }
 
   public getTransferToken(): string {
-    const transferedTimesheet = this.getIfExistAlreadyPresentTimesheet({
-          ...this.timesheet,
-          invoice: Object.assign({}, new Invoice(),  {
-            provider: Object.assign(new Company(), this.timesheet.invoice.client),
-            client: new Company()
-          }),
-    });
+
+    let transferedTimesheet = this.timesheet;
+
+    if (this.timesheet.invoice) {
+      transferedTimesheet = this.getIfExistAlreadyPresentInvoice({
+        ...this.timesheet,
+        invoice: Object.assign({}, new Invoice(),  {
+        provider: Object.assign(new Company(), this.timesheet.invoice.client),
+        client: new Company()
+        }),
+      });
+    }
+
     return this._serializer.serializeObject({
-        mode: 'edit',
-        timesheet: transferedTimesheet
+      mode: 'edit',
+      timesheet: transferedTimesheet
     });
   }
 
@@ -130,7 +136,7 @@ export class TimesheetService {
     return false;
   }
 
-  public getIfExistAlreadyPresentTimesheet(timesheetToTransfer: Timesheet): Timesheet {
+  public getIfExistAlreadyPresentInvoice(timesheetToTransfer: Timesheet): Timesheet {
     const localStorageTimesheetsList = this.getLocalStorageTimesheetsList();
     const localStorageTimesheetsListSize = this.getLocalStorageTimesheetsList().length;
     for (let i = localStorageTimesheetsListSize; i >= 0; i--) {
