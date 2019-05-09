@@ -4,47 +4,37 @@
     <div class="review__wrapper__title">
       <h2>Compte rendu d'activité</h2>
     </div>
+
     <div class="review__wrapper__fields">
       <div class="review__wrapper__fields__block">
         <h3 class="review__wrapper__fields__block__title">Résumé</h3>
         <div class="review__wrapper__fields__block__item-wrapper">
           <div id="left-part" class="review__wrapper__fields__block__item-wrapper__part">
             <div class="review__wrapper__fields__block__item-wrapper__part__text">
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Consultant : </span>
-              <b>{{ timesheet.consultant.name }}</b>
+              <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Consultant</span>
+              <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{ timesheet.consultant.name }}</span>
             </div>
             <div class="review__wrapper__fields__block__item-wrapper__part__text">
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Intitulé de la mission :
-              </span>
-              <b>{{ timesheet.mission.title }}</b>
+              <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Intitulé de la mission</span>
+              <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{ timesheet.mission.title }}</span>
             </div>
             <div class="review__wrapper__fields__block__item-wrapper__part__text">
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Client : </span>
-              <b>{{ timesheet.mission.client }}</b>
+              <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Client</span>
+              <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{ timesheet.mission.client }}</span>
             </div>
           </div>
           <hr>
           <div id="right-part" class="review__wrapper__fields__block__item-wrapper__part">
             <div class="review__wrapper__fields__block__item-wrapper__part__text">
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Nombre de journées : </span>
-              <b>{{ workingTime }}</b>
+              <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Nombre de journées</span>
+              <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{ workingTime }}</span>
             </div>
             <div class="review__wrapper__fields__block__item-wrapper__part__text">
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Période : </span>
-              <b>{{ date.toLocaleString(locale, { month: 'long', year: 'numeric' }) }}</b>
+              <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Période</span>
+              <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{ date.toLocaleString(locale, { month: 'long', year: 'numeric' }) | titlecase }}</span>
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="review__wrapper__fields__invoice">
-        <a *ngIf="generateInvoice" data-text="Télécharger la facture" class="review__wrapper__fields__invoice__button" target="_self"
-          [href]="invoiceLink">
-          <span>Télécharger la facture</span>
-        </a>
-        <a *ngIf="auth.isAuthenticated" [href]="'/timesheet/edit/' + transferToken" data-text="Facturer ce CRA" class="review__wrapper__fields__invoice__button" target="_self">
-            <span>Facturer ce CRA</span>
-        </a>
       </div>
 
       <div class="review__wrapper__fields__calendar">
@@ -69,6 +59,21 @@
         <h3 class="review__wrapper__fields__allowance__title">Détail des déplacements forfaitaires</h3>
         <app-expense-flat-fee-table [hideDeleteButton]="true">
         </app-expense-flat-fee-table>
+      </div>
+
+      <div class="review__wrapper__fields__invoice">
+        <div *ngIf="generateInvoice" class="review__wrapper__fields__invoice__item">
+          <a class="review__wrapper__fields__invoice__item__link" [href]="invoiceLink" target="_self">
+            <i class="material-icons">cloud_download</i>
+            <span>Télécharger la facture</span>
+          </a>
+        </div>
+        <div *ngIf="auth.isAuthenticated" class="review__wrapper__fields__invoice__item">
+          <a class="review__wrapper__fields__invoice__item__link" [href]="'/timesheet/edit/' + transferToken" target="_self">
+            <i class="material-icons">send</i>
+            <span>Facturer ce CRA</span>
+          </a>
+        </div>
       </div>
     </div>
   </div>

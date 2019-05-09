@@ -114,31 +114,31 @@
         </button>
       </div>
 
-      <div *ngIf="showLinks" class="timesheet-edit__wrapper__form__icons">
+      <div *ngIf="showLinks" id="action-links" class="timesheet-edit__wrapper__form__icons">
         <div *ngIf="generateInvoice" class="timesheet-edit__wrapper__form__icons__item">
           <a target="_self" [href]="timesheetService.getInvoiceLink()">
-            <i class="material-icons">picture_as_pdf</i>
-            <p>Télécharger la facture</p>
+            <i class="material-icons">cloud_download</i>
+            <span>Télécharger la facture</span>
           </a>
         </div>
         <div class="timesheet-edit__wrapper__form__icons__item">
           <a href="#" [mailto] [mailContent]="reviewMail">
             <i class="material-icons">email</i>
-            <p>Envoyer le CRA par mail</p>
+            <span>Envoyer le CRA par mail</span>
           </a>
         </div>
         <div class="timesheet-edit__wrapper__form__icons__item">
           <a href="#" [copyToClipboard]="editShortUrl"
             [copyToClipboardMessage]="'Lien de modification copié'" [copyToClipboardMessageParent]="editLink.parentNode" #editLink>
             <i class="material-icons">edit</i>
-            <p>Copier le lien de modification</p>
+            <span>Copier le lien de modification</span>
           </a>
         </div>
         <div class="timesheet-edit__wrapper__form__icons__item">
           <a href="#" [copyToClipboard]="reviewShortUrl"
             [copyToClipboardMessage]="'Lien de partage copié'" [copyToClipboardMessageParent]="shareLink.parentNode" #shareLink>
             <i class="material-icons">remove_red_eye</i>
-            <p>Copier le lien de partage</p>
+            <span>Copier le lien de partage</span>
           </a>
         </div>
       </div>

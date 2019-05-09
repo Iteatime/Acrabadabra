@@ -127,61 +127,49 @@
       }
 
       &__icons {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
         margin-top: 40px;
         width: 100%;
-        display: flex;
 
         &__item {
-          width: 100%;
-          text-align: center;
-
-          @include alert;
-
-          & .alert {
-            position: relative;
-            right: -118px;
-            top: -90px;
-            background: $green_valid;
-
-            &::before {
-              border-color: $green_valid transparent transparent transparent;
-            }
+          @media (min-width: $screen-sm-min) {
+            width: calc(100% / 4 - 40px);
           }
 
-          &__submit {
-            margin-top: 40px;
-            width: 100%;
-            text-align: center;
-
-            &__button {
-              @include hoveranim_glow($darker_blue);
-
-              border: none;
-              display: inline-block;
-              background: $dark_blue;
-              padding: 0;
-              cursor: pointer;
-              width: 40%;
-              height: 60px;
-              min-width: 220px;
-              line-height: 60px;
-              color: $white;
-              font-size: 20px;
-              font-weight: 700;
-            }
-          }
+          margin: 20px;
+          width: calc(100% - 40px);
 
           &__disabled {
             cursor: not-allowed;
           }
 
-          * {
-            color: initial;
-            text-decoration: none;
-          }
+          > a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
 
-          i {
-            font-size: 30pt;
+            &:hover,
+            &:focus,
+            &:active {
+              color: initial;
+              text-decoration: none;
+
+              span {
+                text-decoration: underline;
+              }
+            }
+
+            i,
+            span {
+              color: initial;
+            }
+
+            i {
+              font-size: 40px;
+            }
           }
         }
       }
