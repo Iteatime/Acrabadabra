@@ -52,7 +52,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="mileage-allowance-form__block__input-wrapper__item form-group" >
+                <div [ngClass]="{
+                  'mileage-allowance-form__block__input-wrapper__item form-group':!vehiclesService.isCustomizable(this.commute),
+                  'mileage-allowance-form__block__input-wrapper__item--3col form-group2':vehiclesService.isCustomizable(this.commute)
+                  }">
                     <label for="distance" class="mileage-allowance-form__block__input-wrapper__item__label">Distance parcourue (en km)</label>
                     <div class="mileage-allowance-form__block__input-wrapper__item__input">
                         <input
@@ -76,20 +79,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="mileage-allowance-form__block__input-wrapper__item form-group" >
+                <div [ngClass]="{
+                  'mileage-allowance-form__block__input-wrapper__item form-group':!vehiclesService.isCustomizable(this.commute),
+                  'mileage-allowance-form__block__input-wrapper__item--3col form-group2':vehiclesService.isCustomizable(this.commute)
+                  }">
                     <label for="vehicle" class="mileage-allowance-form__block__input-wrapper__item__label">Véhicule</label>
                     <div class="mileage-allowance-form__block__input-wrapper__item__input">
                         <select
                         class="form-control"
                         name="vehicle"
-                        [(ngModel)]="commute.allowance"
-                        required
+                        [(ngModel)]="commute.vehicleSelected"
+
                         id="vehicle"
                         #vehicle="ngModel"
                         >
-                            <option value="" disabled selected>Votre véhicule</option>
-                            <option *ngFor="let vehicle of vehicles" [ngValue]="vehicle.allowance">
-                                {{vehicle.horsepower}} CV ({{vehicle.allowance}}€/km)
+                            <option [ngValue]="undefined" disabled selected>Votre véhicule</option>
+                            <option *ngFor="let vehicle of vehicles, let i = index" [ngValue]="i">
+                                {{vehicle.typeOfRate}} {{vehicle.horsePower}} ({{vehicle.allowance}}€/km)
                             </option>
                         </select>
                         <div *ngIf="vehicle.invalid && (vehicle.dirty || vehicle.touched)" class="alert alert-danger">
@@ -98,6 +104,33 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div *ngIf="vehiclesService.isCustomizable(this.commute)" [ngClass]="{
+                  'mileage-allowance-form__block__input-wrapper__item form-group':!vehiclesService.isCustomizable(this.commute),
+                  'mileage-allowance-form__block__input-wrapper__item--3col form-group2':vehiclesService.isCustomizable(this.commute)
+                  }">
+                  <label for="taxRate" class="mileage-allowance-form__block__input-wrapper__item__label">Taux personnalisé (€/km)</label>
+                  <div class="mileage-allowance-form__block__input-wrapper__item__input">
+                      <input
+                      placeholder="ex: 0.650"
+                      type="text"
+                      pattern="^[0-9.]+$"
+                      class="form-control"
+                      name="taxRate"
+                      [(ngModel)]="commute.allowance"
+                      required
+                      id="taxRate"
+                      #taxRate="ngModel"
+                      >
+                      <div *ngIf="taxRate.invalid && (taxRate.dirty || taxRate.touched)" class="alert alert-danger">
+                          <div *ngIf="taxRate.errors['required']">
+                              Ce champ est obligatoire.
+                          </div>
+                          <div *ngIf="taxRate.errors['pattern']">
+                              Seul des chiffres et un point sont acceptés
+                          </div>
+                      </div>
+                  </div>
                 </div>
                 <div class="mileage-allowance-form__block__submit">
                     <button

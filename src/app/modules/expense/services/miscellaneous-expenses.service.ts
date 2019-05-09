@@ -39,7 +39,7 @@ export class MiscellaneousExpensesService {
 
   constructor(public monetaryService: MonetaryService) { }
 
-  vatDeductible(misc: Miscellaneous) {
+  vatDeductible(misc: Miscellaneous): boolean {
     return misc.selectedType !== undefined && this.miscellaneousTypes[misc.selectedType].vatDeductible;
   }
 }

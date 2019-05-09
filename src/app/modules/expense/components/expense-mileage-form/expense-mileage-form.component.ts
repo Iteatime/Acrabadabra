@@ -22,7 +22,7 @@ export class ExpenseMileageFormComponent implements OnInit {
   submitted = false;
   vehicles: any[];
 
-  constructor(private vehiclesService: VehiclesService,
+  constructor(public vehiclesService: VehiclesService,
               public timesheetService: TimesheetService) { }
 
   ngOnInit() {
@@ -38,6 +38,9 @@ export class ExpenseMileageFormComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
+      if (!this.vehiclesService.isCustomizable(this.commute)) {
+        this.commute.allowance = this.vehiclesService.vehicles[this.commute.vehicleSelected].allowance;
+      }
       this.submitted = true;
       this.commute.mileageAllowance = this.commute.distance * this.commute.allowance;
       this.commutes.push({...this.commute});
