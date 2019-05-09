@@ -218,7 +218,7 @@ describe('TimesheetService', () => {
     });
   });
 
-  describe('getIfExistAlreadyPresentTimesheet()', () => {
+  describe('getIfExistAlreadyPresentInvoice()', () => {
 
     const timesheetsOfLocalStorage = {
       'timesheet.1': {
@@ -247,12 +247,12 @@ describe('TimesheetService', () => {
     });
 
     it('should edit transfered timesheet with client informations if a provider and a consultant are associated to a same client in local storage', () => {
-      expect(service.getIfExistAlreadyPresentTimesheet(testTimesheet).invoice.clientRef).toEqual('1000');
+      expect(service.getIfExistAlreadyPresentInvoice(testTimesheet).invoice.clientRef).toEqual('1000');
     });
 
     it('shouldn\'t edit transfered timesheet if neither provider and consultant are associated to a same client in local storage', () => {
       const timesheetTest: Timesheet = {...testTimesheet, consultant: {name: 'Maurice', email: 'maurice@hl.com'}};
-      expect(service.getIfExistAlreadyPresentTimesheet(timesheetTest).invoice.clientRef).toEqual('4000');
+      expect(service.getIfExistAlreadyPresentInvoice(timesheetTest).invoice.clientRef).toEqual('4000');
     });
   });
 

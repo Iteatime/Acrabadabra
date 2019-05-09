@@ -41,19 +41,12 @@ export class TimesheetReviewComponent implements OnInit {
         this.timesheet = this.timesheetService.timesheet;
         this.date = this.calendarManager.getDate(this.timesheet);
         this.workingTime = this.calendarManager.getWorkedTime(this.timesheet);
+        this.transferToken = this.timesheetService.getTransferToken();
+        this.generateInvoice = false;
 
         if (this.timesheet.invoice) {
-           this.invoiceLink = this.timesheetService.getInvoiceLink();
-           this.transferToken = this.timesheetService.getTransferToken();
-           this.generateInvoice = true;
-        }
-
-        if (this.timesheetService.timesheet.commutes.length > 0) {
-          this.showAllowanceTable = true;
-        }
-
-        if (this.timesheetService.timesheet.miscellaneous.length > 0) {
-          this.showMiscellaneousTable = true;
+          this.invoiceLink = this.timesheetService.getInvoiceLink();
+          this.generateInvoice = true;
         }
       }
     });
