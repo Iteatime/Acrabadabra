@@ -14,7 +14,7 @@
             <td class="mileage__body__item left-text" data-text="Trajet:">{{commute.journey}}</td>
             <td class="mileage__body__item" data-text="Distance:">{{commute.distance}}</td>
             <td class="mileage__body__item" data-text="Taux:">{{commute.allowance}}</td>
-            <td class="mileage__body__item" data-text="Indemnités kilométriques:">{{commute.mileageAllowance | currency:currencyCode:"symbol":'1.2-2':local}}</td>
+            <td class="mileage__body__item" data-text="IK:">{{commute.mileageAllowance | currency:currencyCode:"symbol":'1.2-2':local}}</td>
             <td class="mileage__body__item trashCan" *ngIf="!hideDeleteButton"><a (click)="delete(commute)"><i class="material-icons">delete</i></a></td>
         </tr>
         <tr class="no-background">
