@@ -37,9 +37,9 @@ Scenario Outline: I can select the month I worked
   Then the selected month should be <month>
   And the days selection should have been emptied
 
-  Exemples:
+  Examples:
     | action   | month         |
-    | next     | Feburay 2019  |
+    | next     | February 2019  |
     | previous | December 2018 |
 
 Scenario: I can indicate how many days I worked in the month
