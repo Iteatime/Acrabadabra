@@ -22,7 +22,7 @@ export class HomeComponent {
 
     this.auth.widget.on('close', () => {
       if (this.auth.isAuthenticated) {
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['timesheet', 'create']);
       }
     });
   }

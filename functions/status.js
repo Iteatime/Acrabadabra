@@ -55,11 +55,11 @@
         return Object.prototype.hasOwnProperty.call(e, t);
       }),
       (r.p = ""),
-      r((r.s = 32))
+      r((r.s = 0))
     );
-  })({
-    32: function (e, t) {
+  })([
+    function (e, t) {
       t.handler = async (e, t) => ({ statusCode: 200, body: "success!" });
     },
-  })
+  ])
 );
