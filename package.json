@@ -8,11 +8,10 @@
     "lint": "ng lint",
     "e2e": "ENV=prod node scripts/set-env.js && ng e2e",
     "watch:front": "ENV=dev node scripts/set-env.js && ng serve --configuration developpement",
-    "watch:back": "concurrently --names \"LAMBDA,SERVICES\" \"netlify-lambda serve src/functions\" \"node src/web-services/launch.js\" \"./webpack.config.js\"",
+    "watch:back": "concurrently --names \"LAMBDA,SERVICES\" \"netlify-lambda serve src/functions\" \"node src/web-services/launch.js\"",
     "dev": "concurrently --names \"FRONT,BACK\" --prefix-colors \"reset.bgBlue.bold,reset.bgRed.bold\"  \"npm:watch:front\" \"npm:watch:back\"",
     "ci-validate": "node scripts/ci-validate.js",
-    "postinstall": "node src/web-services/install.js",
-    "bootstrap": "node ./scripts/bootstrap-fauna-database.js"
+    "postinstall": "node src/web-services/install.js"
   },
   "private": true,
   "dependencies": {
@@ -32,10 +31,8 @@
     "classlist.js": "^1.1.20150312",
     "core-js": "^2.6.3",
     "date-fns": "^1.30.1",
-    "faunadb": "^2.6.1",
     "material-icons": "^0.2.3",
     "moment": "^2.24.0",
-    "mongoose": "^5.5.11",
     "netlify-identity-widget": "github:iteatime/netlify-identity-widget",
     "ng-mocks": "^7.5.0",
     "node-sass": "^4.10.0",
@@ -59,8 +56,6 @@
     "codelyzer": "~4.5.0",
     "concurrently": "^4.1.0",
     "cucumber": "^5.1.0",
-    "dotenv": "^8.0.0",
-    "http-proxy-middleware": "^0.19.1",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~3.0.0",
@@ -71,8 +66,7 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "karma-summary-reporter": "^1.6.0",
     "lambda-tester": "^3.5.0",
-    "netlify-lambda": "^1.4.13",
-    "npm-run-all": "^4.1.5",
+    "netlify-lambda": "^1.3.0",
     "npx": "^10.2.0",
     "protractor": "^5.4.2",
     "protractor-cucumber-framework": "^6.1.1",
@@ -82,13 +76,5 @@
     "tslint": "~5.11.0",
     "typescript": "~3.2.4",
     "webpack": "^4.30.0"
-  },
-  "proxy": {
-    "/.netlify/functions": {
-      "target": "http://localhost:9000",
-      "pathRewrite": {
-        "^/\\.netlify/functions": ""
-      }
-    }
   }
 }
