@@ -1,0 +1,184 @@
+<app-header></app-header>
+<div class="timesheet-edit">
+  <div class="timesheet-edit__wrapper">
+    <div class="timesheet-edit__wrapper__title">
+      <h2>Créer une mission</h2>
+    </div>
+    <form #missionForm="ngForm">
+      <div class="invoice-form">
+        <div class="invoice-form__half-block">
+          <h4 class="invoice-form__half-block__title">Consultant</h4>
+          <div class="invoice-form__half-block__input-wrapper">
+            <div class="invoice-form__half-block__input-wrapper__item form-group">
+              <label for="missionConsultantNameInput"
+                class="invoice-form__half-block__input-wrapper__item__label">Nom</label>
+              <div class="invoice-form__half-block__input-wrapper__item__input">
+                <input type="text" required class="form-control" name="missionConsultantNameInput"
+                [(ngModel)]="missionService.mission.consultant" #missionConsultantNameInput="ngModel">
+                <div *ngIf="missionConsultantNameInput.invalid && (missionConsultantNameInput.dirty || missionConsultantNameInput.touched)"
+                  class="alert alert-danger">
+
+                  <div *ngIf="missionConsultantNameInput.errors['required']">
+                    Ce champ est obligatoire.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="invoice-form__half-block__input-wrapper__item form-group">
+              <label for="missionConsultantEmailInput"
+                class="invoice-form__half-block__input-wrapper__item__label">Email</label>
+              <div class="invoice-form__half-block__input-wrapper__item__input">
+                <input type="text" required class="form-control" name="missionConsultantEmailInput"
+                [(ngModel)]="missionService.mission.consultantEmail" #missionConsultantEmailInput="ngModel">
+                <div *ngIf="missionConsultantEmailInput.invalid && (missionConsultantEmailInput.dirty || missionConsultantEmailInput.touched)"
+                  class="alert alert-danger">
+
+                  <div *ngIf="missionConsultantEmailInput.errors['required']">
+                    Ce champ est obligatoire.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="invoice-form__half-block" id="client">
+          <h4 class="invoice-form__half-block__title">Client</h4>
+          <div class="invoice-form__half-block__input-wrapper">
+            <div class="invoice-form__half-block__input-wrapper__item form-group">
+              <label for="missionClientNameInput"
+                class="invoice-form__half-block__input-wrapper__item__label">Nom</label>
+              <div class="invoice-form__half-block__input-wrapper__item__input">
+                <input type="text" required class="form-control" name="missionClientNameInput"
+                [(ngModel)]="missionService.mission.client" #missionClientNameInput="ngModel">
+                <div *ngIf="missionClientNameInput.invalid && (missionClientNameInput.dirty || missionClientNameInput.touched)" class="alert alert-danger">
+
+                  <div *ngIf="missionClientNameInput.errors['required']">
+                    Ce champ est obligatoire.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="invoice-form__half-block__input-wrapper__item form-group">
+              <label for="missionClientEmailInput"
+                class="invoice-form__half-block__input-wrapper__item__label">Email</label>
+              <div class="invoice-form__half-block__input-wrapper__item__input">
+                <input type="text" required class="form-control" name="missionClientEmailInput"
+                [(ngModel)]="missionService.mission.clientEmail" #missionClientEmailInput="ngModel">
+                <div *ngIf="missionClientEmailInput.invalid && (missionClientEmailInput.dirty || missionClientEmailInput.touched)"
+                  class="alert alert-danger">
+
+                  <div *ngIf="missionClientEmailInput.errors['required']">
+                    Ce champ est obligatoire.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="invoice-form__block">
+          <h4 class="invoice-form__block__title">Mission</h4>
+          <div class="invoice-form__block__input-wrapper">
+            <div class="invoice-form__block__input-wrapper__item form-group">
+              <label for="missionNameInput" class="invoice-form__block__input-wrapper__item__label">Intitulé</label>
+              <div class="invoice-form__block__input-wrapper__item__input">
+                <input type="text" required class="form-control" name="missionNameInput"
+                [(ngModel)]="missionService.mission.title" #missionNameInput="ngModel">
+                <div *ngIf="missionNameInput.invalid && (missionNameInput.dirty || missionNameInput.touched)" class="alert alert-danger">
+
+                  <div *ngIf="missionNameInput.errors['required']">
+                    Ce champ est obligatoire.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="invoice-form__block__input-wrapper__item form-group">
+              <label for="missionclientRefInput" class="invoice-form__block__input-wrapper__item__label">Référence client
+                (BDC)<span class="optional">(optionnel)</span></label>
+              <div class="invoice-form__block__input-wrapper__item__input">
+                <input type="text" class="form-control" name="missionclientRefInput"
+                [(ngModel)]="missionService.mission.clientRef" #missionclientRefInput="ngModel">
+                <div *ngIf="missionclientRefInput.invalid && (missionclientRefInput.dirty || missionclientRefInput.touched)" class="alert alert-danger">
+
+                  <div *ngIf="missionNameInput.errors['required']">
+                    Ce champ est obligatoire.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="invoice-form__block__input-wrapper__item form-group">
+              <label for="missionStartDateInput" class="invoice-form__block__input-wrapper__item__label">Date de début</label>
+              <div class="invoice-form__block__input-wrapper__item__input">
+                <input type="date" required pattern="\d{4}-\d{2}-\d{2}" class="form-control" name="missionStartDateInput"
+                [(ngModel)]="missionService.mission.startDate" #missionStartDateInput="ngModel">
+                <div *ngIf="missionStartDateInput.invalid && (missionStartDateInput.dirty || missionStartDateInput.touched)" class="alert alert-danger">
+
+                  <div *ngIf="missionStartDateInput.errors['required']">
+                    Ce champ est obligatoire.
+                  </div>
+
+                  <div *ngIf="missionStartDateInput.errors['pattern']">
+                    La date devrait respecter aaaa-mm-jj.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="invoice-form__block__input-wrapper__item form-group">
+              <label for="missionEndDateInput" class="invoice-form__block__input-wrapper__item__label">Date de fin</label>
+              <div class="invoice-form__block__input-wrapper__item__input">
+                <input type="date" required pattern="\d{4}-\d{2}-\d{2}" class="form-control" name="missionEndDateInput"
+                [(ngModel)]="missionService.mission.endDate" #missionEndDateInput="ngModel">
+                <div *ngIf="missionEndDateInput.invalid && (missionEndDateInput.dirty || missionEndDateInput.touched)" class="alert alert-danger">
+
+                  <div *ngIf="missionEndDateInput.errors['required']">
+                    Ce champ est obligatoire.
+                  </div>
+
+                  <div *ngIf="missionEndDateInput.errors['pattern']">
+                    La date devrait respecter aaaa-mm-jj.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="invoice-form__block__input-wrapper__item form-group">
+              <label for="missionUnitOfWorkTypeInput" class="invoice-form__block__input-wrapper__item__label">Type d'unité d'oeuvre</label>
+              <div class="invoice-form__block__input-wrapper__item__input">
+                <input type="text" required class="form-control" name="missionUnitOfWorkTypeInput"
+                [(ngModel)]="missionService.mission.unitOfWorkType" #missionUnitOfWorkTypeInput="ngModel">
+                  <div *ngIf="missionUnitOfWorkTypeInput.invalid && (missionUnitOfWorkTypeInput.dirty || missionUnitOfWorkTypeInput.touched)"
+                  class="alert alert-danger">
+
+                  <div *ngIf="missionUnitOfWorkTypeInput.errors['required']">
+                    Ce champ est obligatoire
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="invoice-form__block__input-wrapper__item form-group">
+              <label for="missionUnitOfWorkPriceInput" class="invoice-form__block__input-wrapper__item__label">Prix de l'unité d'oeuvre</label>
+              <div class="invoice-form__block__input-wrapper__item__input">
+                <input type="text" required pattern="([0-9]+(\.[0-9]+)?)" class="form-control" name="missionUnitOfWorkPriceInput"
+                [(ngModel)]="missionService.mission.unitOfworkPrice" #missionUnitOfWorkPriceInput="ngModel">
+                <div *ngIf="missionUnitOfWorkPriceInput.invalid && (missionUnitOfWorkPriceInput.dirty || missionUnitOfWorkPriceInput.touched)" class="alert alert-danger">
+
+                  <div *ngIf="missionUnitOfWorkPriceInput.errors['required']">
+                    Ce champ est obligatoire
+                  </div>
+                  <div *ngIf="missionUnitOfWorkPriceInput.errors['pattern']">
+                    Seul des chiffres et un point sont acceptés
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="timesheet-edit__wrapper__form__submit">
+        <button data-text="Créer cette mission" class="timesheet-edit__wrapper__form__submit__button" (click)="onSubmit()">
+          <span>Créer cette mission</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
