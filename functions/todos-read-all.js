@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./todos-create.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./todos-read-all.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -13012,10 +13012,10 @@ module.exports = __webpack_require__(/*! util */ "util").deprecate;
 
 /***/ }),
 
-/***/ "./todos-create.js":
-/*!*************************!*\
-  !*** ./todos-create.js ***!
-  \*************************/
+/***/ "./todos-read-all.js":
+/*!***************************!*\
+  !*** ./todos-read-all.js ***!
+  \***************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -13023,41 +13023,32 @@ module.exports = __webpack_require__(/*! util */ "util").deprecate;
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var faunadb__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! faunadb */ "../../node_modules/faunadb/index.js");
 /* harmony import */ var faunadb__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(faunadb__WEBPACK_IMPORTED_MODULE_0__);
-/* code from functions/todos-create.js */
-
-/* Import faunaDB sdk */
-
-/* configure faunaDB Client with our secret */
+/* code from functions/todos-read-all.js */
 
 const q = faunadb__WEBPACK_IMPORTED_MODULE_0___default.a.query;
 const client = new faunadb__WEBPACK_IMPORTED_MODULE_0___default.a.Client({
   secret: process.env.FAUNADB_SECRET
 });
-/* export our lambda function as named "handler" export */
 
 exports.handler = (event, context, callback) => {
-  /* parse the string body into a useable JS object */
-  console.log('<<<<<<<<<' + "      " + event.body + "       " + '>>>>>>>>>');
-  const eventBody = JSON.stringify(event.body);
-  const data = JSON.parse(eventBody);
-  console.log("Function `todo-create` invoked", data);
-  const todoItem = {
-    data: data
-    /* construct the fauna query */
+  console.log("Function `todo-read-all` invoked");
+  return client.query(q.Paginate(q.Match(q.Ref("indexes/all_todos")))).then(response => {
+    const todoRefs = response.data;
+    console.log("Todo refs", todoRefs);
+    console.log(`${todoRefs.length} todos found`); // create new query out of todo refs. http://bit.ly/2LG3MLg
 
-  };
-  return client.query(q.Create(q.Ref("classes/todos"), todoItem)).then(response => {
-    console.log("success", response);
-    /* Success! return the response with statusCode 200 */
+    const getAllTodoDataQuery = todoRefs.map(ref => {
+      return q.Get(ref);
+    }); // then query the refs
 
-    return callback(null, {
-      statusCode: 200,
-      body: JSON.stringify(response)
+    return client.query(getAllTodoDataQuery).then(ret => {
+      return callback(null, {
+        statusCode: 200,
+        body: JSON.stringify(ret)
+      });
     });
   }).catch(error => {
-    console.log("C'est pas bon du tout !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", error);
-    /* Error! return the error with statusCode 400 */
-
+    console.log("error", error);
     return callback(null, {
       statusCode: 400,
       body: JSON.stringify(error)
