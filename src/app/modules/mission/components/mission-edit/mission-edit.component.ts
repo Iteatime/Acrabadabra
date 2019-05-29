@@ -19,9 +19,8 @@ export class MissionEditComponent implements OnInit {
   editShortUrl: string = '';
   reviewShortUrl: string = '';
   submitMessage: any = null;
-  myTodo = {
-    title: 'My todo title'
-  };
+  public myTodo = { title: 'What I had for breakfast ..',
+                    completed: true };
 
 
   constructor(
@@ -72,6 +71,8 @@ export class MissionEditComponent implements OnInit {
     //   this.reactToSubmition(true);
     //   this.showValidationMessages();
     // }
+
+    // create it!
     this.missionService.createTodo(this.myTodo).then((response) => {
       console.log('API response', response);
       // set app state
@@ -79,6 +80,11 @@ export class MissionEditComponent implements OnInit {
       console.log('API error', error);
     });
 
+    // this.missionService.readAll();
+
+    // this.missionService
+    //   .createMission(this.missionService.mission)
+    //   .subscribe(data => this.handleSuccess(data), error => this.handleError(error));
   }
 
   // reactToSubmition(error: boolean): void {
