@@ -28,7 +28,7 @@ jobs:
 
       - run: npm install
 
-      - run: sudo npm install -g @angular/cli
+      - run: sudo npm install -g @angular/cli@7
 
       - save_cache:
           paths:
