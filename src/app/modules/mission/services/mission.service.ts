@@ -8,27 +8,25 @@ import { SerializationService } from 'src/app/shared/services/serialization/seri
 })
 export class MissionService {
 
-
-  baseUrl = 'http://localhost:3000/api/mission';
   public mission = new Mission();
   public timesheet: Timesheet;
 
   constructor(private _serializer: SerializationService) { }
 
-  public getEditToken(): string {
-    return this._serializer.serializeObject({
-        timesheet: Object.assign({}, new Timesheet(), {
-          consultant: {
-            name: this.mission.consultant,
-            email: this.mission.consultantEmail
-          },
-          mission: {
-            client: this.mission.client,
-            title: this.mission.title
-          }
-        })
-    });
-  }
+  // public getEditToken(): string {
+  //   return this._serializer.serializeObject({
+  //       timesheet: Object.assign({}, new Timesheet(), {
+  //         consultant: {
+  //           name: this.mission.consultant,
+  //           email: this.mission.consultantEmail
+  //         },
+  //         mission: {
+  //           client: this.mission.client,
+  //           title: this.mission.title
+  //         }
+  //       })
+  //   });
+  // }
 
   createMission(data) {
 
@@ -39,7 +37,6 @@ export class MissionService {
       return response.json();
     });
   }
-
 
 }
 
