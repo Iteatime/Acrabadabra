@@ -11,11 +11,11 @@
     "dev": "concurrently --names \"FRONT,BACK\" --prefix-colors \"reset.bgBlue.bold,reset.bgRed.bold\"  \"npm:watch:front\" \"npm:watch:back\"",
     "ci-validate": "node scripts/ci-validate.js",
     "postinstall": "node src/web-services/install.js",
-    "lint": "yarn lint:ng && yarn lint:scss",
+    "lint": "npm run lint:ng && npm run lint:scss",
     "lint:ng": "ng lint",
     "lint:scss": "stylelint 'apps/**/*.scss' 'libs/**/*.scss'",
-    "lint:prettier": "yarn prettier -l '{migrations,seeds,src,test}/**/*.{ts,js,md,json}'",
-    "lint:prettier:fix": "yarn prettier --write '{migrations,seeds,src,test}/**/*.{ts,js,md,json}'"
+    "lint:prettier": "npm run prettier -l '{migrations,seeds,src,test}/**/*.{ts,js,md,json}'",
+    "lint:prettier:fix": "npm run prettier --write '{migrations,seeds,src,test}/**/*.{ts,js,md,json}'"
   },
   "private": true,
   "prettier": {
@@ -88,6 +88,7 @@
     "protractor-cucumber-framework": "^6.1.1",
     "puppeteer": "^1.14.0",
     "replace-in-file": "^3.4.3",
+    "stylelint": "^9.10.1",
     "stylelint-config-concentric-order": "^3.4.1",
     "stylelint-config-prettier": "^5.0.0",
     "stylelint-config-recommended-scss": "^3.2.0",
