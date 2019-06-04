@@ -33,15 +33,15 @@ export class MissionEditComponent implements OnInit {
     this.auth.widget.open();
   }
 
-  setShortUrl(): void {
+  // setShortUrl(): void {
 
-      const getToken = this.missionService.getEditToken();
-      this._urlShortener.shortenUrl(this.originUrl + `/timesheet/edit/` + getToken)
-      .then ((res) => {
-        this.editShortUrl = res;
-      });
-      return;
-  }
+  //     const getToken = this.missionService.getEditToken();
+  //     this._urlShortener.shortenUrl(this.originUrl + `/timesheet/edit/` + getToken)
+  //     .then ((res) => {
+  //       this.editShortUrl = res;
+  //     });
+  //     return;
+  // }
 
   onSubmit() {
     this.notificationService.dismissAll();
@@ -55,7 +55,7 @@ export class MissionEditComponent implements OnInit {
         }).catch((error) => {
           console.log('API error', error);
         });
-        this.setShortUrl();
+        // this.setShortUrl();
       } else {
         this.reactToSubmition(true);
         this.showValidationMessages();
