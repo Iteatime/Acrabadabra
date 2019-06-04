@@ -1,6 +1,5 @@
 /* code from functions/todos-create.js */
 import faunadb from 'faunadb' /* Import faunaDB sdk */
-
 /* configure faunaDB Client with our secret */
 const q = faunadb.query
 const client = new faunadb.Client({
@@ -10,15 +9,16 @@ const client = new faunadb.Client({
 /* export our lambda function as named "handler" export */
 exports.handler = (event, context, callback) => {
   /* parse the string body into a useable JS object */
-  console.log('<<<<<<<<<' + "      " + event.body + "       " + '>>>>>>>>>')
+
+
   const eventBody = JSON.stringify(event.body)
   const data = JSON.parse(eventBody)
-  console.log("Function `todo-create` invoked", data)
-  const todoItem = {
-    data: data
+  const mission = {
+    data: JSON.parse(data)
   }
+  // {"title":"What I had for breakfast ..","completed":true}
   /* construct the fauna query */
-  return client.query(q.Create(q.Ref("classes/todos"), todoItem))
+  return client.query(q.Create(q.Ref("classes/missions"), mission))
   .then((response) => {
     console.log("success", response)
     /* Success! return the response with statusCode 200 */

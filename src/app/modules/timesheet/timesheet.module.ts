@@ -13,7 +13,6 @@ import { InvoicePDFComponent } from './components/invoice-pdf/invoice-pdf.compon
 import { TimesheetEditComponent } from './components/timesheet-edit/timesheet-edit.component';
 import { TimesheetReviewComponent } from './components/timesheet-review/timesheet-review.component';
 
-import { CopyToClipboardDirective } from 'src/app/shared/directives/copy-to-clipboard/copy-to-clipboard.directive';
 import { MailtoDirective } from 'src/app/shared/directives/mailto/mailto.directive';
 
 @NgModule({
@@ -29,7 +28,6 @@ import { MailtoDirective } from 'src/app/shared/directives/mailto/mailto.directi
     InvoicePDFComponent,
     TimesheetEditComponent,
     TimesheetReviewComponent,
-    CopyToClipboardDirective,
     MailtoDirective,
     HeaderComponent
   ]
