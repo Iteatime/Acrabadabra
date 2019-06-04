@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./todos-create.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./mission-create.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -13012,10 +13012,10 @@ module.exports = __webpack_require__(/*! util */ "util").deprecate;
 
 /***/ }),
 
-/***/ "./todos-create.js":
-/*!*************************!*\
-  !*** ./todos-create.js ***!
-  \*************************/
+/***/ "./mission-create.js":
+/*!***************************!*\
+  !*** ./mission-create.js ***!
+  \***************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -13037,16 +13037,15 @@ const client = new faunadb__WEBPACK_IMPORTED_MODULE_0___default.a.Client({
 
 exports.handler = (event, context, callback) => {
   /* parse the string body into a useable JS object */
-  console.log('<<<<<<<<<' + "      " + event.body + "       " + '>>>>>>>>>');
   const eventBody = JSON.stringify(event.body);
   const data = JSON.parse(eventBody);
-  console.log("Function `todo-create` invoked", data);
-  const todoItem = {
-    data: data
+  const mission = {
+    data: JSON.parse(data) // {"title":"What I had for breakfast ..","completed":true}
+
     /* construct the fauna query */
 
   };
-  return client.query(q.Create(q.Ref("classes/todos"), todoItem)).then(response => {
+  return client.query(q.Create(q.Ref("classes/missions"), mission)).then(response => {
     console.log("success", response);
     /* Success! return the response with statusCode 200 */
 
@@ -13055,7 +13054,7 @@ exports.handler = (event, context, callback) => {
       body: JSON.stringify(response)
     });
   }).catch(error => {
-    console.log("C'est pas bon du tout !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", error);
+    console.log("error", error);
     /* Error! return the error with statusCode 400 */
 
     return callback(null, {
