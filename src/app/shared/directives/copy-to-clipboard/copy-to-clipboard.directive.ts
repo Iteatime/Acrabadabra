@@ -1,31 +1,32 @@
-import { Directive, Input, Output, EventEmitter, HostListener, OnChanges } from '@angular/core';
+import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 
+/* tslint:disable:no-input-rename */
 @Directive({
-  selector: '[copyToClipboard]',
+  selector: '[appCopyToClipboard]',
 })
 export class CopyToClipboardDirective {
-  @Input('copyToClipboard')
-  public payload: string;
+  @Input('appCopyToClipboard')
+  payload: string;
 
-  @Input('copyToClipboardMessage')
-  public message: string;
+  @Input('appCopyToClipboardMessage')
+  message: string;
 
-  @Input('copyToClipboardMessageParent')
-  public parent: HTMLElement;
+  @Input('appCopyToClipboardMessageParent')
+  parent: HTMLElement;
 
   @Output()
-  public copied: EventEmitter<string> = new EventEmitter<string>();
+  copied: EventEmitter<string> = new EventEmitter<string>();
 
   @HostListener('click', ['$event'])
-  public onCopy(event: MouseEvent): void {
+  onCopy(event: MouseEvent): void {
     event.preventDefault();
     if (!this.payload) {
       return;
     }
 
     const listener = (e: ClipboardEvent) => {
-      const clipboard = e.clipboardData || window['clipboardData'];
+      const clipboard = e.clipboardData || (window as any)['clipboardData'];
       clipboard.setData('text', this.payload.toString());
       e.preventDefault();
 

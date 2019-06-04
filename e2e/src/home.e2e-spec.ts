@@ -1,10 +1,10 @@
 import { HomePage } from './home.po';
 
-import { browser, element, by, ElementFinder } from 'protractor';
+import { browser, by, element, ElementFinder } from 'protractor';
 
 describe('When browsing the HomePage :', () => {
-  let home: HomePage,
-      buttonCreate: ElementFinder;
+  let home: HomePage;
+  let buttonCreate: ElementFinder;
 
   beforeEach(() => {
     home = new HomePage();

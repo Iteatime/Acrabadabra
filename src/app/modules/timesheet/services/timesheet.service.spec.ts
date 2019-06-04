@@ -1,9 +1,12 @@
-import { Company, Consultant, Invoice, Mission, Timesheet } from 'src/app/shared/models';
+import { Company, Invoice, Timesheet } from 'src/app/shared/models';
 
 import { LocalSaveService } from 'src/app/shared/services/localSave/local-save.service';
 import { SerializationService } from 'src/app/shared/services/serialization/serialization.service';
 import { TimesheetService } from './timesheet.service';
 
+/* tslint:disable:no-big-function */
+/* tslint:disable:no-commented-code */
+/* tslint:disable:no-duplicate-string */
 describe('TimesheetService', () => {
   let service: TimesheetService;
   let saveService: LocalSaveService;
@@ -11,6 +14,9 @@ describe('TimesheetService', () => {
 
   const editToken = btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'edit', timesheet: testTimesheet }))));
   const reviewToken = btoa(unescape(encodeURIComponent(JSON.stringify({ mode: 'review', timesheet: testTimesheet }))));
+  const unknownToken = btoa(
+    unescape(encodeURIComponent(JSON.stringify({ mode: 'unknown', timesheet: testTimesheet }))),
+  );
 
   beforeEach(() => {
     const serializer = new SerializationService();
@@ -33,11 +39,11 @@ describe('TimesheetService', () => {
     });
 
     it('should return false if the token is undefined', () => {
-      expect(service.openTimesheet(undefined, 'edit')).toBeFalsy();
+      expect(service.openTimesheet(undefined!, 'edit')).toBeFalsy();
     });
 
     describe('if the "mode" argument matches the "mode" stored in the token', () => {
-      let returnValue;
+      let returnValue: any;
 
       beforeEach(() => {
         returnValue = service.openTimesheet(editToken, 'edit');
@@ -63,7 +69,7 @@ describe('TimesheetService', () => {
     });
 
     it('should return a base64 encoded json object containing the timesheet property, and a "mode" property set to "review"', () => {
-      expect(service.getToken('review')).toBe(editToken);
+      expect(service.getToken('review')).toBe(reviewToken);
     });
 
     it('should return a base64 encoded json object containing the timesheet property, and a "mode" property set to "review"', () => {
@@ -100,11 +106,11 @@ describe('TimesheetService', () => {
   //     );
   //     token = service.getTransferToken();
   //   });
-  //
+
   //   it('should return a new invoice edit page with the information correctly completed', () => {
-  //     expect(service.timesheet.invoice.number).toBe(null);
-  //     expect(service.timesheet.invoice.provider.name).toBe('Iteatime');
-  //     expect(service.timesheet.invoice.client.name).toBe('');
+  //     expect(service.timesheet.invoice!.number).toBe(null);
+  //     expect(service.timesheet.invoice!.provider.name).toBe('Iteatime');
+  //     expect(service.timesheet.invoice!.client.name).toBe('');
   //     expect(token).toEqual(transferToken);
   //   });
   // });
@@ -161,8 +167,8 @@ describe('TimesheetService', () => {
   });
 
   describe('saveTimesheet()', () => {
-    let timesheetArray = [];
-    let store;
+    let timesheetArray: any[] = [];
+    let store: any;
 
     beforeEach(() => {
       spyOn(service, 'getLocalStorageTimesheetsList').and.callFake(() => {
@@ -188,8 +194,8 @@ describe('TimesheetService', () => {
   });
 
   describe('openLastTimesheetInLocal()', () => {
-    let timesheetArray = [];
-    let store;
+    let timesheetArray: any[] = [];
+    let store: any;
 
     beforeEach(() => {
       spyOn(service, 'getLocalStorageTimesheetsList').and.callFake(() => {
@@ -228,7 +234,7 @@ describe('TimesheetService', () => {
   });
 
   describe('getIfExistAlreadyPresentInvoice()', () => {
-    const timesheetsOfLocalStorage = {
+    const timesheetsOfLocalStorage: any = {
       'timesheet.1': {
         consultant: { email: 'no', name: 'Pierre' },
         invoice: new Invoice('', '', '', null, new Company('Paul'), new Company('Nathalie')),
@@ -255,20 +261,21 @@ describe('TimesheetService', () => {
       });
     });
 
+    // tslint:disable-next-line:max-line-length
     it('should edit transfered timesheet with client informations if a provider and a consultant are associated to a same client in local storage', () => {
-      expect(service.getIfExistAlreadyPresentInvoice(testTimesheet).invoice.clientRef).toEqual('1000');
+      expect(service.getIfExistAlreadyPresentInvoice(testTimesheet).invoice!.clientRef).toEqual('1000');
     });
 
     it('shouldn\'t edit transfered timesheet if neither provider and consultant are associated to a same client in local storage', () => {
       const timesheetTest: Timesheet = { ...testTimesheet, consultant: { name: 'Maurice', email: 'maurice@hl.com' } };
-      expect(service.getIfExistAlreadyPresentInvoice(timesheetTest).invoice.clientRef).toEqual('4000');
+      expect(service.getIfExistAlreadyPresentInvoice(timesheetTest).invoice!.clientRef).toEqual('4000');
     });
   });
 
   describe('setTimesheet()', () => {
     it('should set a new timesheet without unneeded properties', () => {
       service.setTimesheet({ ...testTimesheet, invoice: { number: 'test' } });
-      expect(service.timesheet.invoice.number).toEqual(null);
+      expect(service.timesheet.invoice!.number).toEqual(null);
     });
   });
 });

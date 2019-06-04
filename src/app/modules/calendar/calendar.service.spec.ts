@@ -1,8 +1,6 @@
-import { TestBed } from '@angular/core/testing';
-
-import { CalendarService } from './calendar.service';
-import { Timesheet } from 'src/app/shared/models/timesheet.model';
 import { CalendarEvent } from 'calendar-utils';
+import { Timesheet } from 'src/app/shared/models/timesheet.model';
+import { CalendarService } from './calendar.service';
 
 describe('CalendarService', () => {
   let service: CalendarService;

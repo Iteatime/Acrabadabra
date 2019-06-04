@@ -7,7 +7,7 @@ describe('AuthenticationService', () => {
   let widgetInit: any;
 
   beforeEach(() => {
-    widgetInit = spyOn(window['netlifyIdentity'], 'init');
+    widgetInit = spyOn((window as any)['netlifyIdentity'], 'init');
     TestBed.configureTestingModule({});
     service = TestBed.get(AuthenticationService);
   });

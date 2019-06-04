@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 import { environment } from 'src/environments/environment';
 
@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 export class UrlShorteningService {
   constructor(private _http: HttpClient) {}
 
-  public shortenUrl(url): Promise<string> {
+  shortenUrl(url: any): Promise<string> {
     const headers = new HttpHeaders({
       apikey: environment.short_url_api_key,
       'Content-Type': 'application/json',

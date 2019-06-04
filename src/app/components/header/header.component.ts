@@ -8,5 +8,5 @@ import { AuthenticationService } from 'src/app/shared/services/authentication/au
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  public constructor(public auth: AuthenticationService) {}
+  constructor(public auth: AuthenticationService) {}
 }

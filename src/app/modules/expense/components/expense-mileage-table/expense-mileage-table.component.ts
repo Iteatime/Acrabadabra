@@ -1,7 +1,7 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { MonetaryService } from 'src/app/shared/services/monetary/monetary.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TimesheetService } from 'src/app/modules/timesheet/services/timesheet.service';
 import { Commute } from 'src/app/shared/models/commute';
+import { MonetaryService } from 'src/app/shared/services/monetary/monetary.service';
 
 @Component({
   selector: 'app-expense-mileage-table',
@@ -14,8 +14,8 @@ export class ExpenseMileageTableComponent implements OnInit {
 
   commutes: Commute[];
 
-  public local = 'fr';
-  public currencyCode: string;
+  local = 'fr';
+  currencyCode: string;
 
   constructor(public timesheetService: TimesheetService, private _monetaryService: MonetaryService) {
     this.currencyCode = this._monetaryService.currencyCode;
@@ -25,7 +25,7 @@ export class ExpenseMileageTableComponent implements OnInit {
     this.commutes = this.timesheetService.timesheet.commutes;
   }
 
-  delete(commute) {
+  delete(commute: Commute) {
     this.commutes.splice(this.commutes.indexOf(commute), 1);
     this.changed.emit(true);
   }

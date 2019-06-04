@@ -6,10 +6,10 @@ import { AppRoutingModule } from './app.routes';
 import { AppComponent } from './components/app/app.component';
 import { HomeComponent } from './components/home/home.component';
 
-import { TimesheetModule } from './modules/timesheet/timesheet.module';
+import { HttpClientModule } from '@angular/common/http';
 import { ExpenseModule } from './modules/expense/expense.module';
 import { NotificationModule } from './modules/notification/notification.module';
-import { HttpClientModule } from '@angular/common/http';
+import { TimesheetModule } from './modules/timesheet/timesheet.module';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent],

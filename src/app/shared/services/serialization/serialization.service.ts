@@ -6,11 +6,11 @@ import { Injectable } from '@angular/core';
 export class SerializationService {
   constructor() {}
 
-  public serializeObject(o: any): string {
+  serializeObject(o: any): string {
     return btoa(unescape(encodeURIComponent(JSON.stringify(o))));
   }
 
-  public deserializeObject(serialized: string): any {
+  deserializeObject(serialized: string): any {
     if (serialized) {
       try {
         return JSON.parse(decodeURIComponent(escape(atob(serialized))));

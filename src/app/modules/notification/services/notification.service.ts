@@ -31,8 +31,8 @@ export class NotificationService {
   push(message: string, type: string = 'default', options = {}): void {
     const notification = {
       id: this.generateUniqueId(),
-      message: message,
-      type: type,
+      message,
+      type,
       options: this.mergeWithDefaultOptions(options),
     };
 

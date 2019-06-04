@@ -13,7 +13,7 @@ describe('NotificationService', () => {
 
   describe('push()', () => {
     it('should add a notification to the list with an id', () => {
-      service.push("I'm a simple notification");
+      service.push('I\'m a simple notification');
 
       expect(service.notifications.length).toEqual(1);
 
@@ -23,7 +23,7 @@ describe('NotificationService', () => {
     });
 
     it('should merge notification options with default options', () => {
-      service.push("I'm a notification with custom options", 'default', { isSelfClosing: false, isDismissable: false });
+      service.push('I\'m a notification with custom options', 'default', { isSelfClosing: false, isDismissable: false });
 
       service.notifications.forEach(n => {
         expect(n.options).toEqual({
@@ -37,15 +37,15 @@ describe('NotificationService', () => {
     it('should launch a timer for selfclosing notifications only and remove it after the delay', () => {
       spyOn(service, 'startTimer');
 
-      service.push("I'm NOT a selfclosing notification", 'default', { isSelfClosing: false });
+      service.push('I\'m NOT a selfclosing notification', 'default', { isSelfClosing: false });
       expect(service.startTimer).not.toHaveBeenCalled();
 
-      service.push("I'm a selfclosing notification", 'default', { isSelfClosing: true, duration: 3 });
+      service.push('I\'m a selfclosing notification', 'default', { isSelfClosing: true, duration: 3 });
       expect(service.startTimer).toHaveBeenCalled();
 
       setTimeout(() => {
         expect(service.notifications.length).toEqual(1);
-        expect(service.notifications[0].message).toEqual("I'm a selfclosing notification");
+        expect(service.notifications[0].message).toEqual('I\'m a selfclosing notification');
       }, service.removingDelay + 3000);
     });
   });

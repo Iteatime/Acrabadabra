@@ -12,10 +12,10 @@ import { SerializationService } from 'src/app/shared/services/serialization/seri
   providedIn: 'root',
 })
 export class TimesheetService {
-  public timesheet: Timesheet;
-  public mode: string;
+  timesheet: Timesheet;
+  mode: string;
 
-  public constructor(private _localSaveService: LocalSaveService, private _serializer: SerializationService) {
+  constructor(private _localSaveService: LocalSaveService, private _serializer: SerializationService) {
     this.timesheet = new Timesheet();
   }
 
@@ -40,7 +40,7 @@ export class TimesheetService {
     });
   }
 
-  public getTransferToken(): string {
+  getTransferToken(): string {
 
     let transferedTimesheet = this.timesheet;
 
@@ -60,7 +60,7 @@ export class TimesheetService {
     });
   }
 
-  public openTimesheet(token: string, mode: string): boolean {
+  openTimesheet(token: string, mode: string): boolean {
     const a = this._serializer.deserializeObject(token);
     if (!a || a.mode !== mode) {
       return false;
@@ -71,7 +71,7 @@ export class TimesheetService {
     }
   }
 
-  public getInvoiceLink() {
+  getInvoiceLink() {
     return (
       environment.pdf_api_url +
       '?url=' +
@@ -82,57 +82,53 @@ export class TimesheetService {
       '&api=' +
       environment.pdf_api_key +
       '&title=' +
-      this.timesheet.invoice.number
+      this.timesheet.invoice!.number
     );
   }
 
-  public getTotalAllowance() {
+  getTotalAllowance() {
     let totalAllowance = 0;
-    for (let i = 0; i < this.timesheet.commutes.length; i++) {
-      totalAllowance += this.timesheet.commutes[i].mileageAllowance;
+    for (const commute of this.timesheet.commutes) {
+      totalAllowance += commute.mileageAllowance;
     }
+
     return totalAllowance;
   }
 
-  public getTotalMiscellaneous() {
+  getTotalMiscellaneous() {
     let totalMisc = 0;
-    for (let i = 0; i < this.timesheet.miscellaneous.length; i++) {
-      totalMisc += +this.timesheet.miscellaneous[i].amount;
+    for (const miscellaneous of this.timesheet.miscellaneous) {
+      totalMisc += miscellaneous.amount!;
     }
+
     return totalMisc;
   }
 
-  public getTotalFlatFee() {
+  getTotalFlatFee() {
     let totalFlatFee = 0;
-    for (let i = 0; i < this.timesheet.flatFees.length; i++) {
-      totalFlatFee += +this.timesheet.flatFees[i].amount;
+    for (const flatFees of this.timesheet.flatFees) {
+      totalFlatFee += flatFees.amount!;
     }
+
     return totalFlatFee;
   }
 
-  public getLocalStorageTimesheetsList() {
-    const timesheetArray = [];
+  getLocalStorageTimesheetsList() {
+    const timesheetArray: any[] = [];
 
-<<<<<<< HEAD
-    Object.keys(localStorage).forEach(function(localKey) {
-      if ((localKey.split('.')[0]) === 'timesheet') {
+    Object.keys(localStorage).forEach(localKey => {
+      if (localKey.split('.')[0] === 'timesheet') {
         timesheetArray.push(localKey);
-=======
-    Object.keys(localStorage).forEach(function(name) {
-      if (name.split('.')[0] === 'timesheet') {
-        timesheetArray.push(name);
->>>>>>> fix: fix prettier lint error
       }
     });
 
     // sort timesheets in timesheetArray by their name.
-
     return timesheetArray.sort((aTimesheet, anotherTimesheet) => {
       return aTimesheet.split('.')[1] - anotherTimesheet.split('.')[1];
     });
   }
 
-  public saveTimesheet() {
+  saveTimesheet() {
     let lastTimesheet: number;
     const timesheetArray = this.getLocalStorageTimesheetsList();
 
@@ -144,7 +140,7 @@ export class TimesheetService {
     this._localSaveService.setLocalItem(`timesheet.${lastTimesheet + 1}`, this.timesheet);
   }
 
-  public openLastTimesheetInLocal(): boolean {
+  openLastTimesheetInLocal(): boolean {
     const timesheetsOfLocalStorage = this.getLocalStorageTimesheetsList();
     if (timesheetsOfLocalStorage.length > 0) {
       this.setTimesheet(
@@ -155,7 +151,7 @@ export class TimesheetService {
     return false;
   }
 
-  public getIfExistAlreadyPresentInvoice(timesheetToTransfer: Timesheet): Timesheet {
+  getIfExistAlreadyPresentInvoice(timesheetToTransfer: Timesheet): Timesheet {
     const localStorageTimesheetsList = this.getLocalStorageTimesheetsList();
     const localStorageTimesheetsListSize = this.getLocalStorageTimesheetsList().length;
     for (let i = localStorageTimesheetsListSize; i >= 0; i--) {
@@ -165,22 +161,24 @@ export class TimesheetService {
         this._localSaveService.getLocalItem(localStorageTimesheetsList[i])
       );
 
+      const storedTimesheetInvoice = storedTimesheet.invoice!;
+
       if (storedTimesheet.consultant.name === timesheetToTransfer.consultant.name &&
-        storedTimesheet.invoice.provider.name === timesheetToTransfer.invoice.provider.name) {
+        storedTimesheetInvoice.provider.name === timesheetToTransfer.invoice!.provider.name) {
 
         return {
           ...timesheetToTransfer,
           invoice: Object.assign({}, timesheetToTransfer.invoice, {
-            clientRef: storedTimesheet.invoice.clientRef,
-            dailyRate: storedTimesheet.invoice.dailyRate,
-            client: Object.assign(new Company(), storedTimesheet.invoice.client),
-            paymentLatePenalty: storedTimesheet.invoice.paymentLatePenalty,
-            paymentModality: storedTimesheet.invoice.paymentModality,
-            bankAccountHolder: storedTimesheet.invoice.bankAccountHolder,
-            bankingAgency: storedTimesheet.invoice.bankingAgency,
-            bankingDomiciliation: storedTimesheet.invoice.bankingDomiciliation,
-            bankIBAN: storedTimesheet.invoice.bankIBAN,
-            bankSWIFT: storedTimesheet.invoice.bankSWIFT
+            clientRef: storedTimesheetInvoice.clientRef,
+            dailyRate: storedTimesheetInvoice.dailyRate,
+            client: Object.assign(new Company(), storedTimesheetInvoice.client),
+            paymentLatePenalty: storedTimesheetInvoice.paymentLatePenalty,
+            paymentModality: storedTimesheetInvoice.paymentModality,
+            bankAccountHolder: storedTimesheetInvoice.bankAccountHolder,
+            bankingAgency: storedTimesheetInvoice.bankingAgency,
+            bankingDomiciliation: storedTimesheetInvoice.bankingDomiciliation,
+            bankIBAN: storedTimesheetInvoice.bankIBAN,
+            bankSWIFT: storedTimesheetInvoice.bankSWIFT
           }),
         };
       }
@@ -188,7 +186,7 @@ export class TimesheetService {
     return timesheetToTransfer;
   }
 
-  public setTimesheet(timesheet) {
+  setTimesheet(timesheet: any) {
     this.timesheet = Object.assign({}, new Timesheet(), {
       ...timesheet,
       workingDays: 0,

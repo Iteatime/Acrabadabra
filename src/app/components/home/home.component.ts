@@ -10,11 +10,11 @@ import { AuthenticationService } from 'src/app/shared/services/authentication/au
   encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent {
-  public title = 'Acrabadabra';
+  title = 'Acrabadabra';
 
-  public constructor(public auth: AuthenticationService, public router: Router) {}
+  constructor(public auth: AuthenticationService, public router: Router) {}
 
-  public onProviderBtnClick() {
+  onProviderBtnClick() {
     this.auth.widget.open();
 
     this.auth.widget.on('close', () => {

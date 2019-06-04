@@ -1,3 +1,4 @@
+/* tslint:disable:parameters-max-number */
 export class Company {
   name: string;
   address: string;
@@ -5,7 +6,7 @@ export class Company {
   siren: string;
   tradeAndCompaniesRegisterCity: string;
   tradeAndCompaniesRegisterExemption: boolean;
-  vatNumber: string;
+  vatNumber: string | null;
   vatExemption: boolean;
 
   constructor(
@@ -14,42 +15,40 @@ export class Company {
     telephone?: string,
     siren?: string,
     tradeAndCompaniesRegisterCity?: string,
-    tradeAndCompaniesRegisterExemption?: boolean,
-    vatNumber?: string,
-    vatExemption?: boolean,
+    tradeAndCompaniesRegisterExemption: boolean = false,
+    vatNumber?: string | null,
+    vatExemption: boolean = false,
   ) {
     this.name = name || '';
     this.address = address || '';
     this.telephone = telephone || '';
     this.siren = siren || '';
     this.tradeAndCompaniesRegisterCity = tradeAndCompaniesRegisterCity || '';
-    this.tradeAndCompaniesRegisterExemption = tradeAndCompaniesRegisterExemption || false;
+    this.tradeAndCompaniesRegisterExemption = tradeAndCompaniesRegisterExemption;
     this.vatNumber = vatNumber || null;
-    this.vatExemption = vatExemption || false;
+    this.vatExemption = vatExemption;
   }
 
   getFormattedAddress(): string {
     const lines = this.address.split(';');
-    lines.forEach(line => {
-      line.trim();
-    });
+    lines.forEach(line => line.trim());
     return lines.join('<br/>');
   }
 
-  getFormattedVATNumber(): string {
+  getFormattedVATNumber(): string | undefined {
     if (this.vatExemption) {
       return undefined;
     } else {
       return (
-        this.vatNumber.substring(0, 2) +
+        this.vatNumber!.substring(0, 2) +
         ' ' +
-        this.vatNumber.substring(2, 4) +
+        this.vatNumber!.substring(2, 4) +
         ' ' +
-        this.vatNumber.substring(4, 7) +
+        this.vatNumber!.substring(4, 7) +
         ' ' +
-        this.vatNumber.substring(7, 10) +
+        this.vatNumber!.substring(7, 10) +
         ' ' +
-        this.vatNumber.substring(10, 13) +
+        this.vatNumber!.substring(10, 13) +
         '.'
       );
     }
@@ -70,6 +69,7 @@ export class Company {
     }
   }
 
+  // tslint:disable-next-line:cognitive-complexity
   getFormattedSIRENNumber(): string {
     const newSiren = [];
 

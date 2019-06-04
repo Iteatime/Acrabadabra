@@ -175,7 +175,7 @@
           </a>
         </div>
         <div class="timesheet-edit__wrapper__form__icons__item">
-          <a href="#" [mailto] [mailContent]="reviewMail">
+          <a href="#" [appMailto] [mailContent]="reviewMail">
             <i class="material-icons">email</i>
             <span>Envoyer le CRA par mail</span>
           </a>
@@ -183,9 +183,9 @@
         <div class="timesheet-edit__wrapper__form__icons__item">
           <a
             href="#"
-            [copyToClipboard]="editShortUrl"
-            [copyToClipboardMessage]="'Lien de modification copié'"
-            [copyToClipboardMessageParent]="editLink.parentNode"
+            [appCopyToClipboard]="editShortUrl"
+            [appCopyToClipboardMessage]="'Lien de modification copié'"
+            [appCopyToClipboardMessageParent]="editLink.parentNode"
             #editLink
           >
             <i class="material-icons">edit</i>
@@ -195,9 +195,9 @@
         <div class="timesheet-edit__wrapper__form__icons__item">
           <a
             href="#"
-            [copyToClipboard]="reviewShortUrl"
-            [copyToClipboardMessage]="'Lien de partage copié'"
-            [copyToClipboardMessageParent]="shareLink.parentNode"
+            [appCopyToClipboard]="reviewShortUrl"
+            [appCopyToClipboardMessage]="'Lien de partage copié'"
+            [appCopyToClipboardMessageParent]="shareLink.parentNode"
             #shareLink
           >
             <i class="material-icons">remove_red_eye</i>

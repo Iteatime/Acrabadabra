@@ -1,5 +1,3 @@
-import { TestBed } from '@angular/core/testing';
-
 import { SerializationService } from './serialization.service';
 
 describe('SerializationService', () => {
@@ -14,7 +12,7 @@ describe('SerializationService', () => {
   });
 
   describe('serializeObject', () => {
-    let test;
+    let test: any;
     beforeEach(() => {
       test = { x: 5, y: 6 };
     });
@@ -25,7 +23,7 @@ describe('SerializationService', () => {
   });
 
   describe('deserializeObject', () => {
-    let test;
+    let test: any;
     beforeEach(() => {
       test = 'eyJ4Ijo1LCJ5Ijo2fQ==';
     });
