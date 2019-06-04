@@ -1,11 +1,96 @@
 @import "src/app/style/vars";
 @import "src/app/style/mixins";
 
+.mission-form {
+  width: 100%;
+
+  &__block {
+    @media (min-width: $screen-sm-min) {
+      margin: 30px 0px;
+    }
+    margin: 20px 0px;
+
+    &__title {
+      @include header-form;
+    }
+
+    &__input-wrapper {
+      @include form-input;
+      display: flex;
+      flex-wrap: wrap;
+
+      &__item {
+        @media (min-width: $screen-sm-min) {
+          width: calc(50% - 10px);
+          margin: 0 5px;
+          margin-bottom: 20px;
+        }
+          width: calc(100% - 10px);
+          margin: 0 5px;
+          margin-bottom: 20px;
+      }
+
+        &__title {
+          @include sub-heading;
+        }
+
+        &__input-wrapper {
+          @include form-input;
+          display: flex;
+          flex-wrap: wrap;
+          background: $white;
+          border-bottom: none;
+
+          &:first-of-type {
+            border-top: 1px solid $grey_border_dark;
+          }
+
+          &:last-of-type {
+            border-bottom: 1px solid $grey_border_dark;
+          }
+
+          &__item {
+            width: 100%;
+            margin: 0px;
+          }
+        }
+    }
+  }
+
+  &__half-block {
+    @media (min-width: $screen-sm-min) {
+      width: calc(50% - 20px);
+    }
+
+    display: inline-table;
+    width: 100%;
+
+    &__title {
+      @include header-form;
+    }
+
+    &__input-wrapper {
+      @include form-input;
+    }
+  }
+}
+
+.optional{
+  padding-left: 5px;
+  font-size: 13px;
+}
+
+#client {
+  @media (min-width: $screen-sm-min) {
+    margin-left: 40px;
+  }
+}
+
 .ng-invalid:not(form) {
   border-left: 5px solid ;
 }
 
-.timesheet-edit {
+.mission-edit {
   &__wrapper {
     @include container;
 
