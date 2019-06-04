@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
-import { Mission } from 'src/app/shared/models';
+import { Mission, Timesheet } from 'src/app/shared/models';
+import { SerializationService } from 'src/app/shared/services/serialization/serialization.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,25 +11,31 @@ export class MissionService {
 
   baseUrl = 'http://localhost:3000/api/mission';
   public mission = new Mission();
+  public timesheet: Timesheet;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private _serializer: SerializationService) { }
 
-  // createMission(mission: Mission) {
-  //   return this.httpClient.post<Mission>(this.baseUrl, mission);
-  // }
-  createTodo(data) {
-    console.log(data);
-    return fetch('/.netlify/functions/todos-create', {
-      // headers: new Headers({'content-type': 'application/json'}),
-      body: JSON.stringify(data),
-      method: 'POST'
-    }).then(response => {
-      return response.json();
+  public getEditToken(): string {
+    return this._serializer.serializeObject({
+        timesheet: Object.assign({}, new Timesheet(), {
+          consultant: {
+            name: this.mission.consultant,
+            email: this.mission.consultantEmail
+          },
+          mission: {
+            client: this.mission.client,
+            title: this.mission.title
+          }
+        })
     });
   }
 
-  readAll = () => {
-    return fetch('/.netlify/functions/todos-read-all').then((response) => {
+  createMission(data) {
+
+    return fetch('/.netlify/functions/mission-create', {
+      body: JSON.stringify(data),
+      method: 'POST'
+    }).then(response => {
       return response.json();
     });
   }
