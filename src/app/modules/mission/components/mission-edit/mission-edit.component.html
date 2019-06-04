@@ -69,10 +69,10 @@
                 [(ngModel)]="missionService.mission.clientEmail" #missionClientEmailInput="ngModel">
                 <div *ngIf="missionClientEmailInput.invalid && (missionClientEmailInput.dirty || missionClientEmailInput.touched)"
                   class="alert alert-danger">
-                  <div *ngIf="missionConsultantEmailInput.errors['required']">
+                  <div *ngIf="missionClientEmailInput.errors['required']">
                     Ce champ est obligatoire
                   </div>
-                  <div *ngIf="missionConsultantEmailInput.errors['email']">
+                  <div *ngIf="missionClientEmailInput.errors['email']">
                     Adresse mail non valide
                   </div>
                 </div>
