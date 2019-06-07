@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { UrlShorteningService } from 'src/app/modules/timesheet/services/url-shortening.service';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
 import { Title } from '@angular/platform-browser';
 import { MissionService } from '../../services/mission.service';
@@ -16,10 +16,12 @@ export class MissionEditComponent implements OnInit {
 
   @ViewChild('missionForm') form: NgForm;
   showLink = false;
+  commentary = false;
   editShortUrl: string = '';
   originUrl = window.location.origin;
 
   constructor(
+    public router: Router,
     public auth: AuthenticationService,
     private notificationService: NotificationService,
     private _urlShortener: UrlShorteningService,
@@ -33,15 +35,20 @@ export class MissionEditComponent implements OnInit {
     this.auth.widget.open();
   }
 
-  // setShortUrl(): void {
+  setShortUrl(action?: string): void {
+    if (!!action) {
+      const getToken = this.missionService.getEditToken();
+      this._urlShortener.shortenUrl(this.originUrl + `/timesheet/${action}/` + getToken)
+        .then ((res) => {
+          this.editShortUrl = res;
+        });
+      return;
+    }
 
-  //     const getToken = this.missionService.getEditToken();
-  //     this._urlShortener.shortenUrl(this.originUrl + `/timesheet/edit/` + getToken)
-  //     .then ((res) => {
-  //       this.editShortUrl = res;
-  //     });
-  //     return;
-  // }
+    ['edit', 'review'].forEach(mode => {
+      this.setShortUrl(mode);
+    });
+  }
 
   onSubmit() {
     this.notificationService.dismissAll();
@@ -52,10 +59,11 @@ export class MissionEditComponent implements OnInit {
         this.missionService.mission.missionCreator = this.auth.user.id;
         this.reactToSubmition(false);
         this.missionService.createMission(this.missionService.mission).then((response) => {
+          console.log('API response', response)
         }).catch((error) => {
           console.log('API error', error);
         });
-        // this.setShortUrl();
+        this.setShortUrl('edit');
       } else {
         this.reactToSubmition(true);
         this.showValidationMessages();
