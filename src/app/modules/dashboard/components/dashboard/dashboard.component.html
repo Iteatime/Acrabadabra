@@ -1,7 +1,8 @@
 <app-header></app-header>
 <div class="navbar">
   <ul>
-    <li><div [routerLink]="['/mission']">Créer une mission</div></li>
-    <li><div [routerLink]="['/timesheet','create']">Saisir un CRA</div></li>
+    <li><div [routerLink]="['/mission']"><i class="material-icons md-36">business_center</i>CRÉER UNE MISSION</div></li>
+    <li><div [routerLink]="['/timesheet','create']"><i class="material-icons md-36">create_new_folder</i>SAISIR UN CRA</div></li>
   </ul>
 </div>
+<app-mission-list class="missions"></app-mission-list>

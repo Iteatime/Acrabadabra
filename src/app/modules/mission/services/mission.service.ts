@@ -13,23 +13,23 @@ export class MissionService {
 
   constructor(private _serializer: SerializationService) { }
 
-  // public getEditToken(): string {
-  //   return this._serializer.serializeObject({
-  //       timesheet: Object.assign({}, new Timesheet(), {
-  //         consultant: {
-  //           name: this.mission.consultant,
-  //           email: this.mission.consultantEmail
-  //         },
-  //         mission: {
-  //           client: this.mission.client,
-  //           title: this.mission.title
-  //         }
-  //       })
-  //   });
-  // }
+  public getEditToken(): string {
+    return this._serializer.serializeObject({
+        mode: 'edit',
+        timesheet: Object.assign({}, new Timesheet(), {
+          consultant: {
+            name: this.mission.consultant,
+            email: this.mission.consultantEmail
+          },
+          mission: {
+            client: this.mission.client,
+            title: this.mission.title
+          }
+        })
+    });
+  }
 
   createMission(data) {
-
     return fetch('/.netlify/functions/mission-create', {
       body: JSON.stringify(data),
       method: 'POST'
@@ -38,5 +38,26 @@ export class MissionService {
     });
   }
 
+  readAllMissions = () => {
+    return fetch('/.netlify/functions/missions-read-all').then((response) => {
+      return response.json();
+    });
+  }
+
+  readById = () => {
+    return fetch('/.netlify/functions/mission-read-by-id').then((response) => {
+      return response.json();
+    });
+  }
+
+  deleteMission = (missionId) => {
+    console.log(missionId);
+    return fetch(`/.netlify/functions/mission-delete-by-id/${missionId}`, {
+      method: 'POST',
+    }).then(response => {
+      console.log(response);
+      return response.json();
+    });
+  }
 }
 
