@@ -33,15 +33,20 @@ export class MissionEditComponent implements OnInit {
     this.auth.widget.open();
   }
 
-  // setShortUrl(): void {
+  setShortUrl(action?: string): void {
+    if (!!action) {
+      const getToken = this.missionService.getEditToken();
+      this._urlShortener.shortenUrl(this.originUrl + `/timesheet/${action}/` + getToken)
+        .then ((res) => {
+          this.editShortUrl = res;
+        });
+      return;
+    }
 
-  //     const getToken = this.missionService.getEditToken();
-  //     this._urlShortener.shortenUrl(this.originUrl + `/timesheet/edit/` + getToken)
-  //     .then ((res) => {
-  //       this.editShortUrl = res;
-  //     });
-  //     return;
-  // }
+    ['edit', 'review'].forEach(mode => {
+      this.setShortUrl(mode);
+    });
+  }
 
   onSubmit() {
     this.notificationService.dismissAll();
@@ -52,10 +57,11 @@ export class MissionEditComponent implements OnInit {
         this.missionService.mission.missionCreator = this.auth.user.id;
         this.reactToSubmition(false);
         this.missionService.createMission(this.missionService.mission).then((response) => {
+          console.log('API response', response)
         }).catch((error) => {
           console.log('API error', error);
         });
-        // this.setShortUrl();
+        this.setShortUrl('edit');
       } else {
         this.reactToSubmition(true);
         this.showValidationMessages();

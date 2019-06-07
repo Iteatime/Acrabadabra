@@ -35,5 +35,36 @@ export class Mission {
     this.endDate = missionEndDate;
     this.unitOfWorkType = missionUnitOfWorkType;
     this.unitOfworkPrice = missionUnitOfWorkPrice;
+
+  }
+
+  static fromFaunaDB(data: ApiFaunaDB) {
+    return new Mission(
+      data.missionCreator,
+      data.consultant,
+      data.consultantEmail,
+      data.clientEmail,
+      data.title,
+      data.clientRef,
+      data.startDate,
+      data.endDate,
+      data.unitOfWorkType,
+      data.unitOfWorkPrice
+    );
   }
 }
+export interface ApiFaunaDB {
+  missionCreator: string;
+  consultant: string;
+  consultantEmail: string;
+  client: string;
+  clientEmail: string;
+  title: string;
+  clientRef: string;
+  startDate: string;
+  endDate: string;
+  unitOfWorkType: string;
+  unitOfWorkPrice: string;
+}
+
+

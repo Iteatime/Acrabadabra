@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    MissionEditComponent
+    MissionEditComponent,
   ],
   imports: [
     CommonModule,
