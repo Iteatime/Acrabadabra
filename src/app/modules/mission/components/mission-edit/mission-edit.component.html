@@ -145,52 +145,28 @@
                 </div>
               </div>
             </div>
-            <div class="mission-form__block__input-wrapper__item form-group">
-              <label for="missionUnitOfWorkTypeInput" class="mission-form__block__input-wrapper__item__label">Type d'unité d'oeuvre</label>
-              <div class="mission-form__block__input-wrapper__item__input">
-                <input type="text" required class="form-control" name="missionUnitOfWorkTypeInput"
-                [(ngModel)]="missionService.mission.unitOfWorkType" #missionUnitOfWorkTypeInput="ngModel">
-                  <div *ngIf="missionUnitOfWorkTypeInput.invalid && (missionUnitOfWorkTypeInput.dirty || missionUnitOfWorkTypeInput.touched)"
-                  class="alert alert-danger">
-
-                  <div *ngIf="missionUnitOfWorkTypeInput.errors['required']">
-                    Ce champ est obligatoire
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="mission-form__block__input-wrapper__item form-group">
-              <label for="missionUnitOfWorkPriceInput" class="mission-form__block__input-wrapper__item__label">Prix de l'unité d'oeuvre</label>
-              <div class="mission-form__block__input-wrapper__item__input">
-                <input type="text" required pattern="([0-9]+(\.[0-9]+)?)" class="form-control" name="missionUnitOfWorkPriceInput"
-                [(ngModel)]="missionService.mission.unitOfworkPrice" #missionUnitOfWorkPriceInput="ngModel">
-                <div *ngIf="missionUnitOfWorkPriceInput.invalid && (missionUnitOfWorkPriceInput.dirty || missionUnitOfWorkPriceInput.touched)" class="alert alert-danger">
-
-                  <div *ngIf="missionUnitOfWorkPriceInput.errors['required']">
-                    Ce champ est obligatoire
-                  </div>
-                  <div *ngIf="missionUnitOfWorkPriceInput.errors['pattern']">
-                    Seul des chiffres et un point sont acceptés
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
-      <div class="mission-edit__wrapper__form__submit">
-        <button data-text="Créer cette mission" class="mission-edit__wrapper__form__submit__button" (click)="onSubmit()">
-          <span>Créer cette mission</span>
-        </button>
-      </div>
+      <div class="mission-edit__wrapper__form__buttons">
 
-      <div *ngIf="showLink" id="action-links" class="mission-edit__wrapper__form__icons">
-        <div class="mission-edit__wrapper__form__icons__item">
-          <a href="#" [copyToClipboard]="editShortUrl"
-          [copyToClipboardMessage]="'Lien de modification copié'" [copyToClipboardMessageParent]="editLink.parentNode" #editLink>
-          <i class="material-icons">edit</i>
-          <span>Copier le lien de modification</span>
-        </a>
+          <button data-text="Créer cette mission" class="mission-edit__wrapper__form__buttons__item" (click)="onSubmit()">
+            <span>Créer cette mission</span>
+          </button>
+
+          <button data-text="Retour" class="mission-edit__wrapper__form__buttons__item" [routerLink]="['/dashboard']">
+            <span>Retour</span>
+          </button>
+
+      </div>
+      <div *ngIf="showLink === true" id="action-links" class="mission-edit__wrapper__form__icons" >
+        <div class="mission-edit__wrapper__form__icons__item" >
+          <a href="#" [copyToClipboard]="editShortUrl" (mouseover)="commentary=true" (mouseout)="commentary=false"
+            [copyToClipboardMessage]="'Lien d\'édition copié'" [copyToClipboardMessageParent]="editLink.parentNode" #editLink>
+            <i class="material-icons" (mouseover)="commentary=true" (mouseout)="commentary=false">edit</i>
+            <span>Copier le lien de création de CRA</span>
+            <span *ngIf="commentary" class="commentary">Ceci vous fournira un lien permettant de créer un CRA contenant les informations relatives à votre mission</span>
+          </a>
         </div>
       </div>
     </form>

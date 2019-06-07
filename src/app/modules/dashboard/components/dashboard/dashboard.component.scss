@@ -5,19 +5,29 @@
   position: absolute;
   width: 15%;
   height: 100%;
+  left: 0%;
   background-color: $main_red;
   color: $white;
-  font-size: 20px;
+  font-size: 19px;
   font-weight: bold;
 }
 
 ul {
   position: absolute;
-  top: 20px;
+  left: -20px;
+  top: 7%;
   list-style:none;
 }
 
+.md-36 {
+  font-size: 36px;
+  margin-right: 10px;
+  vertical-align: middle;
+  margin-bottom: 8px; }
+
 li {
+  display: inline-block;
+  margin-top: 10px;
   cursor: pointer;
   opacity: 1;
   transition: opacity 0.15s ease-in-out;
@@ -27,3 +37,4 @@ li:hover {
   cursor: pointer;
   opacity: 0.9;
 }
+

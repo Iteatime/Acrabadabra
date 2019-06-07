@@ -112,6 +112,9 @@
         <button data-text="Valider mon CRA" class="timesheet-edit__wrapper__form__submit__button" (click)="onSubmit()">
           <span>Valider mon CRA</span>
         </button>
+        <button *ngIf="this.auth.isAuthenticated" data-text="Retour" class="timesheet-edit__wrapper__form__submit__button" [routerLink]="['/dashboard']">
+          <span>Retour</span>
+        </button>
       </div>
 
       <div *ngIf="showLinks" id="action-links" class="timesheet-edit__wrapper__form__icons">
