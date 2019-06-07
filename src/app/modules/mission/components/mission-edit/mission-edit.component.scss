@@ -148,17 +148,17 @@
           background-color: $red_error;
         }
       }
+      &__buttons {
 
-      &__submit {
+        display: flex;
+        justify-content: space-around;
         margin-top: 40px;
         width: 100%;
-        text-align: center;
 
-        &__button {
+        &__item {
           @include hoveranim_glow($darker_blue);
 
           border: none;
-          display: inline-block;
           background: $dark_blue;
           padding: 0;
           cursor: pointer;
@@ -186,6 +186,21 @@
 
           margin: 20px;
           width: calc(100% - 40px);
+
+          a:hover .commentary {
+            position: absolute;
+            left:57%;
+            width:10%;
+            height: 7%;
+
+            border-radius: 2px;
+            background-color: $main_red;
+            text-decoration: none;
+            font-weight: bold;
+            color: white;
+            display: inline-block;
+            font-size: 0.7em;
+          }
 
           &__disabled {
             cursor: not-allowed;
