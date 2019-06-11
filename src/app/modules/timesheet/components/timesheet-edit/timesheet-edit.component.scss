@@ -192,7 +192,8 @@
       &__submit {
         margin-top: 40px;
         width: 100%;
-        text-align: center;
+        display: flex;
+        justify-content: space-around;
 
         &__button {
           @include hoveranim_glow($darker_blue);

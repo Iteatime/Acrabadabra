@@ -38,14 +38,17 @@ export class MissionListComponent implements OnInit {
   }
 
   delete(id: any) {
-    this.missionService.deleteMission(id)
-    .then((res) => {
-      this.getAllMissions();
-      this.reactToSubmition(false);
-    }).catch((error) => {
-      this.reactToSubmition(true);
-      console.log('error', error);
-    });
+    if ( confirm( "Etes vous sur de vouloir supprimer cette mission ?" ) ) {
+      this.missionService.deleteMission(id)
+      .then((res) => {
+        this.getAllMissions();
+        this.reactToSubmition(false);
+      }).catch((error) => {
+        this.reactToSubmition(true);
+        console.log('error', error);
+      });
+    } else {
+    }
   }
 
   reactToSubmition(error: boolean): void {

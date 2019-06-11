@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { UrlShorteningService } from 'src/app/modules/timesheet/services/url-shortening.service';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
 import { Title } from '@angular/platform-browser';
 import { MissionService } from '../../services/mission.service';
@@ -16,10 +16,12 @@ export class MissionEditComponent implements OnInit {
 
   @ViewChild('missionForm') form: NgForm;
   showLink = false;
+  commentary = false;
   editShortUrl: string = '';
   originUrl = window.location.origin;
 
   constructor(
+    public router: Router,
     public auth: AuthenticationService,
     private notificationService: NotificationService,
     private _urlShortener: UrlShorteningService,
