@@ -103,12 +103,6 @@
               <div class="mission-form__block__input-wrapper__item__input">
                 <input type="text" class="form-control" name="missionclientRefInput"
                 [(ngModel)]="missionService.mission.clientRef" #missionclientRefInput="ngModel">
-                <div *ngIf="missionclientRefInput.invalid && (missionclientRefInput.dirty || missionclientRefInput.touched)" class="alert alert-danger">
-
-                  <div *ngIf="missionNameInput.errors['required']">
-                    Ce champ est obligatoire.
-                  </div>
-                </div>
               </div>
             </div>
             <div class="mission-form__block__input-wrapper__item form-group">
@@ -161,11 +155,10 @@
       </div>
       <div *ngIf="showLink === true" id="action-links" class="mission-edit__wrapper__form__icons" >
         <div class="mission-edit__wrapper__form__icons__item" >
-          <a href="#" [copyToClipboard]="editShortUrl" (mouseover)="commentary=true" (mouseout)="commentary=false"
-            [copyToClipboardMessage]="'Lien d\'édition copié'" [copyToClipboardMessageParent]="editLink.parentNode" #editLink>
-            <i class="material-icons" (mouseover)="commentary=true" (mouseout)="commentary=false">edit</i>
+          <a href="#" (click)="reactToCopy()" [copyToClipboard]="editShortUrl"
+            [copyToClipboardMessage]="'Lien de création de CRA copié'" [copyToClipboardMessageParent]="editLink.parentNode" #editLink>
+            <i class="material-icons">edit</i>
             <span>Copier le lien de création de CRA</span>
-            <span *ngIf="commentary" class="commentary">Ceci vous fournira un lien permettant de créer un CRA contenant les informations relatives à votre mission</span>
           </a>
         </div>
       </div>
