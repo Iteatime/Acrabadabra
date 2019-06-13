@@ -155,7 +155,7 @@
       </div>
       <div *ngIf="showLink === true" id="action-links" class="mission-edit__wrapper__form__icons" >
         <div class="mission-edit__wrapper__form__icons__item" >
-          <a href="#" (click)="reactToCopy()" [copyToClipboard]="editShortUrl"
+          <a href="#" (click)="reactToCopy()" [copyToClipboard]="editUrl"
             [copyToClipboardMessage]="'Lien de création de CRA copié'" [copyToClipboardMessageParent]="editLink.parentNode" #editLink>
             <i class="material-icons">edit</i>
             <span>Copier le lien de création de CRA</span>

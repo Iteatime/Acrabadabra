@@ -14,15 +14,15 @@ export class MissionEditComponent implements OnInit {
 
   @ViewChild('missionForm') form: NgForm;
   showLink = false;
-  editShortUrl: string = '';
+  editUrl: string = '';
   originUrl = window.location.origin;
   missionReference: string;
 
   constructor(
     public router: Router,
     public auth: AuthenticationService,
-    private notificationService: NotificationService,
     public missionService: MissionService,
+    private notificationService: NotificationService,
   ) {}
 
   ngOnInit(): void {
@@ -43,7 +43,7 @@ export class MissionEditComponent implements OnInit {
         this.missionService.createMission(this.missionService.mission).then((response) => {
           console.log('API response', response);
           this.missionReference = response.ref['@ref'].id;
-          this.editShortUrl = this.originUrl + '/mission/' + this.missionReference + '/timesheet/create';
+          this.editUrl = this.originUrl + '/mission/' + this.missionReference + '/timesheet/create';
         }).catch((error) => {
           console.log('API error', error);
         });

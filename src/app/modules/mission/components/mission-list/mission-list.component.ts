@@ -12,6 +12,9 @@ import { NotificationService } from 'src/app/modules/notification/services/notif
 export class MissionListComponent implements OnInit {
 
   missionsArray$: any [] = [];
+  editUrl: string = '';
+  originUrl = window.location.origin;
+  missionReference: string;
 
   constructor(public missionService: MissionService,
               private _auth: AuthenticationService,
@@ -51,6 +54,14 @@ export class MissionListComponent implements OnInit {
     }
   }
 
+  copyLinkToTimesheet() {
+    this._notificationService.push(
+      'Vous pouvez partager ce lien permettant la création d\'un CRA intégrant les informations relatives à votre mission',
+      'success',
+      { duration: 15 }
+    );
+  }
+
   reactToSubmition(error: boolean): void {
     if (error) {
       this._notificationService.push('La suppression de la mission à échouée', 'warning', { isSelfClosing: false });
@@ -62,5 +73,4 @@ export class MissionListComponent implements OnInit {
       );
     }
   }
-
 }
