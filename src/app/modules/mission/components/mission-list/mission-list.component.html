@@ -23,7 +23,11 @@
               <td class="missions-list__table__body__item" data-text="titre:">{{mission.title}}</td>
               <td class="missions-list__table__body__item" data-text="date début:">{{mission.startDate | date: 'dd/MM/yyyy'}}</td>
               <td class="missions-list__table__body__item" data-text="date fin:">{{mission.endDate | date: 'dd/MM/yyyy'}}</td>
-              <td class="missions-list__table__body__item"><a><i class="material-icons">create_new_folder</i></a></td>
+              <td class="missions-list__table__body__item"><a [copyToClipboard]="this.originUrl + '/mission/' + mission.id + '/timesheet/create'"
+                (click)="copyLinkToTimesheet()"
+                [copyToClipboardMessage]="'Lien de création de CRA copié'" [copyToClipboardMessageParent]="editLink.parentNode" #editLink>
+                <i class="material-icons">create_new_folder</i></a>
+              </td>
               <td class="missions-list__table__body__item"><a (click)="delete(mission.id)"><i class="material-icons">delete</i></a></td>
           </tr>
       </tbody>
