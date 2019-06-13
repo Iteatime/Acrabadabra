@@ -13,9 +13,9 @@ export class MissionService {
 
   constructor(private _serializer: SerializationService) { }
 
-  public getEditToken(): string {
+  public getCreateToken(): string {
     return this._serializer.serializeObject({
-        mode: 'edit',
+        mode: 'create',
         timesheet: Object.assign({}, new Timesheet(), {
           consultant: {
             name: this.mission.consultant,
@@ -44,8 +44,10 @@ export class MissionService {
     });
   }
 
-  readById = () => {
-    return fetch('/.netlify/functions/mission-read-by-id').then((response) => {
+  readById = (missionId) => {
+    console.log('Je suis readById');
+    return fetch(`/.netlify/functions/mission-read-by-id/${missionId}`).then((response) => {
+      // console.log(response);
       return response.json();
     });
   }
