@@ -13031,9 +13031,9 @@ const client = new faunadb__WEBPACK_IMPORTED_MODULE_0___default.a.Client({
 });
 
 exports.handler = (event, context, callback) => {
-  const id = '234316534878568967';
-  console.log(`Function 'todo-read' invoked. Read id: ${id}`);
-  return client.query(q.Get(q.Ref(q.Class("missions"), "234316534878568967"))).then(response => {
+  const id = event.path.match(/([^\/]*)\/*$/)[0];
+  console.log(`Function 'mission-read' invoked. Read id: ${id}`);
+  return client.query(q.Get(q.Ref(q.Class("missions"), id))).then(response => {
     console.log("success", response);
     return callback(null, {
       statusCode: 200,
