@@ -13,6 +13,7 @@
               <th class="flat-fee__table__header__item">DATE DÉBUT:</th>
               <th class="flat-fee__table__header__item">DATE FIN:</th>
               <th class="flat-fee__table__header__item"></th>
+              <th class="flat-fee__table__header__item"></th>
           </tr>
       </thead>
       <tbody class="missions-list__table__body">
@@ -22,6 +23,7 @@
               <td class="missions-list__table__body__item" data-text="titre:">{{mission.title}}</td>
               <td class="missions-list__table__body__item" data-text="date début:">{{mission.startDate | date: 'dd/MM/yyyy'}}</td>
               <td class="missions-list__table__body__item" data-text="date fin:">{{mission.endDate | date: 'dd/MM/yyyy'}}</td>
+              <td class="missions-list__table__body__item"><a><i class="material-icons">create_new_folder</i></a></td>
               <td class="missions-list__table__body__item"><a (click)="delete(mission.id)"><i class="material-icons">delete</i></a></td>
           </tr>
       </tbody>
