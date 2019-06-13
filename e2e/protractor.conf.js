@@ -16,7 +16,7 @@ exports.config = {
   framework: 'custom',
   frameworkPath: require.resolve('protractor-cucumber-framework'),
   cucumberOpts: {
-    require: ['./steps/**/*.js'],
+    require: ['./steps/**/*.step.ts'],
     format: 'json:./e2e/reports/cucumber-report.json',
   },
   // jasmineNodeOpts: {
