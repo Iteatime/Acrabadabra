@@ -41,12 +41,12 @@ export class MissionEditComponent implements OnInit {
         this.missionService.mission.missionCreator = this.auth.user.id;
         this.reactToSubmition(false);
         this.missionService.createMission(this.missionService.mission).then((response) => {
-          console.log('API response', response);
           this.missionReference = response.ref['@ref'].id;
           this.editUrl = this.originUrl + '/mission/' + this.missionReference + '/timesheet/create';
         }).catch((error) => {
           console.log('API error', error);
         });
+
       } else {
         this.reactToSubmition(true);
         this.showValidationMessages();

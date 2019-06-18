@@ -38,6 +38,12 @@ export class MissionService {
     });
   }
 
+  createIndex = () => {
+    return fetch('/.netlify/functions/mission-create-index').then(response => {
+      return response.json();
+    });
+  }
+
   readAllMissions = () => {
     return fetch('/.netlify/functions/missions-read-all').then((response) => {
       return response.json();
@@ -45,19 +51,25 @@ export class MissionService {
   }
 
   readById = (missionId) => {
-    console.log('Je suis readById');
     return fetch(`/.netlify/functions/mission-read-by-id/${missionId}`).then((response) => {
       // console.log(response);
       return response.json();
     });
   }
 
+  updateMission = (missionId, data) => {
+    return fetch(`/.netlify/functions/mission-update-by-id/${missionId}`, {
+      body: JSON.stringify(data),
+      method: 'POST'
+    }).then(response => {
+      return response.json();
+    })
+  }
+
   deleteMission = (missionId) => {
-    console.log(missionId);
     return fetch(`/.netlify/functions/mission-delete-by-id/${missionId}`, {
       method: 'POST',
     }).then(response => {
-      console.log(response);
       return response.json();
     });
   }

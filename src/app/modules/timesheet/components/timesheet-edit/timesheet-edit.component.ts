@@ -62,12 +62,6 @@ export class TimesheetEditComponent implements OnInit {
   ngOnInit(): void {
     this.currentUrl = window.location.href;
 
-    // console.log(this._missionService.readById(this.currentUrl.match(/\/mission\/(\d+)\/timesheet\/(\w+)$/)[0]));
-    // console.log(this._missionService.readById(this._router.url));
-    // if (this.timesheetService.openTimesheet(this.route.snapshot.params['data'], 'create')) {
-    //   this.loadTimesheet(this.route.snapshot.params['data']);
-    // }
-
     if (this.route.snapshot.params.data !== undefined)
     {
       if (!this.timesheetService.openTimesheet(this.route.snapshot.params['data'], 'edit')) {

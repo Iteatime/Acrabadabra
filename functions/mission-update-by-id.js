@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./missions-read-all.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./mission-update-by-id.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -13082,10 +13082,10 @@ module.exports = __webpack_require__(/*! util */ "util").deprecate;
 
 /***/ }),
 
-/***/ "./missions-read-all.js":
-/*!******************************!*\
-  !*** ./missions-read-all.js ***!
-  \******************************/
+/***/ "./mission-update-by-id.js":
+/*!*********************************!*\
+  !*** ./mission-update-by-id.js ***!
+  \*********************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -13093,6 +13093,7 @@ module.exports = __webpack_require__(/*! util */ "util").deprecate;
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var faunadb__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! faunadb */ "../../node_modules/faunadb/index.js");
 /* harmony import */ var faunadb__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(faunadb__WEBPACK_IMPORTED_MODULE_0__);
+/* code from functions/todos-update.js */
 
 const q = faunadb__WEBPACK_IMPORTED_MODULE_0___default.a.query;
 const client = new faunadb__WEBPACK_IMPORTED_MODULE_0___default.a.Client({
@@ -13101,37 +13102,20 @@ const client = new faunadb__WEBPACK_IMPORTED_MODULE_0___default.a.Client({
 
 const Cryptr = __webpack_require__(/*! cryptr */ "../../node_modules/cryptr/index.js");
 
-const cryptr = new Cryptr(process.env.CRYPTR_KEY);
+const cryptr = new Cryptr('hello');
 
 exports.handler = (event, context, callback) => {
-  console.log("Function `missions-read-all` invoked");
-  return client.query(q.Paginate(q.Match(q.Ref("indexes/all_missions")))).then(response => {
-    console.log('$$$$$$$');
-    console.log(response);
-    const missionRefs = response.data;
-    console.log('++++++++++');
-    console.log(missionRefs); // create new query out of todo refs. http://bit.ly/2LG3MLg
-
-    const getAllTodoDataQuery = missionRefs.map(ref => {
-      console.log('^^^^^^');
-      console.log(JSON.stringify(ref));
-      let object = q.Get(ref);
-      return object;
-    }); // then query the refs
-
-    return client.query(getAllTodoDataQuery).then(ret => {
-      let list = JSON.parse(JSON.stringify(ret));
-      console.log('-------');
-      console.log(list);
-      list.forEach(object => {
-        object.ref['@ref'].id = cryptr.encrypt(object.ref['@ref'].id);
-      });
-      console.log('-------');
-      console.log(list);
-      return callback(null, {
-        statusCode: 200,
-        body: JSON.stringify(list)
-      });
+  const id = event.path.match(/([^\/]*)\/*$/)[0];
+  const data = JSON.parse(event.body);
+  data.secret = cryptr.encrypt(id);
+  console.log(`Function 'todo-update' invoked. update id: ${id}`);
+  return client.query(q.Update(q.Ref(`classes/missions/${id}`), {
+    data
+  })).then(response => {
+    console.log("success", response);
+    return callback(null, {
+      statusCode: 200,
+      body: JSON.stringify(response)
     });
   }).catch(error => {
     console.log("error", error);
