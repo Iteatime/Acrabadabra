@@ -27,7 +27,6 @@ export class MissionListComponent implements OnInit {
   getAllMissions(): any {
     this.missionsArray$ = [];
     this.missionService.readAllMissions().then(response => {
-
       response.forEach(mission => {
         if (mission.data.missionCreator === this._auth.user.id) {
           mission.data.id = mission.ref['@ref'].id;
