@@ -1268,6 +1268,76 @@ function defer(fn)
 
 /***/ }),
 
+/***/ "../../node_modules/cryptr/index.js":
+/*!*********************************************************************************!*\
+  !*** /home/mathieu/Bureau/acrabadabra/Acrabadabra/node_modules/cryptr/index.js ***!
+  \*********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const crypto = __webpack_require__(/*! crypto */ "crypto");
+
+const algorithm = 'aes-256-ctr';
+
+function Cryptr(secret) {
+    if (!secret || typeof secret !== 'string') {
+        throw new Error('Cryptr: secret must be a non-0-length string');
+    }
+
+    const key = crypto
+        .createHash('sha256')
+        .update(String(secret))
+        .digest();
+
+    this.encrypt = function encrypt(value) {
+        if (value == null) {
+            throw new Error('value must not be null or undefined');
+        }
+
+        const iv = crypto.randomBytes(16);
+        const cipher = crypto.createCipheriv(algorithm, key, iv);
+        const encrypted = cipher.update(String(value), 'utf8', 'hex') + cipher.final('hex');
+
+        return iv.toString('hex') + encrypted;
+    };
+
+    this.decrypt = function decrypt(value) {
+        if (value == null) {
+            throw new Error('value must not be null or undefined');
+        }
+
+        const stringValue = String(value);
+        const iv = Buffer.from(stringValue.slice(0, 32), 'hex');
+        const encrypted = stringValue.slice(32);
+        let legacyValue = false;
+        let decipher;
+
+        try {
+            decipher = crypto.createDecipheriv(algorithm, key, iv);
+        } catch (exception) {
+            if (exception.message === 'Invalid IV length') {
+                legacyValue = true;
+            } else {
+                throw exception;
+            }
+        }
+
+        if (!legacyValue) {
+            return decipher.update(encrypted, 'hex', 'utf8') + decipher.final('utf8');
+        }
+
+        const legacyIv = stringValue.slice(0, 16);
+        const legacyEncrypted = stringValue.slice(16);
+        decipher = crypto.createDecipheriv(algorithm, key, legacyIv);
+        return decipher.update(legacyEncrypted, 'hex', 'utf8') + decipher.final('utf8');
+    };
+}
+
+module.exports = Cryptr;
+
+
+/***/ }),
+
 /***/ "../../node_modules/delayed-stream/lib/delayed_stream.js":
 /*!******************************************************************************************************!*\
   !*** /home/mathieu/Bureau/acrabadabra/Acrabadabra/node_modules/delayed-stream/lib/delayed_stream.js ***!
@@ -13033,6 +13103,10 @@ const q = faunadb__WEBPACK_IMPORTED_MODULE_0___default.a.query;
 const client = new faunadb__WEBPACK_IMPORTED_MODULE_0___default.a.Client({
   secret: process.env.FAUNADB_SECRET
 });
+
+const Cryptr = __webpack_require__(/*! cryptr */ "../../node_modules/cryptr/index.js");
+
+const cryptr = new Cryptr(process.env.CRYPTR_KEY);
 /* export our lambda function as named "handler" export */
 
 exports.handler = (event, context, callback) => {
@@ -13047,11 +13121,14 @@ exports.handler = (event, context, callback) => {
   };
   return client.query(q.Create(q.Ref("classes/missions"), mission)).then(response => {
     console.log("success", response);
+    let jsonResponse = JSON.parse(JSON.stringify(response));
+    console.log(jsonResponse);
+    jsonResponse.ref['@ref'].id = cryptr.encrypt(jsonResponse.ref['@ref'].id);
     /* Success! return the response with statusCode 200 */
 
     return callback(null, {
       statusCode: 200,
-      body: JSON.stringify(response)
+      body: JSON.stringify(jsonResponse)
     });
   }).catch(error => {
     console.log("error", error);
