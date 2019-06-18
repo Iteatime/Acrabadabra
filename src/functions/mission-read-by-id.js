@@ -5,11 +5,14 @@ const q = faunadb.query
 const client = new faunadb.Client({
   secret: process.env.FAUNADB_SECRET
 })
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr(process.env.CRYPTR_KEY);
 
 exports.handler = (event, context, callback) => {
   const id = event.path.match(/([^\/]*)\/*$/)[0];
-  console.log(`Function 'mission-read' invoked. Read id: ${id}`)
-  return client.query(q.Get(q.Ref(q.Class("missions"), id)))
+  const decryptedId = cryptr.decrypt(id);
+  console.log(`Function 'mission-read' invoked. Read id: ${decryptedId}`)
+  return client.query(q.Get(q.Ref(q.Class("missions"), decryptedId)))
   .then((response) => {
     console.log("success", response)
     return callback(null, {
@@ -24,6 +27,7 @@ exports.handler = (event, context, callback) => {
     })
   })
 }
+
 
 // client.query(q.Get(q.Ref(q.Class("posts"), "192903209792046592")))
 //   .then((ret) => console.log(ret))
