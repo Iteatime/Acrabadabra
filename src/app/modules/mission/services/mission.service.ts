@@ -60,8 +60,8 @@ export class MissionService {
     });
   }
 
-  readById = () => {
-    return fetch('/.netlify/functions/mission-read-all/').then((response) => {
+  readById = (id) => {
+    return fetch(`/.netlify/functions/mission-read-by-id/${id}`).then((response) => {
       return response.json();
     });
   }

@@ -18,12 +18,12 @@
       </thead>
       <tbody class="missions-list__table__body">
           <tr *ngFor = "let mission of missionsArray$">
-              <td class="missions-list__table__body__item" data-text="client:">{{mission.client}}</td>
-              <td class="missions-list__table__body__item" data-text="consultant:">{{mission.consultant}}</td>
-              <td class="missions-list__table__body__item" data-text="titre:">{{mission.title}}</td>
-              <td class="missions-list__table__body__item" data-text="date début:">{{mission.startDate | date: 'dd/MM/yyyy'}}</td>
-              <td class="missions-list__table__body__item" data-text="date fin:">{{mission.endDate | date: 'dd/MM/yyyy'}}</td>
-              <td class="missions-list__table__body__item"><a [copyToClipboard]="this.originUrl + '/mission/' + mission.id + '/timesheet/create'"
+              <td class="missions-list__table__body__item" data-text="client:">{{mission.data.client}}</td>
+              <td class="missions-list__table__body__item" data-text="consultant:">{{mission.data.consultant}}</td>
+              <td class="missions-list__table__body__item" data-text="titre:">{{mission.data.title}}</td>
+              <td class="missions-list__table__body__item" data-text="date début:">{{mission.data.startDate | date: 'dd/MM/yyyy'}}</td>
+              <td class="missions-list__table__body__item" data-text="date fin:">{{mission.data.endDate | date: 'dd/MM/yyyy'}}</td>
+              <td class="missions-list__table__body__item"><a [copyToClipboard]="this.originUrl + '/mission/' + mission.data.id + '/timesheet/create'"
                 (click)="copyLinkToTimesheet()"
                 [copyToClipboardMessage]="'Lien de création de CRA copié'" [copyToClipboardMessageParent]="editLink.parentNode" #editLink>
                 <i class="material-icons">create_new_folder</i></a>
