@@ -42,6 +42,12 @@ export class MissionService {
     });
   }
 
+  createIndex = () => {
+    return fetch('/.netlify/functions/mission-create-index').then(response => {
+      return response.json();
+    });
+  }
+
   readAllMissions = () => {
     return fetch('/.netlify/functions/missions-read-all').then((response) => {
       return response.json();

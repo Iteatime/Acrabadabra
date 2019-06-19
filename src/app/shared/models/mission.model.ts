@@ -10,6 +10,7 @@ export class Mission {
   endDate: string;
   unitOfWorkType: string;
   unitOfworkPrice: string;
+  secret: string;
 
   constructor(
     missionCreator?: string,
@@ -22,7 +23,8 @@ export class Mission {
     missionStartDate?: string,
     missionEndDate?: string,
     missionUnitOfWorkType?: string,
-    missionUnitOfWorkPrice?: string) {
+    missionUnitOfWorkPrice?: string,
+    secret?: string) {
 
     this.missionCreator = missionCreator;
     this.consultant = missionConsultant;
@@ -35,7 +37,6 @@ export class Mission {
     this.endDate = missionEndDate;
     this.unitOfWorkType = missionUnitOfWorkType;
     this.unitOfworkPrice = missionUnitOfWorkPrice;
-
   }
 
   static fromFaunaDB(data: ApiFaunaDB) {

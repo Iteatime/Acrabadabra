@@ -5,6 +5,10 @@ const client = new faunadb.Client({
   secret: process.env.FAUNADB_SECRET
 })
 
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr(process.env.CRYPTR_KEY);
+
+
 exports.handler = (event, context, callback) => {
   console.log("Function `missions-read-all` invoked");
   let id;
@@ -25,9 +29,16 @@ exports.handler = (event, context, callback) => {
       })
       // then query the refs
       return client.query(getQuery).then((ret) => {
+
+        let list = JSON.parse(JSON.stringify(ret))
+
+        list.forEach(object => {
+          object.ref['@ref'].id = cryptr.encrypt(object.ref['@ref'].id);
+        });
+
         return callback(null, {
           statusCode: 200,
-          body: JSON.stringify(ret)
+          body: JSON.stringify(list)
         })
       })
     }).catch((error) => {
@@ -47,9 +58,16 @@ exports.handler = (event, context, callback) => {
       })
       // then query the refs
       return client.query(getQuery).then((ret) => {
+
+        let list = JSON.parse(JSON.stringify(ret))
+
+        list.forEach(object => {
+          object.ref['@ref'].id = cryptr.encrypt(object.ref['@ref'].id);
+        });
+
         return callback(null, {
           statusCode: 200,
-          body: JSON.stringify(ret)
+          body: JSON.stringify(list)
         })
       })
     }).catch((error) => {
