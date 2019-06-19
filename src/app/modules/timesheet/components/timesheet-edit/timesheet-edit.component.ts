@@ -23,6 +23,7 @@ import { NotificationService } from 'src/app/modules/notification/services/notif
 
 import { Timesheet } from 'src/app/shared/models/timesheet.model';
 import { Invoice } from 'src/app/shared/models/invoice.model';
+import { MissionService } from 'src/app/modules/mission/services/mission.service';
 
 @Component({
   selector: 'app-timesheet-edit',
@@ -45,27 +46,41 @@ export class TimesheetEditComponent implements OnInit {
   generateInvoice = false;
   generateExpenses = false;
   showLinks = false;
+  currentUrl = '';
 
   constructor(
     public timesheetService: TimesheetService,
     public auth: AuthenticationService,
     private calendarService: CalendarService,
     private route: ActivatedRoute,
-    private router: Router,
     private titleService: Title,
     private notificationService: NotificationService,
-    private _urlShortener: UrlShorteningService
+    private _urlShortener: UrlShorteningService,
+    private _missionService: MissionService
   ) {}
 
   ngOnInit(): void {
-    if (!this.timesheetService.openTimesheet(this.route.snapshot.params['data'], 'edit')) {
-      this.router.navigate(['timesheet', 'create']);
-      if (this.timesheetService.openLastTimesheetInLocal()) {
+    this.currentUrl = window.location.href;
+
+    if (this.route.snapshot.params.data !== undefined)
+    {
+      if (!this.timesheetService.openTimesheet(this.route.snapshot.params['data'], 'edit')) {
+        if (this.timesheetService.openLastTimesheetInLocal()) {
+          this.loadTimesheet(this.timesheetService.timesheet);
+        }
+      } else {
         this.loadTimesheet(this.timesheetService.timesheet);
       }
-    } else {
-      this.loadTimesheet(this.timesheetService.timesheet);
+    } else if (this.route.snapshot.params.missionId !== undefined)
+    {
+      this._missionService.readById(this.route.snapshot.params.missionId).then( response => {
+        this.timesheetService.timesheet.consultant.name = response.data.consultant;
+        this.timesheetService.timesheet.consultant.email = response.data.consultantEmail;
+        this.timesheetService.timesheet.mission.client = response.data.client;
+        this.timesheetService.timesheet.mission.title = response.data.title;
+      });
     }
+
     this.form.valueChanges.subscribe(() => {
       if (this.form.dirty) {
         this.onUserInput();
