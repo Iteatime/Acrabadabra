@@ -4,7 +4,7 @@ import { Notification } from '../@type/notification';
 import { NotificationOptions } from '../@type/notification-options';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NotificationService {
   /** Notifications list */
@@ -14,7 +14,7 @@ export class NotificationService {
   options: NotificationOptions = {
     isDismissable: true,
     isSelfClosing: true,
-    duration: 5
+    duration: 5,
   };
 
   /** Id prefix of the nofications */
@@ -23,7 +23,7 @@ export class NotificationService {
   /** Delay to wait before removing a notification on a dismiss action */
   removingDelay = 1000;
 
-  constructor() { }
+  constructor() {}
 
   /**
    * Add a notification
@@ -31,9 +31,9 @@ export class NotificationService {
   push(message: string, type: string = 'default', options = {}): void {
     const notification = {
       id: this.generateUniqueId(),
-      message: message,
-      type: type,
-      options: this.mergeWithDefaultOptions(options)
+      message,
+      type,
+      options: this.mergeWithDefaultOptions(options),
     };
 
     this.notifications.push(notification);
@@ -75,7 +75,12 @@ export class NotificationService {
    * Generate a unique id for the notification
    */
   private generateUniqueId(): string {
-    return this.idPrefix + Math.random().toString(36).substr(2, 9);
+    return (
+      this.idPrefix +
+      Math.random()
+        .toString(36)
+        .substr(2, 9)
+    );
   }
 
   /**

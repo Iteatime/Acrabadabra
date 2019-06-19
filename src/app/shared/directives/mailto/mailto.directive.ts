@@ -1,19 +1,18 @@
-import { Directive, Input, HostListener } from '@angular/core';
+import { Directive, HostListener, Input } from '@angular/core';
 import { ReviewMail } from '../../models/review-mail.model';
 
 @Directive({
-  selector: '[mailto]'
+  selector: '[appMailto]',
 })
 export class MailtoDirective {
-
-  @Input('mailto')
-  public recipient: string;
+  @Input('appMailto')
+  recipient?: string;
 
   @Input()
-  public mailContent: ReviewMail;
+  mailContent: ReviewMail;
 
   @HostListener('click', ['$event'])
-  public onClick(event: MouseEvent): void {
+  onClick(event: MouseEvent): void {
     event.preventDefault();
 
     if (this.recipient === undefined) {
@@ -21,11 +20,8 @@ export class MailtoDirective {
     }
 
     window.open(
-      'mailto:' + this.recipient +
-      '?subject=' + this.mailContent.subject +
-      '&body=' + this.mailContent.body,
-      '_self'
+      'mailto:' + this.recipient + '?subject=' + this.mailContent.subject + '&body=' + this.mailContent.body,
+      '_self',
     );
   }
-
 }

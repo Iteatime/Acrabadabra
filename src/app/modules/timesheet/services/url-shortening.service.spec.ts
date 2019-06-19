@@ -1,5 +1,5 @@
-import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { of } from 'rxjs';
 
@@ -14,7 +14,7 @@ describe('UrlShorteningService', () => {
 
     TestBed.configureTestingModule({
       providers: [UrlShorteningService],
-      imports: [HttpClientTestingModule]
+      imports: [HttpClientTestingModule],
     });
     service = TestBed.get(UrlShorteningService);
   });
@@ -23,15 +23,12 @@ describe('UrlShorteningService', () => {
     expect(service).toBeTruthy();
   });
 
-  it ('shortenUrl() should return a shortened URL', () => {
+  it('shortenUrl() should return a shortened URL', () => {
     const shortUrl = 'https://link.acrabadabra.com/8355d';
-    const url ='https://vimeo.com/256549521';
+    const url = 'https://vimeo.com/256549521';
 
     httpClientSpy.post.and.returnValue(of({ shortUrl }));
 
-    service.shortenUrl(url).then(
-      value => expect(value).toEqual(shortUrl),
-      fail
-    );
+    service.shortenUrl(url).then(value => expect(value).toEqual(shortUrl), fail);
   });
 });

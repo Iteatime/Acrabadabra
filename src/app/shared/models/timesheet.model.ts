@@ -1,15 +1,15 @@
-import { Mission } from './mission.model';
-import { Consultant } from './consultant.model';
-import { Invoice } from './invoice.model';
 import { Commute } from './commute';
-import { Miscellaneous } from './miscellaneous.model';
+import { Consultant } from './consultant.model';
 import { FlatFee } from './flat-fee.model';
+import { Invoice } from './invoice.model';
+import { Miscellaneous } from './miscellaneous.model';
+import { Mission } from './mission.model';
 
 export class Timesheet {
   consultant: Consultant;
   mission: Mission;
-  workingDays: {};
-  invoice: Invoice;
+  workingDays: any;
+  invoice: Invoice | null;
   commutes: Commute[];
   miscellaneous: Miscellaneous[];
   flatFees: FlatFee[];

@@ -1,15 +1,15 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 
 import { CalendarService } from 'src/app/modules/calendar/calendar.service';
-import { TimesheetService } from '../../services/timesheet.service';
 import { MonetaryService } from 'src/app/shared/services/monetary/monetary.service';
+import { TimesheetService } from '../../services/timesheet.service';
 
-import { Invoice } from 'src/app/shared/models/invoice.model';
 import { Company } from 'src/app/shared/models/company.model';
-import { Timesheet } from 'src/app/shared/models/timesheet.model';
+import { Invoice } from 'src/app/shared/models/invoice.model';
 
+import { FlatFee } from '@shared/models';
 import * as moment from 'moment';
 import { MiscellaneousExpensesService } from '../../../expense/services/miscellaneous-expenses.service';
 
@@ -17,28 +17,26 @@ import { MiscellaneousExpensesService } from '../../../expense/services/miscella
   selector: 'app-invoice-pdf',
   templateUrl: './invoice-pdf.component.html',
   styleUrls: ['./invoice-pdf.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class InvoicePDFComponent {
-  public local = 'fr';
-  public totalHT: number;
-  public totalTTC: number;
-  public currencyCode: string;
-  public workedTime: number;
-  public expenseMileageTitle = 'Indémnités kilométriques';
-  public expenseMileageQuantity = '1';
-  public expenseMileageTotal: number;
-  public expenseMiscellaneousTitle = 'Frais sur justificatifs';
-  public expenseMiscellaneousQuantity = '1';
-  public expenseMiscellaneousTotal: any;
-  public expenseFlatFeeTitle = 'Déplacements forfaitaires';
-  public expenseFlatFeeQuantity: number;
-  public expenseFlatFeeTotal: any;
-  public totalVat: any;
-  public performanceTotal: number;
-  public format;
-  public miscsTotal;
-  public flatFeesTotal;
+  local = 'fr';
+  totalHT: number;
+  totalTTC: number;
+  currencyCode: string;
+  workedTime: number;
+  expenseMileageTitle = 'Indémnités kilométriques';
+  expenseMileageQuantity = '1';
+  expenseMileageTotal: number;
+  expenseMiscellaneousTitle = 'Frais sur justificatifs';
+  expenseMiscellaneousQuantity = '1';
+  expenseMiscellaneousTotal: any;
+  expenseFlatFeeTitle = 'Déplacements forfaitaires';
+  expenseFlatFeeQuantity: number;
+  expenseFlatFeeTotal: any;
+  totalVat: any;
+  performanceTotal: number;
+  flatFeesTotal: any;
 
   constructor(
     public calendarService: CalendarService,
@@ -46,12 +44,22 @@ export class InvoicePDFComponent {
     public monetaryService: MonetaryService,
     public miscellaneousService: MiscellaneousExpensesService,
     private _route: ActivatedRoute,
-    private _titleService: Title
+    private _titleService: Title,
   ) {
-    this.timesheetService.openTimesheet(this._route.snapshot.paramMap.get('data'), 'review');
+    if (this._route.snapshot.paramMap.get('data')) {
+      this.timesheetService.openTimesheet(this._route.snapshot.paramMap.get('data'), 'review');
+    } else {
+      // TODO throw an error
+    }
     this.timesheetService.timesheet.invoice = Object.assign(new Invoice(), this.timesheetService.timesheet.invoice);
-    this.timesheetService.timesheet.invoice.provider = Object.assign(new Company(), this.timesheetService.timesheet.invoice.provider);
-    this.timesheetService.timesheet.invoice.client = Object.assign(new Company(), this.timesheetService.timesheet.invoice.client);
+    this.timesheetService.timesheet.invoice.provider = Object.assign(
+      new Company(),
+      this.timesheetService.timesheet.invoice.provider,
+    );
+    this.timesheetService.timesheet.invoice.client = Object.assign(
+      new Company(),
+      this.timesheetService.timesheet.invoice.client,
+    );
     this.workedTime = this.calendarService.getWorkedTime(this.timesheetService.timesheet);
     this.expenseMileageTotal = timesheetService.getTotalAllowance();
     this.expenseMiscellaneousTotal = timesheetService.getTotalMiscellaneous();
@@ -63,7 +71,7 @@ export class InvoicePDFComponent {
     this._sumCalcul();
   }
 
-  public formatDate(date: string): string {
+  formatDate(date: string): string {
     let momentDate = moment(date);
 
     if (!momentDate.isValid()) {
@@ -73,9 +81,9 @@ export class InvoicePDFComponent {
     return momentDate.format('DD/MM/YYYY');
   }
 
-  public formatDuration(): string {
-    let start;
-    let end;
+  formatDuration(): string {
+    let start: any;
+    let end: any;
 
     if (this.workedTime > 0) {
       start = this.calendarService.getFirstWorkingDay(this.timesheetService.timesheet);
@@ -84,40 +92,40 @@ export class InvoicePDFComponent {
       start = this.timesheetService.timesheet.invoice.date;
     }
 
-    if (end && <Date>start.getDate() !== <Date>end.getDate()) {
-      return  `du ${this.formatDate(start)} au  ${this.formatDate(end)}`;
+    if (end && (start.getDate() as Date) !== (end.getDate() as Date)) {
+      return `du ${this.formatDate(start)} au  ${this.formatDate(end)}`;
     } else {
       return `le ${this.formatDate(start)}`;
     }
   }
 
-  public getNumberOfFlatFees() {
+  getNumberOfFlatFees() {
     return this.timesheetService.timesheet.flatFees.length;
   }
 
   private _sortFlatFeesAmounts() {
-    let amounts = [];
-    let quantity : number[] = [];
+    const amounts: FlatFee[] = [];
+    const quantity: number[] = [];
 
-    this.timesheetService.timesheet.flatFees.forEach(( flatFee ) => {
-      let index = amounts.indexOf(flatFee.amount);
+    this.timesheetService.timesheet.flatFees.forEach((flatFee: any) => {
+      const index = amounts.indexOf(flatFee.amount);
       if (index === -1) {
         amounts.push(flatFee.amount);
         quantity.push(1);
       } else {
-        quantity[index] ++;
+        quantity[index]++;
       }
     });
     return { amounts, quantity };
   }
 
-  public sortByMiscsVatState() {
-    let deductible = [];
-    let nondeductible = {
+  sortByMiscsVatState() {
+    const deductible: any = [];
+    const nondeductible = {
       quantity: 0,
-      amount: 0
+      amount: 0,
     };
-    this.timesheetService.timesheet.miscellaneous.forEach(misc => {
+    this.timesheetService.timesheet.miscellaneous.forEach((misc: any) => {
       if (this.miscellaneousService.vatDeductible(misc)) {
         const index = deductible.indexOf(this._searchMiscVatIndex(misc.tvaRate, deductible));
         if (index > -1) {
@@ -127,7 +135,7 @@ export class InvoicePDFComponent {
           deductible.push({
             amount: +misc.amount,
             quantity: 1,
-            vatRate: misc.tvaRate
+            vatRate: misc.tvaRate,
           });
         }
       } else {
@@ -139,7 +147,7 @@ export class InvoicePDFComponent {
   }
 
   private _searchMiscVatIndex(vat: number, miscTable: any) {
-    return miscTable.find(element => {
+    return miscTable.find((element: any) => {
       return element['vatRate'] === vat;
     });
   }
@@ -147,17 +155,17 @@ export class InvoicePDFComponent {
   private _totalDeductible() {
     let total = 0;
 
-    this.sortByMiscsVatState().deductible.forEach(miscVat => {
-      if (this.timesheetService.timesheet.invoice.provider.vatExemption ) {
+    this.sortByMiscsVatState().deductible.forEach((miscVat: any) => {
+      if (this.timesheetService.timesheet.invoice.provider.vatExemption) {
         total += miscVat.amount;
       } else {
-        total += miscVat.amount / ( 1 + miscVat.vatRate / 100);
+        total += miscVat.amount / (1 + miscVat.vatRate / 100);
       }
       if (miscVat.vatRate !== 0) {
         if (miscVat.vatRate !== this.monetaryService.vatRates.normal) {
           this.totalVat.push({
             rate: miscVat.vatRate,
-            amount: miscVat.amount - miscVat.amount / (1 + miscVat.vatRate / 100)
+            amount: miscVat.amount - miscVat.amount / (1 + miscVat.vatRate / 100),
           });
         } else {
           this.totalVat[0].amount += miscVat.amount - miscVat.amount / (1 + miscVat.vatRate / 100);
@@ -167,7 +175,7 @@ export class InvoicePDFComponent {
     return total;
   }
   private _sortVatTable() {
-    this.totalVat.sort( (a, b) => {
+    this.totalVat.sort((a: any, b: any) => {
       return +(a.rate - b.rate);
     });
   }
@@ -176,26 +184,27 @@ export class InvoicePDFComponent {
     this.totalVat = [
       {
         rate: this.monetaryService.vatRates.normal,
-        amount: (
-            this.performanceTotal +
+        amount:
+          (this.performanceTotal +
             this.expenseFlatFeeTotal +
             this.expenseMileageTotal +
-            this.sortByMiscsVatState().nondeductible.amount
-          ) * (this.monetaryService.vatRates.normal / 100)
-      }
+            this.sortByMiscsVatState().nondeductible.amount) *
+          (this.monetaryService.vatRates.normal / 100),
+      },
     ];
-    this.totalHT = this.performanceTotal +
+    this.totalHT =
+      this.performanceTotal +
       this._totalDeductible() +
       this.sortByMiscsVatState().nondeductible.amount +
       this.expenseMileageTotal +
       this.expenseFlatFeeTotal;
     this._sortVatTable();
-    if (this.timesheetService.timesheet.invoice.provider.vatExemption ) {
+    if (this.timesheetService.timesheet.invoice.provider.vatExemption) {
       this.totalTTC = this.totalHT;
       this.totalVat = [];
     } else {
       let sumVat = 0;
-      this.totalVat.forEach(vat => {
+      this.totalVat.forEach((vat: any) => {
         sumVat += vat.amount;
       });
       this.totalTTC = this.totalHT + sumVat;

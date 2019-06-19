@@ -1,8 +1,6 @@
-import { TestBed } from '@angular/core/testing';
-
-import { CalendarService } from './calendar.service';
-import { Timesheet } from 'src/app/shared/models/timesheet.model';
 import { CalendarEvent } from 'calendar-utils';
+import { Timesheet } from 'src/app/shared/models/timesheet.model';
+import { CalendarService } from './calendar.service';
 
 describe('CalendarService', () => {
   let service: CalendarService;
@@ -14,14 +12,13 @@ describe('CalendarService', () => {
 
     testTimesheet = new Timesheet();
     testTimesheet.workingDays = {
-      '0.1900': [0.5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      '0.1900': [0.5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     };
 
     calendarEvents = [
       { title: '', start: new Date(1900, 0, 1, 8), end: new Date(1900, 0, 1, 12) },
-      { title: '', start: new Date(1900, 0, 2, 8), end: new Date(1900, 0, 2, 16) }
+      { title: '', start: new Date(1900, 0, 2, 8), end: new Date(1900, 0, 2, 16) },
     ];
-
   });
 
   it('should be created', () => {

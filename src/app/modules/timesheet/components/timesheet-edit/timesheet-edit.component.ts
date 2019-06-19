@@ -9,26 +9,27 @@ import { ReviewMail } from 'src/app/shared/models/review-mail.model';
 
 import { CalendarService } from 'src/app/modules/calendar/calendar.service';
 
+import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
 import { TimesheetService } from '../../services/timesheet.service';
 import { UrlShorteningService } from '../../services/url-shortening.service';
-import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
 
-import { InvoiceFormComponent } from '../invoice-form/invoice-form.component';
-import { ExpenseMileageFormComponent } from 'src/app/modules/expense/components/expense-mileage-form/expense-mileage-form.component';
-import { ExpenseMiscellaneousFormComponent } from 'src/app/modules/expense/components/expense-miscellaneous-form/expense-miscellaneous-form.component';
-import { ExpenseFlatFeeFormComponent } from 'src/app/modules/expense/components/expense-flat-fee-form/expense-flat-fee-form.component';
 import { CalendarSelectorComponent } from 'src/app/modules/calendar/components/calendar-selector/calendar-selector.component';
+import { ExpenseFlatFeeFormComponent } from 'src/app/modules/expense/components/expense-flat-fee-form/expense-flat-fee-form.component';
+import { ExpenseMileageFormComponent } from 'src/app/modules/expense/components/expense-mileage-form/expense-mileage-form.component';
+// tslint:disable-next-line:max-line-length
+import { ExpenseMiscellaneousFormComponent } from 'src/app/modules/expense/components/expense-miscellaneous-form/expense-miscellaneous-form.component';
+import { InvoiceFormComponent } from '../invoice-form/invoice-form.component';
 
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 
-import { Timesheet } from 'src/app/shared/models/timesheet.model';
 import { Invoice } from 'src/app/shared/models/invoice.model';
+import { Timesheet } from 'src/app/shared/models/timesheet.model';
 
 @Component({
   selector: 'app-timesheet-edit',
   templateUrl: './timesheet-edit.component.html',
   styleUrls: ['./timesheet-edit.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class TimesheetEditComponent implements OnInit {
   @ViewChild(CalendarSelectorComponent) calendar: CalendarSelectorComponent;
@@ -38,8 +39,8 @@ export class TimesheetEditComponent implements OnInit {
   @ViewChild(ExpenseFlatFeeFormComponent) flatFeesForm: ExpenseFlatFeeFormComponent;
   @ViewChild('form') form: NgForm;
   originUrl = window.location.origin;
-  editShortUrl: string = '';
-  reviewShortUrl: string = '';
+  editShortUrl = '';
+  reviewShortUrl = '';
   submitMessage: any = null;
   reviewMail: ReviewMail;
   generateInvoice = false;
@@ -54,7 +55,7 @@ export class TimesheetEditComponent implements OnInit {
     private router: Router,
     private titleService: Title,
     private notificationService: NotificationService,
-    private _urlShortener: UrlShorteningService
+    private _urlShortener: UrlShorteningService,
   ) {}
 
   ngOnInit(): void {
@@ -66,12 +67,12 @@ export class TimesheetEditComponent implements OnInit {
     } else {
       this.loadTimesheet(this.timesheetService.timesheet);
     }
-    this.form.valueChanges.subscribe(() => {
+    this.form.valueChanges!.subscribe(() => {
       if (this.form.dirty) {
         this.onUserInput();
       }
     });
-    this.titleService.setTitle(`Acrabadabra - ${ this.getModeTitle() } un compte rendu d'activité`);
+    this.titleService.setTitle(`Acrabadabra - ${this.getModeTitle()} un compte rendu d'activité`);
   }
 
   openAuth() {
@@ -88,12 +89,12 @@ export class TimesheetEditComponent implements OnInit {
 
   setShortUrl(action?: string): void {
     if (!!action) {
-      const getToken = (action === 'edit') ? this.timesheetService.getEditToken() : this.timesheetService.getReviewToken();
-      this._urlShortener.shortenUrl(this.originUrl + `/timesheet/${action}/` + getToken)
-        .then ((res) => {
-          action === 'edit' ? this.editShortUrl = res : this.reviewShortUrl = res;
-          this.updateMailtoLink();
-        });
+      const getToken =
+        action === 'edit' ? this.timesheetService.getToken('edit') : this.timesheetService.getToken('review');
+      this._urlShortener.shortenUrl(this.originUrl + `/timesheet/${action}/` + getToken).then(res => {
+        action === 'edit' ? (this.editShortUrl = res) : (this.reviewShortUrl = res);
+        this.updateMailtoLink();
+      });
       return;
     }
 
@@ -127,13 +128,13 @@ export class TimesheetEditComponent implements OnInit {
       this.notificationService.push(
         'Votre CRA est validé<br/>Si vous le modifiez, vous devrez le valider à nouveau et utiliser le nouveau lien de partage.',
         'success',
-        { duration: 10 }
+        { duration: 10 },
       );
     }
     this.showLinks = !error;
     if (this.showLinks) {
       setTimeout(() => {
-        document.getElementById('action-links').scrollIntoView({behavior:"smooth"});
+        document.getElementById('action-links').scrollIntoView({behavior: 'smooth'});
       });
     }
   }
@@ -143,11 +144,11 @@ export class TimesheetEditComponent implements OnInit {
       this.timesheetService.timesheet,
       this.calendarService,
       this.calendarService.getWorkedTime(this.timesheetService.timesheet),
-      this.reviewShortUrl
+      this.reviewShortUrl,
     );
   }
 
-  checkFormsValidity(): boolean {
+  checkFormsValidity(): boolean | null {
     let valid = this.form.valid;
     if (this.generateInvoice) {
       valid = valid && this.invoiceForm.form.valid;
@@ -164,10 +165,12 @@ export class TimesheetEditComponent implements OnInit {
         this.invoiceForm.form.controls[field].markAsTouched();
       });
     }
-    if (this.timesheetService.timesheet.commutes.length === 0
-        && this.timesheetService.timesheet.miscellaneous.length === 0
-        && this.timesheetService.timesheet.flatFees.length === 0
-        && this.generateExpenses) {
+    if (
+      this.timesheetService.timesheet.commutes.length === 0 &&
+      this.timesheetService.timesheet.miscellaneous.length === 0 &&
+      this.timesheetService.timesheet.flatFees.length === 0 &&
+      this.generateExpenses
+    ) {
       this.notificationService.push('Vous n\'avez ajouté aucun frais', 'warning', { isSelfClosing: false });
     }
   }
@@ -175,7 +178,8 @@ export class TimesheetEditComponent implements OnInit {
   private loadTimesheet(timesheet: Timesheet): void {
     this.showLinks = false;
     this.generateInvoice = !!timesheet.invoice && !_.isEqual(timesheet.invoice, Object.assign({}, new Invoice()));
-    this.generateExpenses = timesheet.commutes.length > 0 || timesheet.flatFees.length > 0 || timesheet.miscellaneous.length > 0;
+    this.generateExpenses =
+      timesheet.commutes.length > 0 || timesheet.flatFees.length > 0 || timesheet.miscellaneous.length > 0;
     this.setShortUrl();
   }
 }

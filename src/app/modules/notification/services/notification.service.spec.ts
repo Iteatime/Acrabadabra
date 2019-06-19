@@ -17,7 +17,7 @@ describe('NotificationService', () => {
 
       expect(service.notifications.length).toEqual(1);
 
-      service.notifications.forEach((notification) => {
+      service.notifications.forEach(notification => {
         expect(notification.id).toBeDefined();
       });
     });
@@ -25,11 +25,11 @@ describe('NotificationService', () => {
     it('should merge notification options with default options', () => {
       service.push('I\'m a notification with custom options', 'default', { isSelfClosing: false, isDismissable: false });
 
-      service.notifications.forEach((n) => {
+      service.notifications.forEach(n => {
         expect(n.options).toEqual({
           isSelfClosing: n.options.isSelfClosing,
           isDismissable: n.options.isDismissable,
-          duration: service.options.duration
+          duration: service.options.duration,
         });
       });
     });

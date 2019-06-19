@@ -1,11 +1,12 @@
-import { Company } from './company.model';
 import * as _ from 'lodash';
+import { Company } from './company.model';
 
+/* tslint:disable:parameters-max-number */
 export class Invoice {
-  number: string;
+  number: string | null;
   date: string;
   clientRef: string;
-  dailyRate: number;
+  dailyRate: number | null;
   provider: Company;
   client: Company;
 
@@ -19,32 +20,32 @@ export class Invoice {
   bankSWIFT: string;
 
   constructor(
-    number?: string,
+    number: string | null = null, // tslint:disable-line:variable-name
     date?: string,
     clientRef?: string,
-    dailyRate?: number,
+    dailyRate: number | null = null,
     provider?: Company,
     client?: Company,
 
     paymentDate?: string,
     paymentModality?: string,
-    paymentLatePenalty?: boolean,
+    paymentLatePenalty: boolean = false,
     bankAccountHolder?: string,
     bankingAgency?: string,
     bankingDomiciliation?: string,
     bankIBAN?: string,
     bankSWIFT?: string,
   ) {
-    this.number = number || null;
+    this.number = number;
     this.date = date || '';
     this.clientRef = clientRef || '';
-    this.dailyRate = dailyRate || null;
+    this.dailyRate = dailyRate;
     this.provider = provider || new Company();
     this.client = client || new Company();
 
     this.paymentDate = paymentDate || '';
     this.paymentModality = paymentModality || '';
-    this.paymentLatePenalty = paymentLatePenalty || false;
+    this.paymentLatePenalty = paymentLatePenalty;
     this.bankAccountHolder = bankAccountHolder || '';
     this.bankingAgency = bankingAgency || '';
     this.bankingDomiciliation = bankingDomiciliation || '';
@@ -53,10 +54,12 @@ export class Invoice {
   }
 
   isBankingDetails(): boolean {
-    return  !_.isEmpty(this.bankAccountHolder) ||
-            !_.isEmpty(this.bankingAgency) ||
-            !_.isEmpty(this.bankingDomiciliation) ||
-            !_.isEmpty(this.bankIBAN) ||
-            !_.isEmpty(this.bankSWIFT);
+    return (
+      !_.isEmpty(this.bankAccountHolder) ||
+      !_.isEmpty(this.bankingAgency) ||
+      !_.isEmpty(this.bankingDomiciliation) ||
+      !_.isEmpty(this.bankIBAN) ||
+      !_.isEmpty(this.bankSWIFT)
+    );
   }
 }

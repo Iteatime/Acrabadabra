@@ -1,10 +1,10 @@
 import { Consultant } from './consultant';
-import { Mission } from './mission';
 import { Invoice } from './invoice';
+import { Mission } from './mission';
 
 export interface Timesheet {
   consultant: Consultant;
   mission: Mission;
   workingDays: any;
-  invoice: Invoice;
+  invoice: Invoice | null;
 }

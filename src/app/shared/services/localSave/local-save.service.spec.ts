@@ -1,23 +1,25 @@
-import { TestBed } from '@angular/core/testing';
-import { LocalSaveService } from './local-save.service';
 import { SerializationService } from '../serialization/serialization.service';
+import { LocalSaveService } from './local-save.service';
 
 describe('LocalSaveService', () => {
-
   let service: LocalSaveService;
 
   beforeEach(() => {
     service = new LocalSaveService(new SerializationService());
-    const store = {};
+    const store: any = {};
 
-    spyOn(localStorage, 'getItem').and.callFake((key: string): String => {
-      return store[key] || null;
-     });
+    spyOn(localStorage, 'getItem').and.callFake(
+      (key: string): string => {
+        return store[key] || null;
+      },
+    );
 
-    spyOn(localStorage, 'setItem').and.callFake((key: string, value: string): string =>  {
-      return store[key] = <string>value;
-      });
-    });
+    spyOn(localStorage, 'setItem').and.callFake(
+      (key: string, value: string): string => {
+        return store[key] = value;
+      },
+    );
+  });
 
   it('should be created', () => {
     expect(service).toBeTruthy();

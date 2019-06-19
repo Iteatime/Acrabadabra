@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-
-import { HomeComponent } from 'src/app/components/home/home.component';
+import { RouterModule, Routes } from '@angular/router';
 
 import { InvoicePDFComponent } from './components/invoice-pdf/invoice-pdf.component';
 
@@ -10,17 +8,18 @@ import { TimesheetReviewComponent } from './components/timesheet-review/timeshee
 
 const routes: Routes = [
   {
-    path: 'timesheet', children: [
+    path: 'timesheet',
+    children: [
       { path: 'create', component: TimesheetEditComponent },
       { path: 'edit/:data', component: TimesheetEditComponent },
       { path: 'review/:data', component: TimesheetReviewComponent },
-    ]
+    ],
   },
   { path: 'invoice/:data', component: InvoicePDFComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class TimesheetRoutingModule { }
+export class TimesheetRoutingModule {}

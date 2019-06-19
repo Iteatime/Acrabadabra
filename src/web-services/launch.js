@@ -10,7 +10,7 @@ fs.readdir(folder, (err, elements) => {
   elements.forEach(element => {
     const dir = path.resolve(folder, element);
     if (fs.lstatSync(dir).isDirectory() && fs.existsSync(dir + '/package.json')) {
-      services.push({ command: `cd ${ dir } && npm run dev`, name: element, prefixColor: 'reset.bgGreen.bold' });
+      services.push({ command: `cd ${dir} && npm run dev`, name: element, prefixColor: 'reset.bgGreen.bold' });
     }
   });
 

@@ -1,19 +1,19 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Params, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import { Timesheet } from 'src/app/shared/models/timesheet.model';
 import { Commute } from '../../../../shared/models/commute';
 
 import { CalendarService } from 'src/app/modules/calendar/calendar.service';
-import { TimesheetService } from '../../services/timesheet.service';
 import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
+import { TimesheetService } from '../../services/timesheet.service';
 
 @Component({
   selector: 'app-review',
   templateUrl: './timesheet-review.component.html',
   styleUrls: ['./timesheet-review.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class TimesheetReviewComponent implements OnInit {
   timesheet = new Timesheet();
@@ -32,8 +32,8 @@ export class TimesheetReviewComponent implements OnInit {
     private calendarManager: CalendarService,
     private route: ActivatedRoute,
     private timesheetService: TimesheetService,
-    private titleService: Title
-  ) { }
+    private titleService: Title,
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
@@ -52,7 +52,5 @@ export class TimesheetReviewComponent implements OnInit {
     });
 
     this.titleService.setTitle('Acradababra - Consulter un compte rendu d\'activité');
-
   }
-
 }

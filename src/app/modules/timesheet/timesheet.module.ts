@@ -1,6 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 
 import { HeaderComponent } from 'src/app/components/header/header.component';
 
@@ -17,13 +17,7 @@ import { CopyToClipboardDirective } from 'src/app/shared/directives/copy-to-clip
 import { MailtoDirective } from 'src/app/shared/directives/mailto/mailto.directive';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TimesheetRoutingModule,
-    CalendarModule,
-    FormsModule,
-    ExpenseModule,
-  ],
+  imports: [CommonModule, TimesheetRoutingModule, CalendarModule, FormsModule, ExpenseModule],
   declarations: [
     InvoiceFormComponent,
     InvoicePDFComponent,
@@ -31,7 +25,7 @@ import { MailtoDirective } from 'src/app/shared/directives/mailto/mailto.directi
     TimesheetReviewComponent,
     CopyToClipboardDirective,
     MailtoDirective,
-    HeaderComponent
-  ]
+    HeaderComponent,
+  ],
 })
-export class TimesheetModule { }
+export class TimesheetModule {}

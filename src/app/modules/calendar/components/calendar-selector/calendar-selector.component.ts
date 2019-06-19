@@ -1,13 +1,13 @@
 import {
-  Component,
   ChangeDetectionStrategy,
-  Input,
-  OnInit,
-  ViewEncapsulation,
   ChangeDetectorRef,
-  Output,
+  Component,
   EventEmitter,
-  OnDestroy
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewEncapsulation,
 } from '@angular/core';
 
 import { Subject } from 'rxjs';
@@ -18,15 +18,15 @@ import {
   addMonths,
   differenceInMinutes,
   endOfMonth,
+  getDay,
   isSameDay,
   isSameMonth,
   setDate,
+  setMonth,
+  setYear,
   startOfDay,
   startOfMonth,
-  getDay,
-  setMonth,
   subMonths,
-  setYear,
 } from 'date-fns';
 
 import { CalendarEvent, CalendarMonthViewDay, DAYS_OF_WEEK } from 'angular-calendar';
@@ -39,20 +39,20 @@ import { CalendarEvent, CalendarMonthViewDay, DAYS_OF_WEEK } from 'angular-calen
   encapsulation: ViewEncapsulation.None,
 })
 export class CalendarSelectorComponent implements OnInit, OnDestroy {
-  @Input() public minifiedTimesheet: any;
-  @Input() public picking: boolean;
-  @Output() public changed = new EventEmitter<boolean>();
-  public timesheet: CalendarEvent[] = [];
-  public refresh: Subject<any> = new Subject();
-  public locale = 'fr';
-  public weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
-  public weekendDays: number[] = [DAYS_OF_WEEK.SATURDAY, DAYS_OF_WEEK.SUNDAY];
-  public viewDate: Date = new Date();
-  public totalWorkedTime = 0;
+  @Input() minifiedTimesheet?: any;
+  @Input() picking: boolean;
+  @Output() changed = new EventEmitter<boolean>();
+  timesheet: CalendarEvent[] = [];
+  refresh: Subject<any> = new Subject();
+  locale = 'fr';
+  weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
+  weekendDays: number[] = [DAYS_OF_WEEK.SATURDAY, DAYS_OF_WEEK.SUNDAY];
+  viewDate: Date = new Date();
+  totalWorkedTime = 0;
 
-  public constructor(private changeDetector: ChangeDetectorRef) {}
+  constructor(private changeDetector: ChangeDetectorRef) {}
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
     this._initTimesheet();
     this.refresh.subscribe(() => {
       this.changeDetector.detectChanges();
@@ -65,18 +65,18 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
     });
   }
 
-  public ngOnDestroy(): void {
+  ngOnDestroy(): void {
     this.refresh.unsubscribe();
   }
 
-  public beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
+  beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
     this.totalWorkedTime = 0;
 
     body.forEach(day => {
       if (!this.picking) {
         day.cssClass = 'cal-disabled';
       }
-      day.events.forEach((event) => {
+      day.events.forEach((event: any) => {
         const dayTime = differenceInMinutes(event.end, event.start) / 60 / 8;
         day.badgeTotal = dayTime;
         this.totalWorkedTime += dayTime;
@@ -84,7 +84,7 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
     });
   }
 
-  public dayClicked(date: Date): void {
+  dayClicked(date: Date): void {
     if (isSameMonth(date, this.viewDate)) {
       if (!this._isDayWorked(date)) {
         this._addTimesheetDay(date);
@@ -95,19 +95,19 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
     this.refresh.next();
   }
 
-  public nextMonth(): void {
+  nextMonth(): void {
     this.viewDate = addMonths(this.viewDate, 1);
     this.emptyDays();
   }
 
-  public previousMonth(): void {
+  previousMonth(): void {
     this.viewDate = subMonths(this.viewDate, 1);
     this.emptyDays();
   }
 
-  public selectAllBusinessDays(): void {
-    const monthStart = startOfMonth(this.viewDate).getDate(),
-          monthEnd = endOfMonth(this.viewDate).getDate();
+  selectAllBusinessDays(): void {
+    const monthStart = startOfMonth(this.viewDate).getDate();
+    const monthEnd = endOfMonth(this.viewDate).getDate();
 
     for (let date = monthStart; date <= monthEnd; date++) {
       const aDay = setDate(this.viewDate, date);
@@ -119,16 +119,16 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
     this.refresh.next();
   }
 
-  public emptyDays(): void {
+  emptyDays(): void {
     this.timesheet = [];
     this.refresh.next();
   }
 
-  public dayEdited(event: Event, date: Date, time: number): void {
+  dayEdited(event: Event, date: Date, time: number): void {
     event.stopPropagation();
 
-    const day = this._getDayWorkingTime(date),
-          end = addMinutes(day.start, 8 * 60 * time);
+    const day: any = this._getDayWorkingTime(date);
+    const end = addMinutes(day.start, 8 * 60 * time);
 
     if (time !== 0 && end) {
       day.end = end;
@@ -141,7 +141,7 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
   private _initTimesheet(): void {
     const timesheetDate = Object.keys(this.minifiedTimesheet)[0];
 
-    if (timesheetDate !== undefined) {
+    if (timesheetDate) {
       const month = Number.parseInt(timesheetDate.split('.')[0], 10);
       const year = Number.parseInt(timesheetDate.split('.')[1], 10);
       const daysValue = this.minifiedTimesheet[timesheetDate];
@@ -158,14 +158,14 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
     }
   }
 
-  private _getDayWorkingTime(day: Date): CalendarEvent {
-    return this.timesheet.find((currenDay) => {
+  private _getDayWorkingTime(day: Date): CalendarEvent | undefined {
+    return this.timesheet.find(currenDay => {
       return isSameDay(currenDay.start, day);
     });
   }
 
   private _isDayWorked(day: Date): boolean {
-    return this.timesheet.some((currentDay) => {
+    return this.timesheet.some(currentDay => {
       return isSameDay(currentDay.start, day);
     });
   }
@@ -180,14 +180,12 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
     this.timesheet.push({
       title: '',
       start: date,
-      end: end,
+      end,
       draggable: false,
     });
   }
 
-  private _deleteDay(day: Date): void  {
-    this.timesheet = this.timesheet.filter(
-      (iEvent) => !isSameDay(day, iEvent.start)
-    );
+  private _deleteDay(day: Date): void {
+    this.timesheet = this.timesheet.filter(iEvent => !isSameDay(day, iEvent.start));
   }
 }

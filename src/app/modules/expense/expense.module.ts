@@ -1,14 +1,14 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
-import { ExpenseRoutingModule } from './expense.routes';
+import { FormsModule } from '@angular/forms';
+import { ExpenseFlatFeeFormComponent } from './components/expense-flat-fee-form/expense-flat-fee-form.component';
+import { ExpenseFlatFeeTableComponent } from './components/expense-flat-fee-table/expense-flat-fee-table.component';
 import { ExpenseMileageFormComponent } from './components/expense-mileage-form/expense-mileage-form.component';
 import { ExpenseMileageTableComponent } from './components/expense-mileage-table/expense-mileage-table.component';
 import { ExpenseMiscellaneousFormComponent } from './components/expense-miscellaneous-form/expense-miscellaneous-form.component';
 import { ExpenseMiscellaneousTableComponent } from './components/expense-miscellaneous-table/expense-miscellaneous-table.component';
-import { ExpenseFlatFeeFormComponent } from './components/expense-flat-fee-form/expense-flat-fee-form.component';
-import { ExpenseFlatFeeTableComponent } from './components/expense-flat-fee-table/expense-flat-fee-table.component';
-import { FormsModule } from '@angular/forms';
+import { ExpenseRoutingModule } from './expense.routes';
 
 @NgModule({
   declarations: [
@@ -17,13 +17,9 @@ import { FormsModule } from '@angular/forms';
     ExpenseMiscellaneousFormComponent,
     ExpenseMiscellaneousTableComponent,
     ExpenseFlatFeeFormComponent,
-    ExpenseFlatFeeTableComponent
+    ExpenseFlatFeeTableComponent,
   ],
-  imports: [
-    CommonModule,
-    ExpenseRoutingModule,
-    FormsModule,
-  ],
+  imports: [CommonModule, ExpenseRoutingModule, FormsModule],
   exports: [
     CommonModule,
     ExpenseMileageFormComponent,
@@ -31,7 +27,7 @@ import { FormsModule } from '@angular/forms';
     ExpenseMiscellaneousFormComponent,
     ExpenseMiscellaneousTableComponent,
     ExpenseFlatFeeFormComponent,
-    ExpenseFlatFeeTableComponent
-  ]
+    ExpenseFlatFeeTableComponent,
+  ],
 })
-export class ExpenseModule { }
+export class ExpenseModule {}

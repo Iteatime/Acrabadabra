@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MiscellaneousExpensesService } from './miscellaneous-expenses.service';
-import { MonetaryService } from 'src/app/shared/services/monetary/monetary.service';
 import { Miscellaneous } from 'src/app/shared/models/miscellaneous.model';
+import { MonetaryService } from 'src/app/shared/services/monetary/monetary.service';
+import { MiscellaneousExpensesService } from './miscellaneous-expenses.service';
 
 let service: MiscellaneousExpensesService;
 let misc: Miscellaneous;
@@ -10,9 +10,8 @@ let misc: Miscellaneous;
 describe('MiscellaneousExpensesService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ MonetaryService ]
-    })
-    .compileComponents();
+      providers: [MonetaryService],
+    }).compileComponents();
     service = TestBed.get(MiscellaneousExpensesService);
   });
 
@@ -25,14 +24,14 @@ describe('MiscellaneousExpensesService', () => {
       service.miscellaneousTypes = [
         {
           type: 'Lavage',
-          vatDeductible: false
+          vatDeductible: false,
         },
         {
           type: 'Fournitures',
-          vatDeductible: true
-        }
+          vatDeductible: true,
+        },
       ];
-      misc = {miscellaneousType: '', tvaRate: 10, wording: '', date: '', amount: 10, selectedType: 1 };
+      misc = { miscellaneousType: '', tvaRate: 10, wording: '', date: '', amount: 10, selectedType: 1 };
     });
 
     it('should return "true" if the vat is deductible on this type of miscellaneous expense', () => {
