@@ -18,30 +18,21 @@ export class MissionListComponent implements OnInit {
               private _notificationService: NotificationService ) { }
 
   ngOnInit() {
-    this.getAllMissions();
+    this.update();
   }
 
-  getAllMissions(): any {
-    this.missionsArray$ = [];
-    this.missionService.readAllMissions().then(response => {
-
-      response.forEach(mission => {
-        if (mission.data.missionCreator === this._auth.user.id) {
-          mission.data.id = mission.ref['@ref'].id;
-          // this.missionsArray$[mission.data.id].push(mission.data);
-          this.missionsArray$.push(mission.data);
-        } else {
-          this.missionsArray$ = [];
-        }
-      });
+  update() {
+    this.missionService.readByUser().then(response => {
+      this.missionsArray$ = response;
+      console.log(this.missionsArray$);
     });
   }
-
+  
   delete(id: any) {
     if ( confirm( "Etes vous sur de vouloir supprimer cette mission ?" ) ) {
       this.missionService.deleteMission(id)
       .then((res) => {
-        this.getAllMissions();
+        this.update();
         this.reactToSubmition(false);
       }).catch((error) => {
         this.reactToSubmition(true);

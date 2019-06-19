@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Mission, Timesheet } from 'src/app/shared/models';
 import { SerializationService } from 'src/app/shared/services/serialization/serialization.service';
+import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,10 @@ export class MissionService {
   public mission = new Mission();
   public timesheet: Timesheet;
 
-  constructor(private _serializer: SerializationService) { }
+  constructor(
+    private _serializer: SerializationService,
+    private _auth: AuthenticationService,
+  ) { }
 
   public getEditToken(): string {
     return this._serializer.serializeObject({
@@ -44,8 +48,14 @@ export class MissionService {
     });
   }
 
+  readByUser = () => {
+    return fetch(`/.netlify/functions/missions-read-all/${this._auth.user.id}`).then( (response) => {
+      return response.json();
+    });
+  }
+
   readById = () => {
-    return fetch('/.netlify/functions/mission-read-by-id').then((response) => {
+    return fetch('/.netlify/functions/mission-read-all/').then((response) => {
       return response.json();
     });
   }
