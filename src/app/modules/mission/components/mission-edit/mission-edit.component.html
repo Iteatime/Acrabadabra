@@ -362,7 +362,7 @@
               <label class="invoice-form__half-block__input-wrapper__item__input__toggle">
                 <input type="checkbox" name="invoiceProviderTradeAndCompaniesRegisterToggle"
                   [(ngModel)]="missionService.mission.providerCompany.tradeAndCompaniesRegisterExemption"
-                  (change)="missionService.mission.providerCompany.tradeAndCompaniesRegisterExemption = ''"
+                  (change)="missionService.mission.providerCompany.tradeAndCompaniesRegisterCity = ''"
                   #missionProviderCompanyTradeAndCompaniesRegisterExemption>
                 Dispensé d'immatriculation au RCS et au RM
               </label>
@@ -388,7 +388,7 @@
               <label class="invoice-form__half-block__input-wrapper__item__input__toggle">
                 <input type="checkbox" name="invoiceProviderVATToggle"
                   [(ngModel)]="missionService.mission.providerCompany.vatExemption"
-                  (change)="missionService.mission.providerCompany.vatExemption = ''"
+                  (change)="missionService.mission.providerCompany.vatNumber = ''"
                   #missionProviderCompanyVATExemption>
                 Franchise TVA
               </label>
@@ -461,7 +461,7 @@
               <label class="invoice-form__half-block__input-wrapper__item__input__toggle">
                 <input type="checkbox" name="invoiceClientTradeAndCompaniesRegisterToggle"
                   [(ngModel)]="missionService.mission.clientCompany.tradeAndCompaniesRegisterExemption"
-                  (change)="missionService.mission.clientCompany.tradeAndCompaniesRegisterExemption = ''"
+                  (change)="missionService.mission.clientCompany.tradeAndCompaniesRegisterCity = ''"
                   #missionClientCompanyTradeAndCompaniesRegisterExemption>
                 Dispensé d'immatriculation au RCS et au RM
               </label>
