@@ -1,79 +1,6 @@
 @import "src/app/style/vars";
 @import "src/app/style/mixins";
 
-.mission-form {
-  width: 100%;
-
-  &__block {
-    @media (min-width: $screen-sm-min) {
-      margin: 30px 0px;
-    }
-    margin: 20px 0px;
-
-    &__title {
-      @include header-form;
-    }
-
-    &__input-wrapper {
-      @include form-input;
-      display: flex;
-      flex-wrap: wrap;
-
-      &__item {
-        @media (min-width: $screen-sm-min) {
-          width: calc(50% - 10px);
-          margin: 0 5px;
-          margin-bottom: 20px;
-        }
-          width: calc(100% - 10px);
-          margin: 0 5px;
-          margin-bottom: 20px;
-      }
-
-        &__title {
-          @include sub-heading;
-        }
-
-        &__input-wrapper {
-          @include form-input;
-          display: flex;
-          flex-wrap: wrap;
-          background: $white;
-          border-bottom: none;
-
-          &:first-of-type {
-            border-top: 1px solid $grey_border_dark;
-          }
-
-          &:last-of-type {
-            border-bottom: 1px solid $grey_border_dark;
-          }
-
-          &__item {
-            width: 100%;
-            margin: 0px;
-          }
-        }
-    }
-  }
-
-  &__half-block {
-    @media (min-width: $screen-sm-min) {
-      width: calc(50% - 20px);
-    }
-
-    display: inline-table;
-    width: 100%;
-
-    &__title {
-      @include header-form;
-    }
-
-    &__input-wrapper {
-      @include form-input;
-    }
-  }
-}
 
 .optional{
   padding-left: 5px;
@@ -122,103 +49,186 @@
       }
     }
 
-    &__form {
-      @media (min-width: $screen-sm-min) {
-        margin-top: 45px;
-      }
-
+    &__submit {
+      margin-top: 40px;
+      width: 100%;
       display: flex;
-      flex-wrap: wrap;
-      margin-top: 25px;
+      justify-content: space-around;
 
-      &__message {
-        min-height: 50px;
-        line-height: 50px;
-        width: 100%;
-        border-radius: 5px;
-        text-align: center;
+      &__button {
+        @include hoveranim_glow($darker_blue);
 
-        &--success {
-          background-color: $green_valid;
-        }
-
-        &--error {
-          color: white;
-          font-weight: 700;
-          background-color: $red_error;
-        }
+        border: none;
+        display: inline-block;
+        background: $dark_blue;
+        padding: 0;
+        cursor: pointer;
+        width: 40%;
+        height: 60px;
+        min-width: 220px;
+        line-height: 60px;
+        color: $white;
+        font-size: 20px;
+        font-weight: 700;
       }
-      &__buttons {
+    }
 
-        display: flex;
-        justify-content: space-around;
-        margin-top: 40px;
-        width: 100%;
+    &__icons {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+      margin-top: 40px;
+      width: 100%;
 
-        &__item {
-          @include hoveranim_glow($darker_blue);
-
-          border: none;
-          background: $dark_blue;
-          padding: 0;
-          cursor: pointer;
-          width: 40%;
-          height: 60px;
-          min-width: 220px;
-          line-height: 60px;
-          color: $white;
-          font-size: 20px;
-          font-weight: 700;
+      &__item {
+        @media (min-width: $screen-sm-min) {
+          width: calc(100% / 4 - 40px);
         }
-      }
 
-      &__icons {
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: center;
-        margin-top: 40px;
-        width: 100%;
+        margin: 20px;
+        width: calc(100% - 40px);
 
-        &__item {
-          @media (min-width: $screen-sm-min) {
-            width: calc(100% / 4 - 40px);
-          }
+        &__disabled {
+          cursor: not-allowed;
+        }
 
-          margin: 20px;
-          width: calc(100% - 40px);
+        > a {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
 
-          &__disabled {
-            cursor: not-allowed;
-          }
+          &:hover,
+          &:focus,
+          &:active {
+            color: initial;
+            text-decoration: none;
 
-          > a {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-
-            &:hover,
-            &:focus,
-            &:active {
-              color: initial;
-              text-decoration: none;
-
-              span {
-                text-decoration: underline;
-              }
-            }
-
-            i,
             span {
-              color: initial;
+              text-decoration: underline;
             }
+          }
 
-            i {
-              font-size: 40px;
-            }
+          i,
+          span {
+            color: initial;
+          }
+
+          i {
+            font-size: 40px;
           }
         }
       }
     }
+  }
+}
+
+.mission-form {
+  width: 100%;
+
+  &__block {
+
+    @media (min-width: $screen-sm-min) {
+      margin: 30px 0px;
+    }
+    margin: 20px 0px;
+
+    &__title {
+      @include header-form;
+    }
+
+    &__input-wrapper {
+      @include form-input;
+      display: flex;
+      flex-wrap: wrap;
+
+      &__item {
+        @media (min-width: $screen-sm-min) {
+          width: calc(50% - 10px);
+          margin: 0 5px;
+        }
+          width: calc(100% - 10px);
+          margin: 0 5px;
+      }
+
+      &__sub-block {
+        @media (min-width: $screen-sm-min) {
+          margin-bottom: 30px;
+        }
+        margin-bottom: 20px;
+        width: 100%;
+
+        &__title {
+          @include sub-heading;
+        }
+
+        &__input-wrapper {
+          @include form-input;
+          display: flex;
+          flex-wrap: wrap;
+          background: $white;
+          border-bottom: none;
+
+          &:first-of-type {
+            border-top: 1px solid $grey_border_dark;
+          }
+
+          &:last-of-type {
+            border-bottom: 1px solid $grey_border_dark;
+          }
+
+          &__item {
+            width: 100%;
+            margin: 0px;
+          }
+        }
+      }
+    }
+  }
+
+  &__half-block {
+
+    @media (min-width: $screen-sm-min) {
+      width: calc(50% - 20px);
+    }
+
+    display: inline-table;
+    width: 100%;
+    margin-bottom: 20px;
+
+    &__title {
+      @include header-form;
+    }
+
+    &__input-wrapper {
+      @include form-input;
+
+      &__item {
+        &__button {
+          border: none;
+          background: $dark_blue;
+          cursor: pointer;
+          width: 100%;
+          height: 38px;
+          color: $white;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}
+
+input[name="invoiceClientVATNumberInput"] {
+  margin-bottom: 32px;
+}
+
+.optional{
+  padding-left: 5px;
+  font-size: 13px;
+}
+
+#client {
+  @media (min-width: $screen-sm-min) {
+    margin-left: 40px;
   }
 }

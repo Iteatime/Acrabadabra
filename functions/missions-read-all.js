@@ -13106,28 +13106,18 @@ const cryptr = new Cryptr(process.env.CRYPTR_KEY);
 exports.handler = (event, context, callback) => {
   console.log("Function `missions-read-all` invoked");
   return client.query(q.Paginate(q.Match(q.Ref("indexes/all_missions")))).then(response => {
-    console.log('$$$$$$$');
-    console.log(response);
-    const missionRefs = response.data;
-    console.log('++++++++++');
-    console.log(missionRefs); // create new query out of todo refs. http://bit.ly/2LG3MLg
+    const missionRefs = response.data; // create new query out of todo refs. http://bit.ly/2LG3MLg
 
     const getAllTodoDataQuery = missionRefs.map(ref => {
-      console.log('^^^^^^');
-      console.log(JSON.stringify(ref));
       let object = q.Get(ref);
       return object;
     }); // then query the refs
 
     return client.query(getAllTodoDataQuery).then(ret => {
       let list = JSON.parse(JSON.stringify(ret));
-      console.log('-------');
-      console.log(list);
       list.forEach(object => {
         object.ref['@ref'].id = cryptr.encrypt(object.ref['@ref'].id);
       });
-      console.log('-------');
-      console.log(list);
       return callback(null, {
         statusCode: 200,
         body: JSON.stringify(list)

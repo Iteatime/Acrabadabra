@@ -40,7 +40,7 @@ export class MissionListComponent implements OnInit {
   }
 
   delete(id: any) {
-    if ( confirm( "Etes vous sur de vouloir supprimer cette mission ?" ) ) {
+    if ( confirm( "Êtes vous sur de vouloir supprimer cette mission ?" ) ) {
       this.missionService.deleteMission(id)
       .then((res) => {
         this.getAllMissions();

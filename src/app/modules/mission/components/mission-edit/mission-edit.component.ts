@@ -17,6 +17,7 @@ export class MissionEditComponent implements OnInit {
   editUrl: string = '';
   originUrl = window.location.origin;
   missionReference: string;
+  isConsultantFreelance = false;
 
   constructor(
     public router: Router,
@@ -33,6 +34,7 @@ export class MissionEditComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('base 64 ---->' + btoa('234514343108018689'));
     this.notificationService.dismissAll();
     if (!this.auth.isAuthenticated) {
       this.notificationService.push('Veuillez vous connecter', 'warning', { isSelfClosing: false });

@@ -1,3 +1,5 @@
+import { Company } from './company.model';
+
 export class Mission {
   missionCreator: string;
   consultant: string;
@@ -10,7 +12,14 @@ export class Mission {
   endDate: string;
   unitOfWorkType: string;
   unitOfworkPrice: string;
-  secret: string;
+  consultantCompany: Company;
+  providerCompany: Company;
+  clientCompany: Company;
+  bankAccountHolder: string;
+  bankingAgency: string;
+  bankingDomiciliation: string;
+  bankIBAN: string;
+  bankSWIFT: string;
 
   constructor(
     missionCreator?: string,
@@ -24,7 +33,15 @@ export class Mission {
     missionEndDate?: string,
     missionUnitOfWorkType?: string,
     missionUnitOfWorkPrice?: string,
-    secret?: string) {
+    consultantCompany?: Company,
+    providerCompany?: Company,
+    clientCompany?: Company,
+    bankAccountHolder?: string,
+    bankingAgency?: string,
+    bankingDomiciliation?: string,
+    bankIBAN?: string,
+    bankSWIFT?: string
+    ) {
 
     this.missionCreator = missionCreator;
     this.consultant = missionConsultant;
@@ -37,8 +54,14 @@ export class Mission {
     this.endDate = missionEndDate;
     this.unitOfWorkType = missionUnitOfWorkType;
     this.unitOfworkPrice = missionUnitOfWorkPrice;
-    this.secret = secret;
-
+    this.consultantCompany = consultantCompany || new Company();
+    this.providerCompany = providerCompany || new Company();
+    this.clientCompany = clientCompany || new Company();
+    this.bankAccountHolder = bankAccountHolder || '';
+    this.bankingAgency = bankingAgency || '';
+    this.bankingDomiciliation = bankingDomiciliation || '';
+    this.bankIBAN = bankIBAN || '';
+    this.bankSWIFT = bankSWIFT || '';
   }
 
   static fromFaunaDB(data: ApiFaunaDB) {

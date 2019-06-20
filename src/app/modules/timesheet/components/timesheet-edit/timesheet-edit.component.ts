@@ -71,13 +71,15 @@ export class TimesheetEditComponent implements OnInit {
       } else {
         this.loadTimesheet(this.timesheetService.timesheet);
       }
-    } else if (this.route.snapshot.params.missionId !== undefined)
-    {
+    } else if (this.route.snapshot.params.missionId !== undefined) {
+
       this._missionService.readById(this.route.snapshot.params.missionId).then( response => {
-        this.timesheetService.timesheet.consultant.name = response.data.consultant;
-        this.timesheetService.timesheet.consultant.email = response.data.consultantEmail;
-        this.timesheetService.timesheet.mission.client = response.data.client;
-        this.timesheetService.timesheet.mission.title = response.data.title;
+      this.generateInvoice = true;
+      this.timesheetService.timesheet.consultant.name = response.data.consultant;
+      this.timesheetService.timesheet.consultant.email = response.data.consultantEmail;
+      this.timesheetService.timesheet.mission.client = response.data.client;
+      this.timesheetService.timesheet.mission.title = response.data.title;
+
       });
     }
 

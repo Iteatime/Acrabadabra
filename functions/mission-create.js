@@ -13122,7 +13122,6 @@ exports.handler = (event, context, callback) => {
   return client.query(q.Create(q.Ref("classes/missions"), mission)).then(response => {
     console.log("success", response);
     let jsonResponse = JSON.parse(JSON.stringify(response));
-    console.log(jsonResponse);
     jsonResponse.ref['@ref'].id = cryptr.encrypt(jsonResponse.ref['@ref'].id);
     /* Success! return the response with statusCode 200 */
 
