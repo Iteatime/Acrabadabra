@@ -30,6 +30,8 @@ import {
 } from 'date-fns';
 
 import { CalendarEvent, CalendarMonthViewDay, DAYS_OF_WEEK } from 'angular-calendar';
+import { CalendarService } from '../../calendar.service';
+import { TimeUnit } from 'src/app/shared/@types/timeUnit';
 
 @Component({
   selector: 'app-calendar-selector',
@@ -48,16 +50,27 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
   public weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
   public weekendDays: number[] = [DAYS_OF_WEEK.SATURDAY, DAYS_OF_WEEK.SUNDAY];
   public viewDate: Date = new Date();
+  public timeUnits: TimeUnit[] = [];
+  public selectedTimeUnit: string;
   public totalWorkedTime = 0;
 
-  public constructor(private changeDetector: ChangeDetectorRef) {}
+  public constructor(
+    private changeDetector: ChangeDetectorRef,
+    private calendarService: CalendarService
+  ) {}
 
   public ngOnInit(): void {
+    this.setTimeUnits();
+
     this._initTimesheet();
+
+    this.selectedTimeUnit = this.calendarService.getSelectedTimeUnit(this.timesheet);
+
     this.refresh.subscribe(() => {
       this.changeDetector.detectChanges();
       this.changed.emit();
     });
+
     setTimeout(() => {
       if (!this.refresh.isStopped) {
         this.changeDetector.detectChanges();
@@ -76,12 +89,27 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
       if (!this.picking) {
         day.cssClass = 'cal-disabled';
       }
+
       day.events.forEach((event) => {
-        const dayTime = differenceInMinutes(event.end, event.start) / 60 / 8;
-        day.badgeTotal = dayTime;
-        this.totalWorkedTime += dayTime;
+        const time = this.calendarService.getTimeFromCalendarEvent(event);
+        day.badgeTotal = time;
+        this.totalWorkedTime += time;
       });
     });
+  }
+
+  public getDayWorkedTime(day: any): number {
+    let time = 0;
+    day.events.forEach((event: CalendarEvent<any>) => {
+      time = this.calendarService.getTimeFromCalendarEvent(event);
+    });
+
+    return time;
+  }
+
+  public setTimeUnit(unit: string): void {
+    this.selectedTimeUnit = unit;
+    this.emptyDays();
   }
 
   public dayClicked(date: Date): void {
@@ -127,15 +155,26 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
   public dayEdited(event: Event, date: Date, time: number): void {
     event.stopPropagation();
 
-    const day = this._getDayWorkingTime(date),
-          end = addMinutes(day.start, 8 * 60 * time);
+    const day = this._getDayWorkingTime(date);
+    const end = this.calendarService.getNewEndDate(day, time);
 
     if (time !== 0 && end) {
       day.end = end;
     } else {
       this._deleteDay(date);
     }
+
     this.refresh.next();
+  }
+
+  private setTimeUnits(): void {
+    Object.keys(this.calendarService.timeUnits).forEach(key => {
+      const timeUnit: TimeUnit = this.calendarService.timeUnits[key];
+      this.timeUnits.push({
+        label: timeUnit.label,
+        key
+      });
+    });
   }
 
   private _initTimesheet(): void {
@@ -151,8 +190,9 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
       for (let date = 0; date < daysValue.length; date++) {
         const day = new Date(+year, +month, date + 1);
 
-        if (daysValue[date] !== undefined && daysValue[date] !== 0) {
-          this._addTimesheetDay(day, addMinutes(day, daysValue[date] * 60 * 8));
+        if (daysValue[date].time !== undefined && daysValue[date].time !== 0) {
+          const time = this.calendarService.getTimeFromWorkingEvent(daysValue[date]);
+          this._addTimesheetDay(day, addMinutes(day, time), daysValue[date].unit);
         }
       }
     }
@@ -170,18 +210,18 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
     });
   }
 
-  private _addTimesheetDay(date: Date, end?: Date): void {
+  private _addTimesheetDay(date: Date, end?: Date, timeUnit: string = this.selectedTimeUnit): void {
     date = startOfDay(date);
 
     if (end === undefined) {
-      end = addHours(date, 8);
+      end = addMinutes(date, this.calendarService.timeUnits[timeUnit].timeInMinutes);
     }
 
     this.timesheet.push({
-      title: '',
+      title: timeUnit,
       start: date,
       end: end,
-      draggable: false,
+      draggable: false
     });
   }
 
