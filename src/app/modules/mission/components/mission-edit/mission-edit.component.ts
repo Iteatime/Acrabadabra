@@ -4,6 +4,7 @@ import { NotificationService } from 'src/app/modules/notification/services/notif
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
 import { MissionService } from '../../services/mission.service';
+import { Company } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-mission-edit',
@@ -34,12 +35,14 @@ export class MissionEditComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('base 64 ---->' + btoa('234514343108018689'));
     this.notificationService.dismissAll();
     if (!this.auth.isAuthenticated) {
       this.notificationService.push('Veuillez vous connecter', 'warning', { isSelfClosing: false });
     } else {
       if (this.checkFormsValidity()) {
+        if (this.isConsultantFreelance === false) {
+          this.missionService.mission.consultantCompany = new Company();
+        }
         this.missionService.mission.missionCreator = this.auth.user.id;
         this.reactToSubmition(false);
         this.missionService.createMission(this.missionService.mission).then((response) => {
@@ -80,11 +83,11 @@ export class MissionEditComponent implements OnInit {
   }
 
   reactToCopy(): void {
-      this.notificationService.push(
-        'Vous pouvez partager ce lien permettant la création d\'un CRA intégrant les informations relatives à votre mission',
-        'success',
-        { duration: 15 }
-      );
+    this.notificationService.push(
+      'Vous pouvez partager ce lien permettant la création d\'un CRA intégrant les informations relatives à votre mission',
+      'success',
+      { duration: 15 }
+    );
   }
 
   showValidationMessages(): void {

@@ -50,7 +50,6 @@ export class TimesheetReviewComponent implements OnInit {
         }
       }
     });
-
     this.titleService.setTitle('Acradababra - Consulter un compte rendu d\'activité');
 
   }

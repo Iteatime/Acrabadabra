@@ -20,3 +20,9 @@ When I click on "Créer cette mission" button
 Then a success message appears
 And a edit timesheet copy link appears
 And my datas are stored in database
+
+Scenario: I want a link to create a timesheet with mission informations
+Given I filled all inputs on mission creation page
+When I click on "Créer cette mission" button
+Then an icon with message "Copier le lien de création de CRA" appears
+And I can click on it to obtain a link to create a timesheet in my clipboard

@@ -157,7 +157,7 @@
       </div>
       <div class="timesheet-edit__wrapper__form__component">
         <label class="timesheet-edit__wrapper__form__component__toggle">
-          <input name="invoiceToggle" type="checkbox" [(ngModel)]="isConsultantFreelance" #invoiceToggle>
+          <input name="missionToggle" type="checkbox" [(ngModel)]="isConsultantFreelance" #missionToggle>
           Consultant indépendant
         </label>
       </div>
@@ -243,8 +243,8 @@
                     Ce champ est obligatoire.
                   </div>
                 </div>
-                <label class="invoice-form__half-block__input-wrapper__item__input__toggle">
-                  <input type="checkbox" name="invoiceProviderTradeAndCompaniesRegisterToggle"
+                <label class="mission-form__half-block__input-wrapper__item__input__toggle">
+                  <input type="checkbox" name="missionProviderTradeAndCompaniesRegisterToggle"
                     [(ngModel)]="missionService.mission.consultantCompany.tradeAndCompaniesRegisterExemption"
                     (change)="missionService.mission.consultantCompany.tradeAndCompaniesRegisterExemption = ''"
                     #missionConsultantCompanyTradeAndCompaniesRegisterExemption>
@@ -254,23 +254,15 @@
             </div>
             <div class="mission-form__block__input-wrapper__item form-group">
               <label for="missionConsultantCompanyVatNumberInput"
-                class="mission-form__block__input-wrapper__item__label">Numéro de TVA intra-communautaire
+                class="mission-form__block__input-wrapper__item__label">Numéro de TVA intra-communautaire<span class="optional">(optionnel)</span>
               </label>
               <div class="mission-form__block__input-wrapper__item__input">
-                <input type="text" required class="form-control" name="missionConsultantCompanyVatNumber"
+                <input type="text" class="form-control" name="missionConsultantCompanyVatNumber"
                   [disabled]="missionConsultantCompanyVATExemption.checked"
                   [(ngModel)]="missionService.mission.consultantCompany.vatNumber"
                   #missionConsultantCompanyVatNumber="ngModel">
-                <div *ngIf="missionConsultantCompanyVatNumber.invalid &&
-                (missionConsultantCompanyVatNumber.dirty || missionConsultantCompanyVatNumber.touched)"
-                  class="alert alert-danger">
-
-                  <div *ngIf="missionConsultantCompanyVatNumber.errors['required']">
-                    Ce champ est obligatoire.
-                  </div>
-                </div>
-                <label class="invoice-form__half-block__input-wrapper__item__input__toggle">
-                  <input type="checkbox" name="invoiceProviderVATToggle"
+                <label class="mission-form__half-block__input-wrapper__item__input__toggle">
+                  <input type="checkbox" name="missionProviderVATToggle"
                     [(ngModel)]="missionService.mission.consultantCompany.vatExemption"
                     (change)="missionService.mission.consultantCompany.vatExemption = ''"
                     #missionConsultantCompanyVATExemption>
@@ -359,8 +351,8 @@
                   Ce champ est obligatoire.
                 </div>
               </div>
-              <label class="invoice-form__half-block__input-wrapper__item__input__toggle">
-                <input type="checkbox" name="invoiceProviderTradeAndCompaniesRegisterToggle"
+              <label class="mission-form__half-block__input-wrapper__item__input__toggle">
+                <input type="checkbox" name="missionProviderTradeAndCompaniesRegisterToggle"
                   [(ngModel)]="missionService.mission.providerCompany.tradeAndCompaniesRegisterExemption"
                   (change)="missionService.mission.providerCompany.tradeAndCompaniesRegisterCity = ''"
                   #missionProviderCompanyTradeAndCompaniesRegisterExemption>
@@ -371,22 +363,15 @@
           <div class="mission-form__half-block__input-wrapper__item form-group">
             <label for="missionProviderCompanyVatNumberInput"
               class="mission-form__half-block__input-wrapper__item__label">Numéro
-              de TVA intra-communautaire</label>
+              de TVA intra-communautaire<span class="optional">(optionnel)</span>
+            </label>
             <div class="mission-form__half-block__input-wrapper__item__input">
-              <input type="text" required class="form-control" name="missionProviderCompanyVatNumberInput"
+              <input type="text" class="form-control" name="missionProviderCompanyVatNumberInput"
                 [disabled]="missionProviderCompanyVATExemption.checked"
                 [(ngModel)]="missionService.mission.providerCompany.vatNumber"
                 #missionProviderCompanyVatNumber="ngModel">
-              <div *ngIf="missionProviderCompanyVatNumber.invalid &&
-                (missionProviderCompanyVatNumber.dirty || missionProviderCompanyVatNumber.touched)"
-                class="alert alert-danger">
-
-                <div *ngIf="missionProviderCompanyVatNumber.errors['required']">
-                  Ce champ est obligatoire.
-                </div>
-              </div>
-              <label class="invoice-form__half-block__input-wrapper__item__input__toggle">
-                <input type="checkbox" name="invoiceProviderVATToggle"
+              <label class="mission-form__half-block__input-wrapper__item__input__toggle">
+                <input type="checkbox" name="missionProviderVATToggle"
                   [(ngModel)]="missionService.mission.providerCompany.vatExemption"
                   (change)="missionService.mission.providerCompany.vatNumber = ''"
                   #missionProviderCompanyVATExemption>
@@ -418,7 +403,7 @@
             <label for="missionClientCompanyAddressInput"
               class="mission-form__half-block__input-wrapper__item__label">Adresse</label>
             <div class="mission-form__half-block__input-wrapper__item__input">
-              <input type="text" class="form-control" name="missionClientCompanyAddressInput"
+              <input type="text" required class="form-control" name="missionClientCompanyAddressInput"
                 [(ngModel)]="missionService.mission.clientCompany.address" #missionClientCompanyAddress="ngModel">
               <div
                 *ngIf="missionClientCompanyAddress.invalid && (missionClientCompanyAddress.dirty || missionClientCompanyAddress.touched)"
@@ -444,7 +429,7 @@
               Numéro de SIREN<span class="optional">(optionnel)</span>
             </label>
             <div class="mission-form__half-block__input-wrapper__item__input">
-              <input type="text" required class="form-control" name="missionClientCompanySirenInput"
+              <input type="text" class="form-control" name="missionClientCompanySirenInput"
                 [(ngModel)]="missionService.mission.clientCompany.siren" #missionClientCompanySiren="ngModel">
             </div>
           </div>
@@ -458,8 +443,8 @@
                 [disabled]="missionClientCompanyTradeAndCompaniesRegisterExemption.checked"
                 [(ngModel)]="missionService.mission.clientCompany.tradeAndCompaniesRegisterCity"
                 #missionClientCompanyTradeAndCompaniesRegisterCity="ngModel">
-              <label class="invoice-form__half-block__input-wrapper__item__input__toggle">
-                <input type="checkbox" name="invoiceClientTradeAndCompaniesRegisterToggle"
+              <label class="mission-form__half-block__input-wrapper__item__input__toggle">
+                <input type="checkbox" name="missionClientTradeAndCompaniesRegisterToggle"
                   [(ngModel)]="missionService.mission.clientCompany.tradeAndCompaniesRegisterExemption"
                   (change)="missionService.mission.clientCompany.tradeAndCompaniesRegisterCity = ''"
                   #missionClientCompanyTradeAndCompaniesRegisterExemption>
@@ -486,53 +471,106 @@
 
       <div class="mission-form__block">
         <h4 class="mission-form__block__title">Règlement</h4>
-        <div class="mission-form__block__input-wrapper">
+        <div *ngIf="isConsultantFreelance" class="mission-form__block__input-wrapper">
           <div class="mission-form__block__input-wrapper__sub-block">
-            <h4 class="mission-form__block__input-wrapper__sub-block__title">Coordonnées bancaires<span
+            <h4 class="mission-form__block__input-wrapper__sub-block__title">Coordonnées bancaires du consultant<span
                 class="optional">(optionnel)</span></h4>
             <div class="mission-form__block__input-wrapper__sub-block__input-wrapper">
               <div class="mission-form__block__input-wrapper__item form-group">
-                <label for="invoiceBankAccountHolderInput"
+                <label for="missionBankAccountHolderInput"
                   class="mission-form__block__input-wrapper__item__label">Titulaire du compte</label>
                 <div class="mission-form__block__input-wrapper__item__input">
-                  <input type="text" class="form-control" name="invoiceBankAccountHolderInput"
-                    [(ngModel)]="missionService.mission.bankAccountHolder">
+                  <input type="text" class="form-control" name="missionBankAccountHolderInput"
+                    [(ngModel)]="missionService.mission.consultantBankAccountHolder">
                 </div>
               </div>
               <div class="mission-form__block__input-wrapper__item form-group">
-                <label for="invoiceBankDetailsSWIFTInput"
+                <label for="missionBankDetailsSWIFTInput"
                   class="mission-form__block__input-wrapper__item__label">SWIFT</label>
                 <div class="mission-form__block__input-wrapper__item__input">
-                  <input type="text" class="form-control" name="invoiceBankDetailsSWIFTInput"
-                    [(ngModel)]="missionService.mission.bankSWIFT">
+                  <input type="text" class="form-control" name="missionBankDetailsSWIFTInput"
+                    [(ngModel)]="missionService.mission.consultantBankSWIFT">
                 </div>
               </div>
             </div>
             <div class="mission-form__block__input-wrapper__sub-block__input-wrapper">
               <div class="mission-form__block__input-wrapper__sub-block__input-wrapper__item form-group">
-                <label for="invoiceBankDetailsIBANInput"
+                <label for="missionBankDetailsIBANInput"
                   class="mission-form__block__input-wrapper__sub-block__input-wrapper__item__label">IBAN</label>
                 <div class="mission-form__block__input-wrapper__sub-block__input-wrapper__item__input">
-                  <input type="text" class="form-control" name="invoiceBankDetailsIBANInput"
-                    [(ngModel)]="missionService.mission.bankIBAN">
+                  <input type="text" class="form-control" name="missionBankDetailsIBANInput"
+                    [(ngModel)]="missionService.mission.consultantBankIBAN">
                 </div>
               </div>
             </div>
             <div class="mission-form__block__input-wrapper__sub-block__input-wrapper">
               <div class="mission-form__block__input-wrapper__item form-group">
-                <label for="invoiceBankDetailsDomiciliationInput"
+                <label for="missionBankDetailsDomiciliationInput"
                   class="mission-form__block__input-wrapper__item__label">Banque</label>
                 <div class="mission-form__block__input-wrapper__item__input">
-                  <input type="text" class="form-control" name="invoiceBankDetailsDomiciliationInput"
-                    [(ngModel)]="missionService.mission.bankingDomiciliation">
+                  <input type="text" class="form-control" name="missionBankDetailsDomiciliationInput"
+                    [(ngModel)]="missionService.mission.consultantBankingDomiciliation">
                 </div>
               </div>
               <div class="mission-form__block__input-wrapper__item form-group">
-                <label for="invoiceBankingAgencyInput"
+                <label for="missionBankingAgencyInput"
                   class="mission-form__block__input-wrapper__item__label">Agence</label>
                 <div class="mission-form__block__input-wrapper__item__input">
-                  <input type="text" class="form-control" name="invoiceBankingAgencyInput"
-                    [(ngModel)]="missionService.mission.bankingAgency">
+                  <input type="text" class="form-control" name="missionBankingAgencyInput"
+                    [(ngModel)]="missionService.mission.consultantBankingAgency">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mission-form__block__input-wrapper">
+          <div class="mission-form__block__input-wrapper__sub-block">
+            <h4 class="mission-form__block__input-wrapper__sub-block__title">Coordonnées bancaires du prestataire<span
+                class="optional">(optionnel)</span></h4>
+            <div class="mission-form__block__input-wrapper__sub-block__input-wrapper">
+              <div class="mission-form__block__input-wrapper__item form-group">
+                <label for="missionBankAccountHolderInput"
+                  class="mission-form__block__input-wrapper__item__label">Titulaire du compte</label>
+                <div class="mission-form__block__input-wrapper__item__input">
+                  <input type="text" class="form-control" name="missionBankAccountHolderInput"
+                    [(ngModel)]="missionService.mission.providerBankAccountHolder">
+                </div>
+              </div>
+              <div class="mission-form__block__input-wrapper__item form-group">
+                <label for="missionBankDetailsSWIFTInput"
+                  class="mission-form__block__input-wrapper__item__label">SWIFT</label>
+                <div class="mission-form__block__input-wrapper__item__input">
+                  <input type="text" class="form-control" name="missionBankDetailsSWIFTInput"
+                    [(ngModel)]="missionService.mission.providerBankSWIFT">
+                </div>
+              </div>
+            </div>
+            <div class="mission-form__block__input-wrapper__sub-block__input-wrapper">
+              <div class="mission-form__block__input-wrapper__sub-block__input-wrapper__item form-group">
+                <label for="missionBankDetailsIBANInput"
+                  class="mission-form__block__input-wrapper__sub-block__input-wrapper__item__label">IBAN</label>
+                <div class="mission-form__block__input-wrapper__sub-block__input-wrapper__item__input">
+                  <input type="text" class="form-control" name="missionBankDetailsIBANInput"
+                    [(ngModel)]="missionService.mission.providerBankIBAN">
+                </div>
+              </div>
+            </div>
+            <div class="mission-form__block__input-wrapper__sub-block__input-wrapper">
+              <div class="mission-form__block__input-wrapper__item form-group">
+                <label for="missionBankDetailsDomiciliationInput"
+                  class="mission-form__block__input-wrapper__item__label">Banque</label>
+                <div class="mission-form__block__input-wrapper__item__input">
+                  <input type="text" class="form-control" name="missionBankDetailsDomiciliationInput"
+                    [(ngModel)]="missionService.mission.providerBankingDomiciliation">
+                </div>
+              </div>
+              <div class="mission-form__block__input-wrapper__item form-group">
+                <label for="missionBankingAgencyInput"
+                  class="mission-form__block__input-wrapper__item__label">Agence</label>
+                <div class="mission-form__block__input-wrapper__item__input">
+                  <input type="text" class="form-control" name="missionBankingAgencyInput"
+                    [(ngModel)]="missionService.mission.providerBankingAgency">
                 </div>
               </div>
             </div>
