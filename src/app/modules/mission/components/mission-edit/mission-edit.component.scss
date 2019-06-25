@@ -7,11 +7,6 @@
   font-size: 13px;
 }
 
-#client {
-  @media (min-width: $screen-sm-min) {
-    margin-left: 40px;
-  }
-}
 
 .ng-invalid:not(form) {
   border-left: 5px solid ;
@@ -154,6 +149,7 @@
       &__sub-block {
         @media (min-width: $screen-sm-min) {
           margin-bottom: 30px;
+          margin-top: 20px;
         }
         margin-bottom: 20px;
         width: 100%;
