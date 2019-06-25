@@ -43,6 +43,12 @@
                 </div>
               </div>
             </div>
+            <div class="mission-form__half-block__input-wrapper__item form-group">
+              <label class="mission-form__half-block__input-wrapper__item__label">
+                <input name="missionToggle" type="checkbox" [(ngModel)]="isConsultantFreelance" #missionToggle>
+                Consultant indépendant
+              </label>
+            </div>
           </div>
         </div>
 
@@ -155,12 +161,6 @@
           </div>
         </div>
       </div>
-      <div class="timesheet-edit__wrapper__form__component">
-        <label class="timesheet-edit__wrapper__form__component__toggle">
-          <input name="missionToggle" type="checkbox" [(ngModel)]="isConsultantFreelance" #missionToggle>
-          Consultant indépendant
-        </label>
-      </div>
       <div *ngIf="isConsultantFreelance" class="mission-form">
         <div class="mission-form__block">
           <h4 class="mission-form__block__title">Consultant</h4>
@@ -244,9 +244,9 @@
                   </div>
                 </div>
                 <label class="mission-form__half-block__input-wrapper__item__input__toggle">
-                  <input type="checkbox" name="missionProviderTradeAndCompaniesRegisterToggle"
+                  <input type="checkbox" name="missionConsultantTradeAndCompaniesRegisterToggle"
                     [(ngModel)]="missionService.mission.consultantCompany.tradeAndCompaniesRegisterExemption"
-                    (change)="missionService.mission.consultantCompany.tradeAndCompaniesRegisterExemption = ''"
+                    (change)="missionService.mission.consultantCompany.tradeAndCompaniesRegisterCity = ''"
                     #missionConsultantCompanyTradeAndCompaniesRegisterExemption>
                   Dispensé d'immatriculation au RCS et au RM
                 </label>
@@ -262,9 +262,9 @@
                   [(ngModel)]="missionService.mission.consultantCompany.vatNumber"
                   #missionConsultantCompanyVatNumber="ngModel">
                 <label class="mission-form__half-block__input-wrapper__item__input__toggle">
-                  <input type="checkbox" name="missionProviderVATToggle"
+                  <input type="checkbox" name="missionConsultantToggle"
                     [(ngModel)]="missionService.mission.consultantCompany.vatExemption"
-                    (change)="missionService.mission.consultantCompany.vatExemption = ''"
+                    (change)="missionService.mission.consultantCompany.vatNumber = ''"
                     #missionConsultantCompanyVATExemption>
                   Franchise TVA
                 </label>

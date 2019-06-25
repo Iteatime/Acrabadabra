@@ -8,7 +8,7 @@ When I arrive on homepage
 Then I need to click on "Je suis une société de services" button
 And then click click on "Créer une mission" link on dashboard page
 
-Scenario: I can't create a mission if get disconnected
+Scenario: I can't create a mission if I get disconnected
 Given I get disconnected from my account
 When I click on "Créer cette mission"
 Then an error message appears
@@ -26,3 +26,8 @@ Given I filled all inputs on mission creation page
 When I click on "Créer cette mission" button
 Then an icon with message "Copier le lien de création de CRA" appears
 And I can click on it to obtain a link to create a timesheet in my clipboard
+
+Scenario: I want register consultant company informations if he is freelance
+When I click on "consultant indépendant" checkbox
+Then a form about consultant company appears
+And a form about consultant banking informations appears

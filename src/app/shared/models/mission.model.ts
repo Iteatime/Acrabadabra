@@ -25,6 +25,7 @@ export class Mission {
   consultantBankingDomiciliation: string;
   consultantBankIBAN: string;
   consultantBankSWIFT: string;
+  consultantFreelance: boolean;
 
   constructor(
     missionCreator?: string,
@@ -51,9 +52,9 @@ export class Mission {
     consultantBankingDomiciliation?: string,
     consultantBankIBAN?: string,
     consultantBankSWIFT?: string,
+    consultantFreelance?: boolean,
 
     ) {
-
     this.missionCreator = missionCreator;
     this.consultant = missionConsultant;
     this.consultantEmail = missionConsultantEmail;
@@ -78,6 +79,7 @@ export class Mission {
     this.consultantBankingDomiciliation = consultantBankingDomiciliation || '';
     this.consultantBankIBAN = consultantBankIBAN || '';
     this.consultantBankSWIFT = consultantBankSWIFT || '';
+    this.consultantFreelance = consultantFreelance;
 
   }
 }

@@ -1,10 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 import { Router } from '@angular/router';
+
+import { NotificationService } from 'src/app/modules/notification/services/notification.service';
+
+import { Company } from 'src/app/shared/models';
+
 import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
 import { MissionService } from '../../services/mission.service';
-import { Company } from 'src/app/shared/models';
+
 
 @Component({
   selector: 'app-mission-edit',
@@ -43,6 +47,7 @@ export class MissionEditComponent implements OnInit {
         if (this.isConsultantFreelance === false) {
           this.missionService.mission.consultantCompany = new Company();
         }
+        this.missionService.mission.consultantFreelance = this.isConsultantFreelance;
         this.missionService.mission.missionCreator = this.auth.user.id;
         this.reactToSubmition(false);
         this.missionService.createMission(this.missionService.mission).then((response) => {
