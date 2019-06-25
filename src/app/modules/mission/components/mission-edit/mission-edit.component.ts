@@ -46,6 +46,11 @@ export class MissionEditComponent implements OnInit {
       if (this.checkFormsValidity()) {
         if (this.isConsultantFreelance === false) {
           this.missionService.mission.consultantCompany = new Company();
+          this.missionService.mission.consultantBankAccountHolder = '';
+          this.missionService.mission.consultantBankingAgency = '';
+          this.missionService.mission.consultantBankingDomiciliation = '';
+          this.missionService.mission.consultantBankIBAN = '';
+          this.missionService.mission.consultantBankSWIFT = '';
         }
         this.missionService.mission.consultantFreelance = this.isConsultantFreelance;
         this.missionService.mission.missionCreator = this.auth.user.id;
@@ -99,10 +104,6 @@ export class MissionEditComponent implements OnInit {
     Object.keys(this.form.controls).forEach(field => {
       this.form.controls[field].markAsTouched();
     });
-  }
-
-  onUserInput() {
-    this.showLink = false;
   }
 
 }

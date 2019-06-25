@@ -6,92 +6,6 @@
     </div>
     <form #missionForm="ngForm">
       <div class="mission-form">
-        <div class="mission-form__half-block">
-          <h4 class="mission-form__half-block__title">Consultant</h4>
-          <div class="mission-form__half-block__input-wrapper">
-            <div class="mission-form__half-block__input-wrapper__item form-group">
-              <label for="missionConsultantNameInput"
-                class="mission-form__half-block__input-wrapper__item__label">Nom</label>
-              <div class="mission-form__half-block__input-wrapper__item__input">
-                <input type="text" required class="form-control" name="missionConsultantNameInput"
-                  [(ngModel)]="missionService.mission.consultant" #missionConsultantNameInput="ngModel">
-                <div
-                  *ngIf="missionConsultantNameInput.invalid && (missionConsultantNameInput.dirty || missionConsultantNameInput.touched)"
-                  class="alert alert-danger">
-
-                  <div *ngIf="missionConsultantNameInput.errors['required']">
-                    Ce champ est obligatoire.
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="mission-form__half-block__input-wrapper__item form-group">
-              <label for="missionConsultantEmailInput"
-                class="mission-form__half-block__input-wrapper__item__label">Email</label>
-              <div class="mission-form__half-block__input-wrapper__item__input">
-                <input type="email" required email class="form-control" name="missionConsultantEmailInput"
-                  [(ngModel)]="missionService.mission.consultantEmail" #missionConsultantEmail="ngModel">
-                <div
-                  *ngIf="missionConsultantEmail.invalid && (missionConsultantEmail.dirty || missionConsultantEmail.touched)"
-                  class="alert alert-danger">
-                  <div *ngIf="missionConsultantEmail.errors['required']">
-                    Ce champ est obligatoire
-                  </div>
-                  <div *ngIf="missionConsultantEmail.errors['email']">
-                    Adresse mail non valide
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="mission-form__half-block__input-wrapper__item form-group">
-              <label class="mission-form__half-block__input-wrapper__item__label">
-                <input name="missionToggle" type="checkbox" [(ngModel)]="isConsultantFreelance" #missionToggle>
-                Consultant indépendant
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <div class="mission-form__half-block" id="client">
-          <h4 class="mission-form__half-block__title">Client</h4>
-          <div class="mission-form__half-block__input-wrapper">
-            <div class="mission-form__half-block__input-wrapper__item form-group">
-              <label for="missionClientNameInput"
-                class="mission-form__half-block__input-wrapper__item__label">Nom</label>
-              <div class="mission-form__half-block__input-wrapper__item__input">
-                <input type="text" required class="form-control" name="missionClientNameInput"
-                  [(ngModel)]="missionService.mission.client" #missionClientNameInput="ngModel">
-                <div
-                  *ngIf="missionClientNameInput.invalid && (missionClientNameInput.dirty || missionClientNameInput.touched)"
-                  class="alert alert-danger">
-
-                  <div *ngIf="missionClientNameInput.errors['required']">
-                    Ce champ est obligatoire.
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="mission-form__half-block__input-wrapper__item form-group">
-              <label for="missionClientEmailInput"
-                class="mission-form__half-block__input-wrapper__item__label">Email</label>
-              <div class="mission-form__half-block__input-wrapper__item__input">
-                <input type="email" required email class="form-control" name="missionClientEmailInput"
-                  [(ngModel)]="missionService.mission.clientEmail" #missionClientEmailInput="ngModel">
-                <div
-                  *ngIf="missionClientEmailInput.invalid && (missionClientEmailInput.dirty || missionClientEmailInput.touched)"
-                  class="alert alert-danger">
-                  <div *ngIf="missionClientEmailInput.errors['required']">
-                    Ce champ est obligatoire
-                  </div>
-                  <div *ngIf="missionClientEmailInput.errors['email']">
-                    Adresse mail non valide
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div class="mission-form__block">
           <h4 class="mission-form__block__title">Mission</h4>
           <div class="mission-form__block__input-wrapper">
@@ -161,11 +75,52 @@
           </div>
         </div>
       </div>
-      <div *ngIf="isConsultantFreelance" class="mission-form">
+      <div class="mission-form__block__input-wrapper__toggle form-group">
+        <label class="mission-form__block__input-wrapper__toggle__item">
+          <input name="missionToggle" type="checkbox" [(ngModel)]="isConsultantFreelance" #missionToggle>
+          Consultant indépendant
+        </label>
+      </div>
+      <div class="mission-form">
         <div class="mission-form__block">
           <h4 class="mission-form__block__title">Consultant</h4>
           <div class="mission-form__block__input-wrapper">
             <div class="mission-form__block__input-wrapper__item form-group">
+              <label for="missionConsultantNameInput"
+                class="mission-form__block__input-wrapper__item__label">Nom</label>
+              <div class="mission-form__block__input-wrapper__item__input">
+                <input type="text" required class="form-control" name="missionConsultantNameInput"
+                  [(ngModel)]="missionService.mission.consultant" #missionConsultantNameInput="ngModel">
+                <div
+                  *ngIf="missionConsultantNameInput.invalid && (missionConsultantNameInput.dirty || missionConsultantNameInput.touched)"
+                  class="alert alert-danger">
+
+                  <div *ngIf="missionConsultantNameInput.errors['required']">
+                    Ce champ est obligatoire.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mission-form__block__input-wrapper__item form-group">
+              <label for="missionConsultantEmailInput"
+                class="mission-form__block__input-wrapper__item__label">Email</label>
+              <div class="mission-form__block__input-wrapper__item__input">
+                <input type="email" required email class="form-control" name="missionConsultantEmailInput"
+                  [(ngModel)]="missionService.mission.consultantEmail" #missionConsultantEmail="ngModel">
+                <div
+                  *ngIf="missionConsultantEmail.invalid && (missionConsultantEmail.dirty || missionConsultantEmail.touched)"
+                  class="alert alert-danger">
+                  <div *ngIf="missionConsultantEmail.errors['required']">
+                    Ce champ est obligatoire
+                  </div>
+                  <div *ngIf="missionConsultantEmail.errors['email']">
+                    Adresse mail non valide
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div></div>
+            <div *ngIf="isConsultantFreelance" class="mission-form__block__input-wrapper__item form-group">
               <label for="missionConsultantCompanyNameInput"
                 class="mission-form__block__input-wrapper__item__label">Dénomination</label>
               <div class="mission-form__block__input-wrapper__item__input">
@@ -181,7 +136,7 @@
                 </div>
               </div>
             </div>
-            <div class="mission-form__block__input-wrapper__item form-group">
+            <div *ngIf="isConsultantFreelance" class="mission-form__block__input-wrapper__item form-group">
               <label for="missionConsultantCompanyAdressInput"
                 class="mission-form__block__input-wrapper__item__label">Adresse</label>
               <div class="mission-form__block__input-wrapper__item__input">
@@ -198,7 +153,7 @@
                 </div>
               </div>
             </div>
-            <div class="mission-form__block__input-wrapper__item form-group">
+            <div *ngIf="isConsultantFreelance" class="mission-form__block__input-wrapper__item form-group">
               <label for="missionConsultantCompanyTelephoneInput"
                 class="mission-form__block__input-wrapper__item__label">Téléphone
                 <span class="optional">(optionnel)</span></label>
@@ -208,7 +163,7 @@
                   #missionConsultantCompanyTelephone="ngModel">
               </div>
             </div>
-            <div class="mission-form__block__input-wrapper__item form-group">
+            <div *ngIf="isConsultantFreelance" class="mission-form__block__input-wrapper__item form-group">
               <label for="missionConsultantCompanySirenInput"
                 class="mission-form__block__input-wrapper__item__label">Numéro de SIREN
               </label>
@@ -225,7 +180,7 @@
                 </div>
               </div>
             </div>
-            <div class="mission-form__block__input-wrapper__item form-group">
+            <div *ngIf="isConsultantFreelance" class="mission-form__block__input-wrapper__item form-group">
               <label for="missionConsultantCompanytradeAndCompaniesRegisterCityInput"
                 class="mission-form__block__input-wrapper__item__label">Ville d'immatriculation au RCS
               </label>
@@ -252,7 +207,7 @@
                 </label>
               </div>
             </div>
-            <div class="mission-form__block__input-wrapper__item form-group">
+            <div *ngIf="isConsultantFreelance" class="mission-form__block__input-wrapper__item form-group">
               <label for="missionConsultantCompanyVatNumberInput"
                 class="mission-form__block__input-wrapper__item__label">Numéro de TVA intra-communautaire<span class="optional">(optionnel)</span>
               </label>
@@ -270,7 +225,7 @@
                 </label>
               </div>
             </div>
-            <div class="mission-form__block__input-wrapper__sub-block">
+            <div *ngIf="isConsultantFreelance" class="mission-form__block__input-wrapper__sub-block">
               <h4 class="mission-form__block__input-wrapper__sub-block__title">Coordonnées bancaires du consultant<span
                   class="optional">(optionnel)</span></h4>
               <div class="mission-form__block__input-wrapper__sub-block__input-wrapper">
@@ -484,6 +439,40 @@
       <div class="mission-form__block">
         <h4 class="mission-form__block__title">Client</h4>
         <div class="mission-form__block__input-wrapper">
+            <div class="mission-form__block__input-wrapper__item form-group">
+              <label for="missionClientNameInput"
+                class="mission-form__block__input-wrapper__item__label">Nom</label>
+              <div class="mission-form__block__input-wrapper__item__input">
+                <input type="text" required class="form-control" name="missionClientNameInput"
+                  [(ngModel)]="missionService.mission.client" #missionClientNameInput="ngModel">
+                <div
+                  *ngIf="missionClientNameInput.invalid && (missionClientNameInput.dirty || missionClientNameInput.touched)"
+                  class="alert alert-danger">
+
+                  <div *ngIf="missionClientNameInput.errors['required']">
+                    Ce champ est obligatoire.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mission-form__block__input-wrapper__item form-group">
+              <label for="missionClientEmailInput"
+                class="mission-form__block__input-wrapper__item__label">Email</label>
+              <div class="mission-form__block__input-wrapper__item__input">
+                <input type="email" required email class="form-control" name="missionClientEmailInput"
+                  [(ngModel)]="missionService.mission.clientEmail" #missionClientEmailInput="ngModel">
+                <div
+                  *ngIf="missionClientEmailInput.invalid && (missionClientEmailInput.dirty || missionClientEmailInput.touched)"
+                  class="alert alert-danger">
+                  <div *ngIf="missionClientEmailInput.errors['required']">
+                    Ce champ est obligatoire
+                  </div>
+                  <div *ngIf="missionClientEmailInput.errors['email']">
+                    Adresse mail non valide
+                  </div>
+                </div>
+              </div>
+            </div>
           <div class="mission-form__block__input-wrapper__item form-group">
             <label for="missionClientCompanyNameInput"
               class="mission-form__block__input-wrapper__item__label">Dénomination</label>

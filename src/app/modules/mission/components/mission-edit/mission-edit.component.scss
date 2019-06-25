@@ -137,6 +137,13 @@
       display: flex;
       flex-wrap: wrap;
 
+      &__toggle {
+
+        &__item {
+          font-weight: bold;
+        }
+      }
+
       &__item {
         @media (min-width: $screen-sm-min) {
           width: calc(50% - 10px);
@@ -216,10 +223,6 @@
 
 input[name="missionClientCompanyVatNumberInput"] {
   margin-bottom: 32px;
-}
-
-input[name="missionClientEmailInput"] {
-  margin-bottom: 48px;
 }
 
 .optional{
