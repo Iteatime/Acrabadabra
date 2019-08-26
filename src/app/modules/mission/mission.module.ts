@@ -1,4 +1,4 @@
-import { NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MissionRoutingModule } from './mission.routes';
 import { FormsModule } from '@angular/forms';

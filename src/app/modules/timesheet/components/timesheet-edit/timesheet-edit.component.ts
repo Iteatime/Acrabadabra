@@ -5,10 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import * as _ from 'lodash';
 
-import { ReviewMail } from 'src/app/shared/models/review-mail.model';
-
-import { Timesheet } from 'src/app/shared/models/timesheet.model';
-import { Invoice } from 'src/app/shared/models/invoice.model';
+import { ReviewMail, Timesheet, Invoice } from 'src/app/shared/models';
 
 import { CalendarService } from 'src/app/modules/calendar/calendar.service';
 import { TimesheetService } from '../../services/timesheet.service';
@@ -71,11 +68,12 @@ export class TimesheetEditComponent implements OnInit {
     } else if (this.route.snapshot.params.missionId !== undefined) {
 
       this._missionService.readById(this.route.snapshot.params.missionId).then( response => {
-      this.generateInvoice = true;
-      this.timesheetService.timesheet.consultant.name = response.data.consultant;
-      this.timesheetService.timesheet.consultant.email = response.data.consultantEmail;
-      this.timesheetService.timesheet.mission.client = response.data.client;
-      this.timesheetService.timesheet.mission.title = response.data.title;
+
+        this.generateInvoice = true;
+        this.timesheetService.timesheet.consultant.name = response.data.consultant;
+        this.timesheetService.timesheet.consultant.email = response.data.consultantEmail;
+        this.timesheetService.timesheet.mission.client = response.data.client;
+        this.timesheetService.timesheet.mission.title = response.data.title;
 
       });
     }

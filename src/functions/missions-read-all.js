@@ -8,7 +8,7 @@ const Cryptr = require('cryptr');
 const cryptr = new Cryptr(process.env.CRYPTR_KEY);
 
 exports.handler = (event, context, callback) => {
-  console.log("Function `missions-read-all` invoked")
+  console.log("Function `missions-read-all` invoked");
   return client.query(q.Paginate(q.Match(q.Ref("indexes/all_missions"))))
   .then((response) => {
 

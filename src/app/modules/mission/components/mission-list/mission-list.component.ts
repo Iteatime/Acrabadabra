@@ -39,7 +39,10 @@ export class MissionListComponent implements OnInit {
           this.missionsArray$ = [];
         }
       });
-    });
+    })
+    // .catch( error => {
+    //   console.error(error);
+    // });
   }
 
   delete(id: any) {
