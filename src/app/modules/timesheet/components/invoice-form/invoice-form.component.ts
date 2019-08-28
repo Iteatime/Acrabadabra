@@ -24,30 +24,30 @@ export class InvoiceFormComponent implements OnInit {
 
   ngOnInit() {
 
-    this._missionService.readById(this._route.snapshot.params.missionId).then( response => {
+    this._missionService.readMission(this._route.snapshot.params.missionId).then( response => {
 
       const invoiceData =           {
-        bankAccountHolder: response.data.consultantBankAccountHolder,
-        bankingAgency: response.data.consultantBankingAgency,
-        bankingDomiciliation: response.data.consultantBankingDomiciliation,
-        bankIBAN: response.data.consultantBankIBAN,
-        bankSWIFT: response.data.consultantBankSWIFT,
-        clientRef: response.data.clientRef,
+        bankAccountHolder: response.consultantBankAccountHolder,
+        bankingAgency: response.consultantBankingAgency,
+        bankingDomiciliation: response.consultantBankingDomiciliation,
+        bankIBAN: response.consultantBankIBAN,
+        bankSWIFT: response.consultantBankSWIFT,
+        clientRef: response.clientRef,
       };
 
-      if (response.data.consultantFreelance) {
+      if (response.consultantFreelance) {
 
         this.fillInvoice(
-          response.data.consultantCompany,
-          response.data.providerCompany,
+          response.consultantCompany,
+          response.providerCompany,
           invoiceData,
         );
 
       } else {
 
         this.fillInvoice(
-          response.data.providerCompany,
-          response.data.clientCompany,
+          response.providerCompany,
+          response.clientCompany,
           invoiceData,
         );
 
@@ -56,19 +56,19 @@ export class InvoiceFormComponent implements OnInit {
 
 
     if (this._route.snapshot.params.data) {
-      this._missionService.readById(this._timesheetService.timesheet.id).then( response => {
+      this._missionService.readMission(this._timesheetService.timesheet.id).then( response => {
 
         const invoiceData =           {
-          bankAccountHolder: response.data.consultantBankAccountHolder,
-          bankingAgency: response.data.consultantBankingAgency,
-          bankingDomiciliation: response.data.consultantBankingDomiciliation,
-          bankIBAN: response.data.consultantBankIBAN,
-          bankSWIFT: response.data.consultantBankSWIFT,
-          clientRef: response.data.clientRef,
+          bankAccountHolder: response.consultantBankAccountHolder,
+          bankingAgency: response.consultantBankingAgency,
+          bankingDomiciliation: response.consultantBankingDomiciliation,
+          bankIBAN: response.consultantBankIBAN,
+          bankSWIFT: response.consultantBankSWIFT,
+          clientRef: response.clientRef,
         };
 
         this.fillInvoice(
-          response.data.clientCompany,
+          response.clientCompany,
           null,
           invoiceData,
         );

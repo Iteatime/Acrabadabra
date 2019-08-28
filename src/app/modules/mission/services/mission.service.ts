@@ -30,52 +30,39 @@ export class MissionService {
     });
   }
 
-  createMission(data) {
-    return fetch('/.netlify/functions/mission-create', {
-      body: JSON.stringify(data),
-      method: 'POST'
-    }).then(response => {
-      return response.json();
-    });
-  }
-
-  createIndex = () => {
-    return fetch('/.netlify/functions/mission-create-index').then(response => {
-      return response.json();
-    });
-  }
-
-  readAllMissions = async (): Promise<Mission[]> => {
+  private crud = async (method: string, id?: string, payload?: any): Promise<any> => {
     try {
-      const response = await axios.get('/.netlify/functions/missions-read-all');
+      const uri = `/.netlify/functions/missions${id ? `/${id}` : ''}`;
+      const response = await axios[method](uri, payload);
       return response.data;
     } catch(error) {
-      console.error(error);
+      throw error;
     }
   }
 
-  readById = (missionId) => {
-    return fetch(`/.netlify/functions/mission-read-by-id/${missionId}`).then((response) => {
-      // console.log(response);
-      return response.json();
-    });
+  createMission = async (data): Promise<Mission> => {
+    const result = await this.crud('post', null, data);
+    return result;
   }
 
-  updateMission = (missionId, data) => {
-    return fetch(`/.netlify/functions/mission-update-by-id/${missionId}`, {
-      body: JSON.stringify(data),
-      method: 'POST'
-    }).then(response => {
-      return response.json();
-    })
+  readAllMissions = async (): Promise<Mission[]> => {
+    const result = await this.crud('get');
+    return result;
   }
 
-  deleteMission = (missionId) => {
-    return fetch(`/.netlify/functions/mission-delete-by-id/${missionId}`, {
-      method: 'POST',
-    }).then(response => {
-      return response.json();
-    });
+  readMission = async (missionId): Promise<Mission> => {
+    const result = await this.crud('get', missionId);
+    return result;
+  }
+
+  updateMission = async (missionId, data): Promise<Mission> => {
+    const result = await this.crud('put', missionId, data);
+    return result;
+  }
+
+  deleteMission = async (missionId): Promise<boolean> => {
+    const result = await this.crud('delete', missionId);
+    return true;
   }
 }
 

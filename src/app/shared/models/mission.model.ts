@@ -1,6 +1,7 @@
 import { Company } from './company.model';
 
 export class Mission {
+  id: string;
   missionCreator: string;
   consultant: string;
   consultantEmail: string;
@@ -28,6 +29,7 @@ export class Mission {
   consultantFreelance: boolean;
 
   constructor(
+    id?: string,
     missionCreator?: string,
     missionClient?: string,
     missionTitle?: string,
@@ -55,6 +57,7 @@ export class Mission {
     consultantFreelance?: boolean,
 
     ) {
+    this.id = id;
     this.missionCreator = missionCreator;
     this.consultant = missionConsultant;
     this.consultantEmail = missionConsultantEmail;

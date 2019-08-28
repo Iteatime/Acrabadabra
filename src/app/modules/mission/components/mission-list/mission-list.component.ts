@@ -31,18 +31,13 @@ export class MissionListComponent implements OnInit {
     this.missionsArray$ = [];
     this.missionService.readAllMissions().then(response => {
       response.forEach(mission => {
-        if (mission.data.missionCreator === this._auth.user.id) {
-          mission.data.id = mission.ref['@ref'].id;
-          // this.missionsArray$[mission.data.id].push(mission.data);
-          this.missionsArray$.push(mission.data);
+        if (mission.missionCreator === this._auth.user.id) {
+          this.missionsArray$.push(mission);
         } else {
           this.missionsArray$ = [];
         }
       });
     })
-    // .catch( error => {
-    //   console.error(error);
-    // });
   }
 
   delete(id: any) {
