@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import axios from 'axios';
 
 import { Mission, Timesheet } from 'src/app/shared/models';
 import { SerializationService } from 'src/app/shared/services/serialization/serialization.service';
@@ -44,10 +45,13 @@ export class MissionService {
     });
   }
 
-  readAllMissions = () => {
-    return fetch('/.netlify/functions/missions-read-all').then((response) => {
-      return response.json();
-    });
+  readAllMissions = async (): Promise<Mission[]> => {
+    try {
+      const response = await axios.get('/.netlify/functions/missions-read-all');
+      return response.data;
+    } catch(error) {
+      console.error(error);
+    }
   }
 
   readById = (missionId) => {
