@@ -5,14 +5,15 @@ const q = faunadb.query
 const client = new faunadb.Client({
   secret: process.env.FAUNADB_SECRET
 })
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr(process.env.CRYPTR_KEY);
 
 
 exports.handler = (event, context, callback) => {
-  // const Id = getId(event.path)
-  const stringifiedEvent = event.path.match(/([^\/]*)\/*$/)[0]
-  const id = stringifiedEvent
-  console.log(`Function 'mission-delete' invoked. delete id: ${id}`)
-  return client.query(q.Delete(q.Ref(`classes/missions/${id}`)))
+  const id = event.path.match(/([^\/]*)\/*$/)[0];
+  const decryptedId = cryptr.decrypt(id)
+  console.log(`Function 'mission-delete' invoked. delete id: ${decryptedId}`)
+  return client.query(q.Delete(q.Ref(`classes/missions/${decryptedId}`)))
   .then((response) => {
     console.log("success", response)
     return callback(null, {

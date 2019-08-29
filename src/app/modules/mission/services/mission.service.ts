@@ -13,9 +13,9 @@ export class MissionService {
 
   constructor(private _serializer: SerializationService) { }
 
-  public getEditToken(): string {
+  public getCreateToken(): string {
     return this._serializer.serializeObject({
-        mode: 'edit',
+        mode: 'create',
         timesheet: Object.assign({}, new Timesheet(), {
           consultant: {
             name: this.mission.consultant,
@@ -38,24 +38,37 @@ export class MissionService {
     });
   }
 
+  createIndex = () => {
+    return fetch('/.netlify/functions/mission-create-index').then(response => {
+      return response.json();
+    });
+  }
+
   readAllMissions = () => {
     return fetch('/.netlify/functions/missions-read-all').then((response) => {
       return response.json();
     });
   }
 
-  readById = () => {
-    return fetch('/.netlify/functions/mission-read-by-id').then((response) => {
+  readById = (missionId) => {
+    return fetch(`/.netlify/functions/mission-read-by-id/${missionId}`).then((response) => {
       return response.json();
     });
   }
 
+  updateMission = (missionId, data) => {
+    return fetch(`/.netlify/functions/mission-update-by-id/${missionId}`, {
+      body: JSON.stringify(data),
+      method: 'POST'
+    }).then(response => {
+      return response.json();
+    })
+  }
+
   deleteMission = (missionId) => {
-    console.log(missionId);
     return fetch(`/.netlify/functions/mission-delete-by-id/${missionId}`, {
       method: 'POST',
     }).then(response => {
-      console.log(response);
       return response.json();
     });
   }

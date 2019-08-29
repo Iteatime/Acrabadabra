@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { UrlShorteningService } from 'src/app/modules/timesheet/services/url-shortening.service';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
-import { Title } from '@angular/platform-browser';
 import { MissionService } from '../../services/mission.service';
 
 @Component({
@@ -19,13 +17,13 @@ export class MissionEditComponent implements OnInit {
   commentary = false;
   editShortUrl: string = '';
   originUrl = window.location.origin;
+  missionReference: string;
 
   constructor(
     public router: Router,
     public auth: AuthenticationService,
-    private notificationService: NotificationService,
-    private _urlShortener: UrlShorteningService,
     public missionService: MissionService,
+    private notificationService: NotificationService,
   ) {}
 
   ngOnInit(): void {
@@ -59,11 +57,12 @@ export class MissionEditComponent implements OnInit {
         this.missionService.mission.missionCreator = this.auth.user.id;
         this.reactToSubmition(false);
         this.missionService.createMission(this.missionService.mission).then((response) => {
-          console.log('API response', response)
+          this.missionReference = response.ref['@ref'].id;
+          this.editUrl = this.originUrl + '/mission/' + this.missionReference + '/timesheet/create';
         }).catch((error) => {
           console.log('API error', error);
         });
-        this.setShortUrl('edit');
+
       } else {
         this.reactToSubmition(true);
         this.showValidationMessages();
@@ -92,6 +91,14 @@ export class MissionEditComponent implements OnInit {
         document.getElementById('action-links').scrollIntoView({behavior:"smooth"});
       });
     }
+  }
+
+  reactToCopy(): void {
+      this.notificationService.push(
+        'Vous pouvez partager ce lien permettant la création d\'un CRA intégrant les informations relatives à votre mission',
+        'success',
+        { duration: 15 }
+      );
   }
 
   showValidationMessages(): void {

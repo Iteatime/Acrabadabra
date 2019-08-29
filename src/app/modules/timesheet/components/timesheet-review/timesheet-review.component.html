@@ -25,9 +25,9 @@
           </div>
           <hr>
           <div id="right-part" class="review__wrapper__fields__block__item-wrapper__part">
-            <div class="review__wrapper__fields__block__item-wrapper__part__text">
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Nombre de journées</span>
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{ workingTime }}</span>
+            <div *ngFor="let entry of workedTime" class="review__wrapper__fields__block__item-wrapper__part__text">
+              <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Nombre d'unités d'oeuvre ({{ calendarService.getTimeUnitLabel(entry.unit) }})</span>
+              <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{ entry.time }}</span>
             </div>
             <div class="review__wrapper__fields__block__item-wrapper__part__text">
               <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Période</span>
@@ -38,7 +38,7 @@
       </div>
 
       <div class="review__wrapper__fields__calendar">
-        <h3 class="review__wrapper__fields__calendar__title">Journées d'intervention</h3>
+        <h3 class="review__wrapper__fields__calendar__title">Détail de l'intervention</h3>
         <app-calendar-selector [minifiedTimesheet]="timesheet.workingDays" [picking]="false">
         </app-calendar-selector>
       </div>

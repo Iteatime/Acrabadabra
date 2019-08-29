@@ -3,10 +3,8 @@
 
 .navbar {
   position: fixed;
-  // position: absolute;
   width: $sidebar_width;
   min-height: calc(100vh - #{$header_height} - 1em);
-  //height: 100%;
   left: 0%;
   background-color: $main_red;
   color: $white;
@@ -15,9 +13,6 @@
 }
 
 ul {
-//   position: absolute;
-//   left: -20px;
-//   top: 7%;
   padding-left: 0;
   list-style:none;
 }
@@ -30,8 +25,6 @@ ul {
 }
 
 li {
-//   display: inline-block;
-  // margin-top: 10px;
   padding: .5em 1em;
   border-radius: .4em;
   cursor: pointer;

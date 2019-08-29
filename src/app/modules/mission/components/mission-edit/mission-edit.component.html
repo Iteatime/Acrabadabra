@@ -103,12 +103,6 @@
               <div class="mission-form__block__input-wrapper__item__input">
                 <input type="text" class="form-control" name="missionclientRefInput"
                 [(ngModel)]="missionService.mission.clientRef" #missionclientRefInput="ngModel">
-                <div *ngIf="missionclientRefInput.invalid && (missionclientRefInput.dirty || missionclientRefInput.touched)" class="alert alert-danger">
-
-                  <div *ngIf="missionNameInput.errors['required']">
-                    Ce champ est obligatoire.
-                  </div>
-                </div>
               </div>
             </div>
             <div class="mission-form__block__input-wrapper__item form-group">
