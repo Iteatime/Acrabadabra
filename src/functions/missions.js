@@ -92,7 +92,7 @@ exports.handler = async (event, context) => {
           id: encryptMissionId(result),
           ...result.data,
         }
-        return httpResponse(result, HTTP_OK);
+        return httpResponse(result);
 
       case 'DELETE':
         result = await client.query(q.Delete(q.Ref(`classes/missions/${id}`)));
