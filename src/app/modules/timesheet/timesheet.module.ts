@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-import { HeaderComponent } from 'src/app/components/header/header.component';
-
 import { CalendarModule } from '../calendar/calendar.module';
 import { ExpenseModule } from '../expense/expense.module';
 import { TimesheetRoutingModule } from './timesheet.routes';
@@ -13,8 +11,8 @@ import { InvoicePDFComponent } from './components/invoice-pdf/invoice-pdf.compon
 import { TimesheetEditComponent } from './components/timesheet-edit/timesheet-edit.component';
 import { TimesheetReviewComponent } from './components/timesheet-review/timesheet-review.component';
 
-import { CopyToClipboardDirective } from 'src/app/shared/directives/copy-to-clipboard/copy-to-clipboard.directive';
 import { MailtoDirective } from 'src/app/shared/directives/mailto/mailto.directive';
+import { SharedModuleModule } from 'src/app/shared/modules/shared-module/shared-module.module';
 
 @NgModule({
   imports: [
@@ -23,15 +21,15 @@ import { MailtoDirective } from 'src/app/shared/directives/mailto/mailto.directi
     CalendarModule,
     FormsModule,
     ExpenseModule,
+    SharedModuleModule
   ],
   declarations: [
     InvoiceFormComponent,
     InvoicePDFComponent,
     TimesheetEditComponent,
     TimesheetReviewComponent,
-    CopyToClipboardDirective,
     MailtoDirective,
-    HeaderComponent
   ]
 })
 export class TimesheetModule { }
+
