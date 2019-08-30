@@ -52,8 +52,16 @@ exports.handler = async (event, context) => {
     switch(httpMethod) {
       case 'GET':
         if (id) {
-          // Get mission
-          result = await client.query(q.Get(q.Ref(q.Class("missions"), id)));
+          try {
+            // Get mission
+            result = await client.query(q.Get(q.Ref(q.Class("missions"), id)));
+          } catch(error) {
+            if (error.name === 'NotFound') {
+              return httpResponse('', HTTP_NO_CONTENT);
+            } else {
+              throw error;
+            }
+          }
           // Encrypt IDs of mission before sending it back
           result = {
             id: encryptMissionId(result),
@@ -102,6 +110,7 @@ exports.handler = async (event, context) => {
         return httpResponse(`Cannot ${httpMethod} /missions`, HTTP_METHOD_NOT_ALLOWED);
     }
   } catch(error) {
+    console.error(error);
     return httpResponse({message: 'Database error', error}, HTTP_SERVER_ERROR)
   }
 }
