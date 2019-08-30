@@ -29,6 +29,13 @@ export class MissionService {
     });
   }
 
+  public getEditToken(): string {
+    return this._serializer.serializeObject({
+        mode: 'edit',
+        timesheet: this.timesheet
+    });
+  }
+
   createMission(data) {
     return fetch('/.netlify/functions/mission-create', {
       body: JSON.stringify(data),
@@ -52,7 +59,6 @@ export class MissionService {
 
   readById = (missionId) => {
     return fetch(`/.netlify/functions/mission-read-by-id/${missionId}`).then((response) => {
-      // console.log(response);
       return response.json();
     });
   }

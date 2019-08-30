@@ -27,8 +27,3 @@ exports.handler = (event, context, callback) => {
     })
   })
 }
-
-
-// client.query(q.Get(q.Ref(q.Class("posts"), "192903209792046592")))
-//   .then((ret) => console.log(ret))
-
