@@ -144,16 +144,9 @@
           <label for="invoiceProviderVATNumberInput" class="invoice-form__half-block__input-wrapper__item__label">Numéro
             de TVA intra-communautaire</label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
-            <input type="text" required class="form-control" name="invoiceProviderVATNumberInput"
+            <input type="text" class="form-control" name="invoiceProviderVATNumberInput"
               [disabled]="providerVATExemption.checked" [(ngModel)]="invoice.provider.vatNumber"
               #providerVATNumber="ngModel">
-            <div *ngIf="providerVATNumber.invalid && (providerVATNumber.dirty || providerVATNumber.touched)"
-              class="alert alert-danger">
-
-              <div *ngIf="providerVATNumber.errors['required']">
-                Ce champ est obligatoire.
-              </div>
-            </div>
             <label class="invoice-form__half-block__input-wrapper__item__input__toggle">
               <input type="checkbox" name="invoiceProviderVATToggle" [(ngModel)]="invoice.provider.vatExemption"
                 (change)="invoice.provider.vatNumber = ''" #providerVATExemption>
