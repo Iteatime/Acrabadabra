@@ -26,7 +26,9 @@
     "@angular/platform-browser": "^7.2.2",
     "@angular/platform-browser-dynamic": "^7.2.2",
     "@angular/router": "^7.2.2",
+    "@sweetalert2/ngx-sweetalert2": "^5.1.0",
     "angular-calendar": "^0.26.6",
+    "axios": "^0.19.0",
     "babel-cli": "^6.26.0",
     "bootstrap": "^4.3.1",
     "classlist.js": "^1.1.20150312",
@@ -41,6 +43,7 @@
     "ng-mocks": "^7.5.0",
     "node-sass": "^4.10.0",
     "rxjs": "~6.3.3",
+    "sweetalert2": "^8.12.2",
     "zone.js": "^0.8.29"
   },
   "devDependencies": {
