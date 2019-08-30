@@ -4,6 +4,7 @@ import { NotificationService } from 'src/app/modules/notification/services/notif
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
 import { MissionService } from '../../services/mission.service';
+import { UrlShorteningService } from 'src/app/modules/timesheet/services/url-shortening.service';
 
 @Component({
   selector: 'app-mission-edit',
@@ -24,6 +25,7 @@ export class MissionEditComponent implements OnInit {
     public auth: AuthenticationService,
     public missionService: MissionService,
     private notificationService: NotificationService,
+    private _urlShortener: UrlShorteningService,
   ) {}
 
   ngOnInit(): void {
@@ -58,7 +60,7 @@ export class MissionEditComponent implements OnInit {
         this.reactToSubmition(false);
         this.missionService.createMission(this.missionService.mission).then((response) => {
           this.missionReference = response.ref['@ref'].id;
-          this.editUrl = this.originUrl + '/mission/' + this.missionReference + '/timesheet/create';
+          this.editShortUrl = this.originUrl + '/mission/' + this.missionReference + '/timesheet/create';
         }).catch((error) => {
           console.log('API error', error);
         });
