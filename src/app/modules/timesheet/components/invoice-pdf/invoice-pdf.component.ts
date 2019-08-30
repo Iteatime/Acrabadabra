@@ -12,6 +12,7 @@ import { Timesheet } from 'src/app/shared/models/timesheet.model';
 
 import * as moment from 'moment';
 import { MiscellaneousExpensesService } from '../../../expense/services/miscellaneous-expenses.service';
+import { WorkingEvent } from 'src/app/shared/@types/workingEvent';
 
 @Component({
   selector: 'app-invoice-pdf',
@@ -24,7 +25,7 @@ export class InvoicePDFComponent {
   public totalHT: number;
   public totalTTC: number;
   public currencyCode: string;
-  public workedTime: number;
+  public workedTime: WorkingEvent[];
   public expenseMileageTitle = 'Indémnités kilométriques';
   public expenseMileageQuantity = '1';
   public expenseMileageTotal: number;
@@ -77,7 +78,7 @@ export class InvoicePDFComponent {
     let start;
     let end;
 
-    if (this.workedTime > 0) {
+    if (this.workedTime.length > 0) {
       start = this.calendarService.getFirstWorkingDay(this.timesheetService.timesheet);
       end = this.calendarService.getLastWorkingDay(this.timesheetService.timesheet);
     } else {
@@ -96,11 +97,11 @@ export class InvoicePDFComponent {
   }
 
   private _sortFlatFeesAmounts() {
-    let amounts = [];
-    let quantity : number[] = [];
+    const amounts = [];
+    const quantity : number[] = [];
 
     this.timesheetService.timesheet.flatFees.forEach(( flatFee ) => {
-      let index = amounts.indexOf(flatFee.amount);
+      const index = amounts.indexOf(flatFee.amount);
       if (index === -1) {
         amounts.push(flatFee.amount);
         quantity.push(1);
@@ -112,8 +113,8 @@ export class InvoicePDFComponent {
   }
 
   public sortByMiscsVatState() {
-    let deductible = [];
-    let nondeductible = {
+    const deductible = [];
+    const nondeductible = {
       quantity: 0,
       amount: 0
     };
@@ -172,7 +173,12 @@ export class InvoicePDFComponent {
     });
   }
   private _sumCalcul(): void {
-    this.performanceTotal = this.workedTime * this.timesheetService.timesheet.invoice.dailyRate;
+    // TODO: workedRate/performanceTotal for each time unit
+    this.performanceTotal = 0;
+    this.workedTime.forEach(entry => {
+        this.performanceTotal += entry.time * this.timesheetService.timesheet.invoice.workedRate;
+    });
+
     this.totalVat = [
       {
         rate: this.monetaryService.vatRates.normal,

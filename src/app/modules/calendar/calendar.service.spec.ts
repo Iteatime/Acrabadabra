@@ -14,12 +14,44 @@ describe('CalendarService', () => {
 
     testTimesheet = new Timesheet();
     testTimesheet.workingDays = {
-      '0.1900': [0.5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      '0.1900': [
+        {time: 0.5, unit: 'days'},
+        {time: 1, unit: 'days'},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''},
+        {time: 0, unit: ''}
+      ]
     };
 
     calendarEvents = [
-      { title: '', start: new Date(1900, 0, 1, 8), end: new Date(1900, 0, 1, 12) },
-      { title: '', start: new Date(1900, 0, 2, 8), end: new Date(1900, 0, 2, 16) }
+      { title: 'days', start: new Date(1900, 0, 1, 8), end: new Date(1900, 0, 1, 12) },
+      { title: 'days', start: new Date(1900, 0, 2, 8), end: new Date(1900, 0, 2, 16) }
     ];
 
   });
@@ -30,7 +62,7 @@ describe('CalendarService', () => {
 
   describe('getWorkedTime()', () => {
     it('should return the total worked time', () => {
-      expect(service.getWorkedTime(testTimesheet)).toBe(1.5);
+      expect(service.getWorkedTime(testTimesheet)[0].time).toBe(1.5);
     });
   });
 

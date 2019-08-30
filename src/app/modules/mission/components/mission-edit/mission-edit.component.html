@@ -567,7 +567,6 @@
           <span>Retour</span>
         </button>
       </div>
-
       <div *ngIf="showLink === true" id="action-links" class="mission-edit__wrapper__icons">
         <div class="mission-edit__wrapper__icons__item">
           <a href="#" (click)="reactToCopy()" [copyToClipboard]="editUrl"
@@ -575,6 +574,7 @@
             [copyToClipboardMessageParent]="editLink.parentNode" #editLink>
             <i class="material-icons">edit</i>
             <span>Copier le lien de création de CRA</span>
+            <span *ngIf="commentary" class="commentary">Ceci vous fournira un lien permettant de créer un CRA contenant les informations relatives à votre mission</span>
           </a>
         </div>
       </div>

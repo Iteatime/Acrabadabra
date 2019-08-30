@@ -30,6 +30,13 @@ export class MissionService {
     });
   }
 
+  public getEditToken(): string {
+    return this._serializer.serializeObject({
+        mode: 'edit',
+        timesheet: this.timesheet
+    });
+  }
+
   private crud = async (method: string, id?: string, payload?: any): Promise<any> => {
     try {
       if (typeof axios[method] === 'undefined') {

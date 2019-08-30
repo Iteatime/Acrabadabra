@@ -4,7 +4,7 @@ export interface Invoice {
   number: string;
   date: string;
   clientRef: string;
-  dailyRate: number;
+  workedRate: number;
   provider: Company;
   client: Company;
 

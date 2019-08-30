@@ -8,6 +8,7 @@ import { Company } from 'src/app/shared/models';
 
 import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
 import { MissionService } from '../../services/mission.service';
+import { UrlShorteningService } from 'src/app/modules/timesheet/services/url-shortening.service';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class MissionEditComponent implements OnInit {
 
   @ViewChild('missionForm') form: NgForm;
   showLink = false;
+  commentary = false;
   editUrl: string = '';
   originUrl = window.location.origin;
   missionReference: string;
@@ -29,6 +31,7 @@ export class MissionEditComponent implements OnInit {
     public auth: AuthenticationService,
     public missionService: MissionService,
     private notificationService: NotificationService,
+    private _urlShortener: UrlShorteningService,
   ) {}
 
   ngOnInit(): void {
@@ -36,6 +39,21 @@ export class MissionEditComponent implements OnInit {
 
   openAuth() {
     this.auth.widget.open();
+  }
+
+  setShortUrl(action?: string): void {
+    if (!!action) {
+      const getToken = this.missionService.getEditToken();
+      this._urlShortener.shortenUrl(this.originUrl + `/timesheet/${action}/` + getToken)
+        .then ((res) => {
+          this.editUrl = res;
+        });
+      return;
+    }
+
+    ['edit', 'review'].forEach(mode => {
+      this.setShortUrl(mode);
+    });
   }
 
   onSubmit() {

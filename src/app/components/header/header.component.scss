@@ -11,7 +11,7 @@ body {
   }
   background: $main_blue;
   padding: 10px 0;
-  height: 60px;
+  height: $header_height;
   box-shadow: 0 0 8px rgba($black, 0.8);
 
   &__container {
