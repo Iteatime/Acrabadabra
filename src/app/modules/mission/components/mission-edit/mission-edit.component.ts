@@ -4,6 +4,7 @@ import { NotificationService } from 'src/app/modules/notification/services/notif
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
 import { MissionService } from '../../services/mission.service';
+import { UrlShorteningService } from 'src/app/modules/timesheet/services/url-shortening.service';
 
 @Component({
   selector: 'app-mission-edit',
@@ -14,7 +15,8 @@ export class MissionEditComponent implements OnInit {
 
   @ViewChild('missionForm') form: NgForm;
   showLink = false;
-  editUrl: string = '';
+  commentary = false;
+  editShortUrl: string = '';
   originUrl = window.location.origin;
   missionReference: string;
 
@@ -23,6 +25,7 @@ export class MissionEditComponent implements OnInit {
     public auth: AuthenticationService,
     public missionService: MissionService,
     private notificationService: NotificationService,
+    private _urlShortener: UrlShorteningService,
   ) {}
 
   ngOnInit(): void {
@@ -30,6 +33,21 @@ export class MissionEditComponent implements OnInit {
 
   openAuth() {
     this.auth.widget.open();
+  }
+
+  setShortUrl(action?: string): void {
+    if (!!action) {
+      const getToken = this.missionService.getEditToken();
+      this._urlShortener.shortenUrl(this.originUrl + `/timesheet/${action}/` + getToken)
+        .then ((res) => {
+          this.editShortUrl = res;
+        });
+      return;
+    }
+
+    ['edit', 'review'].forEach(mode => {
+      this.setShortUrl(mode);
+    });
   }
 
   onSubmit() {
@@ -42,7 +60,7 @@ export class MissionEditComponent implements OnInit {
         this.reactToSubmition(false);
         this.missionService.createMission(this.missionService.mission).then((response) => {
           this.missionReference = response.ref['@ref'].id;
-          this.editUrl = this.originUrl + '/mission/' + this.missionReference + '/timesheet/create';
+          this.editShortUrl = this.originUrl + '/mission/' + this.missionReference + '/timesheet/create';
         }).catch((error) => {
           console.log('API error', error);
         });
