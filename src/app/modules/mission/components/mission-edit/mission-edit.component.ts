@@ -1,10 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 import { Router } from '@angular/router';
+
+import { NotificationService } from 'src/app/modules/notification/services/notification.service';
+
+import { Company } from 'src/app/shared/models';
+
 import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
 import { MissionService } from '../../services/mission.service';
 import { UrlShorteningService } from 'src/app/modules/timesheet/services/url-shortening.service';
+
 
 @Component({
   selector: 'app-mission-edit',
@@ -16,9 +21,10 @@ export class MissionEditComponent implements OnInit {
   @ViewChild('missionForm') form: NgForm;
   showLink = false;
   commentary = false;
-  editShortUrl: string = '';
+  editUrl: string = '';
   originUrl = window.location.origin;
   missionReference: string;
+  isConsultantFreelance = false;
 
   constructor(
     public router: Router,
@@ -40,7 +46,7 @@ export class MissionEditComponent implements OnInit {
       const getToken = this.missionService.getEditToken();
       this._urlShortener.shortenUrl(this.originUrl + `/timesheet/${action}/` + getToken)
         .then ((res) => {
-          this.editShortUrl = res;
+          this.editUrl = res;
         });
       return;
     }
@@ -56,11 +62,20 @@ export class MissionEditComponent implements OnInit {
       this.notificationService.push('Veuillez vous connecter', 'warning', { isSelfClosing: false });
     } else {
       if (this.checkFormsValidity()) {
+        if (this.isConsultantFreelance === false) {
+          this.missionService.mission.consultantCompany = new Company();
+          this.missionService.mission.consultantBankAccountHolder = '';
+          this.missionService.mission.consultantBankingAgency = '';
+          this.missionService.mission.consultantBankingDomiciliation = '';
+          this.missionService.mission.consultantBankIBAN = '';
+          this.missionService.mission.consultantBankSWIFT = '';
+        }
+        this.missionService.mission.consultantFreelance = this.isConsultantFreelance;
         this.missionService.mission.missionCreator = this.auth.user.id;
         this.reactToSubmition(false);
         this.missionService.createMission(this.missionService.mission).then((response) => {
-          this.missionReference = response.ref['@ref'].id;
-          this.editShortUrl = this.originUrl + '/mission/' + this.missionReference + '/timesheet/create';
+          this.missionReference = response.id;
+          this.editUrl = this.originUrl + '/mission/' + this.missionReference + '/timesheet/create';
         }).catch((error) => {
           console.log('API error', error);
         });
@@ -96,21 +111,17 @@ export class MissionEditComponent implements OnInit {
   }
 
   reactToCopy(): void {
-      this.notificationService.push(
-        'Vous pouvez partager ce lien permettant la création d\'un CRA intégrant les informations relatives à votre mission',
-        'success',
-        { duration: 15 }
-      );
+    this.notificationService.push(
+      'Vous pouvez partager ce lien permettant la création d\'un CRA intégrant les informations relatives à votre mission',
+      'success',
+      { duration: 15 }
+    );
   }
 
   showValidationMessages(): void {
     Object.keys(this.form.controls).forEach(field => {
       this.form.controls[field].markAsTouched();
     });
-  }
-
-  onUserInput() {
-    this.showLink = false;
   }
 
 }
