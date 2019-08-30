@@ -6,10 +6,10 @@ i:hover {
 }
 
 .missions-list {
+  width: calc(100vw - #{$sidebar-width});
+  margin-left: $sidebar-width;
   position: relative;
   margin-top: 10px;
-  left: 15%;
-  width: 85%;
   text-align: center;
   border-collapse: collapse;
 
