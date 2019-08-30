@@ -13,6 +13,7 @@ export class Timesheet {
   commutes: Commute[];
   miscellaneous: Miscellaneous[];
   flatFees: FlatFee[];
+  id: string;
 
   constructor(
     consultantEmail: string = '',
@@ -21,6 +22,7 @@ export class Timesheet {
     missionTitle: string = '',
     consultant?: Consultant,
     mission?: Mission,
+    id?: string
   ) {
     this.consultant = new Consultant(consultantEmail, consultantName) || consultant;
     this.mission = new Mission(missionClient, missionTitle) || mission;
@@ -28,5 +30,6 @@ export class Timesheet {
     this.commutes = [];
     this.miscellaneous = [];
     this.flatFees = [];
+    this.id = id;
   }
 }
