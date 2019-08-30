@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import axios from 'axios';
 
 import { Mission, Timesheet } from 'src/app/shared/models';
 import { SerializationService } from 'src/app/shared/services/serialization/serialization.service';
@@ -15,17 +16,17 @@ export class MissionService {
 
   public getCreateToken(): string {
     return this._serializer.serializeObject({
-        mode: 'create',
-        timesheet: Object.assign({}, new Timesheet(), {
-          consultant: {
-            name: this.mission.consultant,
-            email: this.mission.consultantEmail
-          },
-          mission: {
-            client: this.mission.client,
-            title: this.mission.title
-          }
-        })
+      mode: 'create',
+      timesheet: Object.assign({}, new Timesheet(), {
+        consultant: {
+          name: this.mission.consultant,
+          email: this.mission.consultantEmail
+        },
+        mission: {
+          client: this.mission.client,
+          title: this.mission.title
+        }
+      })
     });
   }
 
@@ -36,48 +37,45 @@ export class MissionService {
     });
   }
 
-  createMission(data) {
-    return fetch('/.netlify/functions/mission-create', {
-      body: JSON.stringify(data),
-      method: 'POST'
-    }).then(response => {
-      return response.json();
-    });
+  private crud = async (method: string, id?: string, payload?: any): Promise<any> => {
+    try {
+      if (typeof axios[method] === 'undefined') {
+        throw new Error(`Invalid REST method: '${method}'`);
+      }
+      const uri = `/.netlify/functions/missions${id ? `/${id}` : ''}`;
+      const response = await axios[method](uri, payload);
+      return response.data;
+    } catch(error) {
+      throw error;
+    }
   }
 
-  createIndex = () => {
-    return fetch('/.netlify/functions/mission-create-index').then(response => {
-      return response.json();
-    });
+  createMission = async (data: Mission): Promise<Mission> => {
+    const result = await this.crud('post', null, data);
+    return result;
   }
 
-  readAllMissions = () => {
-    return fetch('/.netlify/functions/missions-read-all').then((response) => {
-      return response.json();
-    });
+  readAllMissions = async (): Promise<Mission[]> => {
+    const result = await this.crud('get');
+    return result;
   }
 
-  readById = (missionId) => {
-    return fetch(`/.netlify/functions/mission-read-by-id/${missionId}`).then((response) => {
-      return response.json();
-    });
+  readMission = async (missionId: string): Promise<Mission> => {
+    if (!missionId) {
+      throw new Error('Must specify an ID');
+    }
+    const result = await this.crud('get', missionId);
+    return result;
   }
 
-  updateMission = (missionId, data) => {
-    return fetch(`/.netlify/functions/mission-update-by-id/${missionId}`, {
-      body: JSON.stringify(data),
-      method: 'POST'
-    }).then(response => {
-      return response.json();
-    })
+  updateMission = async (missionId: string, data: Mission): Promise<Mission> => {
+    const result = await this.crud('put', missionId, data);
+    return result;
   }
 
-  deleteMission = (missionId) => {
-    return fetch(`/.netlify/functions/mission-delete-by-id/${missionId}`, {
-      method: 'POST',
-    }).then(response => {
-      return response.json();
-    });
+  deleteMission = async (missionId: string): Promise<boolean> => {
+    await this.crud('delete', missionId);
+    return true;
   }
 }
 
