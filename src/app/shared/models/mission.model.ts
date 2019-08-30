@@ -1,4 +1,7 @@
+import { Company } from './company.model';
+
 export class Mission {
+  id: string;
   missionCreator: string;
   consultant: string;
   consultantEmail: string;
@@ -10,9 +13,23 @@ export class Mission {
   endDate: string;
   unitOfWorkType: string;
   unitOfworkPrice: string;
-  secret: string;
+  consultantCompany: Company;
+  providerCompany: Company;
+  clientCompany: Company;
+  providerBankAccountHolder: string;
+  providerBankingAgency: string;
+  providerBankingDomiciliation: string;
+  providerBankIBAN: string;
+  providerBankSWIFT: string;
+  consultantBankAccountHolder: string;
+  consultantBankingAgency: string;
+  consultantBankingDomiciliation: string;
+  consultantBankIBAN: string;
+  consultantBankSWIFT: string;
+  consultantFreelance: boolean;
 
   constructor(
+    id?: string,
     missionCreator?: string,
     missionClient?: string,
     missionTitle?: string,
@@ -24,8 +41,23 @@ export class Mission {
     missionEndDate?: string,
     missionUnitOfWorkType?: string,
     missionUnitOfWorkPrice?: string,
-    secret?: string) {
+    consultantCompany?: Company,
+    providerCompany?: Company,
+    clientCompany?: Company,
+    providerBankAccountHolder?: string,
+    providerBankingAgency?: string,
+    providerBankingDomiciliation?: string,
+    providerBankIBAN?: string,
+    providerBankSWIFT?: string,
+    consultantBankAccountHolder?: string,
+    consultantBankingAgency?: string,
+    consultantBankingDomiciliation?: string,
+    consultantBankIBAN?: string,
+    consultantBankSWIFT?: string,
+    consultantFreelance?: boolean,
 
+    ) {
+    this.id = id;
     this.missionCreator = missionCreator;
     this.consultant = missionConsultant;
     this.consultantEmail = missionConsultantEmail;
@@ -37,37 +69,20 @@ export class Mission {
     this.endDate = missionEndDate;
     this.unitOfWorkType = missionUnitOfWorkType;
     this.unitOfworkPrice = missionUnitOfWorkPrice;
-    this.secret = secret;
+    this.consultantCompany = consultantCompany || new Company();
+    this.providerCompany = providerCompany || new Company();
+    this.clientCompany = clientCompany || new Company();
+    this.providerBankAccountHolder = providerBankAccountHolder || '';
+    this.providerBankingAgency = providerBankingAgency || '';
+    this.providerBankingDomiciliation = providerBankingDomiciliation || '';
+    this.providerBankIBAN = providerBankIBAN || '';
+    this.providerBankSWIFT = providerBankSWIFT || '';
+    this.consultantBankAccountHolder = consultantBankAccountHolder || '';
+    this.consultantBankingAgency = consultantBankingAgency || '';
+    this.consultantBankingDomiciliation = consultantBankingDomiciliation || '';
+    this.consultantBankIBAN = consultantBankIBAN || '';
+    this.consultantBankSWIFT = consultantBankSWIFT || '';
+    this.consultantFreelance = consultantFreelance;
 
   }
-
-  static fromFaunaDB(data: ApiFaunaDB) {
-    return new Mission(
-      data.missionCreator,
-      data.consultant,
-      data.consultantEmail,
-      data.clientEmail,
-      data.title,
-      data.clientRef,
-      data.startDate,
-      data.endDate,
-      data.unitOfWorkType,
-      data.unitOfWorkPrice
-    );
-  }
 }
-export interface ApiFaunaDB {
-  missionCreator: string;
-  consultant: string;
-  consultantEmail: string;
-  client: string;
-  clientEmail: string;
-  title: string;
-  clientRef: string;
-  startDate: string;
-  endDate: string;
-  unitOfWorkType: string;
-  unitOfWorkPrice: string;
-}
-
-
