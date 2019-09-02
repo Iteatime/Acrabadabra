@@ -26,6 +26,11 @@ const objectMatchesOriginal = (original: object, copy: object) => {
 }
 
 describe('MissionService', () => {
+  const INVALID_CREATOR_ID = 'aaaaaa';
+  const VALID_CREATOR_ID = '4ce385dd-6e75-4b14-af00-2ee41170893c';
+  const INVALID_MISSION_ID = 'aaaaaa';
+  const VALID_MISSION_ID = '0cf7d063bf28b4fd52532df165ebb0b8ecf664856f58c00afb410867637184387570';
+
   let service: MissionService;
   let id: string;
   let mission: Mission;
@@ -57,10 +62,46 @@ describe('MissionService', () => {
     });
   });
 
+  describe('readMissionsByCreator()', async () => {
+    let missions: Mission[];
+
+    beforeEach(async () => {
+      missions = await service.readMissionsByCreator(VALID_CREATOR_ID);
+    });
+
+    it('should always return a non-null value', () => {
+      expect(missions).toBeTruthy();
+    });
+
+    it('should always return an array', () => {
+      expect(Array.isArray(missions)).toBeTruthy();
+    });
+
+    it('should only return missions whose creator matches the given id', () => {
+      for (let mission of missions) {
+        expect(mission.missionCreator).toEqual(VALID_CREATOR_ID);
+      }
+    });
+
+    it('should raise an exception on empty id', async () => {
+      for (let creatorId of [null, undefined, '']) {
+        const error = await asyncError(service.readMissionsByCreator, creatorId);
+        expect(error).toBeTruthy();
+        expect(error.message).toEqual('Must specify an ID');
+      }
+    });
+
+    it('should return an empty array on invalid creator id', async () => {
+      missions = await service.readMissionsByCreator(INVALID_CREATOR_ID);
+      expect(missions.length).toEqual(0);
+    });
+  })
+
   describe('createMission()', async () => {
     beforeEach(() => {
       mission = new Mission();
       mission.title = 'Dummy Title';
+      mission.missionCreator = VALID_CREATOR_ID;
     });
 
     it('should return a copy of the sent object along with an id', async () => {
@@ -88,7 +129,7 @@ describe('MissionService', () => {
     });
 
     it('should get a \'bad request\' error code (400) from server on undecryptable id', async () => {
-      const error = await asyncError(service.readMission, 'aaaaaa');
+      const error = await asyncError(service.readMission, INVALID_MISSION_ID);
       expect(error).toBeTruthy();
       expect(error.message).toEqual('Request failed with status code 400');
     });
@@ -101,7 +142,7 @@ describe('MissionService', () => {
     });
 
     it('should return an empty response on valid, but non-existing id', async() => {
-      returnedMission = await service.readMission('0cf7d063bf28b4fd52532df165ebb0b8ecf664856f58c00afb410867637184387570');
+      returnedMission = await service.readMission(VALID_MISSION_ID);
       expect(returnedMission).toBeFalsy();
     })
   });
@@ -110,6 +151,7 @@ describe('MissionService', () => {
     beforeEach(() => {
       mission = new Mission();
       mission.title = 'Modified Dummy Title';
+      mission.missionCreator = VALID_CREATOR_ID;
     });
 
     it('should return a copy of the sent object, save for the encrypted id', async () => {
@@ -127,7 +169,7 @@ describe('MissionService', () => {
 
   describe('deleteMission()', async () => {
     it('should get a \'bad request\' error code (400) from server on undecryptable id', async () => {
-      const error = await asyncError(service.deleteMission, 'aaaaaa');
+      const error = await asyncError(service.deleteMission, INVALID_MISSION_ID);
       expect(error).toBeTruthy();
       expect(error.message).toEqual('Request failed with status code 400');
     });
@@ -137,7 +179,6 @@ describe('MissionService', () => {
       const missions: Mission[] = await service.readAllMissions();
       expect(missions.length).toEqual(count);
       const mission: Mission = await service.readMission(id);
-      console.log('Deleted Mission: ', mission);
       expect(mission).toBeFalsy();
     });
   });

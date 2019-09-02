@@ -24,20 +24,14 @@ export class MissionListComponent implements OnInit {
               private _notificationService: NotificationService ) { }
 
   ngOnInit() {
-    this.getAllMissions();
+    this.update();
   }
 
-  getAllMissions(): any {
-    this.missionsArray$ = [];
-    this.missionService.readAllMissions().then(response => {
-      response.forEach(mission => {
-        if (mission.missionCreator === this._auth.user.id) {
-          this.missionsArray$.push(mission);
-        } else {
-          this.missionsArray$ = [];
-        }
-      });
-    })
+  update(): void {
+    this.missionService.readMissionsByCreator(this._auth.user.id)
+    .then(response => {
+      this.missionsArray$ = response;
+    });
   }
 
   delete(id: any) {
@@ -54,7 +48,7 @@ export class MissionListComponent implements OnInit {
     if (result.value) {
       this.missionService.deleteMission(id)
       .then((res) => {
-        this.getAllMissions();
+        this.update();
         this.reactToSubmition(false);
       }).catch((error) => {
         this.reactToSubmition(true);
@@ -76,7 +70,7 @@ export class MissionListComponent implements OnInit {
       this._notificationService.push('La suppression de la mission à échouée', 'warning', { isSelfClosing: false });
     } else {
       this._notificationService.push(
-        'Cette mission à été supprimée<br/>',
+        'Cette mission a été supprimée<br/>',
         'success',
         { duration: 10 }
       );
