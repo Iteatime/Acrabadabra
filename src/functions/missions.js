@@ -30,7 +30,12 @@ exports.handler = async (event, context) => {
 
   // Parse ID from request URL
   let id;
-  const match = event.path.match(/^\/missions\/(.+)$/);
+  let uri = event.path;
+  let match;
+  if (match = uri.match(/^\/\.netlify\/functions(.+)$/)) {
+    uri = match[1];
+  }
+  match = uri.match(/^\/missions\/(.+)$/);
   if (match) {
     // If an ID was found, decrypt it
     try {
