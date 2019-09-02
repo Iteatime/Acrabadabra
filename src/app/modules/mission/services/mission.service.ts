@@ -68,6 +68,14 @@ export class MissionService {
     return result;
   }
 
+  readMissionsByCreator = async (creatorId: string): Promise<Mission[]> => {
+    if (!creatorId) {
+      throw new Error('Must specify an ID');
+    }
+    const result = await this.crud('get', 'user/' + creatorId);
+    return result;
+  }
+
   updateMission = async (missionId: string, data: Mission): Promise<Mission> => {
     const result = await this.crud('put', missionId, data);
     return result;
