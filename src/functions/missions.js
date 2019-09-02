@@ -21,6 +21,7 @@ const encryptMissionId = (missionData) => {
 // Function
 exports.handler = async (event, context) => {
   const { body, httpMethod } = event;
+  return httpResponse(event.path);
 
   // Parse data if needed
   let data;
