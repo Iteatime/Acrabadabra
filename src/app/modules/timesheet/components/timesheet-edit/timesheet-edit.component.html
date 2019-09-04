@@ -104,7 +104,7 @@
           <input name="invoiceToggle" type="checkbox" [(ngModel)]="generateInvoice" #invoiceToggle>
           Générer une facture
         </label>
-        <app-invoice-form *ngIf="generateInvoice" [invoice]="timesheetService.timesheet.invoice"
+        <app-invoice-form *ngIf="generateInvoice" [invoice]="timesheetService.timesheet.invoice" [mission]="timesheetService.timesheet.mission"
           (changed)="onUserInput()"></app-invoice-form>
       </div>
 
