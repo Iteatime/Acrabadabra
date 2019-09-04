@@ -56,10 +56,13 @@
                       (click)="dayEdited($event, day.date, getDayWorkedTime(day) - 1)">
                       -
                     </button>
-                    <span class="calendar__content__dayselect__dayitem__cell__changer__options__item cal-day-badge-selector"
-                      (click)="dayEdited($event, day.date, getDayWorkedTime(day))">
-                      {{ getDayWorkedTime(day) }}
-                    </span>
+                    <input type="text" class="calendar__content__dayselect__dayitem__cell__changer__options__item cal-day-badge-selector"
+                      value="{{ getDayWorkedTime(day) }}"
+                      (keyup)="retrieveInputValue($event, day.date) > 24 ? dayEdited($event, day.date, 24) : dayEdited($event, day.date, retrieveInputValue($event, day.date))"
+                      (click)="makeOptionsVisible($event)"
+                      (blur)="makeOptionsVisible($event)">
+                      
+                    
                     <button class="calendar__content__dayselect__dayitem__cell__changer__options__item cal-day-badge-selector"
                       [ngClass]="{'disabled': getDayWorkedTime(day) + 1 > 24}"
                       (click)="getDayWorkedTime(day) + 1 > 24 ? dayEdited($event, day.date, getDayWorkedTime(day)) : dayEdited($event, day.date, getDayWorkedTime(day) + 1)">

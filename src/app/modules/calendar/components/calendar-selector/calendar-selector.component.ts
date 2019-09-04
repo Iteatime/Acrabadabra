@@ -167,6 +167,40 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
     this.refresh.next();
   }
 
+  public makeOptionsVisible(event: Event): void {
+    event.stopPropagation();
+    
+    const input = <HTMLInputElement>event.target;
+
+    if (event.type === 'click' && input.parentElement.classList.contains('active')) {
+      return;
+    }
+
+    input.parentElement.classList.toggle('active');
+    input.parentElement.nextElementSibling.classList.toggle('hide');
+  }
+
+  public retrieveInputValue(event: Event): number {
+    const MAX_HOURS = 24;
+    const MIN_HOURS = 1;
+    const MAX_NUM_LENGTH = 2;
+
+    const input = <HTMLInputElement>event.target;
+
+    if (input.value.length > MAX_NUM_LENGTH) {
+      input.value = MAX_HOURS.toString();
+    }
+
+    const parsedTime = input.value.length > 0 ? parseInt(input.value) : MIN_HOURS;
+    input.value = input.value.length > 0 ? parsedTime.toString() : '';
+
+    if (!Number.isInteger(parsedTime)) {
+      input.value = '';
+    }
+
+    return parsedTime;
+  }
+
   private setTimeUnits(): void {
     Object.keys(this.calendarService.timeUnits).forEach(key => {
       const timeUnit: TimeUnit = this.calendarService.timeUnits[key];
