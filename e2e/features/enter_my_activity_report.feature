@@ -69,6 +69,12 @@ Scenario: I select zero as the working time for a day
   Then this day is reset
   And the days selection should have been updated
 
+Scenario: I want to fill input time working for a day
+  Given I have displayed time options for a day in hours
+  When I write number in the input
+  Then the time working day is updated
+  And the whole time worked in the month is updated
+
 Scenario: I can go back to the homepage
   When I click the Logo
   Then I should go to the "homepage"
