@@ -7,6 +7,8 @@ import { Invoice, Mission } from 'src/app/shared/models';
 import { MissionService } from 'src/app/modules/mission/services/mission.service';
 import { TimesheetService } from '../../services/timesheet.service';
 
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-invoice-form',
   templateUrl: './invoice-form.component.html',
@@ -59,6 +61,7 @@ export class InvoiceFormComponent implements OnInit {
 
     if (!this.invoice) {
       this.invoice = new Invoice();
+      this.invoice.date = moment(new Date()).format("YYYY-MM-DD");
     }
 
     this.form.valueChanges.subscribe(() => {
