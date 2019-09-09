@@ -72,8 +72,8 @@ export class TimesheetEditComponent implements OnInit {
         this.generateInvoice = true;
         this.timesheetService.timesheet.consultant.name = response.consultant;
         this.timesheetService.timesheet.consultant.email = response.consultantEmail;
-        this.timesheetService.timesheet.mission.client = response.client;
-        this.timesheetService.timesheet.mission.title = response.title;
+
+        this.timesheetService.timesheet.mission = response;
 
       });
     }
