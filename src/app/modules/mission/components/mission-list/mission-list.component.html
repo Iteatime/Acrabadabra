@@ -19,7 +19,7 @@
       <tbody class="missions-list__table__body">
           <tr *ngFor = "let mission of missionsArray$">
               <td class="missions-list__table__body__item" data-text="client:">{{mission.client}}</td>
-              <td class="missions-list__table__body__item" data-text="consultant:">{{mission.consultant}}</td>
+              <td class="missions-list__table__body__item" data-text="consultant:">{{mission.consultant.name}}</td>
               <td class="missions-list__table__body__item" data-text="titre:">{{mission.title}}</td>
               <td class="missions-list__table__body__item" data-text="date début:">{{mission.startDate | date: 'dd/MM/yyyy'}}</td>
               <td class="missions-list__table__body__item" data-text="date fin:">{{mission.endDate | date: 'dd/MM/yyyy'}}</td>

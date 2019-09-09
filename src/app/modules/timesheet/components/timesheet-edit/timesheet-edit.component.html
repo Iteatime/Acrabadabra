@@ -14,7 +14,7 @@
               class="timesheet-edit__wrapper__form__block__input-wrapper__item__label">Nom</label>
             <div class="timesheet-edit__wrapper__form__block__input-wrapper__item__input">
               <input type="text" required class="form-control" name="consultantNameInput"
-                [(ngModel)]="timesheetService.timesheet.consultant.name" #consultantNameInput="ngModel">
+                [(ngModel)]="currentMission.consultant.name" #consultantNameInput="ngModel">
               <div *ngIf="consultantNameInput.invalid && (consultantNameInput.dirty || consultantNameInput.touched)"
                 class="alert alert-danger">
                 <div *ngIf="consultantNameInput.errors['required']">
@@ -28,7 +28,7 @@
               class="timesheet-edit__wrapper__form__block__input-wrapper__item__label">Email</label>
             <div class="timesheet-edit__wrapper__form__block__input-wrapper__item__input">
               <input type="email" required email class="form-control" name="consultantEmailInput"
-                [(ngModel)]="timesheetService.timesheet.consultant.email" #consultantEmailInput="ngModel">
+                [(ngModel)]="currentMission.consultant.email" #consultantEmailInput="ngModel">
               <div *ngIf="consultantEmailInput.invalid && (consultantEmailInput.dirty || consultantEmailInput.touched)"
                 class="alert alert-danger">
                 <div *ngIf="consultantEmailInput.errors['required']">
@@ -51,7 +51,7 @@
               class="timesheet-edit__wrapper__form__block__input-wrapper__item__label">Intitulé</label>
             <div class="timesheet-edit__wrapper__form__block__input-wrapper__item__input">
               <input type="text" required class="form-control" name="missionTitleInput"
-                [(ngModel)]="timesheetService.timesheet.mission.title" #missionTitleInput="ngModel">
+                [(ngModel)]="currentMission.title" #missionTitleInput="ngModel">
               <div *ngIf="missionTitleInput.invalid && (missionTitleInput.dirty || missionTitleInput.touched)"
                 class="alert alert-danger">
                 <div *ngIf="missionTitleInput.errors['required']">
@@ -66,7 +66,7 @@
               final</label>
             <div class="timesheet-edit__wrapper__form__block__input-wrapper__item__input">
               <input type="text" required class="form-control" name="missionFinalClientInput"
-                [(ngModel)]="timesheetService.timesheet.mission.client" #missionFinalClientInput="ngModel">
+                [(ngModel)]="currentMission.client" #missionFinalClientInput="ngModel">
               <div
                 *ngIf="missionFinalClientInput.invalid && (missionFinalClientInput.dirty || missionFinalClientInput.touched)"
                 class="alert alert-danger">
@@ -104,7 +104,7 @@
           <input name="invoiceToggle" type="checkbox" [(ngModel)]="generateInvoice" #invoiceToggle>
           Générer une facture
         </label>
-        <app-invoice-form *ngIf="generateInvoice" [invoice]="timesheetService.timesheet.invoice" [mission]="timesheetService.timesheet.mission"
+        <app-invoice-form *ngIf="generateInvoice" [invoice]="timesheetService.timesheet.invoice" [mission]="currentMission"
           (changed)="onUserInput()"></app-invoice-form>
       </div>
 

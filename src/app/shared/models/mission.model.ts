@@ -1,10 +1,10 @@
-import { Company } from './company.model';
+import { Company, Consultant } from '.';
 
 export class Mission {
   id: string;
   missionCreator: string;
-  consultant: string;
-  consultantEmail: string;
+  consultant: Consultant;
+  // consultantEmail: string;
   client: string;
   clientEmail: string;
   title: string;
@@ -33,8 +33,8 @@ export class Mission {
     missionCreator?: string,
     missionClient?: string,
     missionTitle?: string,
-    missionConsultant?: string,
-    missionConsultantEmail?: string,
+    missionConsultant?: Consultant,
+    // missionConsultantEmail?: string,
     missionClientEmail?: string,
     missionclientRef?: string,
     missionStartDate?: string,
@@ -59,8 +59,8 @@ export class Mission {
     ) {
     this.id = id;
     this.missionCreator = missionCreator;
-    this.consultant = missionConsultant;
-    this.consultantEmail = missionConsultantEmail;
+    this.consultant = missionConsultant || new Consultant();
+    // this.consultantEmail = missionConsultantEmail;
     this.client = missionClient;
     this.clientEmail = missionClientEmail;
     this.title = missionTitle;

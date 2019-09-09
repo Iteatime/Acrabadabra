@@ -90,7 +90,7 @@
                 class="mission-form__block__input-wrapper__item__label">Nom</label>
               <div class="mission-form__block__input-wrapper__item__input">
                 <input type="text" required class="form-control" name="missionConsultantNameInput"
-                  [(ngModel)]="missionService.mission.consultant" #missionConsultantNameInput="ngModel">
+                  [(ngModel)]="missionService.mission.consultant.name" #missionConsultantNameInput="ngModel">
                 <div
                   *ngIf="missionConsultantNameInput.invalid && (missionConsultantNameInput.dirty || missionConsultantNameInput.touched)"
                   class="alert alert-danger">
@@ -106,7 +106,7 @@
                 class="mission-form__block__input-wrapper__item__label">Email</label>
               <div class="mission-form__block__input-wrapper__item__input">
                 <input type="email" required email class="form-control" name="missionConsultantEmailInput"
-                  [(ngModel)]="missionService.mission.consultantEmail" #missionConsultantEmail="ngModel">
+                  [(ngModel)]="missionService.mission.consultant.email" #missionConsultantEmail="ngModel">
                 <div
                   *ngIf="missionConsultantEmail.invalid && (missionConsultantEmail.dirty || missionConsultantEmail.touched)"
                   class="alert alert-danger">

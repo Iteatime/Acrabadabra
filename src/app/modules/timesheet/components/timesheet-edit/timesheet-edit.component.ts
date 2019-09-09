@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import * as _ from 'lodash';
 
-import { ReviewMail, Timesheet, Invoice } from 'src/app/shared/models';
+import { ReviewMail, Timesheet, Invoice, Mission } from 'src/app/shared/models';
 
 import { CalendarService } from 'src/app/modules/calendar/calendar.service';
 import { TimesheetService } from '../../services/timesheet.service';
@@ -43,6 +43,7 @@ export class TimesheetEditComponent implements OnInit {
   generateExpenses = false;
   showLinks = false;
   currentUrl = '';
+  currentMission: Mission = new Mission();
 
   constructor(
     public timesheetService: TimesheetService,
@@ -70,10 +71,12 @@ export class TimesheetEditComponent implements OnInit {
       this._missionService.readMission(this.route.snapshot.params.missionId).then( response => {
 
         this.generateInvoice = true;
-        this.timesheetService.timesheet.consultant.name = response.consultant;
-        this.timesheetService.timesheet.consultant.email = response.consultantEmail;
+        this.currentMission = response;
 
-        this.timesheetService.timesheet.mission = response;
+        // this.timesheetService.timesheet.consultant.name = response.consultant;
+        // this.timesheetService.timesheet.consultant.email = response.consultantEmail;
+
+        // this.timesheetService.timesheet.mission = response;
 
       });
     }
@@ -190,5 +193,9 @@ export class TimesheetEditComponent implements OnInit {
     this.generateInvoice = !!timesheet.invoice && !_.isEqual(timesheet.invoice, Object.assign({}, new Invoice()));
     this.generateExpenses = timesheet.commutes.length > 0 || timesheet.flatFees.length > 0 || timesheet.miscellaneous.length > 0;
     this.setShortUrl();
+
+    this._missionService.readMission(timesheet.missionId).then( response => {
+      this.currentMission = response;
+    });
   }
 }

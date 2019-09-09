@@ -18,14 +18,8 @@ export class MissionService {
     return this._serializer.serializeObject({
       mode: 'create',
       timesheet: Object.assign({}, new Timesheet(), {
-        consultant: {
-          name: this.mission.consultant,
-          email: this.mission.consultantEmail
-        },
-        mission: {
-          client: this.mission.client,
-          title: this.mission.title
-        }
+        consultant: this.mission.consultant,
+        missionId: this.mission.id,
       })
     });
   }
