@@ -1,10 +1,23 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-
+  constructor(
+    private router: Router
+  ) {
+    const widget = this.widget;
+    widget.init();
+    widget.on('login', () => {
+      widget.close();
+      this.router.navigate(['dashboard']);
+    });
+    widget.on('logout', () => {
+      this.router.navigate(['']);
+    });
+  }
 
   public get user(): any {
     return this.widget.currentUser();
@@ -23,9 +36,5 @@ export class AuthenticationService {
 
   public get isAuthenticated(): boolean {
     return !!this.user;
-  }
-
-  public constructor() {
-    this.widget.init();
   }
 }
