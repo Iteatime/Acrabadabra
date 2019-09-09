@@ -18,12 +18,10 @@ export class HomeComponent {
   ) {}
 
   public onProviderBtnClick() {
-    this.auth.widget.open();
-
-    this.auth.widget.on('close', () => {
-      if (this.auth.isAuthenticated) {
-        this.router.navigate(['dashboard']);
-      }
-    });
+    if (this.auth.isAuthenticated) {
+      this.router.navigate(['dashboard']);
+    } else {
+      this.auth.widget.open();
+    }
   }
 }
