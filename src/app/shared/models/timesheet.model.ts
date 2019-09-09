@@ -34,5 +34,6 @@ export class Timesheet {
     this.miscellaneous = [];
     this.flatFees = [];
     this.id = id;
+    this.invoice = new Invoice();
   }
 }

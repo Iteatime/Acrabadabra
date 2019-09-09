@@ -64,7 +64,6 @@ export class TimesheetEditComponent implements OnInit {
           this.loadTimesheet(this.timesheetService.timesheet);
         }
       } else {
-        console.log('timesheet: ', this.timesheetService.timesheet);
         this.loadTimesheet(this.timesheetService.timesheet);
       }
     } else if (this.route.snapshot.params.missionId !== undefined) {
@@ -120,8 +119,6 @@ export class TimesheetEditComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.timesheetService.timesheet);
-
     this.notificationService.dismissAll();
     if (this.checkFormsValidity()) {
       this.timesheetService.timesheet.workingDays = this.calendarService.getWorkingDays(this.calendar.timesheet);
@@ -196,7 +193,6 @@ export class TimesheetEditComponent implements OnInit {
   private loadTimesheet(timesheet: Timesheet): void {
     this._missionService.readMission(timesheet.missionId).then( response => {
       this.currentMission = response;
-      console.log('mission: ', response);
 
       this.showLinks = false;
       this.generateInvoice = !!timesheet.invoice && !_.isEqual(timesheet.invoice, Object.assign({}, new Invoice()));

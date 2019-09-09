@@ -146,7 +146,10 @@ export class TimesheetService {
         this._localSaveService.getLocalItem(localStorageTimesheetsList[i])
       );
 
-      // if (storedTimesheet.consultant.name === timesheetToTransfer.consultant.name &&
+      if (!storedTimesheet.invoice) {
+        continue;
+      }
+
       if (
         storedTimesheet.invoice.provider.name === timesheetToTransfer.invoice.provider.name) {
 
