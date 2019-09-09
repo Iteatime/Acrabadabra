@@ -77,7 +77,6 @@ exports.handler = async (event, context) => {
           }
           // Get actual missions from refs
           result = await client.query(result.data.map( ref => q.Get(ref)));
-          console.log(result);
         // Otherwise, if a mission ID was specified, get that specific mission
         } else if (id) {
           try {
