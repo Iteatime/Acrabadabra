@@ -2,7 +2,7 @@ import { Component, ViewChild, Input, Output, OnInit, EventEmitter } from '@angu
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
-import { Invoice } from 'src/app/shared/models/invoice.model';
+import { Invoice, Mission } from 'src/app/shared/models';
 
 import { MissionService } from 'src/app/modules/mission/services/mission.service';
 import { TimesheetService } from '../../services/timesheet.service';
@@ -16,6 +16,7 @@ export class InvoiceFormComponent implements OnInit {
 
   @ViewChild('form') form: NgForm;
   @Input() invoice: Invoice;
+  @Input() mission: Mission;
   @Output() changed: EventEmitter<boolean> = new EventEmitter();
 
   constructor ( private _route: ActivatedRoute,
@@ -24,55 +25,36 @@ export class InvoiceFormComponent implements OnInit {
 
   ngOnInit() {
 
-    this._missionService.readMission(this._route.snapshot.params.missionId).then( response => {
+    const context = this._route.snapshot.url[0].path;
 
-      const invoiceData =           {
-        bankAccountHolder: response.consultantBankAccountHolder,
-        bankingAgency: response.consultantBankingAgency,
-        bankingDomiciliation: response.consultantBankingDomiciliation,
-        bankIBAN: response.consultantBankIBAN,
-        bankSWIFT: response.consultantBankSWIFT,
-        clientRef: response.clientRef,
+    if (this.mission) {
+
+      const invoiceData = {
+        bankAccountHolder: this.mission.consultantBankAccountHolder,
+        bankingAgency: this.mission.consultantBankingAgency,
+        bankingDomiciliation: this.mission.consultantBankingDomiciliation,
+        bankIBAN: this.mission.consultantBankIBAN,
+        bankSWIFT: this.mission.consultantBankSWIFT,
+        clientRef: this.mission.clientRef,
       };
 
-      if (response.consultantFreelance) {
+      if (this.mission.consultantFreelance && context === 'mission') {
 
         this.fillInvoice(
-          response.consultantCompany,
-          response.providerCompany,
+          this.mission.consultantCompany,
+          this.mission.providerCompany,
           invoiceData,
         );
 
       } else {
 
         this.fillInvoice(
-          response.providerCompany,
-          response.clientCompany,
+          this.mission.providerCompany,
+          this.mission.clientCompany,
           invoiceData,
         );
 
       }
-    });
-
-
-    if (this._route.snapshot.params.data) {
-      this._missionService.readMission(this._timesheetService.timesheet.id).then( response => {
-
-        const invoiceData =           {
-          bankAccountHolder: response.consultantBankAccountHolder,
-          bankingAgency: response.consultantBankingAgency,
-          bankingDomiciliation: response.consultantBankingDomiciliation,
-          bankIBAN: response.consultantBankIBAN,
-          bankSWIFT: response.consultantBankSWIFT,
-          clientRef: response.clientRef,
-        };
-
-        this.fillInvoice(
-          response.clientCompany,
-          null,
-          invoiceData,
-        );
-      });
     }
 
     if (!this.invoice) {
