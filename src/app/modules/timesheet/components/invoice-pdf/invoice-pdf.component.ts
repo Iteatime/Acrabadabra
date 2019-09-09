@@ -13,6 +13,8 @@ import { Timesheet } from 'src/app/shared/models/timesheet.model';
 import * as moment from 'moment';
 import { MiscellaneousExpensesService } from '../../../expense/services/miscellaneous-expenses.service';
 import { WorkingEvent } from 'src/app/shared/@types/workingEvent';
+import { Mission } from 'src/app/shared/models';
+import { MissionService } from 'src/app/modules/mission/services/mission.service';
 
 @Component({
   selector: 'app-invoice-pdf',
@@ -40,6 +42,7 @@ export class InvoicePDFComponent {
   public format;
   public miscsTotal;
   public flatFeesTotal;
+  public mission: Mission;
 
   constructor(
     public calendarService: CalendarService,
@@ -47,7 +50,8 @@ export class InvoicePDFComponent {
     public monetaryService: MonetaryService,
     public miscellaneousService: MiscellaneousExpensesService,
     private _route: ActivatedRoute,
-    private _titleService: Title
+    private _titleService: Title,
+    private _missionService: MissionService
   ) {
     this.timesheetService.openTimesheet(this._route.snapshot.paramMap.get('data'), 'review');
     this.timesheetService.timesheet.invoice = Object.assign(new Invoice(), this.timesheetService.timesheet.invoice);
@@ -62,6 +66,16 @@ export class InvoicePDFComponent {
     this._titleService.setTitle(this.timesheetService.timesheet.invoice.number);
     this.flatFeesTotal = this._sortFlatFeesAmounts();
     this._sumCalcul();
+
+    this.mission = new Mission();
+
+    const { missionId } = this.timesheetService.timesheet;
+    if (missionId) {
+      this._missionService.readMission(missionId)
+      .then( mission => {
+        this.mission = mission;
+      });
+    }
   }
 
   public formatDate(date: string): string {

@@ -80,7 +80,7 @@
         <tr *ngIf="workedTime.length > 0">
           <ng-container *ngFor="let entry of workedTime">
             <td class="invoice__table__left-text">
-              {{ calendarService.getTimeUnitLabel(entry.unit) | titlecase }} d'intervention {{ timesheetService.timesheet.mission.title }}
+              {{ calendarService.getTimeUnitLabel(entry.unit) | titlecase }} d'intervention {{ mission.title }}
             </td>
             <td>
               {{ timesheetService.timesheet.invoice.workedRate | currency:currencyCode:"symbol":"1.2-2":local }}
@@ -240,7 +240,7 @@
           <div>
             Consultant chargé de la prestation :
             <span
-              class="invoice__additional-information__bolding">{{ timesheetService.timesheet.consultant.name }}</span>
+              class="invoice__additional-information__bolding">{{ mission.consultant.name }}</span>
           </div>
           <div>
             Date d’exécution :
