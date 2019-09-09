@@ -4,7 +4,7 @@ import { CalendarEvent } from 'calendar-utils';
 
 import { lastDayOfMonth, differenceInMinutes, getDaysInMonth, addMinutes } from 'date-fns';
 
-import { Timesheet } from 'src/app/shared/@types/timesheet';
+import { Timesheet } from 'src/app/shared/models';
 import { WorkingEvent } from 'src/app/shared/@types/workingEvent';
 
 @Injectable({

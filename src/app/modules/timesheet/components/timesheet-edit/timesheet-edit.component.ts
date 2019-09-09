@@ -64,6 +64,7 @@ export class TimesheetEditComponent implements OnInit {
           this.loadTimesheet(this.timesheetService.timesheet);
         }
       } else {
+        console.log('timesheet: ', this.timesheetService.timesheet);
         this.loadTimesheet(this.timesheetService.timesheet);
       }
     } else if (this.route.snapshot.params.missionId !== undefined) {
@@ -72,6 +73,7 @@ export class TimesheetEditComponent implements OnInit {
 
         this.generateInvoice = true;
         this.currentMission = response;
+        this.timesheetService.timesheet.missionId = response.id;
 
         // this.timesheetService.timesheet.consultant.name = response.consultant;
         // this.timesheetService.timesheet.consultant.email = response.consultantEmail;
@@ -118,6 +120,8 @@ export class TimesheetEditComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.timesheetService.timesheet);
+
     this.notificationService.dismissAll();
     if (this.checkFormsValidity()) {
       this.timesheetService.timesheet.workingDays = this.calendarService.getWorkingDays(this.calendar.timesheet);
@@ -157,6 +161,7 @@ export class TimesheetEditComponent implements OnInit {
   updateMailtoLink(): void {
     this.reviewMail = new ReviewMail(
       this.timesheetService.timesheet,
+      this.currentMission,
       this.calendarService,
       this.calendarService.getWorkedTime(this.timesheetService.timesheet),
       this.reviewShortUrl
@@ -189,13 +194,15 @@ export class TimesheetEditComponent implements OnInit {
   }
 
   private loadTimesheet(timesheet: Timesheet): void {
-    this.showLinks = false;
-    this.generateInvoice = !!timesheet.invoice && !_.isEqual(timesheet.invoice, Object.assign({}, new Invoice()));
-    this.generateExpenses = timesheet.commutes.length > 0 || timesheet.flatFees.length > 0 || timesheet.miscellaneous.length > 0;
-    this.setShortUrl();
-
     this._missionService.readMission(timesheet.missionId).then( response => {
       this.currentMission = response;
+      console.log('mission: ', response);
+
+      this.showLinks = false;
+      this.generateInvoice = !!timesheet.invoice && !_.isEqual(timesheet.invoice, Object.assign({}, new Invoice()));
+      this.generateExpenses = timesheet.commutes.length > 0 || timesheet.flatFees.length > 0 || timesheet.miscellaneous.length > 0;
+      this.setShortUrl();
+
     });
   }
 }

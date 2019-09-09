@@ -27,6 +27,8 @@ export class InvoiceFormComponent implements OnInit {
 
     const context = this._route.snapshot.url[0].path;
 
+    console.log(this.mission);
+
     if (this.mission) {
 
       const invoiceData = {

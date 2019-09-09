@@ -1,4 +1,5 @@
-import { Timesheet } from '../@types/timesheet';
+// import { Timesheet } from '../@types/timesheet';
+import { Mission, Timesheet } from '.';
 import { CalendarService } from 'src/app/modules/calendar/calendar.service';
 
 export class ReviewMail {
@@ -6,9 +7,9 @@ export class ReviewMail {
   public body: string;
   public locale = 'fr';
 
-  constructor(timesheet: Timesheet, calendar: CalendarService, workedTime: any[], url: string) {
-    this.setSubject(timesheet.consultant.name, calendar.getDate(timesheet));
-    this.setBody(timesheet, calendar, workedTime, url);
+  constructor(timesheet: Timesheet, mission: Mission, calendar: CalendarService, workedTime: any[], url: string) {
+    this.setSubject(mission.consultant.name, calendar.getDate(timesheet));
+    this.setBody(timesheet, mission, calendar, workedTime, url);
   }
 
   setSubject(consultantName: string, date) {
@@ -18,7 +19,7 @@ export class ReviewMail {
     date.toLocaleString(this.locale, { month: 'long', year: 'numeric' });
   }
 
-  setBody(timesheet: Timesheet, calendar: CalendarService, workedTime: any[], url: string) {
+  setBody(timesheet: Timesheet, mission: Mission, calendar: CalendarService, workedTime: any[], url: string) {
     let workedTimeString = '';
 
     workedTime.forEach(entry => {
@@ -30,8 +31,8 @@ export class ReviewMail {
     'Un compte rendu d\'activité est consultable sur https://www.acrabadabra.com' +
     '%0d%0a' +
     '%0d%0a' +
-    `Consultant : ${timesheet.consultant.name}%0d%0a` +
-    `Mission : ${timesheet.mission.title}%0d%0a` +
+    `Consultant : ${mission.consultant.name}%0d%0a` +
+    `Mission : ${mission.title}%0d%0a` +
     workedTimeString +
     '%0d%0a' +
     'Vous pouvez le consulter et télécharger la facture ici :%0d%0a ' +
