@@ -8,6 +8,7 @@ Background:
 Scenario: I need to generate an invoice
    When I click on "Generer une facture" checkbox
    Then the associated form appears
+   Then the date input is pre-filled with the current day date
 
 Scenario: I want close my invoice form
    Given my invoice form is open
