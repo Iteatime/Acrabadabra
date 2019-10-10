@@ -43,6 +43,7 @@
     "ng-mocks": "^7.5.0",
     "node-sass": "^4.10.0",
     "rxjs": "~6.3.3",
+    "startbootstrap-sb-admin-2": "^4.0.7",
     "sweetalert2": "^8.12.2",
     "zone.js": "^0.8.29"
   },

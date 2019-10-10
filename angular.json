@@ -29,11 +29,15 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/bootstrap/scss/bootstrap.scss",
+              "node_modules/startbootstrap-sb-admin-2/vendor/fontawesome-free/css/all.min.css",
+              "node_modules/startbootstrap-sb-admin-2/css/sb-admin-2.min.css",
               "src/app/style/main.scss"
             ],
             "scripts": [
-              "node_modules/netlify-identity-widget/build/netlify-identity-widget.js"
+              "node_modules/netlify-identity-widget/build/netlify-identity-widget.js",
+              "node_modules/startbootstrap-sb-admin-2/vendor/jquery/jquery.min.js",
+              "node_modules/startbootstrap-sb-admin-2/vendor/bootstrap/js/bootstrap.bundle.min.js",
+              "node_modules/startbootstrap-sb-admin-2/vendor/jquery-easing/jquery.easing.min.js"
             ]
           },
           "configurations": {
