@@ -1,0 +1,30 @@
+/* Dashboard */
+@import "../../style/_vars.scss";
+
+// Variables
+$primary: $light_blue;
+$secondary: $main_red;
+
+// SBAdmin
+@import "~startbootstrap-sb-admin-2/scss/sb-admin-2.scss";
+
+// Overwrite
+#wrapper {
+  @media (min-width: $screen_sm_min) {
+    height: 100vh;
+    overflow: hidden;
+  }
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+
+  .dropdown-list {
+    .dropdown-header {
+      background-color: $secondary;
+      border-color: $secondary;
+    }
+  }
+}

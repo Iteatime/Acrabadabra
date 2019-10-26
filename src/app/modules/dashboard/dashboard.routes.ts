@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { DashboardComponent } from './dashboard.component';
-
-import { CompanyComponent } from './components/company/company.component';
-import { ActivityComponent } from './components/activity/activity.component';
-import { ProfileComponent } from './components/profile/profile.component';
-import { MissionListComponent } from '../mission/components/mission-list/mission-list.component';
-import { MissionEditComponent } from '../mission/components/mission-edit/mission-edit.component';
+import { ActivityComponent } from './views/activity/activity.component';
+import { CompanyComponent } from './views/company/company.component';
+import { MissionAllComponent } from './views/mission/mission-all/mission-all.component';
+import { MissionCreateComponent } from './views/mission/mission-create/mission-create.component';
+import { ProfileComponent } from './views/profile/profile.component';
 
 const routes: Routes = [
   { path: 'dashboard', redirectTo: 'dashboard/activity' },
@@ -22,8 +21,8 @@ const routes: Routes = [
       {
         path: 'mission',
         children: [
-          { path: 'all', component: MissionListComponent },
-          { path: 'create', component: MissionEditComponent },
+          { path: 'all', component: MissionAllComponent },
+          { path: 'create', component: MissionCreateComponent },
         ],
       },
     ],

@@ -1,0 +1,93 @@
+<!-- Page Heading -->
+<h1 class="h2 mb-2 text-gray-800">Missions</h1>
+<p class="mb-4">
+  Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum officia sunt
+  culpa saepe quae ea, quam perferendis iure distinctio voluptatum, odit
+  delectus dolorem! Distinctio laudantium voluptates nihil error debitis sit.
+</p>
+
+<div *ngIf="!ready" class="row">
+  <div class="col-lg-6 mb-4">
+    <app-card-skeleton></app-card-skeleton>
+  </div>
+  <div class="col-lg-6 mb-4">
+    <app-card-skeleton></app-card-skeleton>
+  </div>
+</div>
+
+<div *ngIf="ready">
+  <div *ngFor="let status of missionsByStatus | keyvalue" class="row">
+    <div *ngFor="let mission of status.value; index as i" class="col-lg-6 mb-2">
+      <div
+        class="card shadow mb-4"
+        [ngClass]="{
+          'border-left-info': status.key == 'current',
+          'border-left-warning': status.key == 'future',
+          'border-left-dark': status.key == 'past'
+        }"
+      >
+        <!-- Card Header - Collapse -->
+        <a
+          [href]="'#mission-' + status.key + i"
+          class="d-block card-header text-body py-3"
+          [ngClass]="{ collapsed: status.key !== 'current' }"
+          data-toggle="collapse"
+          role="button"
+          [attr.aria-expanded]="status.key === 'current'"
+          [attr.aria-controls]="'mission-' + status.key + i"
+        >
+          <h2 class="m-0 font-weight-bold h6">
+            <span class="mr-2 text-dark">{{ mission.consultant }}</span>
+            <small class="text-nowrap">
+              {{ mission.client }} |
+              {{ mission.startDate | date: "dd/MM/yy":"Europe/Paris":"fr" }}
+            </small>
+          </h2>
+        </a>
+        <!-- Card Body -->
+        <div
+          [id]="'mission-' + status.key + i"
+          class="collapse"
+          [ngClass]="{ show: status.key === 'current' }"
+        >
+          <div class="card-body">
+            <h3 class="mb-3 lead">{{ mission.title }}</h3>
+            <h3 class="mb-0 text-xs text-primary text-uppercase">
+              Consultant
+            </h3>
+            <p class="mb-2">
+              {{ mission.consultant }} -
+              <a href="mailto:{{ mission.consultantEmail }}">
+                {{ mission.consultantEmail }}
+              </a>
+            </p>
+            <h3 class="mb-0 text-xs text-primary text-uppercase">Client</h3>
+            <p class="mb-2">
+              {{ mission.client }} -
+              <a href="mailto:{{ mission.clientEmail }}">
+                {{ mission.clientEmail }}
+              </a>
+            </p>
+            <h3 class="mb-0 text-xs text-primary text-uppercase">Période</h3>
+            <p class="mb-2">
+              {{ mission.startDate | date: "dd MMM y":"Europe/Paris":"fr" }}
+              -
+              {{ mission.endDate | date: "dd MMM y":"Europe/Paris":"fr" }}
+            </p>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="card-link"
+              ><i class="fas fa-info-circle"></i> Voir les détails</a
+            >
+            <a
+              *ngIf="status.key === 'current'"
+              routerLink="/dashboard/mission/create"
+              class="card-link text-info"
+              ><i class="fas fa-calendar-plus"></i> Créer un CRA</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
