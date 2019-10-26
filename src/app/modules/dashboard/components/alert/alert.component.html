@@ -1,0 +1,13 @@
+<a class="dropdown-item d-flex align-items-center" href="#">
+  <div class="mr-3">
+    <div [class]="'icon-circle bg-' + alert.type">
+      <i [class]="'text-white fas fa-' + alert.icon"></i>
+    </div>
+  </div>
+  <div>
+    <div class="small text-gray-500">
+      <app-from-now [date]="alert.date"></app-from-now>
+    </div>
+    <span class="font-weight-bold">{{ alert.content }}</span>
+  </div>
+</a>
