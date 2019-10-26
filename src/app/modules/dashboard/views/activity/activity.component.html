@@ -1,0 +1,68 @@
+<div class="mb-4">
+  <h1 class="h3 mb-0 text-gray-800">Tableau de bord</h1>
+</div>
+
+<div *ngIf="!ready" class="row">
+  <div class="col-lg-3 col-md-6 mb-4">
+    <app-card-skeleton></app-card-skeleton>
+  </div>
+  <div class="col-lg-3 col-md-6 mb-4">
+    <app-card-skeleton></app-card-skeleton>
+  </div>
+  <div class="col-lg-3 col-md-6 mb-4">
+    <app-card-skeleton></app-card-skeleton>
+  </div>
+  <div class="col-lg-3 col-md-6 mb-4">
+    <app-card-skeleton></app-card-skeleton>
+  </div>
+</div>
+
+<div *ngIf="ready" class="row">
+  <div class="col-xl-3 col-md-6 mb-4">
+    <app-activity-card
+      icon="calendar-day"
+      color="info"
+      title="Missions"
+      [content]="missions.current + ' en cours'"
+    ></app-activity-card>
+  </div>
+
+  <div class="col-xl-3 col-md-6 mb-4">
+    <app-activity-card
+      icon="business-time"
+      color="warning"
+      title="Missions"
+      [content]="missions.future + ' à venir'"
+    ></app-activity-card>
+  </div>
+
+  <div class="col-xl-3 col-md-6 mb-4">
+    <app-activity-card
+      icon="bell"
+      color="secondary"
+      title="Notifications"
+      [content]="
+        store.state.alerts.length === 0
+          ? 'Aucune'
+          : store.state.alerts.length === 1
+          ? '1 alerte'
+          : store.state.alerts.length + ' alertes'
+      "
+    ></app-activity-card>
+  </div>
+
+  <div class="col-xl-3 col-md-6 mb-4">
+    <app-activity-card
+      icon="comments"
+      color="success"
+      title="Messages"
+      [content]="
+        store.state.messages.length === 0
+          ? 'Aucun'
+          : store.state.messages.length === 1
+          ? '1 nouveau'
+          : store.state.messages.length + ' nouveaux'
+      "
+    ></app-activity-card>
+  </div>
+</div>

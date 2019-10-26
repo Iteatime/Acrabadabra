@@ -1,0 +1,154 @@
+<div class="mb-4">
+  <h1 class="h3 mb-0 text-gray-800">Entreprise</h1>
+</div>
+
+<div *ngIf="!ready">
+  <div class="mb-4">
+    <app-card-skeleton></app-card-skeleton>
+  </div>
+  <div class="mb-4">
+    <app-card-skeleton></app-card-skeleton>
+  </div>
+</div>
+
+<div *ngIf="ready">
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h2 class="m-0 font-weight-bold text-primary h6">
+        Informations générales
+      </h2>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-6">
+          <app-form-input
+            id="mission_provider_name"
+            name="mission[provider[name]]"
+            label="Dénomination"
+            [value]="company.name"
+            [readonly]="true"
+          ></app-form-input>
+          <app-form-input
+            id="mission_provider_address"
+            name="mission[provider[address]]"
+            label="Adresse"
+            [value]="company.address"
+            [readonly]="true"
+          ></app-form-input>
+          <div class="row">
+            <div class="col-lg-4">
+              <app-form-input
+                id="mission_provider_zip-code"
+                name="mission[provider[zipCode]]"
+                label="Code postal"
+                [value]="company.zipCode"
+                [readonly]="true"
+              ></app-form-input>
+            </div>
+            <div class="col-lg-8">
+              <app-form-input
+                id="mission_provider_city"
+                name="mission[provider[city]]"
+                label="Ville"
+                [value]="company.city"
+                [readonly]="true"
+              ></app-form-input>
+            </div>
+          </div>
+          <app-form-input
+            id="mission_provider_phone"
+            type="tel"
+            name="mission[provider[phone]]"
+            label="Téléphone"
+            [value]="company.phone"
+            [readonly]="true"
+          ></app-form-input>
+        </div>
+        <div class="col-lg-6">
+          <app-form-input
+            id="mission_provider_siren"
+            name="mission[provider[siren]]"
+            label="Numéro de SIREN"
+            [value]="company.siren"
+            [readonly]="true"
+          ></app-form-input>
+          <app-form-input
+            id="mission_provider_trade-and-companies-register-city"
+            name="mission[provider[tradeAndCompaniesRegisterCity]]"
+            label="Ville d'immatriculation au RCS"
+            [value]="company.tradeAndCompaniesRegisterCity"
+            [readonly]="true"
+          ></app-form-input>
+          <app-form-input
+            id="mission_provider_vat-number"
+            name="mission[provider[vatNumber]]"
+            label="Numéro de TVA intra-communautaire"
+            [value]="company.vatNumber"
+            [readonly]="true"
+          ></app-form-input>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h2 class="m-0 font-weight-bold text-primary h6">
+        Coordonnées bancaires
+      </h2>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg">
+          <app-form-input
+            id="mission_provider_provider-bank-account-holder"
+            name="mission[provider[providerBankAccountHolder]]"
+            label="Titulaire du compte"
+            [value]="company.providerBankAccountHolder"
+            [readonly]="true"
+          ></app-form-input>
+        </div>
+        <div class="col-lg">
+          <app-form-input
+            id="mission_provider_provider-bank-swift"
+            name="mission[provider[providerBankSWIFT]]"
+            label="SWIFT"
+            [value]="company.providerBankSWIFT"
+            [readonly]="true"
+          ></app-form-input>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg">
+          <app-form-input
+            id="mission_provider_provider-bank-iban"
+            name="mission[provider[providerBankIBAN]]"
+            label="IBAN"
+            [value]="company.providerBankIBAN"
+            [readonly]="true"
+          ></app-form-input>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg">
+          <app-form-input
+            id="mission_provider_provider-banking-domiciliation"
+            name="mission[provider[providerBankingDomiciliation]]"
+            label="Banque"
+            [value]="company.providerBankingDomiciliation"
+            [readonly]="true"
+          ></app-form-input>
+        </div>
+        <div class="col-lg">
+          <app-form-input
+            id="mission_provider_provider-banking-agency"
+            name="mission[provider[providerBankingAgency]]"
+            label="Agence"
+            [value]="company.providerBankingAgency"
+            [readonly]="true"
+          ></app-form-input>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
