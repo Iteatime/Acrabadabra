@@ -29,7 +29,7 @@ module.exports = function (config) {
     singleRun: false,
     proxies: {
       '/.netlify/functions': {
-        'target': 'http://localhost:9000',
+        'target': 'http://localhost:9001',
         'changeOrigin': true
       }
     }
