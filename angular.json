@@ -106,7 +106,7 @@
             "karmaConfig": "src/karma.conf.js",
             "styles": [],
             "scripts": [
-              "node_modules/netlify-identity-widget/build/netlify-identity-widget.js"
+              "node_modules/netlify-identity-widget/releases/v1/netlify-identity-widget.js"
             ],
             "assets": [
               "src/favicon.ico",
