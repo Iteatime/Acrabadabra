@@ -9,7 +9,7 @@
     "e2e": "ENV=prod node scripts/set-env.js && ng e2e",
     "watch:front": "ENV=dev node scripts/set-env.js && ng serve --configuration developpement",
     "watch:back": "concurrently --names \"LAMBDA,SERVICES\" \"netlify-lambda serve src/functions\" \"node src/web-services/launch.js\"",
-    "dev": "concurrently --names \"FRONT,BACK\" --prefix-colors \"reset.bgBlue.bold,reset.bgRed.bold\"  \"npm:watch:front\" \"npm:watch:back\"",
+    "dev": "concurrently --names \"FRONT,BACK\" --prefix-colors \"reset.bgBlue.bold,reset.bgRed.bold\"  \"yarn watch:front\" \"yarn watch:back\"",
     "ci-validate": "node scripts/ci-validate.js",
     "postinstall": "node src/web-services/install.js"
   },
