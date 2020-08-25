@@ -2,8 +2,8 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700");
 
 .invoice {
-  position: absolute;
-  top: 0px;
+  position: relative;
+  top: 0;
   width: 827px;
   height: 1170px;
 
@@ -262,10 +262,11 @@
   }
 
   &__footer {
-    position: fixed;
+    position: absolute;
+    left: 43px;
     bottom: 52px;
     text-align: center;
-    width: 827px;
+    width: calc(100% - 86px);
     font-size: 14.14px;
   }
 
