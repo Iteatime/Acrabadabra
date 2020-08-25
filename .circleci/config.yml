@@ -4,27 +4,15 @@
 #
 version: 2
 jobs:
-  test:
+  build:
     docker:
-      # specify the version you desire here
       - image: circleci/node:lts-browsers
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
     working_directory: ~/repo
-
     steps:
       - checkout
-
-      # Download and cache dependencies
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "yarn.lock" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
 
       - run: yarn install
 
@@ -34,15 +22,41 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}
-
-      # run tests !
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  test:
+    docker:
+      - image: circleci/node:lts-browsers
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
       - run:
           name: unit tests
           command: |
             set -e
             yarn ci-validate
+  lint:
+    docker:
+      - image: circleci/node:lts-browsers
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: yarn lint:ci
+
 workflows:
   version: 2
   test:
     jobs:
-      - test
+      - build
+      - test:
+          requires:
+            - build
+      - lint:
+          requires:
+            - build

@@ -34,3 +34,7 @@ src/environments/environment.*.ts
 # System Files
 .DS_Store
 Thumbs.db
+
+build
+coverage
+.eslintcache
