@@ -9,7 +9,7 @@ export class Company {
   vatNumber: string;
   vatExemption: boolean;
 
-  constructor(
+  constructor (
 
     name?: string,
     address?: string,
@@ -31,15 +31,15 @@ export class Company {
     this.vatExemption = vatExemption || false;
   }
 
-  getFormattedAddress(): string {
+  getFormattedAddress (): string {
     const lines = this.address.split(';');
-          lines.forEach(line => {
+          lines.forEach((line) => {
             line.trim();
           });
     return lines.join('<br/>');
   }
 
-  getFormattedVATNumber(): string {
+  getFormattedVATNumber (): string {
     if (this.vatExemption) {
       return undefined;
     } else {
@@ -51,7 +51,7 @@ export class Company {
     }
   }
 
-  getFormattedTelephoneNumber(): string {
+  getFormattedTelephoneNumber (): string {
     switch (this.telephone.length) {
       case 10:
       const newTelephoneNumber = [];
@@ -66,7 +66,7 @@ export class Company {
     }
   }
 
-  getFormattedSIRENNumber(): string {
+  getFormattedSIRENNumber (): string {
     const newSiren = [];
 
     switch (this.siren.length) {
@@ -96,7 +96,7 @@ export class Company {
     }
   }
 
-  addProperty(name: string, value: any) {
+  addProperty (name: string, value: any) {
     Object.defineProperty(this, name, value);
   }
 }

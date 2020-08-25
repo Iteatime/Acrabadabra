@@ -73,7 +73,7 @@
               #tvaRate="ngModel">
               <option [ngValue]="undefined" disabled selected>Taux de TVA</option>
               <option *ngFor="let tvaRate of vatRates; let i = index" [ngValue]="tvaRate">
-                {{tvaRate}}
+                {{ tvaRate }}
               </option>
             </select>
             <div *ngIf="tvaRate.invalid && (tvaRate.dirty || tvaRate.touched)" class="alert alert-danger">

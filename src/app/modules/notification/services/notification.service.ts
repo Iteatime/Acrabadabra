@@ -23,12 +23,12 @@ export class NotificationService {
   /** Delay to wait before removing a notification on a dismiss action */
   removingDelay = 1000;
 
-  constructor() { }
+  constructor () { }
 
   /**
    * Add a notification
    */
-  push(message: string, type: string = 'default', options = {}): void {
+  push (message: string, type: string = 'default', options = {}): void {
     const notification = {
       id: this.generateUniqueId(),
       message: message,
@@ -46,7 +46,7 @@ export class NotificationService {
   /**
    * Remove a notification
    */
-  dismiss(notification: Notification, delay: number = this.removingDelay): void {
+  dismiss (notification: Notification, delay: number = this.removingDelay): void {
     const index = this.notifications.indexOf(notification);
     if (index > -1) {
       setTimeout(() => {
@@ -58,8 +58,8 @@ export class NotificationService {
   /**
    * Clear all notifications
    */
-  dismissAll(): void {
-    this.notifications.forEach(notification => {
+  dismissAll (): void {
+    this.notifications.forEach((notification) => {
       this.dismiss(notification, 0);
     });
   }
@@ -67,21 +67,21 @@ export class NotificationService {
   /**
    * Merge default options with notification options
    */
-  private mergeWithDefaultOptions(options = {}): any {
+  private mergeWithDefaultOptions (options = {}): any {
     return Object.assign({}, this.options, options);
   }
 
   /**
    * Generate a unique id for the notification
    */
-  private generateUniqueId(): string {
+  private generateUniqueId (): string {
     return this.idPrefix + Math.random().toString(36).substr(2, 9);
   }
 
   /**
    * Start a timer for a self closing notification
    */
-  startTimer(notification: Notification): void {
+  startTimer (notification: Notification): void {
     let delay = notification.options.duration;
     const interval = setInterval(() => {
       if (delay > 0) {

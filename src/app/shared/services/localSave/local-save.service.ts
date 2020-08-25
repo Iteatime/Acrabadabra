@@ -5,7 +5,7 @@ import { SerializationService } from '../serialization/serialization.service';
   providedIn: 'root'
 })
 export class LocalSaveService {
-  constructor(private _serializer: SerializationService) {}
+  constructor (private readonly _serializer: SerializationService) {}
 
   /**
    * Saving item into localStorage
@@ -13,7 +13,7 @@ export class LocalSaveService {
    * @param {string} name
    * @param {any} item
    */
-  public setLocalItem(name: string, item: any) {
+  setLocalItem (name: string, item: any) {
     const serialized = this._serializer.serializeObject(item);
     localStorage.setItem(name, serialized);
   }
@@ -23,7 +23,7 @@ export class LocalSaveService {
   *
   * @returns {any}
   */
-  public getLocalItem(name: string): any {
+  getLocalItem (name: string): any {
     return this._serializer.deserializeObject(localStorage.getItem(name));
   }
 

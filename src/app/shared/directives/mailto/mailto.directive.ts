@@ -7,13 +7,13 @@ import { ReviewMail } from '../../models/review-mail.model';
 export class MailtoDirective {
 
   @Input('mailto')
-  public recipient: string;
+  recipient: string;
 
   @Input()
-  public mailContent: ReviewMail;
+  mailContent: ReviewMail;
 
   @HostListener('click', ['$event'])
-  public onClick(event: MouseEvent): void {
+  onClick (event: MouseEvent): void {
     event.preventDefault();
 
     if (this.recipient === undefined) {

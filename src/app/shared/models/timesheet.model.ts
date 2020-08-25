@@ -14,7 +14,7 @@ export class Timesheet {
   miscellaneous: Miscellaneous[];
   flatFees: FlatFee[];
 
-  constructor(
+  constructor (
     consultantEmail: string = '',
     consultantName: string = '',
     missionClient: string = '',

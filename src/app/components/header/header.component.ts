@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
-import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
+import {AuthenticationService} from 'src/app/shared/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-header',
@@ -9,5 +9,5 @@ import { AuthenticationService } from 'src/app/shared/services/authentication/au
 })
 export class HeaderComponent {
 
-  public constructor(public auth: AuthenticationService) { }
+  constructor (public auth: AuthenticationService) { }
 }

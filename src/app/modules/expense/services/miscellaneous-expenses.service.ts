@@ -37,9 +37,9 @@ export class MiscellaneousExpensesService {
     }
 ];
 
-  constructor(public monetaryService: MonetaryService) { }
+  constructor (public monetaryService: MonetaryService) { }
 
-  vatDeductible(misc: Miscellaneous): boolean {
+  vatDeductible (misc: Miscellaneous): boolean {
     return misc.selectedType !== undefined && this.miscellaneousTypes[misc.selectedType].vatDeductible;
   }
 }

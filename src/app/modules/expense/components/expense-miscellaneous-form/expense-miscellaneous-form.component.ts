@@ -20,15 +20,15 @@ export class ExpenseMiscellaneousFormComponent implements OnInit {
   miscellaneousTypes = [];
   vatRates = [];
 
-  constructor(public miscellaneousExpensesService: MiscellaneousExpensesService,
+  constructor (public miscellaneousExpensesService: MiscellaneousExpensesService,
               public timesheetService: TimesheetService,
-              private _monetaryService: MonetaryService) { }
+              private readonly _monetaryService: MonetaryService) { }
 
-  ngOnInit() {
+  ngOnInit () {
     this.misc = new Miscellaneous();
     this.miscellaneousTypes = this.miscellaneousExpensesService.miscellaneousTypes;
     this.vatRates = [];
-    Object.values(this._monetaryService.vatRates).forEach(rate => {
+    Object.values(this._monetaryService.vatRates).forEach((rate) => {
       this.vatRates.push(rate);
     });
     this.miscellaneous = this.timesheetService.timesheet.miscellaneous;
@@ -39,7 +39,7 @@ export class ExpenseMiscellaneousFormComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit () {
     if (this.form.valid) {
       if (this.miscellaneousExpensesService.vatDeductible(this.misc) && this.misc.selectedType === 1) {
         this.misc.tvaRate = this.miscellaneousExpensesService.miscellaneousTypes[this.misc.selectedType].vat;
@@ -55,7 +55,7 @@ export class ExpenseMiscellaneousFormComponent implements OnInit {
       this.miscellaneous.push(Object.assign(new Miscellaneous(), this.misc));
       this.changed.emit(true);
     } else {
-      Object.keys(this.form.controls).forEach(field => {
+      Object.keys(this.form.controls).forEach((field) => {
         this.form.controls[field].markAsTouched();
       });
     }

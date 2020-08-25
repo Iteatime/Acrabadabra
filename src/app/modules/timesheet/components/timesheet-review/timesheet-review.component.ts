@@ -27,15 +27,15 @@ export class TimesheetReviewComponent implements OnInit {
   showMiscellaneousTable = false;
   transferToken: string;
 
-  constructor(
+  constructor (
     public auth: AuthenticationService,
-    private calendarManager: CalendarService,
-    private route: ActivatedRoute,
-    private timesheetService: TimesheetService,
-    private titleService: Title
+    private readonly calendarManager: CalendarService,
+    private readonly route: ActivatedRoute,
+    private readonly timesheetService: TimesheetService,
+    private readonly titleService: Title
   ) { }
 
-  ngOnInit() {
+  ngOnInit () {
     this.route.params.subscribe((params: Params) => {
       if (this.timesheetService.openTimesheet(params['data'], 'review')) {
         this.timesheet = this.timesheetService.timesheet;

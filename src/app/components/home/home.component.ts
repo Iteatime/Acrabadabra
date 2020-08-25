@@ -1,7 +1,7 @@
-import { Component, ViewEncapsulation} from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, ViewEncapsulation} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
+import {AuthenticationService} from 'src/app/shared/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-home',
@@ -10,14 +10,14 @@ import { AuthenticationService } from 'src/app/shared/services/authentication/au
   encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent {
-  public title = 'Acrabadabra';
+  title = 'Acrabadabra';
 
-  public constructor(
+  constructor (
     public auth: AuthenticationService,
     public router: Router
   ) {}
 
-  public onProviderBtnClick() {
+  onProviderBtnClick () {
     this.auth.widget.open();
 
     this.auth.widget.on('close', () => {

@@ -14,7 +14,7 @@ export class InvoiceFormComponent implements OnInit {
   @Input() invoice: Invoice;
   @Output() changed: EventEmitter<boolean> = new EventEmitter();
 
-  ngOnInit() {
+  ngOnInit () {
     if (!this.invoice) {
       this.invoice = new Invoice();
     }

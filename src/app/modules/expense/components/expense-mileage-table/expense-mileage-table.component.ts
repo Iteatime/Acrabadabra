@@ -15,21 +15,21 @@ export class ExpenseMileageTableComponent implements OnInit {
 
   commutes: Commute[];
 
-  public local = 'fr';
-  public currencyCode: string;
+  local = 'fr';
+  currencyCode: string;
 
-  constructor(public timesheetService: TimesheetService,
-              private _monetaryService: MonetaryService
+  constructor (public timesheetService: TimesheetService,
+              private readonly _monetaryService: MonetaryService
     ) {
       this.currencyCode = this._monetaryService.currencyCode;
 
     }
 
-  ngOnInit() {
+  ngOnInit () {
     this.commutes = this.timesheetService.timesheet.commutes;
   }
 
-  delete(commute) {
+  delete (commute) {
     this.commutes.splice(this.commutes.indexOf(commute), 1);
     this.changed.emit(true);
   }

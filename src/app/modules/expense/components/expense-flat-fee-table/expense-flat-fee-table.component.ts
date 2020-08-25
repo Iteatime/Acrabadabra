@@ -3,7 +3,6 @@ import { TimesheetService } from 'src/app/modules/timesheet/services/timesheet.s
 import { MonetaryService } from 'src/app/shared/services/monetary/monetary.service';
 import { FlatFee } from 'src/app/shared/models/flat-fee.model';
 
-
 @Component({
   selector: 'app-expense-flat-fee-table',
   templateUrl: './expense-flat-fee-table.component.html',
@@ -16,20 +15,20 @@ export class ExpenseFlatFeeTableComponent implements OnInit {
 
   flatFees: FlatFee[];
 
-  public local = 'fr';
-  public currencyCode: string;
+  local = 'fr';
+  currencyCode: string;
 
-  constructor(public timesheetService: TimesheetService,
-              private _monetaryService: MonetaryService) {
+  constructor (public timesheetService: TimesheetService,
+              private readonly _monetaryService: MonetaryService) {
 
     this.currencyCode = this._monetaryService.currencyCode;
   }
 
-  ngOnInit() {
+  ngOnInit () {
     this.flatFees = this.timesheetService.timesheet.flatFees;
   }
 
-  delete(flatFee) {
+  delete (flatFee) {
     this.flatFees.splice(this.flatFees.indexOf(flatFee), 1);
     this.changed.emit(true);
   }

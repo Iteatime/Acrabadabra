@@ -6,7 +6,7 @@ import { Commute } from 'src/app/shared/models';
 })
 export class VehiclesService {
 
-  constructor() { }
+  constructor () { }
 
   vehicles = [
     {
@@ -46,7 +46,7 @@ export class VehiclesService {
     }
   ];
 
-  isCustomizable(commute: Commute): boolean {
+  isCustomizable (commute: Commute): boolean {
       return commute.vehicleSelected !== undefined && this.vehicles[commute.vehicleSelected].customizable;
   }
 }

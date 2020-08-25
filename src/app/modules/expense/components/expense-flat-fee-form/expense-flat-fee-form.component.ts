@@ -16,10 +16,10 @@ export class ExpenseFlatFeeFormComponent implements OnInit {
   flatFee = new FlatFee('', null);
   submitted = false;
 
-  constructor( public timesheetService: TimesheetService) {
+  constructor ( public timesheetService: TimesheetService) {
    }
 
-  ngOnInit() {
+  ngOnInit () {
     this.flatFees = this.timesheetService.timesheet.flatFees;
     this.form.valueChanges.subscribe(() => {
       if (this.form.dirty) {
@@ -28,13 +28,13 @@ export class ExpenseFlatFeeFormComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit () {
     if (this.form.valid) {
       this.submitted = true;
       this.flatFees.push(Object.assign(new FlatFee(), this.flatFee));
       this.changed.emit(true);
     } else {
-      Object.keys(this.form.controls).forEach(field => {
+      Object.keys(this.form.controls).forEach((field) => {
         this.form.controls[field].markAsTouched();
       });
     }

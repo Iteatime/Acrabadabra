@@ -38,26 +38,26 @@ export class TimesheetEditComponent implements OnInit {
   @ViewChild(ExpenseFlatFeeFormComponent) flatFeesForm: ExpenseFlatFeeFormComponent;
   @ViewChild('form') form: NgForm;
   originUrl = window.location.origin;
-  editShortUrl: string = '';
-  reviewShortUrl: string = '';
+  editShortUrl = '';
+  reviewShortUrl = '';
   submitMessage: any = null;
   reviewMail: ReviewMail;
   generateInvoice = false;
   generateExpenses = false;
   showLinks = false;
 
-  constructor(
+  constructor (
     public timesheetService: TimesheetService,
     public auth: AuthenticationService,
-    private calendarService: CalendarService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private titleService: Title,
-    private notificationService: NotificationService,
-    private _urlShortener: UrlShorteningService
+    private readonly calendarService: CalendarService,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly titleService: Title,
+    private readonly notificationService: NotificationService,
+    private readonly _urlShortener: UrlShorteningService
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit (): void {
     if (!this.timesheetService.openTimesheet(this.route.snapshot.params['data'], 'edit')) {
       this.router.navigate(['timesheet', 'create']);
       if (this.timesheetService.openLastTimesheetInLocal()) {
@@ -74,19 +74,19 @@ export class TimesheetEditComponent implements OnInit {
     this.titleService.setTitle(`Acrabadabra - ${ this.getModeTitle() } un compte rendu d'activité`);
   }
 
-  openAuth() {
+  openAuth () {
     this.auth.widget.open();
   }
 
-  getModeTitle() {
+  getModeTitle () {
     return this.timesheetService.mode === 'edit' ? 'Modifier' : 'Saisir';
   }
 
-  onUserInput() {
+  onUserInput () {
     this.showLinks = false;
   }
 
-  setShortUrl(action?: string): void {
+  setShortUrl (action?: string): void {
     if (!!action) {
       const getToken = (action === 'edit') ? this.timesheetService.getEditToken() : this.timesheetService.getReviewToken();
       this._urlShortener.shortenUrl(this.originUrl + `/timesheet/${action}/` + getToken)
@@ -97,12 +97,12 @@ export class TimesheetEditComponent implements OnInit {
       return;
     }
 
-    ['edit', 'review'].forEach(mode => {
+    ['edit', 'review'].forEach((mode) => {
       this.setShortUrl(mode);
     });
   }
 
-  onSubmit() {
+  onSubmit () {
     this.notificationService.dismissAll();
     if (this.checkFormsValidity()) {
       this.timesheetService.timesheet.workingDays = this.calendarService.getWorkingDays(this.calendar.timesheet);
@@ -120,7 +120,7 @@ export class TimesheetEditComponent implements OnInit {
     }
   }
 
-  reactToSubmition(error: boolean): void {
+  reactToSubmition (error: boolean): void {
     if (error) {
       this.notificationService.push('Veuillez vérifier votre saisie', 'warning', { isSelfClosing: false });
     } else {
@@ -133,12 +133,12 @@ export class TimesheetEditComponent implements OnInit {
     this.showLinks = !error;
     if (this.showLinks) {
       setTimeout(() => {
-        document.getElementById('action-links').scrollIntoView({behavior:"smooth"});
+        document.getElementById('action-links').scrollIntoView({behavior: 'smooth'});
       });
     }
   }
 
-  updateMailtoLink(): void {
+  updateMailtoLink (): void {
     this.reviewMail = new ReviewMail(
       this.timesheetService.timesheet,
       this.calendarService,
@@ -147,7 +147,7 @@ export class TimesheetEditComponent implements OnInit {
     );
   }
 
-  checkFormsValidity(): boolean {
+  checkFormsValidity (): boolean {
     let valid = this.form.valid;
     if (this.generateInvoice) {
       valid = valid && this.invoiceForm.form.valid;
@@ -155,12 +155,12 @@ export class TimesheetEditComponent implements OnInit {
     return valid;
   }
 
-  showValidationMessages(): void {
-    Object.keys(this.form.controls).forEach(field => {
+  showValidationMessages (): void {
+    Object.keys(this.form.controls).forEach((field) => {
       this.form.controls[field].markAsTouched();
     });
     if (this.generateInvoice) {
-      Object.keys(this.invoiceForm.form.controls).forEach(field => {
+      Object.keys(this.invoiceForm.form.controls).forEach((field) => {
         this.invoiceForm.form.controls[field].markAsTouched();
       });
     }
@@ -172,7 +172,7 @@ export class TimesheetEditComponent implements OnInit {
     }
   }
 
-  private loadTimesheet(timesheet: Timesheet): void {
+  private loadTimesheet (timesheet: Timesheet): void {
     this.showLinks = false;
     this.generateInvoice = !!timesheet.invoice && !_.isEqual(timesheet.invoice, Object.assign({}, new Invoice()));
     this.generateExpenses = timesheet.commutes.length > 0 || timesheet.flatFees.length > 0 || timesheet.miscellaneous.length > 0;

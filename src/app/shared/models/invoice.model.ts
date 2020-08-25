@@ -18,7 +18,7 @@ export class Invoice {
   bankIBAN: string;
   bankSWIFT: string;
 
-  constructor(
+  constructor (
     number?: string,
     date?: string,
     clientRef?: string,
@@ -52,7 +52,7 @@ export class Invoice {
     this.bankSWIFT = bankSWIFT || '';
   }
 
-  isBankingDetails(): boolean {
+  isBankingDetails (): boolean {
     return  !_.isEmpty(this.bankAccountHolder) ||
             !_.isEmpty(this.bankingAgency) ||
             !_.isEmpty(this.bankingDomiciliation) ||

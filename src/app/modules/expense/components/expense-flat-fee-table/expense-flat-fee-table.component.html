@@ -7,13 +7,13 @@
   </thead>
   <tbody class="flat-fee__body">
       <tr *ngFor = "let flatFee of timesheetService.timesheet.flatFees">
-          <td class="flat-fee__body__item" data-text="Date:">{{flatFee.date | date: 'dd/MM/yyyy'}}</td>
-          <td class="flat-fee__body__item keep-border" data-text="Montant:">{{flatFee.amount | currency:currencyCode:"symbol":'1.2-2':local}}</td>
+          <td class="flat-fee__body__item" data-text="Date:">{{ flatFee.date | date: 'dd/MM/yyyy' }}</td>
+          <td class="flat-fee__body__item keep-border" data-text="Montant:">{{ flatFee.amount | currency:currencyCode:"symbol":'1.2-2':local }}</td>
           <td class="flat-fee__body__item trashCan" *ngIf="!hideDeleteButton"><a (click)="delete(flatFee)"><i class="material-icons">delete</i></a></td>
       </tr>
       <tr>
           <td></td>
-          <td class="flat-fee__body__item">Total HT: {{timesheetService.getTotalFlatFee() | currency:currencyCode:"symbol":'1.2-2':local}}</td>
+          <td class="flat-fee__body__item">Total HT: {{ timesheetService.getTotalFlatFee() | currency:currencyCode:"symbol":'1.2-2':local }}</td>
       </tr>
   </tbody>
 </table>

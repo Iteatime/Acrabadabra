@@ -6,7 +6,6 @@ import { Commute } from '../../../../shared/models/commute';
 import { TimesheetService } from 'src/app/modules/timesheet/services/timesheet.service';
 import { VehiclesService } from '../../services/vehicles.service';
 
-
 @Component({
   selector: 'app-expense-mileage-form',
   templateUrl: './expense-mileage-form.component.html',
@@ -22,10 +21,10 @@ export class ExpenseMileageFormComponent implements OnInit {
   submitted = false;
   vehicles: any[];
 
-  constructor(public vehiclesService: VehiclesService,
+  constructor (public vehiclesService: VehiclesService,
               public timesheetService: TimesheetService) { }
 
-  ngOnInit() {
+  ngOnInit () {
     this.vehicles = this.vehiclesService.vehicles;
     this.commutes = this.timesheetService.timesheet.commutes;
 
@@ -36,7 +35,7 @@ export class ExpenseMileageFormComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit () {
     if (this.form.valid) {
       if (!this.vehiclesService.isCustomizable(this.commute)) {
         this.commute.allowance = this.vehiclesService.vehicles[this.commute.vehicleSelected].allowance;
@@ -46,7 +45,7 @@ export class ExpenseMileageFormComponent implements OnInit {
       this.commutes.push({...this.commute});
       this.changed.emit(true);
     } else {
-      Object.keys(this.form.controls).forEach(field => {
+      Object.keys(this.form.controls).forEach((field) => {
         this.form.controls[field].markAsTouched();
       });
     }

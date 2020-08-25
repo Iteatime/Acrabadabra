@@ -15,7 +15,7 @@ describe('LocalSaveService', () => {
      });
 
     spyOn(localStorage, 'setItem').and.callFake((key: string, value: string): string =>  {
-      return store[key] = <string>value;
+      return store[key] = value;
       });
     });
 

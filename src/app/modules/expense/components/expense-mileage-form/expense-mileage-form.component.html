@@ -95,7 +95,7 @@
                         >
                             <option [ngValue]="undefined" disabled selected>Votre véhicule</option>
                             <option *ngFor="let vehicle of vehicles, let i = index" [ngValue]="i">
-                                {{vehicle.typeOfRate}} {{vehicle.horsePower}} ({{vehicle.allowance}}€/km)
+                                {{ vehicle.typeOfRate }} {{ vehicle.horsePower }} ({{ vehicle.allowance }}€/km)
                             </option>
                         </select>
                         <div *ngIf="vehicle.invalid && (vehicle.dirty || vehicle.touched)" class="alert alert-danger">

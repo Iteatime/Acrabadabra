@@ -1,6 +1,6 @@
 export class Miscellaneous {
 
-    constructor(
+    constructor (
         public miscellaneousType?: string,
         public tvaRate?: any,
         public wording?: string,

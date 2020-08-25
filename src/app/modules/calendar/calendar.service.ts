@@ -1,30 +1,30 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
-import { CalendarEvent } from 'calendar-utils';
+import {CalendarEvent} from 'calendar-utils';
 
-import { lastDayOfMonth, differenceInMinutes, getDaysInMonth } from 'date-fns';
+import {differenceInMinutes, getDaysInMonth, lastDayOfMonth} from 'date-fns';
 
-import { Timesheet } from 'src/app/shared/@types/timesheet';
+import {Timesheet} from 'src/app/shared/@types/timesheet';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CalendarService {
 
-  constructor() { }
+  constructor () { }
 
-  getWorkedTime(timesheet: Timesheet): number {
+  getWorkedTime (timesheet: Timesheet): number {
     let time = 0;
 
     if (Object.keys(timesheet.workingDays).length > 0) {
-      timesheet.workingDays[Object.keys(timesheet.workingDays)[0]].forEach(element => {
+      timesheet.workingDays[Object.keys(timesheet.workingDays)[0]].forEach((element) => {
         time += element;
       });
     }
     return time;
   }
 
-  getDate(timesheet: Timesheet): Date {
+  getDate (timesheet: Timesheet): Date {
 
     if (Object.keys(timesheet.workingDays).length > 0) {
       const dateString = Object.keys(timesheet.workingDays)[0].split('.');
@@ -34,7 +34,7 @@ export class CalendarService {
     }
   }
 
-  getWorkingDays(events: CalendarEvent[]): any {
+  getWorkingDays (events: CalendarEvent[]): any {
     if (events[0] !== undefined) {
       const month = new Date(events[0].start).getMonth(),
           year = new Date(events[0].start).getFullYear(),
@@ -42,7 +42,7 @@ export class CalendarService {
           workingDays[month + '.' + year] = new Array();
     for (let date = 0; date < new Date(lastDayOfMonth(events[0].start)).getDate(); date++) {
       let time = 0;
-      events.forEach(aDay => {
+      events.forEach((aDay) => {
         if (date + 1 === new Date(aDay.start).getDate()) {
           time = differenceInMinutes(aDay.end, aDay.start) / 60 / 8;
           return;
@@ -56,7 +56,7 @@ export class CalendarService {
     }
   }
 
-  public getFirstWorkingDay(timesheet: Timesheet): Date | boolean {
+  getFirstWorkingDay (timesheet: Timesheet): Date | boolean {
     let date;
 
     if (Object.keys(timesheet.workingDays).length > 0) {
@@ -74,7 +74,7 @@ export class CalendarService {
     return !!date ? date : false;
   }
 
-  public getLastWorkingDay(timesheet: Timesheet): Date | boolean {
+  getLastWorkingDay (timesheet: Timesheet): Date | boolean {
     let date;
 
     if (Object.keys(timesheet.workingDays).length > 0) {

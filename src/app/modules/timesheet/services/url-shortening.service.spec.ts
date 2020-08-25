@@ -25,12 +25,12 @@ describe('UrlShorteningService', () => {
 
   it ('shortenUrl() should return a shortened URL', () => {
     const shortUrl = 'https://link.acrabadabra.com/8355d';
-    const url ='https://vimeo.com/256549521';
+    const url = 'https://vimeo.com/256549521';
 
     httpClientSpy.post.and.returnValue(of({ shortUrl }));
 
     service.shortenUrl(url).then(
-      value => expect(value).toEqual(shortUrl),
+      (value) => expect(value).toEqual(shortUrl),
       fail
     );
   });

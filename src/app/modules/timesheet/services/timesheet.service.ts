@@ -12,31 +12,31 @@ import { SerializationService } from 'src/app/shared/services/serialization/seri
   providedIn: 'root'
 })
 export class TimesheetService {
-  public timesheet: Timesheet;
-  public mode: string;
+  timesheet: Timesheet;
+  mode: string;
 
-  public constructor(
-    private _localSaveService: LocalSaveService,
-    private _serializer: SerializationService
+  constructor (
+    private readonly _localSaveService: LocalSaveService,
+    private readonly _serializer: SerializationService
   ) {
     this.timesheet = new Timesheet();
   }
 
-  public getEditToken(): string {
+  getEditToken (): string {
     return this._serializer.serializeObject({
         mode: 'edit',
         timesheet: this.timesheet
     });
   }
 
-  public getReviewToken(): string {
+  getReviewToken (): string {
     return this._serializer.serializeObject({
         mode: 'review',
         timesheet: this.timesheet
     });
   }
 
-  public getTransferToken(): string {
+  getTransferToken (): string {
 
     let transferedTimesheet = this.timesheet;
 
@@ -56,7 +56,7 @@ export class TimesheetService {
     });
   }
 
-  public openTimesheet(token: string, mode: string): boolean {
+  openTimesheet (token: string, mode: string): boolean {
     const a = this._serializer.deserializeObject(token);
     if (!a || a.mode !== mode) {
       return false;
@@ -67,7 +67,7 @@ export class TimesheetService {
     }
   }
 
-  public getInvoiceLink() {
+  getInvoiceLink () {
     return  environment.pdf_api_url +
             '?url=' + window.location.origin + '/invoice/' + this.getReviewToken() +
             '&format=A4&scale=2&margin.top=15px&margin.left=10px&margin.bottom=10px&margin.right=10px' +
@@ -75,7 +75,7 @@ export class TimesheetService {
             '&title=' + this.timesheet.invoice.number;
   }
 
-  public getTotalAllowance() {
+  getTotalAllowance () {
     let totalAllowance = 0;
     for (let i = 0; i < this.timesheet.commutes.length; i++) {
       totalAllowance += this.timesheet.commutes[i].mileageAllowance;
@@ -83,7 +83,7 @@ export class TimesheetService {
     return totalAllowance;
   }
 
-  public getTotalMiscellaneous() {
+  getTotalMiscellaneous () {
     let totalMisc = 0;
     for (let i = 0; i < this.timesheet.miscellaneous.length; i++) {
       totalMisc += +this.timesheet.miscellaneous[i].amount;
@@ -91,7 +91,7 @@ export class TimesheetService {
     return totalMisc;
   }
 
-  public getTotalFlatFee() {
+  getTotalFlatFee () {
     let totalFlatFee = 0;
     for (let i = 0; i < this.timesheet.flatFees.length; i++) {
       totalFlatFee += +this.timesheet.flatFees[i].amount;
@@ -99,10 +99,10 @@ export class TimesheetService {
     return totalFlatFee;
   }
 
-  public getLocalStorageTimesheetsList() {
-    let timesheetArray = [];
+  getLocalStorageTimesheetsList () {
+    const timesheetArray = [];
 
-    Object.keys(localStorage).forEach(function(localKey) {
+    Object.keys(localStorage).forEach(function (localKey) {
       if ((localKey.split('.')[0]) === 'timesheet') {
         timesheetArray.push(localKey);
       }
@@ -115,7 +115,7 @@ export class TimesheetService {
     });
   }
 
-  public saveTimesheet() {
+  saveTimesheet () {
     let lastTimesheet: number;
     const timesheetArray = this.getLocalStorageTimesheetsList();
 
@@ -127,7 +127,7 @@ export class TimesheetService {
     this._localSaveService.setLocalItem(`timesheet.${lastTimesheet + 1}`, this.timesheet);
   }
 
-  public openLastTimesheetInLocal(): boolean {
+  openLastTimesheetInLocal (): boolean {
     const timesheetsOfLocalStorage = this.getLocalStorageTimesheetsList();
     if (timesheetsOfLocalStorage.length > 0) {
       this.setTimesheet(this._localSaveService.getLocalItem(timesheetsOfLocalStorage[timesheetsOfLocalStorage.length - 1]));
@@ -136,7 +136,7 @@ export class TimesheetService {
     return false;
   }
 
-  public getIfExistAlreadyPresentInvoice(timesheetToTransfer: Timesheet): Timesheet {
+  getIfExistAlreadyPresentInvoice (timesheetToTransfer: Timesheet): Timesheet {
     const localStorageTimesheetsList = this.getLocalStorageTimesheetsList();
     const localStorageTimesheetsListSize = this.getLocalStorageTimesheetsList().length;
     for (let i = localStorageTimesheetsListSize; i >= 0; i--) {
@@ -169,7 +169,7 @@ export class TimesheetService {
     return timesheetToTransfer;
   }
 
-  public setTimesheet(timesheet) {
+  setTimesheet (timesheet) {
       this.timesheet = Object.assign(
         {},
         new Timesheet(),

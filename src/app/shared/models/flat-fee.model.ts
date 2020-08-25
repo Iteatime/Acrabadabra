@@ -1,6 +1,6 @@
 export class FlatFee {
 
-  constructor(
+  constructor (
       public date?: string,
       public amount?: number,
   ) {}

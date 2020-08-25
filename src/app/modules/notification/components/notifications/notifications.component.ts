@@ -12,9 +12,9 @@ import { NotificationService } from '../../services/notification.service';
 export class NotificationsComponent {
   notifications: Notification[] = this.notificationService.notifications;
 
-  constructor(private notificationService: NotificationService) { }
+  constructor (private readonly notificationService: NotificationService) { }
 
-  dismiss(notification: Notification): void {
+  dismiss (notification: Notification): void {
     const elem = document.querySelector(`#notifications #${notification.id}`);
     if (elem) {
       elem.classList.add('fade-out');

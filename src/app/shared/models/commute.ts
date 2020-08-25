@@ -1,6 +1,6 @@
 export class Commute {
 
-constructor(
+constructor (
     public date: string,
     public journey: string,
     public distance: number,

@@ -95,7 +95,7 @@
           <td>{{ expenseMileageTotal | currency:currencyCode:"symbol":"1.2-2":local }}</td>
           <td>{{ expenseMileageQuantity }}</td>
           <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">
-            {{ monetaryService.vatRates.normal / 100 | percent:"1.2-2":local  }}</td>
+            {{ monetaryService.vatRates.normal / 100 | percent:"1.2-2":local }}</td>
           <td>{{ expenseMileageTotal | currency:currencyCode:"symbol":'1.2-2':local }}</td>
           <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">
             {{ expenseMileageTotal * ( 1 + monetaryService.vatRates.normal / 100 ) | currency:currencyCode:"symbol":"1.2-2":local }}
@@ -107,8 +107,8 @@
           <td>{{ flatFeesTotal.amounts[i] | currency:currencyCode:"symbol":'1.2-2':local }}</td>
           <td>{{ flatFeesTotal.quantity[i] }}</td>
           <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">
-            {{ monetaryService.vatRates.normal / 100 | percent:"1.2-2":local  }}</td>
-          <td> {{ flatFeesTotal.amounts[i] * flatFeesTotal.quantity[i] | currency:currencyCode:"symbol":'1.2-2':local}}
+            {{ monetaryService.vatRates.normal / 100 | percent:"1.2-2":local }}</td>
+          <td> {{ flatFeesTotal.amounts[i] * flatFeesTotal.quantity[i] | currency:currencyCode:"symbol":'1.2-2':local }}
           </td>
           <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">
             {{ flatFeesTotal.amounts[i]

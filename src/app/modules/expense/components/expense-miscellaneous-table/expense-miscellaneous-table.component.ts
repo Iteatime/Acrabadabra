@@ -15,22 +15,22 @@ export class ExpenseMiscellaneousTableComponent implements OnInit {
   @Input() hideDeleteButton = false;
   @Input() vatExemption = false;
 
-  public local = 'fr';
-  public currencyCode: string;
+  local = 'fr';
+  currencyCode: string;
   miscellaneous: Miscellaneous[];
 
-  constructor(public timesheetService: TimesheetService,
+  constructor (public timesheetService: TimesheetService,
               public miscellaneousService: MiscellaneousExpensesService,
-              private _monetaryService: MonetaryService
+              private readonly _monetaryService: MonetaryService
   ) {
     this.currencyCode = this._monetaryService.currencyCode;
     }
 
-  ngOnInit() {
+  ngOnInit () {
     this.miscellaneous = this.timesheetService.timesheet.miscellaneous;
   }
 
-  delete(miscellaneous) {
+  delete (miscellaneous) {
     this.miscellaneous.splice(this.miscellaneous.indexOf(miscellaneous), 1);
     this.changed.emit(true);
   }
