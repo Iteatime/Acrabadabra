@@ -2,7 +2,7 @@ import { Directive, Input, Output, EventEmitter, HostListener, OnChanges } from 
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 
 @Directive({
-
+  // tslint:disable-next-line:directive-selector
   selector: '[copyToClipboard]',
 })
 export class CopyToClipboardDirective {
@@ -13,6 +13,7 @@ export class CopyToClipboardDirective {
   @Input('copyToClipboardMessage')
   message: string;
 
+  // tslint:disable-next-line:no-input-rename
   @Input('copyToClipboardMessageParent')
   parent: HTMLElement;
 

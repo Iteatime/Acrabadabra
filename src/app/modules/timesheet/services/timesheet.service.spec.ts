@@ -246,6 +246,7 @@ describe('TimesheetService', () => {
       });
     });
 
+    // tslint:disable-next-line:max-line-length
     it('should edit transfered timesheet with client informations if a provider and a consultant are associated to a same client in local storage', () => {
       expect(service.getIfExistAlreadyPresentInvoice(testTimesheet).invoice.clientRef).toEqual('1000');
     });

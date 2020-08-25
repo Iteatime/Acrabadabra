@@ -10,7 +10,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import {Subject} from 'rxjs';
+import { Subject } from 'rxjs';
 
 import {
   addHours,
@@ -29,7 +29,7 @@ import {
   subMonths,
 } from 'date-fns';
 
-import {CalendarEvent, CalendarMonthViewDay, DAYS_OF_WEEK} from 'angular-calendar';
+import { CalendarEvent, CalendarMonthViewDay, DAYS_OF_WEEK } from 'angular-calendar';
 
 @Component({
   selector: 'app-calendar-selector',
@@ -106,8 +106,8 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
   }
 
   selectAllBusinessDays (): void {
-    const monthStart = startOfMonth(this.viewDate).getDate(),
-          monthEnd = endOfMonth(this.viewDate).getDate();
+    const monthStart = startOfMonth(this.viewDate).getDate();
+    const monthEnd = endOfMonth(this.viewDate).getDate();
 
     for (let date = monthStart; date <= monthEnd; date++) {
       const aDay = setDate(this.viewDate, date);
@@ -127,8 +127,8 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
   dayEdited (event: Event, date: Date, time: number): void {
     event.stopPropagation();
 
-    const day = this._getDayWorkingTime(date),
-          end = addMinutes(day.start, 8 * 60 * time);
+    const day = this._getDayWorkingTime(date);
+    const end = addMinutes(day.start, 8 * 60 * time);
 
     if (time !== 0 && end) {
       day.end = end;

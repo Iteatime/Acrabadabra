@@ -12,6 +12,7 @@ export class ReviewMail {
   }
 
   setSubject (consultantName: string, date) {
+    // tslint:disable-next-line:max-line-length
     this.subject = 'Acrabadabra  - Compte rendu d\'activité de ' + consultantName + ', ' + date.toLocaleString(this.locale, { month: 'long', year: 'numeric' });
   }
 

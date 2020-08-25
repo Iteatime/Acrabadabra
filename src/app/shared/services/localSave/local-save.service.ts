@@ -9,9 +9,6 @@ export class LocalSaveService {
 
   /**
    * Saving item into localStorage
-   *
-   * @param {string} name
-   * @param {any} item
    */
   setLocalItem (name: string, item: any) {
     const serialized = this._serializer.serializeObject(item);
@@ -20,11 +17,8 @@ export class LocalSaveService {
 
   /**
   * Getting item from localStorage
-  *
-  * @returns {any}
   */
   getLocalItem (name: string): any {
     return this._serializer.deserializeObject(localStorage.getItem(name));
   }
-
 }

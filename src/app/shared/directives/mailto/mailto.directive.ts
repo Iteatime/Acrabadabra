@@ -2,6 +2,7 @@ import { Directive, Input, HostListener } from '@angular/core';
 import { ReviewMail } from '../../models/review-mail.model';
 
 @Directive({
+  // tslint:disable-next-line:directive-selector
   selector: '[mailto]'
 })
 export class MailtoDirective {

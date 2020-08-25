@@ -182,7 +182,7 @@
     "interface-name": false,
     "interface-over-type-literal": true,
     "jsdoc-format": false,
-    "match-default-export-name": true,
+    "match-default-export-name": false,
     "newline-before-return": false,
     "newline-per-chained-call": false,
     "new-parens": false,
@@ -254,13 +254,13 @@
     "directive-selector": [
       true,
       "attribute",
-      ["app", "lum"],
+      ["app"],
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      ["app", "lum"],
+      ["app"],
       "kebab-case"
     ],
     "no-inputs-metadata-property": true,

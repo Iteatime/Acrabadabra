@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
-import {CalendarEvent} from 'calendar-utils';
+import { CalendarEvent } from 'calendar-utils';
 
-import {differenceInMinutes, getDaysInMonth, lastDayOfMonth} from 'date-fns';
+import { differenceInMinutes, getDaysInMonth, lastDayOfMonth } from 'date-fns';
 
-import {Timesheet} from 'src/app/shared/@types/timesheet';
+import { Timesheet } from 'src/app/shared/@types/timesheet';
 
 @Injectable({
   providedIn: 'root'
@@ -36,10 +36,10 @@ export class CalendarService {
 
   getWorkingDays (events: CalendarEvent[]): any {
     if (events[0] !== undefined) {
-      const month = new Date(events[0].start).getMonth(),
-          year = new Date(events[0].start).getFullYear(),
-          workingDays = {};
-          workingDays[month + '.' + year] = new Array();
+      const month = new Date(events[0].start).getMonth();
+      const year = new Date(events[0].start).getFullYear();
+      const workingDays = {};
+      workingDays[month + '.' + year] = [];
     for (let date = 0; date < new Date(lastDayOfMonth(events[0].start)).getDate(); date++) {
       let time = 0;
       events.forEach((aDay) => {

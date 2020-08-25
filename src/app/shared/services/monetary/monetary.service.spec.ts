@@ -20,7 +20,7 @@ describe('CurrencyService', () => {
 
   describe('vatRate', () => {
     it('should return "normal" value of "vatRates" object', () => {
-      expect(service.vatRate).toBe(20.0);
+      expect(service.vatRate).toBe(20);
     });
   });
 });

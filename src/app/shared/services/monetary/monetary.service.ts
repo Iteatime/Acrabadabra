@@ -7,10 +7,10 @@ export class MonetaryService {
 
   constructor () { }
 
-  vatRates = { exempt: 0.0,
+  vatRates = { exempt: 0,
                       greatlyReduced: 5.5,
-                      reduced: 10.0,
-                      normal: 20.0
+                      reduced: 10,
+                      normal: 20
   };
 
   get currencyCode (): string {
