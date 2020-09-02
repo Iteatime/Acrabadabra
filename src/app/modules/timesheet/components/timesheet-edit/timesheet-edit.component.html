@@ -9,11 +9,13 @@
       <div id="consultant" class="timesheet-edit__wrapper__form__block">
         <h4 class="timesheet-edit__wrapper__form__block__title">Consultant</h4>
         <div class="timesheet-edit__wrapper__form__block__input-wrapper">
-          <div class="timesheet-edit__wrapper__form__block__input-wrapper__item form-group">
+          <div class="timesheet-edit__wrapper__form__block__input-wrapper__item form-group"
+               data-role="consultant-block-name">
             <label for="consultantNameInput"
               class="timesheet-edit__wrapper__form__block__input-wrapper__item__label">Nom</label>
             <div class="timesheet-edit__wrapper__form__block__input-wrapper__item__input">
               <input type="text" required class="form-control" name="consultantNameInput"
+                     data-role="consultant-input-name"
                 [(ngModel)]="timesheetService.timesheet.consultant.name" #consultantNameInput="ngModel">
               <div *ngIf="consultantNameInput.invalid && (consultantNameInput.dirty || consultantNameInput.touched)"
                 class="alert alert-danger">
@@ -23,11 +25,13 @@
               </div>
             </div>
           </div>
-          <div class="timesheet-edit__wrapper__form__block__input-wrapper__item form-group">
+          <div class="timesheet-edit__wrapper__form__block__input-wrapper__item form-group"
+               data-role="consultant-block-email">
             <label for="consultantEmailInput"
               class="timesheet-edit__wrapper__form__block__input-wrapper__item__label">Email</label>
             <div class="timesheet-edit__wrapper__form__block__input-wrapper__item__input">
               <input type="email" required email class="form-control" name="consultantEmailInput"
+                     data-role="consultant-input-email"
                 [(ngModel)]="timesheetService.timesheet.consultant.email" #consultantEmailInput="ngModel">
               <div *ngIf="consultantEmailInput.invalid && (consultantEmailInput.dirty || consultantEmailInput.touched)"
                 class="alert alert-danger">
@@ -46,11 +50,13 @@
       <div id="mission" class="timesheet-edit__wrapper__form__block">
         <h4 class="timesheet-edit__wrapper__form__block__title">Mission</h4>
         <div class="timesheet-edit__wrapper__form__block__input-wrapper">
-          <div class="timesheet-edit__wrapper__form__block__input-wrapper__item form-group">
+          <div class="timesheet-edit__wrapper__form__block__input-wrapper__item form-group"
+               data-role="mission-block-title">
             <label for="missionTitleInput"
               class="timesheet-edit__wrapper__form__block__input-wrapper__item__label">Intitulé</label>
             <div class="timesheet-edit__wrapper__form__block__input-wrapper__item__input">
               <input type="text" required class="form-control" name="missionTitleInput"
+                     data-role="mission-input-title"
                 [(ngModel)]="timesheetService.timesheet.mission.title" #missionTitleInput="ngModel">
               <div *ngIf="missionTitleInput.invalid && (missionTitleInput.dirty || missionTitleInput.touched)"
                 class="alert alert-danger">
@@ -61,11 +67,13 @@
             </div>
           </div>
 
-          <div class="timesheet-edit__wrapper__form__block__input-wrapper__item form-group">
+          <div class="timesheet-edit__wrapper__form__block__input-wrapper__item form-group"
+               data-role="mission-block-final-client">
             <label for="missionFinalClient" class="timesheet-edit__wrapper__form__block__input-wrapper__item__label">Client
               final</label>
             <div class="timesheet-edit__wrapper__form__block__input-wrapper__item__input">
               <input type="text" required class="form-control" name="missionFinalClientInput"
+                     data-role="mission-input-final-client"
                 [(ngModel)]="timesheetService.timesheet.mission.client" #missionFinalClientInput="ngModel">
               <div
                 *ngIf="missionFinalClientInput.invalid && (missionFinalClientInput.dirty || missionFinalClientInput.touched)"
@@ -88,7 +96,7 @@
 
       <div class="timesheet-edit__wrapper__form__component">
         <label class="timesheet-edit__wrapper__form__component__toggle">
-          <input name="commutesToggle" type="checkbox" [(ngModel)]="generateExpenses" #commutesToggle>
+          <input name="commutesToggle" data-role="checkbox-fees" type="checkbox" [(ngModel)]="generateExpenses" #commutesToggle>
           Ajouter des frais
         </label>
         <app-expense-mileage-form *ngIf="generateExpenses" [commutes]="timesheetService.timesheet.commutes"
@@ -101,7 +109,7 @@
 
       <div class="timesheet-edit__wrapper__form__component">
         <label class="timesheet-edit__wrapper__form__component__toggle">
-          <input name="invoiceToggle" type="checkbox" [(ngModel)]="generateInvoice" #invoiceToggle>
+          <input name="invoiceToggle" data-role="checkbox-invoice" type="checkbox" [(ngModel)]="generateInvoice" #invoiceToggle>
           Générer une facture
         </label>
         <app-invoice-form *ngIf="generateInvoice" [invoice]="timesheetService.timesheet.invoice" [mission]="timesheetService.timesheet.mission"
@@ -109,10 +117,14 @@
       </div>
 
       <div class="timesheet-edit__wrapper__form__submit">
-        <button data-text="Valider mon CRA" class="timesheet-edit__wrapper__form__submit__button" (click)="onSubmit()">
+        <button data-text="Valider mon CRA" class="timesheet-edit__wrapper__form__submit__button"
+                data-role="button-validate"
+                (click)="onSubmit()">
           <span>Valider mon CRA</span>
         </button>
-        <button *ngIf="this.auth.isAuthenticated" data-text="Retour" class="timesheet-edit__wrapper__form__submit__button" [routerLink]="['/dashboard']">
+        <button *ngIf="this.auth.isAuthenticated" data-text="Retour" class="timesheet-edit__wrapper__form__submit__button"
+                data-role="button-dashboard"
+                [routerLink]="['/dashboard']">
           <span>Retour</span>
         </button>
       </div>

@@ -1,4 +1,4 @@
-<table class="flat-fee">
+<table class="flat-fee" data-role="flat-fee-table">
   <thead class="flat-fee__header">
       <tr>
           <th class="flat-fee__header__item">Date</th>
@@ -6,14 +6,14 @@
       </tr>
   </thead>
   <tbody class="flat-fee__body">
-      <tr *ngFor = "let flatFee of timesheetService.timesheet.flatFees">
-          <td class="flat-fee__body__item" data-text="Date:">{{flatFee.date | date: 'dd/MM/yyyy'}}</td>
-          <td class="flat-fee__body__item keep-border" data-text="Montant:">{{flatFee.amount | currency:currencyCode:"symbol":'1.2-2':local}}</td>
-          <td class="flat-fee__body__item trashCan" *ngIf="!hideDeleteButton"><a (click)="delete(flatFee)"><i class="material-icons">delete</i></a></td>
+      <tr *ngFor = "let flatFee of timesheetService.timesheet.flatFees; let index = index;">
+          <td class="flat-fee__body__item" data-text="Date:" attr.data-role="flat-fee-table-{{index}}-date">{{flatFee.date | date: 'dd/MM/yyyy'}}</td>
+          <td class="flat-fee__body__item keep-border" data-text="Montant:" attr.data-role="flat-fee-table-{{index}}-amount">{{flatFee.amount | currency:currencyCode:"symbol":'1.2-2':local}}</td>
+          <td class="flat-fee__body__item trashCan" *ngIf="!hideDeleteButton"><a (click)="delete(flatFee)" attr.data-role="button-flat-fee-table-{{index}}-delete"><i class="material-icons">delete</i></a></td>
       </tr>
       <tr>
           <td></td>
-          <td class="flat-fee__body__item">Total HT: {{timesheetService.getTotalFlatFee() | currency:currencyCode:"symbol":'1.2-2':local}}</td>
+          <td class="flat-fee__body__item" data-role="flat-fee-table-total">Total HT: {{timesheetService.getTotalFlatFee() | currency:currencyCode:"symbol":'1.2-2':local}}</td>
       </tr>
   </tbody>
 </table>

@@ -1,0 +1,8 @@
+{
+  "baseUrl": "http://localhost:4200",
+  "projectId": "ccb44p",
+  "videoUploadOnPasses": false,
+  "videoCompression": false,
+  "chromeWebSecurity": false,
+  "numTestsKeptInMemory": 0
+}

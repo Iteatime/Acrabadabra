@@ -37,3 +37,8 @@ Thumbs.db
 
 /functions/*.js
 .env
+
+# Cypress
+/cypress/fixtures/.local-storage-backup
+/cypress/screenshots
+/cypress/videos

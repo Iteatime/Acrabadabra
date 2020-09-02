@@ -3,11 +3,12 @@
     <div class="invoice-form__block">
       <h4 class="invoice-form__block__title">Facture</h4>
       <div class="invoice-form__block__input-wrapper">
-        <div class="invoice-form__block__input-wrapper__item form-group">
+        <div class="invoice-form__block__input-wrapper__item form-group" data-role="invoice-block-number">
           <label for="invoiceNumberInputInput" class="invoice-form__block__input-wrapper__item__label">Numéro de
             facture</label>
           <div class="invoice-form__block__input-wrapper__item__input">
             <input type="text" required class="form-control" name="invoiceNumber" [(ngModel)]="invoice.number"
+                   data-role="invoice-input-number"
               #number="ngModel">
             <div *ngIf="number.invalid && (number.dirty || number.touched)" class="alert alert-danger">
 
@@ -17,11 +18,11 @@
             </div>
           </div>
         </div>
-        <div class="invoice-form__block__input-wrapper__item form-group">
+        <div class="invoice-form__block__input-wrapper__item form-group" data-role="invoice-block-date">
           <label for="invoiceDateInput" class="invoice-form__block__input-wrapper__item__label">Date</label>
           <div class="invoice-form__block__input-wrapper__item__input">
             <input type="date" required pattern="\d{4}-\d{2}-\d{2}" class="form-control" name="invoiceDateInput"
-              [(ngModel)]="invoice.date" #date="ngModel">
+              [(ngModel)]="invoice.date" #date="ngModel" data-role="invoice-input-date">
             <div *ngIf="date.invalid && (date.dirty || date.touched)" class="alert alert-danger">
 
               <div *ngIf="date.errors['required']">
@@ -34,18 +35,18 @@
             </div>
           </div>
         </div>
-        <div class="invoice-form__block__input-wrapper__item form-group">
+        <div class="invoice-form__block__input-wrapper__item form-group" data-role="invoice-block-client-ref">
           <label for="invoiceClientRefInput" class="invoice-form__block__input-wrapper__item__label">Référence client
             (BDC)<span class="optional">(optionnel)</span></label>
           <div class="invoice-form__block__input-wrapper__item__input">
-            <input type="text" class="form-control" name="invoiceClientRefInput" [(ngModel)]="invoice.clientRef">
+            <input type="text" class="form-control" name="invoiceClientRefInput" [(ngModel)]="invoice.clientRef" data-role="invoice-input-client-ref">
           </div>
         </div>
-        <div class="invoice-form__block__input-wrapper__item form-group">
+        <div class="invoice-form__block__input-wrapper__item form-group" data-role="invoice-block-worked-rate">
           <label for="invoiceWorkedRateInput" class="invoice-form__block__input-wrapper__item__label">Prix unitaire de l'unité d'oeuvre
             (HT)</label>
           <div class="invoice-form__block__input-wrapper__item__input">
-            <input type="text" required pattern="([0-9]+(\.[0-9]+)?)" class="form-control" name="invoiceWorkedRateInput"
+            <input type="text" required pattern="([0-9]+(\.[0-9]+)?)" class="form-control" name="invoiceWorkedRateInput" data-role="invoice-input-worked-rate"
               [(ngModel)]="invoice.workedRate" #workedRate="ngModel">
             <div *ngIf="workedRate.invalid && (workedRate.dirty || workedRate.touched)" class="alert alert-danger">
 
@@ -63,11 +64,11 @@
     <div class="invoice-form__half-block">
       <h4 class="invoice-form__half-block__title">Prestataire</h4>
       <div class="invoice-form__half-block__input-wrapper">
-        <div class="invoice-form__half-block__input-wrapper__item form-group">
+        <div class="invoice-form__half-block__input-wrapper__item form-group" data-role="invoice-block-provider-name">
           <label for="invoiceProviderNameInput"
             class="invoice-form__half-block__input-wrapper__item__label">Dénomination</label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
-            <input type="text" required class="form-control" name="invoiceProviderNameInput"
+            <input type="text" required class="form-control" name="invoiceProviderNameInput" data-role="invoice-input-provider-name"
               [(ngModel)]="invoice.provider.name" #providerName="ngModel">
             <div *ngIf="providerName.invalid && (providerName.dirty || providerName.touched)"
               class="alert alert-danger">
@@ -78,11 +79,11 @@
             </div>
           </div>
         </div>
-        <div class="invoice-form__half-block__input-wrapper__item form-group">
+        <div class="invoice-form__half-block__input-wrapper__item form-group" data-role="invoice-block-provider-address">
           <label for="invoiceProviderAddressInput"
             class="invoice-form__half-block__input-wrapper__item__label">Adresse</label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
-            <input type="text" required class="form-control" name="invoiceProviderAddressInput"
+            <input type="text" required class="form-control" name="invoiceProviderAddressInput" data-role="invoice-input-provider-address"
               [(ngModel)]="invoice.provider.address" #providerAddress="ngModel">
             <div *ngIf="providerAddress.invalid && (providerAddress.dirty || providerAddress.touched)"
               class="alert alert-danger">
@@ -93,19 +94,19 @@
             </div>
           </div>
         </div>
-        <div class="invoice-form__half-block__input-wrapper__item form-group">
+        <div class="invoice-form__half-block__input-wrapper__item form-group" data-role="invoice-block-provider-phone">
           <label for="invoiceProviderTelephoneInput"
             class="invoice-form__half-block__input-wrapper__item__label">Téléphone<span class="optional">(optionnel)</span></label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
-            <input type="tel" class="form-control" name="invoiceProviderTelephoneInput"
+            <input type="tel" class="form-control" name="invoiceProviderTelephoneInput" data-role="invoice-input-provider-phone"
               [(ngModel)]="invoice.provider.telephone">
           </div>
         </div>
-        <div class="invoice-form__half-block__input-wrapper__item form-group">
+        <div class="invoice-form__half-block__input-wrapper__item form-group" data-role="invoice-block-provider-siren">
           <label for="invoiceProviderSIRENInput" class="invoice-form__half-block__input-wrapper__item__label">Numéro de
             SIREN</label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
-            <input type="text" required class="form-control" name="invoiceProviderSIRENInput"
+            <input type="text" required class="form-control" name="invoiceProviderSIRENInput" data-role="invoice-input-provider-siren"
               [(ngModel)]="invoice.provider.siren" #providerSIREN="ngModel">
             <div *ngIf="providerSIREN.invalid && (providerSIREN.dirty || providerSIREN.touched)"
               class="alert alert-danger">
@@ -116,11 +117,11 @@
             </div>
           </div>
         </div>
-        <div class="invoice-form__half-block__input-wrapper__item form-group">
+        <div class="invoice-form__half-block__input-wrapper__item form-group" data-role="invoice-block-provider-rcs">
           <label for="invoiceProviderTradeAndCompaniesRegisterCityInput"
             class="invoice-form__half-block__input-wrapper__item__label">Ville d'immatriculation au RCS</label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
-            <input type="text" required class="form-control" name="invoiceProviderTradeAndCompaniesRegisterCityInput"
+            <input type="text" required class="form-control" name="invoiceProviderTradeAndCompaniesRegisterCityInput" data-role="invoice-input-provider-rcs"
               [disabled]="providerTradeAndCompaniesRegisterExemption.checked"
               [(ngModel)]="invoice.provider.tradeAndCompaniesRegisterCity"
               #providerTradeAndCompaniesRegisterCity="ngModel">
@@ -132,7 +133,7 @@
               </div>
             </div>
             <label class="invoice-form__half-block__input-wrapper__item__input__toggle">
-              <input type="checkbox" name="invoiceProviderTradeAndCompaniesRegisterToggle"
+              <input type="checkbox" name="invoiceProviderTradeAndCompaniesRegisterToggle" data-role="checkbox-invoice-provider-rcs"
                 [(ngModel)]="invoice.provider.tradeAndCompaniesRegisterExemption"
                 (change)="invoice.provider.tradeAndCompaniesRegisterCity = ''"
                 #providerTradeAndCompaniesRegisterExemption>
@@ -140,15 +141,15 @@
             </label>
           </div>
         </div>
-        <div class="invoice-form__half-block__input-wrapper__item form-group">
+        <div class="invoice-form__half-block__input-wrapper__item form-group" data-role="invoice-block-provider-vat">
           <label for="invoiceProviderVATNumberInput" class="invoice-form__half-block__input-wrapper__item__label">Numéro
             de TVA intra-communautaire</label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
-            <input type="text" class="form-control" name="invoiceProviderVATNumberInput"
+            <input type="text" class="form-control" name="invoiceProviderVATNumberInput" data-role="invoice-input-provider-vat"
               [disabled]="providerVATExemption.checked" [(ngModel)]="invoice.provider.vatNumber"
               #providerVATNumber="ngModel">
             <label class="invoice-form__half-block__input-wrapper__item__input__toggle">
-              <input type="checkbox" name="invoiceProviderVATToggle" [(ngModel)]="invoice.provider.vatExemption"
+              <input type="checkbox" name="invoiceProviderVATToggle" [(ngModel)]="invoice.provider.vatExemption" data-role="checkbox-invoice-provider-vat"
                 (change)="invoice.provider.vatNumber = ''" #providerVATExemption>
               Franchise TVA
             </label>
@@ -166,11 +167,11 @@
     <div class="invoice-form__half-block" id="client">
       <h4 class="invoice-form__half-block__title">Client</h4>
       <div class="invoice-form__half-block__input-wrapper">
-        <div class="invoice-form__half-block__input-wrapper__item form-group">
+        <div class="invoice-form__half-block__input-wrapper__item form-group" data-role="invoice-block-client-name">
           <label for="invoiceClientNameInput"
             class="invoice-form__half-block__input-wrapper__item__label">Dénomination</label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
-            <input type="text" required class="form-control" name="invoiceClientNameInput"
+            <input type="text" required class="form-control" name="invoiceClientNameInput" data-role="invoice-input-client-name"
               [(ngModel)]="invoice.client.name" #clientName="ngModel">
             <div *ngIf="clientName.invalid && (clientName.dirty || clientName.touched)" class="alert alert-danger">
 
@@ -180,11 +181,11 @@
             </div>
           </div>
         </div>
-        <div class="invoice-form__half-block__input-wrapper__item form-group">
+        <div class="invoice-form__half-block__input-wrapper__item form-group" data-role="invoice-block-client-address">
           <label for="invoiceClientAddressInput"
             class="invoice-form__half-block__input-wrapper__item__label">Adresse</label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
-            <input type="text" required class="form-control" name="invoiceClientAddressInput"
+            <input type="text" required class="form-control" name="invoiceClientAddressInput" data-role="invoice-input-client-address"
               [(ngModel)]="invoice.client.address" #clientAddress="ngModel">
             <div *ngIf="clientAddress.invalid && (clientAddress.dirty || clientAddress.touched)"
               class="alert alert-danger">
@@ -195,34 +196,34 @@
             </div>
           </div>
         </div>
-        <div class="invoice-form__half-block__input-wrapper__item form-group">
+        <div class="invoice-form__half-block__input-wrapper__item form-group" data-role="invoice-block-client-phone">
           <label for="invoiceClientTelephoneInput"
             class="invoice-form__half-block__input-wrapper__item__label">Téléphone<span class="optional">(optionnel)</span></label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
-            <input type="tel" class="form-control" name="invoiceClientTelephoneInput"
+            <input type="tel" class="form-control" name="invoiceClientTelephoneInput" data-role="invoice-input-client-phone"
               [(ngModel)]="invoice.client.telephone">
           </div>
         </div>
-        <div class="invoice-form__half-block__input-wrapper__item form-group">
+        <div class="invoice-form__half-block__input-wrapper__item form-group" data-role="invoice-block-client-siren">
           <label for="invoiceClientSIRENInput" class="invoice-form__half-block__input-wrapper__item__label">
             Numéro de SIREN<span class="optional">(optionnel)</span>
           </label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
-            <input type="text" class="form-control" name="invoiceClientSIRENInput"
+            <input type="text" class="form-control" name="invoiceClientSIRENInput" data-role="invoice-input-client-siren"
               [(ngModel)]="invoice.client.siren" #clientSIREN="ngModel">
           </div>
         </div>
-        <div class="invoice-form__half-block__input-wrapper__item form-group">
+        <div class="invoice-form__half-block__input-wrapper__item form-group" data-role="invoice-block-client-rcs">
           <label for="invoiceClientTradeAndCompaniesRegisterCityInput" class="invoice-form__half-block__input-wrapper__item__label">
             Ville d'immatriculation au RCS<span class="optional">(optionnel)</span>
           </label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
-            <input type="text" class="form-control" name="invoiceClientTradeAndCompaniesRegisterCityInput"
+            <input type="text" class="form-control" name="invoiceClientTradeAndCompaniesRegisterCityInput" data-role="invoice-input-client-rcs"
               [disabled]="invoiceClientTradeAndCompaniesRegisterExemption.checked"
               [(ngModel)]="invoice.client.tradeAndCompaniesRegisterCity"
               #invoiceClientTradeAndCompaniesRegisterCity="ngModel">
             <label class="invoice-form__half-block__input-wrapper__item__input__toggle">
-              <input type="checkbox" name="invoiceClientTradeAndCompaniesRegisterToggle"
+              <input type="checkbox" name="invoiceClientTradeAndCompaniesRegisterToggle" data-role="checkbox-invoice-client-rcs"
                 [(ngModel)]="invoice.client.tradeAndCompaniesRegisterExemption"
                 (change)="invoice.client.tradeAndCompaniesRegisterCity = ''"
                 #invoiceClientTradeAndCompaniesRegisterExemption>
@@ -230,11 +231,11 @@
             </label>
           </div>
         </div>
-        <div class="invoice-form__half-block__input-wrapper__item form-group">
+        <div class="invoice-form__half-block__input-wrapper__item form-group" data-role="invoice-block-client-vat">
           <label for="invoiceClientVATNumberInput" class="invoice-form__half-block__input-wrapper__item__label">Numéro
             de TVA intra-communautaire<span class="optional">(optionnel)</span></label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
-            <input type="text" class="form-control" name="invoiceClientVATNumberInput"
+            <input type="text" class="form-control" name="invoiceClientVATNumberInput" data-role="invoice-block-client-vat"
               [(ngModel)]="invoice.client.vatNumber" #clientVATNumber="ngModel">
           </div>
         </div>
@@ -248,27 +249,27 @@
     <div class="invoice-form__block">
       <h4 class="invoice-form__block__title">Règlement</h4>
       <div class="invoice-form__block__input-wrapper invoice-form__block__input-wrapper--has-next-line">
-        <div class="invoice-form__block__input-wrapper__item form-group">
+        <div class="invoice-form__block__input-wrapper__item form-group" data-role="invoice-block-payment-date">
           <label for="invoicePaymentDateInput" class="invoice-form__block__input-wrapper__item__label">
             Date de règlement<span class="optional">(optionnel)</span>
           </label>
           <div class="invoice-form__block__input-wrapper__item__input">
-            <input type="date"  class="form-control" name="invoicePaymentDateInput"
+            <input type="date"  class="form-control" name="invoicePaymentDateInput" data-role="invoice-input-payment-date"
               [(ngModel)]="invoice.paymentDate" #paymentDate="ngModel">
           </div>
         </div>
-        <div class="invoice-form__block__input-wrapper__item form-group">
+        <div class="invoice-form__block__input-wrapper__item form-group" data-role="invoice-block-payment-modality">
           <label for="invoicePaymentModalityInput" class="invoice-form__block__input-wrapper__item__label">Modalités de
             paiement<span class="optional">(optionnel)</span></label>
           <div class="invoice-form__block__input-wrapper__item__input">
-            <input type="text" class="form-control" name="invoicePaymentModalityInput"
+            <input type="text" class="form-control" name="invoicePaymentModalityInput" data-role="invoice-input-payment-modality"
               [(ngModel)]="invoice.paymentModality">
           </div>
         </div>
       </div>
       <div class="invoice-form__block__input-wrapper invoice-form__block__input-wrapper--has-next-line">
         <label class="invoice-form__block__input-wrapper__item__input__toggle">
-          <input type="checkbox" name="invoicePaymentLatePenaltyToggle" [(ngModel)]="invoice.paymentLatePenalty">
+          <input type="checkbox" name="invoicePaymentLatePenaltyToggle" [(ngModel)]="invoice.paymentLatePenalty" data-role="checkbox-invoice-payment-late-penalty">
           Pénalités de retard légales (40€ par facture + 10% par an)
         </label>
       </div>
@@ -276,47 +277,47 @@
         <div class="invoice-form__block__input-wrapper__sub-block">
           <h4 class="invoice-form__block__input-wrapper__sub-block__title">Coordonnées bancaires<span class="optional">(optionnel)</span></h4>
           <div class="invoice-form__block__input-wrapper__sub-block__input-wrapper">
-            <div class="invoice-form__block__input-wrapper__item form-group">
+            <div class="invoice-form__block__input-wrapper__item form-group" data-role="invoice-block-bank-account-holder">
               <label for="invoiceBankAccountHolderInput"
                 class="invoice-form__block__input-wrapper__item__label">Titulaire du compte</label>
               <div class="invoice-form__block__input-wrapper__item__input">
-                <input type="text" class="form-control" name="invoiceBankAccountHolderInput"
+                <input type="text" class="form-control" name="invoiceBankAccountHolderInput" data-role="invoice-input-bank-account-holder"
                   [(ngModel)]="invoice.bankAccountHolder">
               </div>
             </div>
-            <div class="invoice-form__block__input-wrapper__item form-group">
+            <div class="invoice-form__block__input-wrapper__item form-group" data-role="invoice-block-bank-swift">
               <label for="invoiceBankDetailsSWIFTInput"
                 class="invoice-form__block__input-wrapper__item__label">SWIFT</label>
               <div class="invoice-form__block__input-wrapper__item__input">
-                <input type="text" class="form-control" name="invoiceBankDetailsSWIFTInput"
+                <input type="text" class="form-control" name="invoiceBankDetailsSWIFTInput" data-role="invoice-input-bank-swift"
                   [(ngModel)]="invoice.bankSWIFT">
               </div>
             </div>
           </div>
           <div class="invoice-form__block__input-wrapper__sub-block__input-wrapper">
-            <div class="invoice-form__block__input-wrapper__sub-block__input-wrapper__item form-group">
+            <div class="invoice-form__block__input-wrapper__sub-block__input-wrapper__item form-group" data-role="invoice-block-bank-iban">
               <label for="invoiceBankDetailsIBANInput"
                 class="invoice-form__block__input-wrapper__sub-block__input-wrapper__item__label">IBAN</label>
               <div class="invoice-form__block__input-wrapper__sub-block__input-wrapper__item__input">
-                <input type="text" class="form-control" name="invoiceBankDetailsIBANInput"
+                <input type="text" class="form-control" name="invoiceBankDetailsIBANInput" data-role="invoice-block-bank-iban"
                   [(ngModel)]="invoice.bankIBAN">
               </div>
             </div>
           </div>
           <div class="invoice-form__block__input-wrapper__sub-block__input-wrapper">
-            <div class="invoice-form__block__input-wrapper__item form-group">
+            <div class="invoice-form__block__input-wrapper__item form-group" data-role="invoice-block-bank-domiciliation">
               <label for="invoiceBankDetailsDomiciliationInput"
                 class="invoice-form__block__input-wrapper__item__label">Banque</label>
               <div class="invoice-form__block__input-wrapper__item__input">
-                <input type="text" class="form-control" name="invoiceBankDetailsDomiciliationInput"
+                <input type="text" class="form-control" name="invoiceBankDetailsDomiciliationInput" data-role="invoice-input-bank-domiciliation"
                   [(ngModel)]="invoice.bankingDomiciliation">
               </div>
             </div>
-            <div class="invoice-form__block__input-wrapper__item form-group">
+            <div class="invoice-form__block__input-wrapper__item form-group" data-role="invoice-block-bank-agency">
               <label for="invoiceBankingAgencyInput"
                 class="invoice-form__block__input-wrapper__item__label">Agence</label>
               <div class="invoice-form__block__input-wrapper__item__input">
-                <input type="text" class="form-control" name="invoiceBankingAgencyInput"
+                <input type="text" class="form-control" name="invoiceBankingAgencyInput" data-role="invoice-input-bank-agency"
                   [(ngModel)]="invoice.bankingAgency">
               </div>
             </div>

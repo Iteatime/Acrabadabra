@@ -3,10 +3,12 @@
         <div class="mileage-allowance-form__block">
             <h4 class="mileage-allowance-form__block__title">Indemnités kilométriques</h4>
             <div class="mileage-allowance-form__block__input-wrapper">
-                <div class="mileage-allowance-form__block__input-wrapper__item form-group" >
+                <div class="mileage-allowance-form__block__input-wrapper__item form-group"
+                    data-role="ik-block-date">
                     <label for="date" class="mileage-allowance-form__block__input-wrapper__item__label">Date</label>
                     <div class="mileage-allowance-form__block__input-wrapper__item__input">
                         <input
+                          data-role="ik-input-date"
                         type="date"
                         pattern="\d{4}-\d{2}-\d{2}"
                         class="form-control"
@@ -28,10 +30,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="mileage-allowance-form__block__input-wrapper__item form-group" >
+                <div class="mileage-allowance-form__block__input-wrapper__item form-group"
+                     data-role="ik-block-journey">
                     <label for="journey" class="mileage-allowance-form__block__input-wrapper__item__label">Trajet</label>
                     <div class="mileage-allowance-form__block__input-wrapper__item__input">
                         <input
+                          data-role="ik-input-journey"
                         placeholder="ex: AR Annecy-Grenoble"
                         type="text"
                         pattern="^\S[A-zÀ-ÿ\s'-]+$"
@@ -55,10 +59,12 @@
                 <div [ngClass]="{
                   'mileage-allowance-form__block__input-wrapper__item form-group':!vehiclesService.isCustomizable(this.commute),
                   'mileage-allowance-form__block__input-wrapper__item--3col form-group2':vehiclesService.isCustomizable(this.commute)
-                  }">
+                  }"
+                     data-role="ik-block-distance">
                     <label for="distance" class="mileage-allowance-form__block__input-wrapper__item__label">Distance parcourue (en km)</label>
                     <div class="mileage-allowance-form__block__input-wrapper__item__input">
                         <input
+                          data-role="ik-input-distance"
                         placeholder="ex: 120"
                         type="text"
                         pattern="[0-9]+"
@@ -82,10 +88,12 @@
                 <div [ngClass]="{
                   'mileage-allowance-form__block__input-wrapper__item form-group':!vehiclesService.isCustomizable(this.commute),
                   'mileage-allowance-form__block__input-wrapper__item--3col form-group2':vehiclesService.isCustomizable(this.commute)
-                  }">
+                  }"
+                     data-role="ik-block-vehicle">
                     <label for="vehicle" class="mileage-allowance-form__block__input-wrapper__item__label">Véhicule</label>
                     <div class="mileage-allowance-form__block__input-wrapper__item__input">
                         <select
+                          data-role="ik-input-vehicle"
                         class="form-control"
                         name="vehicle"
                         [(ngModel)]="commute.vehicleSelected"
@@ -108,10 +116,12 @@
                 <div *ngIf="vehiclesService.isCustomizable(this.commute)" [ngClass]="{
                   'mileage-allowance-form__block__input-wrapper__item form-group':!vehiclesService.isCustomizable(this.commute),
                   'mileage-allowance-form__block__input-wrapper__item--3col form-group2':vehiclesService.isCustomizable(this.commute)
-                  }">
+                  }"
+                     data-role="ik-block-tax-rate">
                   <label for="taxRate" class="mileage-allowance-form__block__input-wrapper__item__label">Taux personnalisé (€/km)</label>
                   <div class="mileage-allowance-form__block__input-wrapper__item__input">
                       <input
+                        data-role="ik-input-tax-rate"
                       placeholder="ex: 0.650"
                       type="text"
                       pattern="^[0-9.]+$"
@@ -134,6 +144,7 @@
                 </div>
                 <div class="mileage-allowance-form__block__submit">
                     <button
+                      data-role="button-add-ik"
                     data-text="Ajouter"
                     class="mileage-allowance-form__block__submit__button"
                     >
