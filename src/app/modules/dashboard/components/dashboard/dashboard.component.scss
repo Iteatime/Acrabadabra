@@ -1,12 +1,12 @@
-@import "src/app/style/vars";
-@import "src/app/style/mixins";
+@import 'src/app/style/vars';
+@import 'src/app/style/mixins';
 
 .navbar {
   position: fixed;
-  width: $sidebar_width;
-  min-height: calc(100vh - #{$header_height} - 1em);
   left: 0%;
   background-color: $main_red;
+  width: $sidebar_width;
+  min-height: calc(100vh - #{$header_height} - 1em);
   color: $white;
   font-size: 1em;
   font-weight: bold;
@@ -14,27 +14,26 @@
 
 ul {
   padding-left: 0;
-  list-style:none;
+  list-style: none;
 }
 
 .md-36 {
-  font-size: 2em;
-  margin-right: .25em;
+  margin-right: 0.25em;
+  margin-bottom: 0.25em;
   vertical-align: middle;
-  margin-bottom: .25em;
+  font-size: 2em;
 }
 
 li {
-  padding: .5em 1em;
-  border-radius: .4em;
-  cursor: pointer;
+  transition: all 0.15s ease-in-out;
   opacity: 1;
-  transition: all .15s ease-in-out;
+  border-radius: 0.4em;
+  cursor: pointer;
+  padding: 0.5em 1em;
 }
 
 li:hover {
-  background: rgba(0, 0, 0, .25);
-  cursor: pointer;
   opacity: 0.9;
+  background: rgba(0, 0, 0, 0.25);
+  cursor: pointer;
 }
-

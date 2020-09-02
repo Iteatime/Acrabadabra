@@ -15,21 +15,13 @@ import { MailtoDirective } from 'src/app/shared/directives/mailto/mailto.directi
 import { SharedModuleModule } from 'src/app/shared/modules/shared-module/shared-module.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TimesheetRoutingModule,
-    CalendarModule,
-    FormsModule,
-    ExpenseModule,
-    SharedModuleModule
-  ],
+  imports: [CommonModule, TimesheetRoutingModule, CalendarModule, FormsModule, ExpenseModule, SharedModuleModule],
   declarations: [
     InvoiceFormComponent,
     InvoicePDFComponent,
     TimesheetEditComponent,
     TimesheetReviewComponent,
     MailtoDirective,
-  ]
+  ],
 })
-export class TimesheetModule { }
-
+export class TimesheetModule {}

@@ -15,10 +15,7 @@ import { MissionModule } from './modules/mission/mission.module';
 import { SharedModuleModule } from './shared/modules/shared-module/shared-module.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-  ],
+  declarations: [AppComponent, HomeComponent],
   imports: [
     AppRoutingModule,
     BrowserModule,
@@ -31,7 +28,6 @@ import { SharedModuleModule } from './shared/modules/shared-module/shared-module
     SharedModuleModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
-
+export class AppModule {}

@@ -10,25 +10,24 @@ import { TimesheetService } from '../../services/timesheet.service';
 @Component({
   selector: 'app-invoice-form',
   templateUrl: './invoice-form.component.html',
-  styleUrls: ['./invoice-form.component.scss']
+  styleUrls: ['./invoice-form.component.scss'],
 })
 export class InvoiceFormComponent implements OnInit {
-
   @ViewChild('form') form: NgForm;
   @Input() invoice: Invoice;
   @Input() mission: Mission;
   @Output() changed: EventEmitter<boolean> = new EventEmitter();
 
-  constructor ( private _route: ActivatedRoute,
-                private _missionService: MissionService,
-                private _timesheetService: TimesheetService) {}
+  constructor(
+    private readonly _route: ActivatedRoute,
+    private readonly _missionService: MissionService,
+    private readonly _timesheetService: TimesheetService,
+  ) {}
 
   ngOnInit() {
-
     const context = this._route.snapshot.url[0].path;
 
     if (this.mission) {
-
       const invoiceData = {
         bankAccountHolder: this.mission.consultantBankAccountHolder,
         bankingAgency: this.mission.consultantBankingAgency,
@@ -39,21 +38,9 @@ export class InvoiceFormComponent implements OnInit {
       };
 
       if (this.mission.consultantFreelance && context === 'mission') {
-
-        this.fillInvoice(
-          this.mission.consultantCompany,
-          this.mission.providerCompany,
-          invoiceData,
-        );
-
+        this.fillInvoice(this.mission.consultantCompany, this.mission.providerCompany, invoiceData);
       } else {
-
-        this.fillInvoice(
-          this.mission.providerCompany,
-          this.mission.clientCompany,
-          invoiceData,
-        );
-
+        this.fillInvoice(this.mission.providerCompany, this.mission.clientCompany, invoiceData);
       }
     }
 
@@ -72,7 +59,7 @@ export class InvoiceFormComponent implements OnInit {
     this.invoice = {
       ...this.invoice,
       ...invoiceData,
-    }
+    };
     this.invoice.provider = provider;
     this.invoice.client = client;
   }

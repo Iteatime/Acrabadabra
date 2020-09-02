@@ -1,15 +1,15 @@
-@import "src/app/style/vars";
-@import url("https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700");
+@import 'src/app/style/vars';
+@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700');
 
 .invoice {
   position: absolute;
-  top: 0px;
+  top: 0;
   width: 827px;
   height: 1170px;
 
-  .adress-height{
-    line-height: 20px;
+  .adress-height {
     margin-bottom: -4px;
+    line-height: 20px;
   }
 
   #QuantityColSize {
@@ -22,46 +22,46 @@
 
     &__provider {
       position: absolute;
-      left: 43px;
       top: 52px;
+      left: 43px;
       width: calc(50% - 43px);
 
       &__name {
-        font-weight: bold;
         font-size: 15.5px;
+        font-weight: bold;
       }
 
       div {
         position: relative;
-        padding: 5px 0px;
+        padding: 5px 0;
       }
     }
 
     &__client {
       position: absolute;
-      right: 43px;
       top: 52px;
-      text-align: right;
+      right: 43px;
       width: calc(50% - 43px);
+      text-align: right;
 
       &__name {
-        font-weight: bold;
         font-size: 15.5px;
+        font-weight: bold;
       }
 
       div {
         position: relative;
-        padding: 5px 0px;
+        padding: 5px 0;
       }
     }
   }
 
   &__reference {
     position: relative;
-    left: 43px;
     top: 250px;
-    font-size: 24px;
+    left: 43px;
     height: 150px;
+    font-size: 24px;
 
     &__invoice {
       font-size: 32px;
@@ -76,19 +76,19 @@
 
       &__left {
         display: inline-block;
-        text-align:left;
         width: calc(50% - 43px);
+        text-align: left;
       }
 
       &__right {
         display: inline-block;
-        text-align: right;
         width: calc(50% - 43px);
+        text-align: right;
       }
       &__right-alone {
         display: inline-block;
-        text-align: right;
         width: calc(100% - 86px);
+        text-align: right;
       }
 
       &__number {
@@ -98,10 +98,10 @@
 
     &__date {
       position: relative;
-      left: 43px;
       top: 300px;
-      font-size: 27px;
+      left: 43px;
       height: 150px;
+      font-size: 27px;
     }
 
     div {
@@ -110,16 +110,16 @@
   }
 
   &__table {
-    font-family: "Open Sans Condensed", sans-serif;
     position: relative;
-    left: 43px;
     top: 230px;
-    font-size: 13px;
+    left: 43px;
     width: calc(100% - 86px);
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 13px;
 
     &__left-text {
-      text-align: left !important;
       padding-left: 10px !important;
+      text-align: left !important;
     }
 
     table {
@@ -127,11 +127,11 @@
     }
 
     thead {
+      border-style: hidden !important;
       background-color: $dark_blue;
+      border-collapse: collapse !important;
       color: white;
       font-weight: bold !important;
-      border-collapse: collapse !important;
-      border-style: hidden !important;
     }
 
     thead th {
@@ -141,12 +141,12 @@
     table,
     th,
     td {
-      text-align: center;
-      vertical-align: middle;
       border: 1px solid $grey_mine_shaft;
-      border-collapse: collapse;
-      height: 24px;
       border: none;
+      height: 24px;
+      border-collapse: collapse;
+      vertical-align: middle;
+      text-align: center;
     }
 
     td {
@@ -159,14 +159,13 @@
     tr:nth-of-type(odd) {
       background: $grey_border;
     }
-
   }
 
   &__total {
     position: relative;
-    right: 43px;
     top: 250px;
-    font-family: "Open Sans Condensed", sans-serif;
+    right: 43px;
+    font-family: 'Open Sans Condensed', sans-serif;
 
     &__label {
       padding-right: 20px;
@@ -195,36 +194,36 @@
     }
 
     tr {
-      text-align: right;
-      font-size: 17px;
-      line-height: 16px;
       height: 15px;
+      text-align: right;
+      line-height: 16px;
+      font-size: 17px;
 
       span {
-        font-weight: normal;
         font-size: 15.5px;
+        font-weight: normal;
       }
 
       p {
-        margin-bottom: 0px;
         position: relative;
         right: -1px;
         margin-right: 1px;
+        margin-bottom: 0;
       }
     }
   }
 
   &__additional-information {
     position: relative;
-    left: 43px;
     top: 300px;
+    left: 43px;
     width: calc(100% - 86px);
+    font-family: 'Open Sans Condensed', sans-serif;
     font-size: 15px;
-    font-family: "Open Sans Condensed", sans-serif;
 
     table {
-      background-color: $grey_border;
       border-radius: 1px;
+      background-color: $grey_border;
     }
     td {
       padding: 5px;
@@ -233,27 +232,27 @@
     }
 
     #global-information {
-      width: 50%;
-      white-space: initial;
       border-right: solid 1px white;
-      vertical-align: top;
       padding-left: 20px;
+      width: 50%;
+      vertical-align: top;
+      white-space: initial;
     }
 
     #bank-information {
-      text-align: left;
       vertical-align: top;
+      text-align: left;
     }
     #penalty {
-      margin-top:4px;
+      margin-top: 4px;
+      line-height: 11px;
       font-size: 12px;
       font-style: italic;
-      line-height: 11px;
     }
 
     &__title {
-      font-weight: bold;
       font-size: 18px;
+      font-weight: bold;
     }
 
     &__bolding {
@@ -264,8 +263,8 @@
   &__footer {
     position: fixed;
     bottom: 52px;
-    text-align: center;
     width: 827px;
+    text-align: center;
     font-size: 14.14px;
   }
 
@@ -273,8 +272,8 @@
     position: absolute;
     top: 1222px;
     left: 43px;
-    font-size: 13px;
     width: calc(100% - 86px);
+    font-size: 13px;
 
     &__expenses {
       & > app-expense-mileage-table,
@@ -282,18 +281,18 @@
       & > app-expense-flat-fee-table {
         & > table {
           width: 100% !important;
-          font-family: "Open Sans Condensed", sans-serif !important;
+          font-family: 'Open Sans Condensed', sans-serif !important;
         }
 
         & > table,
         td,
         th,
         tr {
-          height: 24px !important;
           padding: 1px !important;
-          white-space: nowrap !important;
-          max-width: 100% !important;
           min-width: 1% !important;
+          max-width: 100% !important;
+          height: 24px !important;
+          white-space: nowrap !important;
         }
       }
     }
@@ -305,8 +304,8 @@
     }
 
     thead {
-      border-collapse: collapse !important;
       border-style: hidden !important;
+      border-collapse: collapse !important;
     }
 
     thead th {
@@ -314,8 +313,8 @@
     }
 
     #left-text {
-      td:nth-child(2){
-        padding-left:15px !important;
+      td:nth-child(2) {
+        padding-left: 15px !important;
       }
     }
 

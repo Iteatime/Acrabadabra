@@ -55,6 +55,13 @@ jobs:
           path: cypress/screenshots
       - store_artifacts:
           path: cypress/videos
+  lint:
+    executor: node
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: yarn lint:ci
 
 workflows:
   test:
@@ -64,5 +71,8 @@ workflows:
           requires:
             - build
       - cypress:
+          requires:
+            - build
+      - lint:
           requires:
             - build

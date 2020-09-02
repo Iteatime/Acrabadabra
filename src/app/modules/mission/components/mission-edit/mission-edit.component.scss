@@ -1,66 +1,56 @@
-@import "src/app/style/vars";
-@import "src/app/style/mixins";
+@import 'src/app/style/vars';
+@import 'src/app/style/mixins';
 
-
-.optional{
+.optional {
   padding-left: 5px;
   font-size: 13px;
 }
 
-
 .ng-invalid:not(form) {
-  border-left: 5px solid ;
+  border-left: 5px solid;
 }
 
 .mission-edit {
   &__wrapper {
     @include container;
 
-    @media (min-width: $screen-sm-min) {
-      padding: 40px;
-    }
-
-    @media (min-width: $screen-md-min) {
-      margin-top: 30px;
-    }
-
     margin-top: 10px;
+    box-shadow: 0 0 8px rgba($black, 0.2);
     background: $white;
     padding: 20px;
-    box-shadow: 0 0 8px rgba($black, 0.2);
 
     &__title {
-      font-size: 22px;
-      color: $grey_mine_shaft;
       margin-bottom: 40px;
+      color: $grey_mine_shaft;
+      font-size: 22px;
 
       & > h2 {
+        font-size: 20px;
+        font-weight: 700;
+
         @media (min-width: $screen-sm-min) {
           font-size: 28px;
         }
-
-        font-weight: 700;
-        font-size: 20px;
       }
     }
 
     &__submit {
-      margin-top: 40px;
-      width: 100%;
       display: flex;
       justify-content: space-around;
+      margin-top: 40px;
+      width: 100%;
 
       &__button {
         @include hoveranim_glow($darker_blue);
 
-        border: none;
         display: inline-block;
+        border: none;
         background: $dark_blue;
-        padding: 0;
         cursor: pointer;
+        padding: 0;
         width: 40%;
-        height: 60px;
         min-width: 220px;
+        height: 60px;
         line-height: 60px;
         color: $white;
         font-size: 20px;
@@ -76,10 +66,6 @@
       width: 100%;
 
       &__item {
-        @media (min-width: $screen-sm-min) {
-          width: calc(100% / 4 - 40px);
-        }
-
         margin: 20px;
         width: calc(100% - 40px);
 
@@ -96,8 +82,8 @@
           &:hover,
           &:focus,
           &:active {
-            color: initial;
             text-decoration: none;
+            color: initial;
 
             span {
               text-decoration: underline;
@@ -113,7 +99,19 @@
             font-size: 40px;
           }
         }
+
+        @media (min-width: $screen-sm-min) {
+          width: calc(100% / 4 - 40px);
+        }
       }
+    }
+
+    @media (min-width: $screen-sm-min) {
+      padding: 40px;
+    }
+
+    @media (min-width: $screen-md-min) {
+      margin-top: 30px;
     }
   }
 }
@@ -122,11 +120,7 @@
   width: 100%;
 
   &__block {
-
-    @media (min-width: $screen-sm-min) {
-      margin: 30px 0px;
-    }
-    margin: 20px 0px;
+    margin: 20px 0;
 
     &__title {
       @include header-form;
@@ -134,30 +128,27 @@
 
     &__input-wrapper {
       @include form-input;
+
       display: flex;
       flex-wrap: wrap;
 
       &__toggle {
-
         &__item {
           font-weight: bold;
         }
       }
 
       &__item {
+        margin: 0 5px;
+        width: calc(100% - 10px);
+
         @media (min-width: $screen-sm-min) {
+          margin: 0 5px;
           width: calc(50% - 10px);
-          margin: 0 5px;
         }
-          width: calc(100% - 10px);
-          margin: 0 5px;
       }
 
       &__sub-block {
-        @media (min-width: $screen-sm-min) {
-          margin-bottom: 30px;
-          margin-top: 20px;
-        }
         margin-bottom: 20px;
         width: 100%;
 
@@ -167,10 +158,11 @@
 
         &__input-wrapper {
           @include form-input;
+
           display: flex;
           flex-wrap: wrap;
-          background: $white;
           border-bottom: none;
+          background: $white;
 
           &:first-of-type {
             border-top: 1px solid $grey_border_dark;
@@ -181,23 +173,27 @@
           }
 
           &__item {
+            margin: 0;
             width: 100%;
-            margin: 0px;
           }
         }
+
+        @media (min-width: $screen-sm-min) {
+          margin-top: 20px;
+          margin-bottom: 30px;
+        }
       }
+    }
+
+    @media (min-width: $screen-sm-min) {
+      margin: 30px 0;
     }
   }
 
   &__half-block {
-
-    @media (min-width: $screen-sm-min) {
-      width: calc(50% - 20px);
-    }
-
     display: inline-table;
-    width: 100%;
     margin-bottom: 20px;
+    width: 100%;
 
     &__title {
       @include header-form;
@@ -218,14 +214,18 @@
         }
       }
     }
+
+    @media (min-width: $screen-sm-min) {
+      width: calc(50% - 20px);
+    }
   }
 }
 
-input[name="missionClientCompanyVatNumberInput"] {
+input[name='missionClientCompanyVatNumberInput'] {
   margin-bottom: 32px;
 }
 
-.optional{
+.optional {
   padding-left: 5px;
   font-size: 13px;
 }
@@ -237,69 +237,56 @@ input[name="missionClientCompanyVatNumberInput"] {
 }
 
 .ng-invalid:not(form) {
-  border-left: 5px solid ;
+  border-left: 5px solid;
 }
 
 .mission-edit {
   &__wrapper {
     @include container;
 
-    @media (min-width: $screen-sm-min) {
-      padding: 40px;
-    }
-
-    @media (min-width: $screen-md-min) {
-      margin-top: 30px;
-    }
-
     margin-top: 10px;
+    box-shadow: 0 0 8px rgba($black, 0.2);
     background: $white;
     padding: 20px;
-    box-shadow: 0 0 8px rgba($black, 0.2);
 
     &__title {
-      font-size: 22px;
-      color: $grey_mine_shaft;
       margin-bottom: 40px;
+      color: $grey_mine_shaft;
+      font-size: 22px;
 
       & > h2 {
+        font-size: 20px;
+        font-weight: 700;
+
         @media (min-width: $screen-sm-min) {
           font-size: 28px;
         }
-
-        font-weight: 700;
-        font-size: 20px;
       }
     }
 
     &__form {
-      @media (min-width: $screen-sm-min) {
-        margin-top: 45px;
-      }
-
       display: flex;
       flex-wrap: wrap;
       margin-top: 25px;
 
       &__message {
-        min-height: 50px;
-        line-height: 50px;
-        width: 100%;
         border-radius: 5px;
+        width: 100%;
+        min-height: 50px;
         text-align: center;
+        line-height: 50px;
 
         &--success {
           background-color: $green_valid;
         }
 
         &--error {
+          background-color: $red_error;
           color: white;
           font-weight: 700;
-          background-color: $red_error;
         }
       }
       &__buttons {
-
         display: flex;
         justify-content: space-around;
         margin-top: 40px;
@@ -310,11 +297,11 @@ input[name="missionClientCompanyVatNumberInput"] {
 
           border: none;
           background: $dark_blue;
-          padding: 0;
           cursor: pointer;
+          padding: 0;
           width: 40%;
-          height: 60px;
           min-width: 220px;
+          height: 60px;
           line-height: 60px;
           color: $white;
           font-size: 20px;
@@ -330,26 +317,21 @@ input[name="missionClientCompanyVatNumberInput"] {
         width: 100%;
 
         &__item {
-          @media (min-width: $screen-sm-min) {
-            width: calc(100% / 4 - 40px);
-          }
-
           margin: 20px;
           width: calc(100% - 40px);
 
           a:hover .commentary {
+            display: inline-block;
             position: absolute;
-            left:57%;
-            width:10%;
-            height: 7%;
-
+            left: 57%;
             border-radius: 2px;
             background-color: $main_red;
+            width: 10%;
+            height: 7%;
             text-decoration: none;
-            font-weight: bold;
             color: white;
-            display: inline-block;
             font-size: 0.7em;
+            font-weight: bold;
           }
 
           &__disabled {
@@ -365,8 +347,8 @@ input[name="missionClientCompanyVatNumberInput"] {
             &:hover,
             &:focus,
             &:active {
-              color: initial;
               text-decoration: none;
+              color: initial;
 
               span {
                 text-decoration: underline;
@@ -382,8 +364,24 @@ input[name="missionClientCompanyVatNumberInput"] {
               font-size: 40px;
             }
           }
+
+          @media (min-width: $screen-sm-min) {
+            width: calc(100% / 4 - 40px);
+          }
         }
       }
+
+      @media (min-width: $screen-sm-min) {
+        margin-top: 45px;
+      }
+    }
+
+    @media (min-width: $screen-sm-min) {
+      padding: 40px;
+    }
+
+    @media (min-width: $screen-md-min) {
+      margin-top: 30px;
     }
   }
 }

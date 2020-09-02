@@ -1,52 +1,40 @@
-@import "src/app/style/vars";
-@import "src/app/style/mixins";
+@import 'src/app/style/vars';
+@import 'src/app/style/mixins';
 
 .review {
   &__wrapper {
     @include container;
 
-    @media (min-width: $screen-sm-min) {
-      padding: 40px;
-    }
-
-    @media (min-width: $screen-md-min) {
-      margin-top: 30px;
-    }
-
     margin-top: 10px;
+    box-shadow: 0 0 8px rgba($black, 0.2);
     background: $white;
     padding: 20px;
-    box-shadow: 0 0 8px rgba($black, 0.2);
 
     &__title {
-      font-size: 22px;
       color: $grey_mine_shaft;
+      font-size: 22px;
 
       & > h2 {
+        font-size: 20px;
+        font-weight: 700;
+
         @media (min-width: $screen-sm-min) {
           font-size: 28px;
         }
-
-        font-weight: 700;
-        font-size: 20px;
       }
 
       & > h3 {
+        margin-left: 20px;
+        font-size: 16px;
+        font-weight: 400;
+
         @media (min-width: $screen-sm-min) {
           font-size: 24px;
         }
-
-        font-weight: 400;
-        font-size: 16px;
-        margin-left: 20px;
       }
     }
 
     &__fields {
-      @media (min-width: $screen-sm-min) {
-        margin-top: 45px;
-      }
-
       margin-top: 25px;
 
       &__block {
@@ -55,28 +43,40 @@
         }
 
         &__item-wrapper {
-          @media (min-width: $screen-sm-min) {
-            display: flex;
-            flex-wrap: wrap;
-          }
-
           border: 1px solid $grey_border_dark;
           border-top: 0;
           background: $grey_light;
           padding: 18px;
 
           & > hr {
+            display: none;
+
             @media (min-width: $screen-sm-min) {
               display: block;
+              margin: 0;
+              background-color: $grey_border_dark;
               width: 1px;
               height: 90px;
-              background-color: $grey_border_dark;
-              margin: 0px;
             }
-            display: none;
           }
 
           &__part {
+            width: 100%;
+
+            &__text {
+              height: 30px;
+
+              &__label {
+                float: left;
+                font-size: 14px;
+                font-weight: 700;
+              }
+
+              &__value {
+                float: right;
+              }
+            }
+
             @media (min-width: $screen-sm-min) {
               width: calc(50% - 11px);
 
@@ -88,41 +88,22 @@
                 margin-left: 10px;
               }
             }
+          }
 
-            width: 100%;
-
-            &__text {
-              height: 30px;
-
-              &__label {
-                float: left;
-                font-weight: 700;
-                font-size: 14px;
-              }
-
-              &__value {
-                float: right;
-              }
-            }
+          @media (min-width: $screen-sm-min) {
+            display: flex;
+            flex-wrap: wrap;
           }
         }
       }
 
       &__invoice {
-        @media (min-width: $screen-sm-min) {
-          margin-top: 45px;
-        }
-
         display: flex;
         flex-flow: row wrap;
         justify-content: center;
         margin-top: 25px;
 
         &__item {
-          @media (min-width: $screen-sm-min) {
-            width: calc(100% / 4 - 40px);
-          }
-
           margin: 20px;
           width: calc(100% - 40px);
 
@@ -135,8 +116,8 @@
             &:hover,
             &:focus,
             &:active {
-              color: initial;
               text-decoration: none;
+              color: initial;
 
               span {
                 text-decoration: underline;
@@ -152,6 +133,14 @@
               font-size: 40px;
             }
           }
+
+          @media (min-width: $screen-sm-min) {
+            width: calc(100% / 4 - 40px);
+          }
+        }
+
+        @media (min-width: $screen-sm-min) {
+          margin-top: 45px;
         }
       }
 
@@ -170,9 +159,22 @@
 
         &__title {
           @include header-form;
+
           margin-bottom: 30px;
         }
       }
+
+      @media (min-width: $screen-sm-min) {
+        margin-top: 45px;
+      }
+    }
+
+    @media (min-width: $screen-sm-min) {
+      padding: 40px;
+    }
+
+    @media (min-width: $screen-md-min) {
+      margin-top: 30px;
     }
   }
 }

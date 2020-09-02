@@ -13,11 +13,9 @@ describe('AuthenticationService', () => {
   beforeEach(() => {
     widgetInit = spyOn(window['netlifyIdentity'], 'init');
     TestBed.configureTestingModule({
-      imports: [ ],
-      declarations: [
-
-    ],
-    providers: []
+      imports: [],
+      declarations: [],
+      providers: [],
     });
     service = TestBed.get(AuthenticationService);
   });

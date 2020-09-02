@@ -7,17 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { MissionEditComponent } from './components/mission-edit/mission-edit.component';
 
-
 @NgModule({
-  declarations: [
-    MissionEditComponent,
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    SharedModuleModule,
-    HttpClientModule,
-    MissionRoutingModule,
-  ]
+  declarations: [MissionEditComponent],
+  imports: [CommonModule, FormsModule, SharedModuleModule, HttpClientModule, MissionRoutingModule],
 })
-export class MissionModule { }
+export class MissionModule {}

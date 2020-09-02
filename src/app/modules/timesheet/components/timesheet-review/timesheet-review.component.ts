@@ -14,7 +14,8 @@ import { WorkingEvent } from 'src/app/shared/@types/workingEvent';
   selector: 'app-review',
   templateUrl: './timesheet-review.component.html',
   styleUrls: ['./timesheet-review.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  // tslint:disable-next-line:use-component-view-encapsulation
+  encapsulation: ViewEncapsulation.None,
 })
 export class TimesheetReviewComponent implements OnInit {
   timesheet = new Timesheet();
@@ -31,10 +32,10 @@ export class TimesheetReviewComponent implements OnInit {
   constructor(
     public auth: AuthenticationService,
     public calendarService: CalendarService,
-    private route: ActivatedRoute,
-    private timesheetService: TimesheetService,
-    private titleService: Title
-  ) { }
+    private readonly route: ActivatedRoute,
+    private readonly timesheetService: TimesheetService,
+    private readonly titleService: Title,
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
@@ -51,7 +52,6 @@ export class TimesheetReviewComponent implements OnInit {
         }
       }
     });
-    this.titleService.setTitle('Acradababra - Consulter un compte rendu d\'activité');
+    this.titleService.setTitle("Acradababra - Consulter un compte rendu d'activité");
   }
-
 }

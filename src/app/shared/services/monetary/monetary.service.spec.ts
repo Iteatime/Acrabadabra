@@ -3,8 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { MonetaryService } from './monetary.service';
 
 describe('CurrencyService', () => {
-
-  let service = new MonetaryService();
+  const service = new MonetaryService();
 
   beforeEach(() => TestBed.configureTestingModule({}));
 
@@ -20,7 +19,7 @@ describe('CurrencyService', () => {
 
   describe('vatRate', () => {
     it('should return "normal" value of "vatRates" object', () => {
-      expect(service.vatRate).toBe(20.0);
+      expect(service.vatRate).toBe(20);
     });
   });
 });

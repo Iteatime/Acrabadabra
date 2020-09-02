@@ -1,4 +1,4 @@
 export interface WorkingEvent {
-    time: number;
-    unit: string;
+  time: number;
+  unit: string;
 }

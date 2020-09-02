@@ -10,18 +10,16 @@ import { AuthenticationService } from 'src/app/shared/services/authentication/au
 import { MissionService } from '../../services/mission.service';
 import { UrlShorteningService } from 'src/app/modules/timesheet/services/url-shortening.service';
 
-
 @Component({
   selector: 'app-mission-edit',
   templateUrl: './mission-edit.component.html',
-  styleUrls: ['./mission-edit.component.scss']
+  styleUrls: ['./mission-edit.component.scss'],
 })
 export class MissionEditComponent implements OnInit {
-
   @ViewChild('missionForm') form: NgForm;
   showLink = false;
   commentary = false;
-  editUrl: string = '';
+  editUrl = '';
   originUrl = window.location.origin;
   missionReference: string;
   isConsultantFreelance = false;
@@ -30,12 +28,11 @@ export class MissionEditComponent implements OnInit {
     public router: Router,
     public auth: AuthenticationService,
     public missionService: MissionService,
-    private notificationService: NotificationService,
-    private _urlShortener: UrlShorteningService,
+    private readonly notificationService: NotificationService,
+    private readonly _urlShortener: UrlShorteningService,
   ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   openAuth() {
     this.auth.widget.open();
@@ -44,10 +41,9 @@ export class MissionEditComponent implements OnInit {
   setShortUrl(action?: string): void {
     if (!!action) {
       const getToken = this.missionService.getEditToken();
-      this._urlShortener.shortenUrl(this.originUrl + `/timesheet/${action}/` + getToken)
-        .then ((res) => {
-          this.editUrl = res;
-        });
+      this._urlShortener.shortenUrl(this.originUrl + `/timesheet/${action}/` + getToken).then(res => {
+        this.editUrl = res;
+      });
       return;
     }
 
@@ -62,7 +58,7 @@ export class MissionEditComponent implements OnInit {
       this.notificationService.push('Veuillez vous connecter', 'warning', { isSelfClosing: false });
     } else {
       if (this.checkFormsValidity()) {
-        if (this.isConsultantFreelance === false) {
+        if (!this.isConsultantFreelance) {
           this.missionService.mission.consultantCompany = new Company();
           this.missionService.mission.consultantBankAccountHolder = '';
           this.missionService.mission.consultantBankingAgency = '';
@@ -72,15 +68,17 @@ export class MissionEditComponent implements OnInit {
         }
         this.missionService.mission.consultantFreelance = this.isConsultantFreelance;
         this.missionService.mission.missionCreator = this.auth.user.id;
-        this.missionService.createMission(this.missionService.mission).then((response) => {
-          this.reactToSubmition(false);
-          this.missionReference = response.id;
-          this.editUrl = this.originUrl + '/mission/' + this.missionReference + '/timesheet/create';
-          this.router.navigate(['dashboard']);
-        }).catch((error) => {
-          console.log('API error', error);
-        });
-
+        this.missionService
+          .createMission(this.missionService.mission)
+          .then(response => {
+            this.reactToSubmition(false);
+            this.missionReference = response.id;
+            this.editUrl = this.originUrl + '/mission/' + this.missionReference + '/timesheet/create';
+            this.router.navigate(['dashboard']);
+          })
+          .catch(error => {
+            console.log('API error', error);
+          });
       } else {
         this.reactToSubmition(true);
         this.showValidationMessages();
@@ -97,25 +95,21 @@ export class MissionEditComponent implements OnInit {
     if (error) {
       this.notificationService.push('Veuillez vérifier votre saisie', 'warning', { isSelfClosing: false });
     } else {
-      this.notificationService.push(
-        'Votre mission à été créée',
-        'success',
-        { duration: 10 }
-      );
+      this.notificationService.push('Votre mission à été créée', 'success', { duration: 10 });
     }
     this.showLink = !error;
     if (this.showLink) {
       setTimeout(() => {
-        document.getElementById('action-links').scrollIntoView({behavior:"smooth"});
+        document.getElementById('action-links').scrollIntoView({ behavior: 'smooth' });
       });
     }
   }
 
   reactToCopy(): void {
     this.notificationService.push(
-      'Vous pouvez partager ce lien permettant la création d\'un CRA intégrant les informations relatives à votre mission',
+      "Vous pouvez partager ce lien permettant la création d'un CRA intégrant les informations relatives à votre mission",
       'success',
-      { duration: 15 }
+      { duration: 15 },
     );
   }
 
@@ -124,5 +118,4 @@ export class MissionEditComponent implements OnInit {
       this.form.controls[field].markAsTouched();
     });
   }
-
 }

@@ -17,13 +17,9 @@ import { FormsModule } from '@angular/forms';
     ExpenseMiscellaneousFormComponent,
     ExpenseMiscellaneousTableComponent,
     ExpenseFlatFeeFormComponent,
-    ExpenseFlatFeeTableComponent
+    ExpenseFlatFeeTableComponent,
   ],
-  imports: [
-    CommonModule,
-    ExpenseRoutingModule,
-    FormsModule,
-  ],
+  imports: [CommonModule, ExpenseRoutingModule, FormsModule],
   exports: [
     CommonModule,
     ExpenseMileageFormComponent,
@@ -31,7 +27,7 @@ import { FormsModule } from '@angular/forms';
     ExpenseMiscellaneousFormComponent,
     ExpenseMiscellaneousTableComponent,
     ExpenseFlatFeeFormComponent,
-    ExpenseFlatFeeTableComponent
-  ]
+    ExpenseFlatFeeTableComponent,
+  ],
 })
-export class ExpenseModule { }
+export class ExpenseModule {}

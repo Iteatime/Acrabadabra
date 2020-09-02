@@ -22,7 +22,7 @@ export class Timesheet {
     missionTitle: string = '',
     consultant?: Consultant,
     mission?: Mission,
-    id?: string
+    id?: string,
   ) {
     this.consultant = new Consultant(consultantEmail, consultantName) || consultant;
     this.mission = new Mission(missionClient, missionTitle) || mission;

@@ -8,10 +8,9 @@ import { MiscellaneousExpensesService } from '../../services/miscellaneous-expen
 @Component({
   selector: 'app-expense-miscellaneous-form',
   templateUrl: './expense-miscellaneous-form.component.html',
-  styleUrls: ['./expense-miscellaneous-form.component.scss']
+  styleUrls: ['./expense-miscellaneous-form.component.scss'],
 })
 export class ExpenseMiscellaneousFormComponent implements OnInit {
-
   @ViewChild('expenseForm') form: NgForm;
   @Input() miscellaneous: Miscellaneous[];
   @Output() changed: EventEmitter<boolean> = new EventEmitter();
@@ -20,9 +19,11 @@ export class ExpenseMiscellaneousFormComponent implements OnInit {
   miscellaneousTypes = [];
   vatRates = [];
 
-  constructor(public miscellaneousExpensesService: MiscellaneousExpensesService,
-              public timesheetService: TimesheetService,
-              private _monetaryService: MonetaryService) { }
+  constructor(
+    public miscellaneousExpensesService: MiscellaneousExpensesService,
+    public timesheetService: TimesheetService,
+    private readonly _monetaryService: MonetaryService,
+  ) {}
 
   ngOnInit() {
     this.misc = new Miscellaneous();

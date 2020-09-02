@@ -7,24 +7,24 @@ import { TimesheetService } from 'src/app/modules/timesheet/services/timesheet.s
 @Component({
   selector: 'app-expense-miscellaneous-table',
   templateUrl: './expense-miscellaneous-table.component.html',
-  styleUrls: ['./expense-miscellaneous-table.component.scss']
+  styleUrls: ['./expense-miscellaneous-table.component.scss'],
 })
 export class ExpenseMiscellaneousTableComponent implements OnInit {
-
   @Output() changed: EventEmitter<boolean> = new EventEmitter();
   @Input() hideDeleteButton = false;
   @Input() vatExemption = false;
 
-  public local = 'fr';
-  public currencyCode: string;
+  local = 'fr';
+  currencyCode: string;
   miscellaneous: Miscellaneous[];
 
-  constructor(public timesheetService: TimesheetService,
-              public miscellaneousService: MiscellaneousExpensesService,
-              private _monetaryService: MonetaryService
+  constructor(
+    public timesheetService: TimesheetService,
+    public miscellaneousService: MiscellaneousExpensesService,
+    private readonly _monetaryService: MonetaryService,
   ) {
     this.currencyCode = this._monetaryService.currencyCode;
-    }
+  }
 
   ngOnInit() {
     this.miscellaneous = this.timesheetService.timesheet.miscellaneous;
@@ -34,5 +34,4 @@ export class ExpenseMiscellaneousTableComponent implements OnInit {
     this.miscellaneous.splice(this.miscellaneous.indexOf(miscellaneous), 1);
     this.changed.emit(true);
   }
-
 }

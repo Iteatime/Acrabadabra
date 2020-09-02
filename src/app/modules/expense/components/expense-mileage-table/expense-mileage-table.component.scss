@@ -1,30 +1,30 @@
-@import "src/app/style/vars";
-@import "src/app/style/mixins";
+@import 'src/app/style/vars';
+@import 'src/app/style/mixins';
 
 i:hover {
   cursor: pointer;
 }
 
-@media (min-width:$screen_sm_min) {
+@media (min-width: $screen_sm_min) {
   .left-text {
-    text-align: left;
     padding-left: 15px !important;
+    text-align: left;
   }
 }
 
 .mileage {
   width: 100%;
-  text-align: center;
   border-collapse: collapse;
+  text-align: center;
 
   &__header {
     background-color: $dark_blue;
 
     &__item {
-      width: auto;
-      padding: 6px;
-      color: white;
       border: 1px solid $grey_border_dark;
+      padding: 6px;
+      width: auto;
+      color: white;
 
       &:not(:first-of-type):not(:last-of-type) {
         border-right: 1px solid white;
@@ -44,23 +44,23 @@ i:hover {
 
   &__body {
     &__item {
-      padding: 6px;
       border: 1px solid $grey_border_dark;
+      padding: 6px;
 
       &:empty:not(.keep-border) {
-        border: 0px;
-      }
-
-      &.trashCan {
-        width: 60px;
+        border: 0;
       }
 
       &:last-of-type {
         font-weight: bold;
       }
+
+      &.trashCan {
+        width: 60px;
+      }
     }
 
-    &>tr {
+    & > tr {
       &:not(:last-of-type):nth-of-type(odd) {
         background-color: $grey_border;
       }
@@ -89,9 +89,9 @@ i:hover {
     }
 
     td {
+      position: relative;
       border: none;
       border-bottom: 1px solid #eee;
-      position: relative;
       padding-left: 50%;
     }
 
@@ -99,8 +99,8 @@ i:hover {
       position: absolute;
       top: 6px;
       left: 6px;
-      width: 45%;
       padding-right: 10px;
+      width: 45%;
       white-space: nowrap;
     }
 

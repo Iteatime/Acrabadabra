@@ -1,41 +1,32 @@
-@import "src/app/style/vars";
-@import "src/app/style/mixins";
+@import 'src/app/style/vars';
+@import 'src/app/style/mixins';
 
 .calendar {
   &__header {
-    @media (min-width: $screen_sm_min) {
-      flex-flow: row nowrap;
-      align-items: center;
-      justify-content: space-between;
-      padding-bottom: 0;
-      height: 50px;
-      line-height: initial;
-    }
-
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-bottom: 20px;
-    border-bottom: 1px solid $grey_border;
     margin-bottom: 10px;
+    border-bottom: 1px solid $grey_border;
+    padding-bottom: 20px;
     line-height: 40px;
 
     &__daycount {
-      @media (min-width: $screen_sm_min) {
-        text-align: left;
-      }
-
-      font-weight: 700;
-      font-size: 14px;
       text-align: center;
+      font-size: 14px;
+      font-weight: 700;
 
       & > span {
         @include centeralign;
       }
 
       & .highlight {
-        font-size: 2em;
         color: $main_blue;
+        font-size: 2em;
+      }
+
+      @media (min-width: $screen_sm_min) {
+        text-align: left;
       }
     }
 
@@ -55,31 +46,27 @@
 
       &__input {
         display: inline;
-        padding: 0 1rem 0 .25rem;
+        padding: 0 1rem 0 0.25rem;
         width: 100px;
         height: 26px;
       }
     }
 
     &__month-choice {
-      @media (min-width: $screen_sm_min) {
-        text-align: right;
-      }
-
       text-align: center;
 
       &__btn {
         @include centeralign;
 
+        transition: background 0.2s ease-in-out;
+        border-radius: 15px;
+        background: $dark_blue;
+        cursor: pointer;
         width: 30px;
         height: 30px;
-        border-radius: 15px;
         text-align: center;
         line-height: 30px;
-        background: $dark_blue;
         color: $white;
-        cursor: pointer;
-        transition: background 0.2s ease-in-out;
 
         &:hover {
           background: $darker_blue;
@@ -89,39 +76,52 @@
       &__detail {
         @include centeralign;
 
-        font-weight: 700;
-        font-size: 18px;
         background: none;
         min-width: 160px;
         text-align: center;
+        font-size: 18px;
+        font-weight: 700;
       }
+
+      @media (min-width: $screen_sm_min) {
+        text-align: right;
+      }
+    }
+
+    @media (min-width: $screen_sm_min) {
+      flex-flow: row nowrap;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 0;
+      height: 50px;
+      line-height: initial;
     }
   }
 
   &__content {
     &__tools {
-      @media (min-width: $screen_xs_min) {
-        text-align: right;
-      }
-
       text-align: center;
 
       &__selectall {
         display: inline-block;
-        height: 24px;
-        line-height: 12px;
-        padding: 5px 8px;
+        transition: background 0.2s ease-in-out;
         border-radius: 15px;
         background: $dark_blue;
+        cursor: pointer;
+        padding: 5px 8px;
+        height: 24px;
+        line-height: 12px;
         color: $white;
         font-size: 11px;
         font-weight: 700;
-        cursor: pointer;
-        transition: background 0.2s ease-in-out;
 
         &:hover {
           background: $darker_blue;
         }
+      }
+
+      @media (min-width: $screen_xs_min) {
+        text-align: right;
       }
     }
 
@@ -130,24 +130,24 @@
 
       & .cal-header,
       & .cal-out-month {
+        display: none;
+
         @media (min-width: $screen_sm_min) {
           display: flex;
         }
-
-        display: none;
       }
 
       & .cal-cell-row {
+        flex-direction: column;
+
         @media (min-width: $screen_sm_min) {
           flex-direction: row;
         }
-
-        flex-direction: column;
       }
 
       &__dayitem {
-        flex: 1;
         display: flex;
+        flex: 1;
         flex-direction: column;
         align-items: stretch;
         height: 100%;
@@ -157,70 +157,73 @@
           height: 100%;
 
           &__changer {
-            @media (min-width: $screen_sm_min) {
-              height: 42px;
-              width: 42px;
-              line-height: 38px;
-              bottom: 8px;
-              left: 28px;
-            }
-
-            width: 42px;
-            height: 42px;
-            line-height: 38px;
-            text-align: center;
-            border-radius: 30px;
-            margin: 0;
             position: absolute;
             bottom: 20px;
             left: 40px;
-            overflow: hidden;
-            background: $main_blue;
-            box-shadow: 0px 0px 3px 0px rgba($black, 0.35);
             transform: translateX(-50%);
             transition: all 0.3s ease-in-out;
+            margin: 0;
+            border-radius: 30px;
+            box-shadow: 0 0 3px 0 rgba($black, 0.35);
+            background: $main_blue;
+            width: 42px;
+            height: 42px;
+            overflow: hidden;
+            text-align: center;
+            line-height: 38px;
 
-            &__options {
+            &:hover {
+              width: 100px;
+
               @media (min-width: $screen_sm_min) {
-                line-height: 38px;
                 width: 100px;
               }
+            }
 
-              opacity: 0;
-              visibility: hidden;
+            &:hover & {
+              &__options {
+                transform: translateY(0%);
+                visibility: visible;
+                opacity: 1;
+              }
+
+              &__maintext {
+                transform: translateY(-200%);
+                visibility: hidden;
+                opacity: 0;
+              }
+            }
+
+            &__options {
               position: absolute;
               top: 0;
               left: 50%;
-              width: 100px;
+              transform: translateY(200%);
+              transition: opacity 0.3s ease 0s, transform 0.5s ease 0s;
+              visibility: hidden;
+              opacity: 0;
               margin-left: -50px;
+              width: 100px;
               height: 100%;
               line-height: 38px;
               white-space: nowrap;
               color: $white;
-              transform: translateY(200%);
-              transition: opacity 0.3s ease 0s, transform 0.5s ease 0s;
 
               &__item {
                 @include centeralign;
 
-                @media (min-width: $screen_sm_min) {
-                  width: 28px;
-                  height: 28px;
-                  line-height: 28px;
-                }
-
-                font-weight: 700;
-                font-size: 14px;
-                width: 28px;
-                height: 28px;
+                transition: all 0.2s ease-in-out;
                 margin: 0 1px;
-                border-radius: 24px;
                 border: 1px solid rgba($white, 0);
+                border-radius: 24px;
                 background-color: transparent;
                 padding: 0;
+                width: 28px;
+                height: 28px;
                 line-height: 26px;
                 color: $white;
-                transition: all 0.2s ease-in-out;
+                font-size: 14px;
+                font-weight: 700;
 
                 &:hover {
                   border-color: rgba($white, 1);
@@ -236,52 +239,49 @@
                 }
 
                 &.disabled {
-                  opacity: .5;
+                  opacity: 0.5;
 
                   &:hover {
                     border: none;
                   }
                 }
+
+                @media (min-width: $screen_sm_min) {
+                  width: 28px;
+                  height: 28px;
+                  line-height: 28px;
+                }
+              }
+
+              @media (min-width: $screen_sm_min) {
+                width: 100px;
+                line-height: 38px;
               }
             }
 
             &__maintext {
               @include centeralign;
 
-              color: $white;
-              font-weight: 700;
-              font-size: 16px;
-              line-height: 12px;
               transform: translateY(0);
               transition: opacity 0.3s ease 0s, transform 0.5s ease 0s;
+              line-height: 12px;
+              color: $white;
+              font-size: 16px;
+              font-weight: 700;
 
               & > span {
-                font-size: 0.7em;
                 display: block;
                 color: rgba($white, 0.95);
+                font-size: 0.7em;
               }
             }
 
-            &:hover {
-              @media (min-width: $screen_sm_min) {
-                width: 100px;
-              }
-
-              width: 100px;
-            }
-
-            &:hover & {
-              &__options {
-                opacity: 1;
-                visibility: visible;
-                transform: translateY(0%);
-              }
-
-              &__maintext {
-                opacity: 0;
-                visibility: hidden;
-                transform: translateY(-200%);
-              }
+            @media (min-width: $screen_sm_min) {
+              bottom: 8px;
+              left: 28px;
+              width: 42px;
+              height: 42px;
+              line-height: 38px;
             }
           }
         }
@@ -293,22 +293,22 @@
       }
 
       & .cal-month-view .cal-day-cell {
+        height: 80px;
+        min-height: 80px;
+
         @media (min-width: $screen_sm_min) {
           height: 100px;
           min-height: 100px;
         }
-
-        height: 80px;
-        min-height: 80px;
       }
 
       & .cal-month-view .cal-day-cell.cal-today {
+        box-shadow: inset 0 0 0 1px $main_blue;
         background: none;
-        box-shadow: inset 0px 0px 0px 1px $main_blue;
 
         &.cal-disabled {
-          background: #fefefe;
           box-shadow: none;
+          background: #fefefe;
 
           &.cal-weekend {
             background: #fafafa;
@@ -339,30 +339,30 @@
       }
 
       & .cal-month-view .cal-day-cell:not(:last-child) {
+        border-right: 0;
+        border-bottom: 1px solid $grey_border;
+
         @media (min-width: $screen_sm_min) {
           border-right: 1px solid $grey_border;
           border-bottom: 0;
         }
-
-        border-right: 0;
-        border-bottom: 1px solid $grey_border;
       }
 
       & .cal-month-view .cal-days {
+        border: 1px solid $grey_border;
+        border-bottom: 0;
+
         @media (min-width: $screen_sm_min) {
           border-bottom: 1px solid $grey_border;
         }
-
-        border: 1px solid $grey_border;
-        border-bottom: 0;
       }
     }
   }
 }
 
 .fill-height {
-  flex: 1;
   display: flex;
+  flex: 1;
   flex-direction: column;
   align-items: stretch;
 }

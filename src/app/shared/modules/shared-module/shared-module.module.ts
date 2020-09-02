@@ -7,21 +7,8 @@ import { MissionListComponent } from 'src/app/modules/mission/components/mission
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    MissionListComponent,
-    CopyToClipboardDirective,
-
-  ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    [SweetAlert2Module.forRoot()],
-  ],
-  exports: [
-    HeaderComponent,
-    MissionListComponent,
-    CopyToClipboardDirective,
-  ]
+  declarations: [HeaderComponent, MissionListComponent, CopyToClipboardDirective],
+  imports: [CommonModule, RouterModule, [SweetAlert2Module.forRoot()]],
+  exports: [HeaderComponent, MissionListComponent, CopyToClipboardDirective],
 })
-export class SharedModuleModule { }
+export class SharedModuleModule {}

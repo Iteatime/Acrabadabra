@@ -1,5 +1,4 @@
 export class Company {
-
   name: string;
   address: string;
   telephone: string;
@@ -10,7 +9,6 @@ export class Company {
   vatExemption: boolean;
 
   constructor(
-
     name?: string,
     address?: string,
     telephone?: string,
@@ -18,9 +16,8 @@ export class Company {
     tradeAndCompaniesRegisterCity?: string,
     tradeAndCompaniesRegisterExemption?: boolean,
     vatNumber?: string,
-    vatExemption?: boolean
+    vatExemption?: boolean,
   ) {
-
     this.name = name || '';
     this.address = address || '';
     this.telephone = telephone || '';
@@ -33,9 +30,9 @@ export class Company {
 
   getFormattedAddress(): string {
     const lines = this.address.split(';');
-          lines.forEach(line => {
-            line.trim();
-          });
+    lines.forEach(line => {
+      line.trim();
+    });
     return lines.join('<br/>');
   }
 
@@ -43,26 +40,33 @@ export class Company {
     if (this.vatExemption) {
       return undefined;
     } else {
-      return  this.vatNumber.substring(0, 2) + ' ' +
-              this.vatNumber.substring(2, 4) + ' ' +
-              this.vatNumber.substring(4, 7) + ' ' +
-              this.vatNumber.substring(7, 10) + ' ' +
-              this.vatNumber.substring(10, 13) + '.';
+      return (
+        this.vatNumber.substring(0, 2) +
+        ' ' +
+        this.vatNumber.substring(2, 4) +
+        ' ' +
+        this.vatNumber.substring(4, 7) +
+        ' ' +
+        this.vatNumber.substring(7, 10) +
+        ' ' +
+        this.vatNumber.substring(10, 13) +
+        '.'
+      );
     }
   }
 
   getFormattedTelephoneNumber(): string {
     switch (this.telephone.length) {
       case 10:
-      const newTelephoneNumber = [];
-      for (let index = 0; index <= this.telephone.length; index++) {
-        if (index % 2 === 0 && index !== 0) {
-          newTelephoneNumber.push(this.telephone.substring(index - 2, index));
+        const newTelephoneNumber = [];
+        for (let index = 0; index <= this.telephone.length; index++) {
+          if (index % 2 === 0 && index !== 0) {
+            newTelephoneNumber.push(this.telephone.substring(index - 2, index));
+          }
         }
-      }
-      return newTelephoneNumber.join('.');
+        return newTelephoneNumber.join('.');
       default:
-        return  this.telephone;
+        return this.telephone;
     }
   }
 

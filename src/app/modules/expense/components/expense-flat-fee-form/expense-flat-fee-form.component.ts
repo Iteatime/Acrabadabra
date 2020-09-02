@@ -6,18 +6,16 @@ import { TimesheetService } from 'src/app/modules/timesheet/services/timesheet.s
 @Component({
   selector: 'app-expense-flat-fee-form',
   templateUrl: './expense-flat-fee-form.component.html',
-  styleUrls: ['./expense-flat-fee-form.component.scss']
+  styleUrls: ['./expense-flat-fee-form.component.scss'],
 })
 export class ExpenseFlatFeeFormComponent implements OnInit {
-
   @ViewChild('expenseForm') form: NgForm;
   @Input() flatFees: FlatFee[];
   @Output() changed: EventEmitter<boolean> = new EventEmitter();
   flatFee = new FlatFee('', null);
   submitted = false;
 
-  constructor( public timesheetService: TimesheetService) {
-   }
+  constructor(public timesheetService: TimesheetService) {}
 
   ngOnInit() {
     this.flatFees = this.timesheetService.timesheet.flatFees;
@@ -39,5 +37,4 @@ export class ExpenseFlatFeeFormComponent implements OnInit {
       });
     }
   }
-
 }

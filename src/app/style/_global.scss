@@ -4,30 +4,26 @@
 
 html,
 body {
-	font-size: 16px;
+  font-size: 16px;
 }
 
 body {
-	font-family: $main_font;
+  font-family: $main_font;
 }
 
 /* ----------------------------------- */
 
 .modal {
   cursor: pointer;
-
 }
 
 .modal.show {
   background-color: rgba(5, 5, 5, 0.4);
-
 }
 .modal.open {
   display: block;
-
 }
 
 .modal-dialog {
   cursor: initial;
-
 }

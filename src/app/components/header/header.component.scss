@@ -1,26 +1,23 @@
-@import "src/app/style/vars";
-@import "src/app/style/mixins";
+@import 'src/app/style/vars';
+@import 'src/app/style/mixins';
 
 body {
   background: $grey_light;
 }
 
 .header {
-  @media (min-width: $screen-sm-min) {
-    height: 80px;
-  }
+  box-shadow: 0 0 8px rgba($black, 0.8);
   background: $main_blue;
   padding: 10px 0;
   height: $header_height;
-  box-shadow: 0 0 8px rgba($black, 0.8);
 
   &__container {
     position: relative;
     height: 100%;
 
     a {
-      opacity: 1;
       transition: opacity 0.15s ease-in-out;
+      opacity: 1;
     }
 
     a:hover {
@@ -35,24 +32,28 @@ body {
     }
 
     &__user {
+      position: absolute;
+      right: 20px;
+      cursor: pointer;
+      vertical-align: middle;
+      line-height: 40px;
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+
+      &__icon {
+        margin-bottom: 4px;
+        vertical-align: middle;
+      }
+
       @media (min-width: $screen-sm-min) {
         line-height: 60px;
         font-size: 18px;
       }
-
-      position: absolute;
-      right: 20px;
-      cursor: pointer;
-      line-height: 40px;
-      color: white;
-      font-weight: bold;
-      font-size: 12px;
-      vertical-align: middle;
-
-      &__icon {
-        vertical-align: middle;
-        margin-bottom: 4px;
-      }
     }
+  }
+
+  @media (min-width: $screen-sm-min) {
+    height: 80px;
   }
 }

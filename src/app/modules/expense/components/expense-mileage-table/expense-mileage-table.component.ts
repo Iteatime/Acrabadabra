@@ -6,24 +6,20 @@ import { Commute } from 'src/app/shared/models/commute';
 @Component({
   selector: 'app-expense-mileage-table',
   templateUrl: './expense-mileage-table.component.html',
-  styleUrls: ['./expense-mileage-table.component.scss']
+  styleUrls: ['./expense-mileage-table.component.scss'],
 })
 export class ExpenseMileageTableComponent implements OnInit {
-
   @Output() changed: EventEmitter<boolean> = new EventEmitter();
   @Input() hideDeleteButton = false;
 
   commutes: Commute[];
 
-  public local = 'fr';
-  public currencyCode: string;
+  local = 'fr';
+  currencyCode: string;
 
-  constructor(public timesheetService: TimesheetService,
-              private _monetaryService: MonetaryService
-    ) {
-      this.currencyCode = this._monetaryService.currencyCode;
-
-    }
+  constructor(public timesheetService: TimesheetService, private readonly _monetaryService: MonetaryService) {
+    this.currencyCode = this._monetaryService.currencyCode;
+  }
 
   ngOnInit() {
     this.commutes = this.timesheetService.timesheet.commutes;

@@ -6,24 +6,24 @@ import { Mission } from 'src/app/shared/models';
 const asyncError = async (functionToTest: Function, ...otherArgs: any[]): Promise<Error> => {
   let error;
   try {
-      const result = await functionToTest(...otherArgs);
+    const result = await functionToTest(...otherArgs);
   } catch (e) {
-      error = e;
+    error = e;
   }
   return error;
-}
+};
 
 const objectMatchesOriginal = (original: object, copy: object) => {
   // Exclude object id and relations to other objects from check
   const properties = Object.keys(original).filter(key => key !== 'id' && typeof original[key] !== 'object');
   // Check that all properties match between the source object and the returned object
-  for (let property of properties) {
+  for (const property of properties) {
     if (original[property] !== copy[property]) {
       return false;
     }
   }
   return true;
-}
+};
 
 describe('MissionService', () => {
   const INVALID_CREATOR_ID = 'aaaaaa';
@@ -82,13 +82,13 @@ describe('MissionService', () => {
     });
 
     xit('should only return missions whose creator matches the given id', () => {
-      for (let mission of missions) {
-        expect(mission.missionCreator).toEqual(VALID_CREATOR_ID);
+      for (const currentMission of missions) {
+        expect(currentMission.missionCreator).toEqual(VALID_CREATOR_ID);
       }
     });
 
     xit('should raise an exception on empty id', async () => {
-      for (let creatorId of [null, undefined, '']) {
+      for (const creatorId of [null, undefined, '']) {
         const error = await asyncError(service.readMissionsByCreator, creatorId);
         expect(error).toBeTruthy();
         expect(error.message).toEqual('Must specify an ID');
@@ -99,7 +99,7 @@ describe('MissionService', () => {
       missions = await service.readMissionsByCreator(INVALID_CREATOR_ID);
       expect(missions.length).toEqual(0);
     });
-  })
+  });
 
   describe('createMission()', async () => {
     beforeEach(() => {
@@ -118,21 +118,21 @@ describe('MissionService', () => {
     xit('should create an additional entry in database', async () => {
       const missions: Mission[] = await service.readAllMissions();
       expect(missions.length).toEqual(count + 1);
-    })
+    });
   });
 
   describe('readMission()', async () => {
     let returnedMission: Mission;
 
     xit('should raise an exception on empty id', async () => {
-      for (let missionId of [null, undefined, '']) {
+      for (const missionId of [null, undefined, '']) {
         const error = await asyncError(service.readMission, missionId);
         expect(error).toBeTruthy();
         expect(error.message).toEqual('Must specify an ID');
       }
     });
 
-    xit('should get a \'bad request\' error code (400) from server on undecryptable id', async () => {
+    xit('should get a bad request error code (400) from server on undecryptable id', async () => {
       const error = await asyncError(service.readMission, INVALID_MISSION_ID);
       expect(error).toBeTruthy();
       expect(error.message).toEqual('Request failed with status code 400');
@@ -145,10 +145,10 @@ describe('MissionService', () => {
       expect(objectMatchesOriginal(mission, returnedMission)).toEqual(true);
     });
 
-    xit('should return an empty response on valid, but non-existing id', async() => {
+    xit('should return an empty response on valid, but non-existing id', async () => {
       returnedMission = await service.readMission(VALID_MISSION_ID);
       expect(returnedMission).toBeFalsy();
-    })
+    });
   });
 
   describe('updateMission()', async () => {
@@ -168,11 +168,11 @@ describe('MissionService', () => {
     xit('should not change the count of entries in database', async () => {
       const missions: Mission[] = await service.readAllMissions();
       expect(missions.length).toEqual(count + 1);
-    })
+    });
   });
 
   describe('deleteMission()', async () => {
-    xit('should get a \'bad request\' error code (400) from server on undecryptable id', async () => {
+    xit("should get a 'bad request' error code (400) from server on undecryptable id", async () => {
       const error = await asyncError(service.deleteMission, INVALID_MISSION_ID);
       expect(error).toBeTruthy();
       expect(error.message).toEqual('Request failed with status code 400');
@@ -182,8 +182,8 @@ describe('MissionService', () => {
       await service.deleteMission(id);
       const missions: Mission[] = await service.readAllMissions();
       expect(missions.length).toEqual(count);
-      const mission: Mission = await service.readMission(id);
-      expect(mission).toBeFalsy();
+      const readMission: Mission = await service.readMission(id);
+      expect(readMission).toBeFalsy();
     });
   });
 });

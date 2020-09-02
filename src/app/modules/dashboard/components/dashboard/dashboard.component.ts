@@ -5,13 +5,11 @@ import { Router } from '@angular/router';
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  // tslint:disable-next-line:use-component-view-encapsulation
+  encapsulation: ViewEncapsulation.None,
 })
 export class DashboardComponent implements OnInit {
+  constructor(public router: Router) {}
 
-  constructor(public router: Router) { }
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

@@ -1,20 +1,40 @@
-@import "src/app/style/vars";
-@import "src/app/style/mixins";
+@import 'src/app/style/vars';
+@import 'src/app/style/mixins';
 
 i:hover {
   cursor: pointer;
 }
 
 .missions-list {
-  width: calc(100vw - #{$sidebar-width});
-  margin-left: $sidebar-width;
   position: relative;
   margin-top: 10px;
-  text-align: center;
+  margin-left: $sidebar-width;
+  width: calc(100vw - #{$sidebar-width});
   border-collapse: collapse;
+  text-align: center;
 
   &__wrapper {
     @include container;
+
+    margin-top: 10px;
+    box-shadow: 0 0 8px rgba($black, 0.2);
+    background: $white;
+    padding: 20px;
+
+    &__title {
+      margin-top: 20px;
+      color: $grey_mine_shaft;
+      font-size: 22px;
+
+      & > h2 {
+        font-size: 20px;
+        font-weight: 700;
+
+        @media (min-width: $screen-sm-min) {
+          font-size: 28px;
+        }
+      }
+    }
 
     @media (min-width: $screen-sm-min) {
       padding: 40px;
@@ -23,73 +43,45 @@ i:hover {
     @media (min-width: $screen-md-min) {
       margin-top: 30px;
     }
-
-    margin-top: 10px;
-    background: $white;
-    padding: 20px;
-    box-shadow: 0 0 8px rgba($black, 0.2);
-
-    &__title {
-      margin-top: 20px;
-      font-size: 22px;
-      color: $grey_mine_shaft;
-
-      & > h2 {
-        @media (min-width: $screen-sm-min) {
-          font-size: 28px;
-        }
-
-        font-weight: 700;
-        font-size: 20px;
-      }
-    }
   }
 
   &__table {
-
-    @media (min-width:$screen_sm_min) {
-      .left-text {
-        text-align: left;
-        padding-left: 15px !important;
-      }
-    }
-
     width: 100%;
-    text-align: center;
     border-collapse: collapse;
+    text-align: center;
 
     &__header {
       background-color: $dark_blue;
-      color: white;
       height: 42.5px;
+      color: white;
 
       &__item {
-        width: auto;
-        padding: 6px;
-        color: white;
         border: 1px solid $grey_border_dark;
+        padding: 6px;
+        width: auto;
+        color: white;
       }
     }
 
     &__body {
       &__item {
-        padding: 6px;
         border: 1px solid $grey_border_dark;
+        padding: 6px;
 
         &:empty:not(.keep-border) {
-          border: 0px;
-        }
-
-        &.trashCan {
-          width: 60px;
+          border: 0;
         }
 
         &:last-of-type {
           font-weight: bold;
         }
+
+        &.trashCan {
+          width: 60px;
+        }
       }
 
-      &>tr {
+      & > tr {
         &:nth-of-type(odd) {
           background-color: $grey_border;
         }
@@ -100,6 +92,13 @@ i:hover {
       margin-top: 20px;
       color: red;
       font-weight: bold;
+    }
+
+    @media (min-width: $screen_sm_min) {
+      .left-text {
+        padding-left: 15px !important;
+        text-align: left;
+      }
     }
 
     @media only screen and (max-width: 599px), (min-device-width: 350px) and (max-device-width: 599px) {
@@ -124,9 +123,9 @@ i:hover {
       }
 
       td {
+        position: relative;
         border: none;
         border-bottom: 1px solid #eee;
-        position: relative;
         padding-left: 50%;
       }
 
@@ -134,8 +133,8 @@ i:hover {
         position: absolute;
         top: 6px;
         left: 6px;
-        width: 45%;
         padding-right: 10px;
+        width: 45%;
         white-space: nowrap;
       }
 

@@ -2,91 +2,96 @@
 @import 'src/app/style/mixins';
 
 .flat-fee-form {
-    width: 100%;
-    &__block {
+  width: 100%;
+  &__block {
+    margin: 20px 0;
+
+    &__title {
+      @include header-form;
+    }
+
+    &__submit {
+      margin-top: 40px;
+      width: 100%;
+      text-align: center;
+
+      &__button {
+        @include hoveranim_glow($darker_blue);
+
+        display: inline-block;
+        border: none;
+        background: $dark_blue;
+        cursor: pointer;
+        padding: 0;
+        width: 15%;
+        min-width: 100px;
+        height: 40px;
+        line-height: 40px;
+        color: $white;
+        font-size: 16px;
+        font-weight: 700;
+      }
+    }
+
+    &__input-wrapper {
+      @include form-input;
+
+      display: flex;
+      flex-wrap: wrap;
+
+      &__item {
+        margin: 0 5px;
+        width: calc(100% - 10px);
+
         @media (min-width: $screen-sm-min) {
-            margin: 30px 0px;
+          margin: 0 5px;
+          width: calc(50% - 10px);
         }
-        margin: 20px 0px;
+      }
+
+      &__sub-block {
+        margin-bottom: 20px;
+        width: 100%;
 
         &__title {
-            @include header-form;
-        }
-
-        &__submit {
-            margin-top: 40px;
-            width: 100%;
-            text-align: center;
-
-            &__button {
-              @include hoveranim_glow($darker_blue);
-              border: none;
-                    display: inline-block;
-              background: $dark_blue;
-              padding: 0;
-                    cursor: pointer;
-                    width: 15%;
-              height: 40px;
-              min-width: 100px;
-                    line-height: 40px;
-              color: $white;
-                    font-size: 16px;
-                    font-weight: 700;
-            }
+          @include header-form;
         }
 
         &__input-wrapper {
-            @include form-input;
-            display: flex;
-            flex-wrap: wrap;
+          @include form-input;
 
-            &__item {
-              @media (min-width: $screen-sm-min) {
-                width: calc(50% - 10px);
-                margin: 0 5px;
-              }
-                width: calc(100% - 10px);
-                margin: 0 5px;
-            }
+          display: flex;
+          flex-wrap: wrap;
+          border-bottom: none;
+          background: $white;
 
+          &:first-of-type {
+            border-top: 1px solid $grey_border_dark;
+          }
 
-            &__sub-block {
-                @media (min-width: $screen-sm-min) {
-                    margin-bottom: 30px;
-                }
-                margin-bottom: 20px;
-                width: 100%;
+          &:last-of-type {
+            border-bottom: 1px solid $grey_border_dark;
+          }
 
-                &__title {
-                    @include header-form;
-                }
-
-                &__input-wrapper {
-                    @include form-input;
-                    display: flex;
-                    flex-wrap: wrap;
-                    background: $white;
-                    border-bottom: none;
-
-                    &:first-of-type {
-                        border-top: 1px solid $grey_border_dark;
-                    }
-
-                    &:last-of-type {
-                      border-bottom: 1px solid $grey_border_dark;
-                    }
-
-                    &__item {
-                        width: 100%;
-                        margin: 0px;
-                    }
-                }
-            }
-
-            app-expense-flat-fee-table {
-              width: 100%;
-              margin-top: 40px;
-            }
+          &__item {
+            margin: 0;
+            width: 100%;
+          }
         }
+
+        @media (min-width: $screen-sm-min) {
+          margin-bottom: 30px;
+        }
+      }
+
+      app-expense-flat-fee-table {
+        margin-top: 40px;
+        width: 100%;
+      }
     }
+
+    @media (min-width: $screen-sm-min) {
+      margin: 30px 0;
+    }
+  }
 }

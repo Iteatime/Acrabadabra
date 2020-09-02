@@ -55,8 +55,7 @@ export class Mission {
     consultantBankIBAN?: string,
     consultantBankSWIFT?: string,
     consultantFreelance?: boolean,
-
-    ) {
+  ) {
     this.id = id;
     this.missionCreator = missionCreator;
     this.consultant = missionConsultant;
@@ -83,6 +82,5 @@ export class Mission {
     this.consultantBankIBAN = consultantBankIBAN || '';
     this.consultantBankSWIFT = consultantBankSWIFT || '';
     this.consultantFreelance = consultantFreelance;
-
   }
 }

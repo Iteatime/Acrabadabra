@@ -18,11 +18,11 @@
       </thead>
       <tbody class="missions-list__table__body">
           <tr *ngFor = "let mission of missionsArray$; let index = index;">
-              <td class="missions-list__table__body__item" data-text="client:" attr.data-role="mission-table-{{index}}-client">{{mission.client}}</td>
-              <td class="missions-list__table__body__item" data-text="consultant:" attr.data-role="mission-table-{{index}}-consultant">{{mission.consultant}}</td>
-              <td class="missions-list__table__body__item" data-text="titre:" attr.data-role="mission-table-{{index}}-title">{{mission.title}}</td>
-              <td class="missions-list__table__body__item" data-text="date début:" attr.data-role="mission-table-{{index}}-date-start">{{mission.startDate | date: 'dd/MM/yyyy'}}</td>
-              <td class="missions-list__table__body__item" data-text="date fin:" attr.data-role="mission-table-{{index}}-date-end">{{mission.endDate | date: 'dd/MM/yyyy'}}</td>
+              <td class="missions-list__table__body__item" data-text="client:" attr.data-role="mission-table-{{index}}-client">{{ mission.client }}</td>
+              <td class="missions-list__table__body__item" data-text="consultant:" attr.data-role="mission-table-{{index}}-consultant">{{ mission.consultant }}</td>
+              <td class="missions-list__table__body__item" data-text="titre:" attr.data-role="mission-table-{{index}}-title">{{ mission.title }}</td>
+              <td class="missions-list__table__body__item" data-text="date début:" attr.data-role="mission-table-{{index}}-date-start">{{ mission.startDate | date: 'dd/MM/yyyy' }}</td>
+              <td class="missions-list__table__body__item" data-text="date fin:" attr.data-role="mission-table-{{index}}-date-end">{{ mission.endDate | date: 'dd/MM/yyyy' }}</td>
               <td class="missions-list__table__body__item">
                 <a
                 [copyToClipboard]="this.originUrl + '/mission/' + mission.id + '/timesheet/create'"
