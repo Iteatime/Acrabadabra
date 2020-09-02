@@ -1,3 +1,5 @@
+const moment = require('moment-business-days');
+
 class Calendar {
   fillAndCheckCreate() {
     // Calendar
@@ -15,7 +17,7 @@ class Calendar {
     cy.getByRole('button-unselect-open-days').click();
     cy.getByRole('unit-count').should('contain', '0');
     cy.getByRole('button-select-open-days').click();
-    cy.getByRole('unit-count').should('contain', '21');
+    cy.getByRole('unit-count').should('contain', moment().businessDaysIntoMonth());
     cy.getByRole('unit-count').invoke('text').then(text => {
       expect(parseInt(text)).to.be.greaterThan(0);
     });
