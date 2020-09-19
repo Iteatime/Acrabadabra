@@ -1,4 +1,4 @@
-import {errorMessage} from './errorMessage';
+import { errorMessage } from './errorMessage';
 
 class Mileage {
   BUTTON_ADD = 'button-add-ik';
@@ -9,11 +9,21 @@ class Mileage {
   INPUT_VEHICLE = 'ik-input-vehicle';
 
   TABLE_TOTAL = 'ik-table-total';
-  TABLE_DATE(id) { return `ik-table-${id}-date`; }
-  TABLE_JOURNEY(id) { return `ik-table-${id}-journey`; }
-  TABLE_DISTANCE(id) { return `ik-table-${id}-distance`; }
-  TABLE_TAX_RATE(id) { return `ik-table-${id}-tax-rate`; }
-  TABLE_MILEAGE(id) { return `ik-table-${id}-mileage`; }
+  TABLE_DATE(id) {
+    return `ik-table-${id}-date`;
+  }
+  TABLE_JOURNEY(id) {
+    return `ik-table-${id}-journey`;
+  }
+  TABLE_DISTANCE(id) {
+    return `ik-table-${id}-distance`;
+  }
+  TABLE_TAX_RATE(id) {
+    return `ik-table-${id}-tax-rate`;
+  }
+  TABLE_MILEAGE(id) {
+    return `ik-table-${id}-mileage`;
+  }
 
   fillAndCheckCreate() {
     // Mileage Date

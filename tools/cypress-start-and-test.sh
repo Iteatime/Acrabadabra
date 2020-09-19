@@ -6,7 +6,7 @@ set -o errexit
 yarn netlify:dev &
 YARN_NETLIFY_PID=$!
 
-yarn start --progress=false &
+yarn start --configuration production --progress=false &
 YARN_START_PID=$!
 
 # Wait for app to start.

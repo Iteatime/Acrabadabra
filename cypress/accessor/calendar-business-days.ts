@@ -12,9 +12,9 @@ export const checkCalendar = (workingDays: object) => {
 
   workingDays[monthYearKey].forEach(day => {
     if (now.isBusinessDay()) {
-      expect(day).to.deep.equal({time: 1, unit: 'days'});
+      expect(day).to.deep.equal({ time: 1, unit: 'days' });
     } else {
-      expect(day).to.deep.equal({time: 0, unit: ''});
+      expect(day).to.deep.equal({ time: 0, unit: '' });
     }
     now.add(1, 'days');
   });

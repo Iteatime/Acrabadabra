@@ -34,9 +34,7 @@ class InvoicePayment {
     cy.getByRole(this.CHECKBOX_LATE_PENALTY).click();
   }
 
-  add() {
-
-  }
+  add() {}
 }
 
 export const invoicePayment = new InvoicePayment();

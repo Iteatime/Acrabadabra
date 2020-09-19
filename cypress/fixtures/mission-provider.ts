@@ -1,4 +1,4 @@
-import {errorMessage} from './errorMessage';
+import { errorMessage } from './errorMessage';
 
 class MissionProvider {
   CHECKBOX_RCS = 'checkbox-mission-provider-rcs';

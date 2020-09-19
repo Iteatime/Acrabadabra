@@ -1,4 +1,4 @@
-import {errorMessage} from './errorMessage';
+import { errorMessage } from './errorMessage';
 
 class MissionConsultant {
   CHECKBOX_CONSULTANT = 'checkbox-mission-consultant';

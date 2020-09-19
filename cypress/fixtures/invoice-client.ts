@@ -33,9 +33,7 @@ class InvoiceClient {
     cy.typeInputByRole(this.BLOCK_VAT, 'VAT');
   }
 
-  add() {
-
-  }
+  add() {}
 }
 
 export const invoiceClient = new InvoiceClient();

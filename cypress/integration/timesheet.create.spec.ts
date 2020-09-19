@@ -1,21 +1,21 @@
-import {routes} from '../accessor/cypress-config';
-import {checkCalendar} from '../accessor/calendar-business-days';
-import {consultant} from '../fixtures/consultant';
-import {mission} from '../fixtures/mission';
-import {calendar} from '../fixtures/calendar';
-import {mileage} from '../fixtures/mileage';
-import {miscellaneous} from '../fixtures/miscellaneous';
-import {flatFee} from '../fixtures/flatFee';
-import {invoice} from '../fixtures/invoice';
-import {invoiceProvider} from '../fixtures/invoice-provider';
-import {invoiceClient} from '../fixtures/invoice-client';
-import {invoicePayment} from '../fixtures/invoice-payment';
-import {button} from '../fixtures/button';
+import { routes } from '../accessor/cypress-config';
+import { checkCalendar } from '../accessor/calendar-business-days';
+import { consultant } from '../fixtures/consultant';
+import { mission } from '../fixtures/mission';
+import { calendar } from '../fixtures/calendar';
+import { mileage } from '../fixtures/mileage';
+import { miscellaneous } from '../fixtures/miscellaneous';
+import { flatFee } from '../fixtures/flatFee';
+import { invoice } from '../fixtures/invoice';
+import { invoiceProvider } from '../fixtures/invoice-provider';
+import { invoiceClient } from '../fixtures/invoice-client';
+import { invoicePayment } from '../fixtures/invoice-payment';
+import { button } from '../fixtures/button';
 
 describe('Test create form CRA', function () {
   it('Minimum required form', function () {
     cy.visit(routes.timesheetCreate);
-    cy.title().should('eq', 'Acrabadabra - Saisir un compte rendu d\'activité');
+    cy.title().should('eq', "Acrabadabra - Saisir un compte rendu d'activité");
 
     consultant.fillAndCheckCreate();
 
@@ -29,12 +29,7 @@ describe('Test create form CRA', function () {
     mileage.fillAndCheckCreate();
 
     // Add new Mileage
-    mileage.add(
-      '2020-01-01',
-      'AR La Fouillouse - Saint-Etienne',
-      42,
-      'Taux légal: 4 CV (0.518€/km)'
-    );
+    mileage.add('2020-01-01', 'AR La Fouillouse - Saint-Etienne', 42, 'Taux légal: 4 CV (0.518€/km)');
     cy.getByRole('ik-table').within(() => {
       cy.get('tbody').find('tr').should('have.length', 3);
       cy.getByRole('button-ik-table-1-delete').click();
@@ -44,13 +39,7 @@ describe('Test create form CRA', function () {
     miscellaneous.fillAndCheckCreate();
 
     // Add new Miscellaneous
-    miscellaneous.add(
-      '2020-01-01',
-      '42.42',
-      'Repas (TVA déductible)',
-      '20',
-      'Burger King'
-    );
+    miscellaneous.add('2020-01-01', '42.42', 'Repas (TVA déductible)', '20', 'Burger King');
     cy.getByRole('miscellaneous-table').within(() => {
       cy.get('tbody').find('tr').should('have.length', 3);
       cy.getByRole('button-miscellaneous-table-1-delete').click();
@@ -60,10 +49,7 @@ describe('Test create form CRA', function () {
     flatFee.fillAndCheckCreate();
 
     // Add new Flat Fee
-    flatFee.add(
-      '2020-01-01',
-      '42.42'
-    );
+    flatFee.add('2020-01-01', '42.42');
     cy.getByRole('flat-fee-table').within(() => {
       cy.get('tbody').find('tr').should('have.length', 3);
       cy.getByRole('button-flat-fee-table-1-delete').click();
@@ -104,7 +90,7 @@ describe('Test create form CRA', function () {
           tradeAndCompaniesRegisterCity: '',
           tradeAndCompaniesRegisterExemption: false,
           vatNumber: null,
-          vatExemption: false
+          vatExemption: false,
         },
         providerCompany: {
           name: 'John',
@@ -114,7 +100,7 @@ describe('Test create form CRA', function () {
           tradeAndCompaniesRegisterCity: 'RCS',
           tradeAndCompaniesRegisterExemption: false,
           vatNumber: 'VAT',
-          vatExemption: false
+          vatExemption: false,
         },
         clientCompany: {
           name: 'IteamTime',
@@ -124,7 +110,7 @@ describe('Test create form CRA', function () {
           tradeAndCompaniesRegisterCity: 'RCS',
           tradeAndCompaniesRegisterExemption: false,
           vatNumber: 'VAT',
-          vatExemption: false
+          vatExemption: false,
         },
         providerBankAccountHolder: '',
         providerBankingAgency: '',
@@ -135,31 +121,37 @@ describe('Test create form CRA', function () {
         consultantBankingAgency: '',
         consultantBankingDomiciliation: '',
         consultantBankIBAN: '',
-        consultantBankSWIFT: ''
+        consultantBankSWIFT: '',
       });
 
-      expect(data.commutes).to.deep.equal([{
-        date: '2020-01-01',
-        journey: 'AR Annecy - Lyon',
-        distance: '42',
-        allowance: '0.518',
-        mileageAllowance: 21.756,
-        vehicleSelected: 1
-      }]);
+      expect(data.commutes).to.deep.equal([
+        {
+          date: '2020-01-01',
+          journey: 'AR Annecy - Lyon',
+          distance: '42',
+          allowance: '0.518',
+          mileageAllowance: 21.756,
+          vehicleSelected: 1,
+        },
+      ]);
 
-      expect(data.miscellaneous).to.deep.equal([{
-        miscellaneousType: 'Péage',
-        tvaRate: 20,
-        wording: 'Test',
-        date: '2020-01-01',
-        amount: '42.42',
-        selectedType: 1
-      }]);
+      expect(data.miscellaneous).to.deep.equal([
+        {
+          miscellaneousType: 'Péage',
+          tvaRate: 20,
+          wording: 'Test',
+          date: '2020-01-01',
+          amount: '42.42',
+          selectedType: 1,
+        },
+      ]);
 
-      expect(data.flatFees).to.deep.equal([{
-        date: '2020-01-01',
-        amount: '42.42'
-      }]);
+      expect(data.flatFees).to.deep.equal([
+        {
+          date: '2020-01-01',
+          amount: '42.42',
+        },
+      ]);
 
       expect(data.invoice).to.deep.equal({
         bankAccountHolder: 'John Doe',
@@ -176,7 +168,7 @@ describe('Test create form CRA', function () {
           tradeAndCompaniesRegisterCity: 'RCS',
           tradeAndCompaniesRegisterExemption: false,
           vatNumber: 'VAT',
-          vatExemption: false
+          vatExemption: false,
         },
         client: {
           name: 'IteamTime',
@@ -186,14 +178,14 @@ describe('Test create form CRA', function () {
           tradeAndCompaniesRegisterCity: 'RCS',
           tradeAndCompaniesRegisterExemption: false,
           vatNumber: 'VAT',
-          vatExemption: false
+          vatExemption: false,
         },
         number: 'IT-01',
         date: '2020-01-01',
         workedRate: '42',
         paymentDate: '2020-01-01',
         paymentModality: 'Virement',
-        paymentLatePenalty: true
+        paymentLatePenalty: true,
       });
     });
   });

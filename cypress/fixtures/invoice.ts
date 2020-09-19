@@ -1,4 +1,4 @@
-import {errorMessage} from './errorMessage';
+import { errorMessage } from './errorMessage';
 
 class Invoice {
   BLOCK_NUMBER = 'invoice-block-number';
@@ -26,9 +26,7 @@ class Invoice {
     });
   }
 
-  add() {
-
-  }
+  add() {}
 }
 
 export const invoice = new Invoice();

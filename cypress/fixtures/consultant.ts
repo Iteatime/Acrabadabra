@@ -1,4 +1,4 @@
-import {errorMessage} from './errorMessage';
+import { errorMessage } from './errorMessage';
 
 class Consultant {
   BLOCK_NAME = 'consultant-block-name';

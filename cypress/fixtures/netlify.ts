@@ -1,14 +1,13 @@
-import {defineProdUrl, PROD_URL} from '../accessor/cypress-config';
-import {localStorageBackup} from '../accessor/local-storage-backup';
+import { defineProdUrl, PROD_URL } from '../accessor/cypress-config';
+import { localStorageBackup } from '../accessor/local-storage-backup';
 
 class Netlify {
   tryToLogin() {
-    return localStorageBackup.tryRestore()
-      .then((result: boolean) => {
-        if (result !== true) {
-          this.login();
-        }
-      });
+    return localStorageBackup.tryRestore().then((result: boolean) => {
+      if (result !== true) {
+        this.login();
+      }
+    });
   }
 
   login() {
@@ -19,12 +18,12 @@ class Netlify {
       body: {
         grant_type: 'password',
         username: 'cypress@mailna.me',
-        password: 'cypress'
+        password: 'cypress',
       },
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    }).then((tokenResponse) => {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    }).then(tokenResponse => {
       this.user(tokenResponse.body);
     });
   }
@@ -35,9 +34,9 @@ class Netlify {
       url: PROD_URL + '/.netlify/identity/user',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token.access_token
-      }
-    }).then((userResponse) => {
+        Authorization: 'Bearer ' + token.access_token,
+      },
+    }).then(userResponse => {
       const user = userResponse.body;
       user.token = token;
       user.url = PROD_URL + '/.netlify/identity';

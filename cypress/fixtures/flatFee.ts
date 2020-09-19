@@ -1,12 +1,16 @@
-import {errorMessage} from './errorMessage';
+import { errorMessage } from './errorMessage';
 
 class FlatFee {
   BUTTON_ADD = 'button-add-flat-fee';
   BLOCK_DATE = 'flat-fee-block-date';
   BLOCK_AMOUNT = 'flat-fee-block-amount';
   TABLE_TOTAL = 'flat-fee-table-total';
-  TABLE_DATE(id) { return `flat-fee-table-${id}-date`; }
-  TABLE_AMOUNT(id) { return `flat-fee-table-${id}-amount`; }
+  TABLE_DATE(id) {
+    return `flat-fee-table-${id}-date`;
+  }
+  TABLE_AMOUNT(id) {
+    return `flat-fee-table-${id}-amount`;
+  }
 
   fillAndCheckCreate() {
     // Flat fee date

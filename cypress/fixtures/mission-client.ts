@@ -1,4 +1,4 @@
-import {errorMessage} from './errorMessage';
+import { errorMessage } from './errorMessage';
 
 class MissionClient {
   BLOCK_NAME = 'mission-block-client-name';

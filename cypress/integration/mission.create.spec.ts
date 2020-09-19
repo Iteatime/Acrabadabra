@@ -1,10 +1,10 @@
-import {netlify} from '../fixtures/netlify';
-import {routes} from '../accessor/cypress-config';
-import {mission} from '../fixtures/mission';
-import {missionConsultant} from '../fixtures/mission-consultant';
-import {missionProvider} from '../fixtures/mission-provider';
-import {missionClient} from '../fixtures/mission-client';
-import {button} from '../fixtures/button';
+import { netlify } from '../fixtures/netlify';
+import { routes } from '../accessor/cypress-config';
+import { mission } from '../fixtures/mission';
+import { missionConsultant } from '../fixtures/mission-consultant';
+import { missionProvider } from '../fixtures/mission-provider';
+import { missionClient } from '../fixtures/mission-client';
+import { button } from '../fixtures/button';
 
 describe('Test create form mission', function () {
   beforeEach(() => {

@@ -1,4 +1,4 @@
-import {errorMessage} from './errorMessage';
+import { errorMessage } from './errorMessage';
 
 class Miscellaneous {
   BUTTON_ADD = 'button-add-miscellaneous';
@@ -12,10 +12,18 @@ class Miscellaneous {
   INPUT_WORDING = 'miscellaneous-input-wording';
 
   TABLE_TOTAL = 'miscellaneous-table-total';
-  TABLE_DATE(id) { return `miscellaneous-table-${id}-date`; }
-  TABLE_TYPE(id) { return `miscellaneous-table-${id}-type`; }
-  TABLE_TAX_RATE(id) { return `miscellaneous-table-${id}-tax-rate`; }
-  TABLE_TOTAL_TAX_INCL(id) { return `miscellaneous-table-${id}-total-tax-incl`; }
+  TABLE_DATE(id) {
+    return `miscellaneous-table-${id}-date`;
+  }
+  TABLE_TYPE(id) {
+    return `miscellaneous-table-${id}-type`;
+  }
+  TABLE_TAX_RATE(id) {
+    return `miscellaneous-table-${id}-tax-rate`;
+  }
+  TABLE_TOTAL_TAX_INCL(id) {
+    return `miscellaneous-table-${id}-total-tax-incl`;
+  }
 
   fillAndCheckCreate() {
     // Miscellaneous date

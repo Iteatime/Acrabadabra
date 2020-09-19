@@ -9,7 +9,7 @@ executors:
       - image: circleci/node:10-browsers
     working_directory: ~/repo
 jobs:
-  build:
+  install:
     executor: node
     steps:
       - checkout
@@ -28,6 +28,14 @@ jobs:
           root: .
           paths:
             - .
+  build:
+    executor: node
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: yarn run config
+      - run: yarn build --progress=false
   test:
     executor: node
     steps:
@@ -50,6 +58,7 @@ jobs:
           key: cypress
           paths:
           - ../.cache/cypress
+      - run: yarn run config
       - run: tools/cypress-start-and-test.sh
       - store_artifacts:
           path: cypress/screenshots
@@ -66,13 +75,16 @@ jobs:
 workflows:
   test:
     jobs:
-      - build
+      - install
+      - build:
+          requires:
+            - install
       - test:
           requires:
-            - build
+            - install
       - cypress:
           requires:
-            - build
+            - install
       - lint:
           requires:
-            - build
+            - install

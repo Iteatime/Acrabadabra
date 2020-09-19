@@ -1,6 +1,6 @@
-import {BASE_URL, defineProdUrl, loginToNetlify} from '../accessor/cypress-config';
-import {button} from '../fixtures/button';
-import {netlify} from '../fixtures/netlify';
+import { BASE_URL, defineProdUrl, loginToNetlify } from '../accessor/cypress-config';
+import { button } from '../fixtures/button';
+import { netlify } from '../fixtures/netlify';
 
 describe('Fetch homepage and check everything on it', function () {
   it('Check consultant button on homepage', () => {
