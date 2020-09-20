@@ -16,7 +16,7 @@ import { UrlShorteningService } from 'src/app/modules/timesheet/services/url-sho
   styleUrls: ['./mission-edit.component.scss'],
 })
 export class MissionEditComponent implements OnInit {
-  @ViewChild('missionForm') form: NgForm;
+  @ViewChild('missionForm', { static: true }) form: NgForm;
   showLink = false;
   commentary = false;
   editUrl = '';

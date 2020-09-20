@@ -28,12 +28,12 @@ import { CalendarSelectorComponent } from 'src/app/modules/calendar/components/c
   encapsulation: ViewEncapsulation.None,
 })
 export class TimesheetEditComponent implements OnInit {
-  @ViewChild(CalendarSelectorComponent) calendar: CalendarSelectorComponent;
-  @ViewChild(InvoiceFormComponent) invoiceForm: InvoiceFormComponent;
-  @ViewChild(ExpenseMileageFormComponent) commutesForm: ExpenseMileageFormComponent;
-  @ViewChild(ExpenseMiscellaneousFormComponent) miscellaneousForm: ExpenseMiscellaneousFormComponent;
-  @ViewChild(ExpenseFlatFeeFormComponent) flatFeesForm: ExpenseFlatFeeFormComponent;
-  @ViewChild('form') form: NgForm;
+  @ViewChild(CalendarSelectorComponent, { static: true }) calendar: CalendarSelectorComponent;
+  @ViewChild(InvoiceFormComponent, { static: false }) invoiceForm: InvoiceFormComponent;
+  @ViewChild(ExpenseMileageFormComponent, { static: false }) commutesForm: ExpenseMileageFormComponent;
+  @ViewChild(ExpenseMiscellaneousFormComponent, { static: false }) miscellaneousForm: ExpenseMiscellaneousFormComponent;
+  @ViewChild(ExpenseFlatFeeFormComponent, { static: false }) flatFeesForm: ExpenseFlatFeeFormComponent;
+  @ViewChild('form', { static: true }) form: NgForm;
   originUrl = window.location.origin;
   editShortUrl = '';
   reviewShortUrl = '';

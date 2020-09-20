@@ -12,7 +12,7 @@ import { VehiclesService } from '../../services/vehicles.service';
   styleUrls: ['./expense-mileage-form.component.scss'],
 })
 export class ExpenseMileageFormComponent implements OnInit {
-  @ViewChild('expenseForm') form: NgForm;
+  @ViewChild('expenseForm', { static: true }) form: NgForm;
   @Input() commutes: Commute[];
   @Output() changed: EventEmitter<boolean> = new EventEmitter();
 

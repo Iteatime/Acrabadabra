@@ -11,7 +11,7 @@ import { MiscellaneousExpensesService } from '../../services/miscellaneous-expen
   styleUrls: ['./expense-miscellaneous-form.component.scss'],
 })
 export class ExpenseMiscellaneousFormComponent implements OnInit {
-  @ViewChild('expenseForm') form: NgForm;
+  @ViewChild('expenseForm', { static: true }) form: NgForm;
   @Input() miscellaneous: Miscellaneous[];
   @Output() changed: EventEmitter<boolean> = new EventEmitter();
   misc: Miscellaneous;

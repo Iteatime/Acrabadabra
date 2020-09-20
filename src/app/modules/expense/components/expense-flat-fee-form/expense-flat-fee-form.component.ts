@@ -9,7 +9,7 @@ import { TimesheetService } from 'src/app/modules/timesheet/services/timesheet.s
   styleUrls: ['./expense-flat-fee-form.component.scss'],
 })
 export class ExpenseFlatFeeFormComponent implements OnInit {
-  @ViewChild('expenseForm') form: NgForm;
+  @ViewChild('expenseForm', { static: true }) form: NgForm;
   @Input() flatFees: FlatFee[];
   @Output() changed: EventEmitter<boolean> = new EventEmitter();
   flatFee = new FlatFee('', null);

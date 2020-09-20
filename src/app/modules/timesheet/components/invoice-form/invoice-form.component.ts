@@ -13,7 +13,7 @@ import { TimesheetService } from '../../services/timesheet.service';
   styleUrls: ['./invoice-form.component.scss'],
 })
 export class InvoiceFormComponent implements OnInit {
-  @ViewChild('form') form: NgForm;
+  @ViewChild('form', { static: true }) form: NgForm;
   @Input() invoice: Invoice;
   @Input() mission: Mission;
   @Output() changed: EventEmitter<boolean> = new EventEmitter();
