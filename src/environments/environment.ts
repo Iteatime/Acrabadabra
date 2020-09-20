@@ -11,6 +11,7 @@ export const environment = {
   short_url_api: 'https://api.rebrandly.com/v1/links',
   short_url_workspace: 'e8989a355dc84230b79bf51d50e07377',
   FAUNADB_SECRET: 'fnADPZOHdLACAbcc4eWL7T7vQn3a9dobGcKDiVde',
+  CRYPTR_KEY: 'az0qs2wx3',
 };
 
 /*

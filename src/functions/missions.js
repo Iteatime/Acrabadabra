@@ -1,17 +1,14 @@
-// FaunaDB setup
 import faunadb from 'faunadb';
+import httpResponse, { HTTP_CREATED, HTTP_NO_CONTENT, HTTP_BAD_REQUEST, HTTP_METHOD_NOT_ALLOWED, HTTP_SERVER_ERROR } from './common/httpResponse';
+import {environment} from "../environments/environment";
+const Cryptr = require('cryptr');
 
 const q = faunadb.query;
 const client = new faunadb.Client({
-  secret: process.env.FAUNADB_SECRET
+  secret: environment.FAUNADB_SECRET
 });
 
-// Cryptr setup
-const Cryptr = require('cryptr');
-const cryptr = new Cryptr(process.env.CRYPTR_KEY);
-
-// Project imports
-import httpResponse, { HTTP_CREATED, HTTP_NO_CONTENT, HTTP_BAD_REQUEST, HTTP_METHOD_NOT_ALLOWED, HTTP_SERVER_ERROR } from './common/httpResponse';
+const cryptr = new Cryptr(environment.CRYPTR_KEY);
 
 const encryptMissionId = (missionData) => {
   const object = JSON.parse(JSON.stringify(missionData));

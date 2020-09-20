@@ -14,6 +14,7 @@ const json = {
   short_url_api: env.SHORT_URL_API,
   short_url_workspace: env.SHORT_URL_WORKSPACE,
   FAUNADB_SECRET: '',
+  CRYPTR_KEY: env.CRYPTR_KEY,
 };
 
 if (env.NETLIFY) {
