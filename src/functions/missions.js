@@ -8,6 +8,9 @@ const client = new faunadb.Client({
   secret: environment.FAUNADB_SECRET
 });
 
+console.log('CIRCLECI', environment.CIRCLECI);
+console.log('NETLIFY', environment.NETLIFY);
+
 const cryptr = new Cryptr(environment.CRYPTR_KEY);
 
 const encryptMissionId = (missionData) => {
