@@ -25,7 +25,7 @@ if (env.NETLIFY) {
   } else {
     json.FAUNADB_SECRET = env.PREV_FAUNADB_SECRET;
   }
-} else if (env.CIRCLECI) {
+} else if (env.CIRCLECI || env.CI) {
   json.FAUNADB_SECRET = env.FAUNADB_SECRET;
 }
 
