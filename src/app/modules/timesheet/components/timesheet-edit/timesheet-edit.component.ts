@@ -1,19 +1,15 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
-
+import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
-
 import { ReviewMail, Timesheet, Invoice } from 'src/app/shared/models';
-
 import { CalendarService } from 'src/app/modules/calendar/calendar.service';
 import { TimesheetService } from '../../services/timesheet.service';
 import { UrlShorteningService } from '../../services/url-shortening.service';
 import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
 import { MissionService } from 'src/app/modules/mission/services/mission.service';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
-
 import { InvoiceFormComponent } from '../invoice-form/invoice-form.component';
 import { ExpenseMileageFormComponent } from 'src/app/modules/expense/components/expense-mileage-form/expense-mileage-form.component';
 import { ExpenseMiscellaneousFormComponent } from 'src/app/modules/expense/components/expense-miscellaneous-form/expense-miscellaneous-form.component';
@@ -83,15 +79,11 @@ export class TimesheetEditComponent implements OnInit {
     this.titleService.setTitle(`Acrabadabra - ${this.getModeTitle()} un compte rendu d'activité`);
   }
 
-  openAuth() {
-    this.auth.widget.open();
-  }
-
-  getModeTitle() {
+  getModeTitle(): string {
     return this.timesheetService.mode === 'edit' ? 'Modifier' : 'Saisir';
   }
 
-  onUserInput() {
+  onUserInput(): void {
     this.showLinks = false;
   }
 
@@ -111,7 +103,7 @@ export class TimesheetEditComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.notificationService.dismissAll();
     if (this.checkFormsValidity()) {
       this.timesheetService.timesheet.workingDays = this.calendarService.getWorkingDays(this.calendar.timesheet);

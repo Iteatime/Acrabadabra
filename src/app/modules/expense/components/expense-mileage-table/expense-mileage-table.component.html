@@ -1,28 +1,44 @@
 <table class="mileage" data-role="ik-table">
     <thead class="mileage__header">
-        <tr>
-            <th class="mileage__header__item">Date</th>
-            <th class="mileage__header__item left-text">Trajet</th>
-            <th class="mileage__header__item">Distance (km)</th>
-            <th class="mileage__header__item">Taux (€/km)</th>
-            <th class="mileage__header__item amount">IK</th>
-        </tr>
+    <tr>
+        <th class="mileage__header__item">Date</th>
+        <th class="mileage__header__item left-text">Trajet</th>
+        <th class="mileage__header__item">Distance (km)</th>
+        <th class="mileage__header__item">Taux (€/km)</th>
+        <th class="mileage__header__item amount">IK</th>
+    </tr>
     </thead>
     <tbody class="mileage__body">
-        <tr *ngFor = "let commute of timesheetService.timesheet.commutes; let index = index;">
-            <td class="mileage__body__item" data-text="Date:" attr.data-role="ik-table-{{index}}-date">{{ commute.date | date: 'dd/MM/yyyy' }}</td>
-            <td class="mileage__body__item left-text" data-text="Trajet:" attr.data-role="ik-table-{{index}}-journey">{{ commute.journey }}</td>
-            <td class="mileage__body__item" data-text="Distance:" attr.data-role="ik-table-{{index}}-distance">{{ commute.distance }}</td>
-            <td class="mileage__body__item" data-text="Taux:" attr.data-role="ik-table-{{index}}-tax-rate">{{ commute.allowance }}</td>
-            <td class="mileage__body__item" data-text="IK:" attr.data-role="ik-table-{{index}}-mileage">{{ commute.mileageAllowance | currency:currencyCode:"symbol":'1.2-2':local }}</td>
-            <td class="mileage__body__item trashCan" *ngIf="!hideDeleteButton"><a (click)="delete(commute)" attr.data-role="button-ik-table-{{index}}-delete"><i class="material-icons">delete</i></a></td>
-        </tr>
-        <tr class="no-background">
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="mileage__body__item totalOfAllowances" data-role="ik-table-total">Total HT: {{ timesheetService.getTotalAllowance() | currency:currencyCode:"symbol":'1.2-2':local }}</td>
-        </tr>
+    <tr *ngFor="let commute of timesheetService.timesheet.commutes; let index = index;">
+        <td class="mileage__body__item" data-text="Date:" attr.data-role="ik-table-{{index}}-date">
+            {{ commute.date | date: 'dd/MM/yyyy' }}
+        </td>
+        <td class="mileage__body__item left-text" data-text="Trajet:" attr.data-role="ik-table-{{index}}-journey">
+            {{ commute.journey }}
+        </td>
+        <td class="mileage__body__item" data-text="Distance:" attr.data-role="ik-table-{{index}}-distance">
+            {{ commute.distance }}
+        </td>
+        <td class="mileage__body__item" data-text="Taux:" attr.data-role="ik-table-{{index}}-tax-rate">
+            {{ commute.allowance }}
+        </td>
+        <td class="mileage__body__item" data-text="IK:" attr.data-role="ik-table-{{index}}-mileage">
+            {{ commute.mileageAllowance | currency:currencyCode:"symbol":'1.2-2':local }}
+        </td>
+        <td class="mileage__body__item trashCan" *ngIf="!hideDeleteButton">
+            <a (click)="delete(commute)" attr.data-role="button-ik-table-{{index}}-delete">
+                <i class="material-icons">delete</i>
+            </a>
+        </td>
+    </tr>
+    <tr class="no-background">
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="mileage__body__item totalOfAllowances" data-role="ik-table-total">
+            Total HT: {{ timesheetService.getTotalAllowance() | currency:currencyCode:"symbol":'1.2-2':local }}
+        </td>
+    </tr>
     </tbody>
 </table>

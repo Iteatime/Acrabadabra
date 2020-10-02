@@ -9,14 +9,10 @@ import {
   EventEmitter,
   OnDestroy,
 } from '@angular/core';
-
 import { Subject } from 'rxjs';
-
 import {
-  addHours,
   addMinutes,
   addMonths,
-  differenceInMinutes,
   endOfMonth,
   isSameDay,
   isSameMonth,

@@ -1,55 +1,66 @@
 <form #expenseForm="ngForm" (ngSubmit)="onSubmit()">
-  <div class="flat-fee-form">
-    <div class="flat-fee-form__block">
-      <h4 class="flat-fee-form__block__title">Déplacements forfaitaires </h4>
-      <div class="flat-fee-form__block__input-wrapper">
-
-        <div class="flat-fee-form__block__input-wrapper__item form-group" data-role="flat-fee-block-date">
-          <label for="date" class="flat-fee-form__block__input-wrapper__item__label">Date</label>
-          <div class="flat-fee-form__block__input-wrapper__item__input">
-            <input type="date" pattern="\d{4}-\d{2}-\d{2}" class="form-control" name="date" [(ngModel)]="flatFee.date"
-              required id="date" #date="ngModel"
-                   data-role="flat-fee-input-date">
-            <div *ngIf="date.invalid && (date.dirty || date.touched)" class="alert alert-danger">
-
-              <div *ngIf="date.errors['required']">
-                Ce champ est obligatoire.
-              </div>
-
-              <div *ngIf="date.errors['pattern']">
-                La date devrait respecter aaaa-mm-jj.
-              </div>
+    <div class="flat-fee-form">
+        <div class="flat-fee-form__block">
+            <h4 class="flat-fee-form__block__title">Déplacements forfaitaires </h4>
+            <div class="flat-fee-form__block__input-wrapper">
+                <div class="flat-fee-form__block__input-wrapper__item form-group" data-role="flat-fee-block-date">
+                    <label for="date" class="flat-fee-form__block__input-wrapper__item__label">Date</label>
+                    <div class="flat-fee-form__block__input-wrapper__item__input">
+                        <input type="date"
+                               pattern="\d{4}-\d{2}-\d{2}"
+                               class="form-control"
+                               name="date"
+                               [(ngModel)]="flatFee.date"
+                               required
+                               id="date"
+                               #date="ngModel"
+                               data-role="flat-fee-input-date"/>
+                        <div *ngIf="date.invalid && (date.dirty || date.touched)" class="alert alert-danger">
+                            <div *ngIf="date.errors['required']">
+                                Ce champ est obligatoire.
+                            </div>
+                            <div *ngIf="date.errors['pattern']">
+                                La date devrait respecter aaaa-mm-jj.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flat-fee-form__block__input-wrapper__item form-group" data-role="flat-fee-block-amount">
+                    <label for="amount" class="flat-fee-form__block__input-wrapper__item__label">
+                        Montant HT (€)
+                    </label>
+                    <div class="flat-fee-form__block__input-wrapper__item__input">
+                        <input placeholder="ex: 25.50"
+                               type="text"
+                               pattern="([0-9]+(\.[0-9]+)?)"
+                               class="form-control"
+                               name="amount"
+                               [(ngModel)]="flatFee.amount"
+                               data-role="flat-fee-input-amount"
+                               required
+                               id="amount"
+                               #amount="ngModel"/>
+                        <div *ngIf="amount.invalid && (amount.dirty || amount.touched)" class="alert alert-danger">
+                            <div *ngIf="amount.errors['required']">
+                                Ce champ est obligatoire.
+                            </div>
+                            <div *ngIf="amount.errors['pattern']">
+                                Seul des chiffres et un point sont acceptés
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flat-fee-form__block__submit">
+                    <button data-text="Ajouter"
+                            class="flat-fee-form__block__submit__button"
+                            data-role="button-add-flat-fee">
+                        <span>Ajouter</span>
+                    </button>
+                </div>
+                <app-expense-flat-fee-table
+                    (changed)="changed.emit(true)"
+                ></app-expense-flat-fee-table>
             </div>
-          </div>
         </div>
-
-        <div class="flat-fee-form__block__input-wrapper__item form-group" data-role="flat-fee-block-amount">
-          <label for="amount" class="flat-fee-form__block__input-wrapper__item__label">Montant HT
-            (€)</label>
-          <div class="flat-fee-form__block__input-wrapper__item__input">
-            <input placeholder="ex: 25.50" type="text" pattern="([0-9]+(\.[0-9]+)?)" class="form-control" name="amount" [(ngModel)]="flatFee.amount"  data-role="flat-fee-input-amount"
-              required id="amount" #amount="ngModel">
-            <div *ngIf="amount.invalid && (amount.dirty || amount.touched)" class="alert alert-danger">
-              <div *ngIf="amount.errors['required']">
-                Ce champ est obligatoire.
-              </div>
-              <div *ngIf="amount.errors['pattern']">
-                Seul des chiffres et un point sont acceptés
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="flat-fee-form__block__submit">
-          <button data-text="Ajouter" class="flat-fee-form__block__submit__button"
-                  data-role="button-add-flat-fee">
-            <span>Ajouter</span>
-          </button>
-        </div>
-        <app-expense-flat-fee-table
-        (changed)="changed.emit(true)">
-        </app-expense-flat-fee-table>
-      </div>
     </div>
-  </div>
 </form>

@@ -1,79 +1,97 @@
 <app-header></app-header>
 <div class="review">
-  <div class="review__wrapper">
-    <div class="review__wrapper__title">
-      <h2>Compte rendu d'activité</h2>
+    <div class="review__wrapper">
+        <div class="review__wrapper__title">
+            <h2>Compte rendu d'activité</h2>
+        </div>
+
+        <div class="review__wrapper__fields">
+            <div class="review__wrapper__fields__block">
+                <h3 class="review__wrapper__fields__block__title">Résumé</h3>
+                <div class="review__wrapper__fields__block__item-wrapper">
+                    <div id="left-part"
+                         class="review__wrapper__fields__block__item-wrapper__part">
+                        <div class="review__wrapper__fields__block__item-wrapper__part__text">
+                            <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Consultant</span>
+                            <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{ timesheet.consultant.name }}</span>
+                        </div>
+                        <div class="review__wrapper__fields__block__item-wrapper__part__text">
+                            <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Intitulé de la mission</span>
+                            <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{ timesheet.mission.title }}</span>
+                        </div>
+                        <div class="review__wrapper__fields__block__item-wrapper__part__text">
+                            <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Client</span>
+                            <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{ timesheet.mission.client }}</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div id="right-part" class="review__wrapper__fields__block__item-wrapper__part">
+                        <div *ngFor="let entry of workedTime"
+                             class="review__wrapper__fields__block__item-wrapper__part__text">
+                            <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Nombre d'unités d'oeuvre ({{ calendarService.getTimeUnitLabel(entry.unit) }})</span>
+                            <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{ entry.time }}</span>
+                        </div>
+                        <div class="review__wrapper__fields__block__item-wrapper__part__text">
+                            <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Période</span>
+                            <span class="review__wrapper__fields__block__item-wrapper__part__text__value">
+                                {{ date.toLocaleString(locale, {
+                                    month: 'long',
+                                    year: 'numeric'
+                                }) | titlecase }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="review__wrapper__fields__calendar">
+                <h3 class="review__wrapper__fields__calendar__title">Détail de l'intervention</h3>
+                <app-calendar-selector
+                    [minifiedTimesheet]="timesheet.workingDays"
+                    [picking]="false">
+                </app-calendar-selector>
+            </div>
+
+            <div class="review__wrapper__fields__allowance" *ngIf="timesheet.commutes.length > 0">
+                <h3 class="review__wrapper__fields__allowance__title">Détail des indemnités kilométriques</h3>
+                <app-expense-mileage-table
+                    [hideDeleteButton]="true">
+                </app-expense-mileage-table>
+            </div>
+
+            <div class="review__wrapper__fields__allowance" *ngIf="timesheet.miscellaneous.length > 0">
+                <h3 class="review__wrapper__fields__allowance__title">Détail des frais sur justificatif</h3>
+                <app-expense-miscellaneous-table
+                    [hideDeleteButton]="true">
+                </app-expense-miscellaneous-table>
+            </div>
+
+            <div class="review__wrapper__fields__allowance" *ngIf="timesheet.flatFees.length > 0">
+                <h3 class="review__wrapper__fields__allowance__title">Détail des déplacements forfaitaires</h3>
+                <app-expense-flat-fee-table
+                    [hideDeleteButton]="true">
+                </app-expense-flat-fee-table>
+            </div>
+
+            <div class="review__wrapper__fields__invoice">
+                <div *ngIf="generateInvoice"
+                     class="review__wrapper__fields__invoice__item">
+                    <a class="review__wrapper__fields__invoice__item__link"
+                       [href]="invoiceLink"
+                       target="_self">
+                        <i class="material-icons">cloud_download</i>
+                        <span>Télécharger la facture</span>
+                    </a>
+                </div>
+                <div *ngIf="auth.isAuthenticated"
+                     class="review__wrapper__fields__invoice__item">
+                    <a class="review__wrapper__fields__invoice__item__link"
+                       [href]="'/timesheet/edit/' + transferToken"
+                       target="_self">
+                        <i class="material-icons">send</i>
+                        <span>Facturer ce CRA</span>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="review__wrapper__fields">
-      <div class="review__wrapper__fields__block">
-        <h3 class="review__wrapper__fields__block__title">Résumé</h3>
-        <div class="review__wrapper__fields__block__item-wrapper">
-          <div id="left-part" class="review__wrapper__fields__block__item-wrapper__part">
-            <div class="review__wrapper__fields__block__item-wrapper__part__text">
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Consultant</span>
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{ timesheet.consultant.name }}</span>
-            </div>
-            <div class="review__wrapper__fields__block__item-wrapper__part__text">
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Intitulé de la mission</span>
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{ timesheet.mission.title }}</span>
-            </div>
-            <div class="review__wrapper__fields__block__item-wrapper__part__text">
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Client</span>
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{ timesheet.mission.client }}</span>
-            </div>
-          </div>
-          <hr>
-          <div id="right-part" class="review__wrapper__fields__block__item-wrapper__part">
-            <div *ngFor="let entry of workedTime" class="review__wrapper__fields__block__item-wrapper__part__text">
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Nombre d'unités d'oeuvre ({{ calendarService.getTimeUnitLabel(entry.unit) }})</span>
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{ entry.time }}</span>
-            </div>
-            <div class="review__wrapper__fields__block__item-wrapper__part__text">
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Période</span>
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{ date.toLocaleString(locale, { month: 'long', year: 'numeric' }) | titlecase }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="review__wrapper__fields__calendar">
-        <h3 class="review__wrapper__fields__calendar__title">Détail de l'intervention</h3>
-        <app-calendar-selector [minifiedTimesheet]="timesheet.workingDays" [picking]="false">
-        </app-calendar-selector>
-      </div>
-
-      <div class="review__wrapper__fields__allowance" *ngIf="timesheet.commutes.length > 0">
-        <h3 class="review__wrapper__fields__allowance__title">Détail des indemnités kilométriques</h3>
-        <app-expense-mileage-table [hideDeleteButton]="true">
-        </app-expense-mileage-table>
-      </div>
-
-      <div class="review__wrapper__fields__allowance" *ngIf="timesheet.miscellaneous.length > 0">
-        <h3 class="review__wrapper__fields__allowance__title">Détail des frais sur justificatif</h3>
-        <app-expense-miscellaneous-table [hideDeleteButton]="true">
-        </app-expense-miscellaneous-table>
-      </div>
-
-      <div class="review__wrapper__fields__allowance" *ngIf="timesheet.flatFees.length > 0">
-        <h3 class="review__wrapper__fields__allowance__title">Détail des déplacements forfaitaires</h3>
-        <app-expense-flat-fee-table [hideDeleteButton]="true">
-        </app-expense-flat-fee-table>
-      </div>
-
-      <div class="review__wrapper__fields__invoice">
-        <div *ngIf="generateInvoice" class="review__wrapper__fields__invoice__item">
-          <a class="review__wrapper__fields__invoice__item__link" [href]="invoiceLink" target="_self">
-            <i class="material-icons">cloud_download</i>
-            <span>Télécharger la facture</span>
-          </a>
-        </div>
-        <div *ngIf="auth.isAuthenticated" class="review__wrapper__fields__invoice__item">
-          <a class="review__wrapper__fields__invoice__item__link" [href]="'/timesheet/edit/' + transferToken" target="_self">
-            <i class="material-icons">send</i>
-            <span>Facturer ce CRA</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
+</div>

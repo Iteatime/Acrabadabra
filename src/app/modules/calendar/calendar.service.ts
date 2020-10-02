@@ -19,7 +19,7 @@ export class CalendarService {
     },
     hours: {
       label: 'heures',
-      timeInMinutes: 1 * 60,
+      timeInMinutes: 60,
     },
   };
   defaultTimeUnit = 'days';
@@ -78,9 +78,9 @@ export class CalendarService {
         workingDays[month + '.' + year][date] = day;
       }
       return workingDays;
-    } else {
-      return {};
     }
+
+    return {};
   }
 
   getDayFromEvent(event: CalendarEvent): WorkingEvent {
@@ -101,9 +101,7 @@ export class CalendarService {
   }
 
   getTimeFromWorkingEvent(event: WorkingEvent): number {
-    const time = event.time * this.timeUnits[event.unit].timeInMinutes;
-
-    return time;
+    return event.time * this.timeUnits[event.unit].timeInMinutes;
   }
 
   getNewEndDate(event: CalendarEvent, time: number): Date {

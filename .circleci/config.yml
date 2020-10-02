@@ -43,7 +43,7 @@ jobs:
       - attach_workspace:
           at: .
       - run: sudo apt-get install libxss1
-      - run: yarn test
+      - run: yarn test:ci
   cypress:
     executor: node
     steps:

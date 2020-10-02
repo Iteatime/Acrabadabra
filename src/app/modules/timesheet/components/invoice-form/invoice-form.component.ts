@@ -1,11 +1,10 @@
 import { Component, ViewChild, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-
-import { Invoice, Mission } from 'src/app/shared/models';
-
 import { MissionService } from 'src/app/modules/mission/services/mission.service';
 import { TimesheetService } from '../../services/timesheet.service';
+import { Invoice } from '@model/invoice.model';
+import { Mission } from '@model/mission.model';
 
 @Component({
   selector: 'app-invoice-form',
@@ -24,7 +23,7 @@ export class InvoiceFormComponent implements OnInit {
     private readonly _timesheetService: TimesheetService,
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     const context = this._route.snapshot.url[0].path;
 
     if (this.mission) {
@@ -55,7 +54,7 @@ export class InvoiceFormComponent implements OnInit {
     });
   }
 
-  fillInvoice(provider, client, invoiceData) {
+  fillInvoice(provider, client, invoiceData): void {
     this.invoice = {
       ...this.invoice,
       ...invoiceData,

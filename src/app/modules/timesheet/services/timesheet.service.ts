@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
-
 import { environment } from 'src/environments/environment';
-
 import { Company, Invoice, Timesheet } from 'src/app/shared/models';
-
 import { LocalSaveService } from 'src/app/shared/services/localSave/local-save.service';
-
 import { SerializationService } from 'src/app/shared/services/serialization/serialization.service';
 
 @Injectable({
@@ -20,8 +16,6 @@ export class TimesheetService {
   }
   timesheet: Timesheet;
   mode: string;
-
-  load;
 
   getEditToken(): string {
     return this._serializer.serializeObject({
@@ -67,7 +61,7 @@ export class TimesheetService {
     }
   }
 
-  getInvoiceLink() {
+  getInvoiceLink(): string {
     return (
       environment.pdf_api_url +
       '?url=' +
@@ -82,28 +76,16 @@ export class TimesheetService {
     );
   }
 
-  getTotalAllowance() {
-    let totalAllowance = 0;
-    for (let i = 0; i < this.timesheet.commutes.length; i++) {
-      totalAllowance += this.timesheet.commutes[i].mileageAllowance;
-    }
-    return totalAllowance;
+  getTotalAllowance(): number {
+    return this.timesheet.commutes.reduce((a, b) => a + (b['mileageAllowance'] || 0), 0);
   }
 
-  getTotalMiscellaneous() {
-    let totalMisc = 0;
-    for (let i = 0; i < this.timesheet.miscellaneous.length; i++) {
-      totalMisc += +this.timesheet.miscellaneous[i].amount;
-    }
-    return totalMisc;
+  getTotalMiscellaneous(): number {
+    return this.timesheet.miscellaneous.reduce((a, b) => a + (+b['amount'] || 0), 0);
   }
 
-  getTotalFlatFee() {
-    let totalFlatFee = 0;
-    for (let i = 0; i < this.timesheet.flatFees.length; i++) {
-      totalFlatFee += +this.timesheet.flatFees[i].amount;
-    }
-    return totalFlatFee;
+  getTotalFlatFee(): number {
+    return this.timesheet.flatFees.reduce((a, b) => a + (+b['amount'] || 0), 0);
   }
 
   getLocalStorageTimesheetsList() {
@@ -122,7 +104,7 @@ export class TimesheetService {
     });
   }
 
-  saveTimesheet() {
+  saveTimesheet(): void {
     let lastTimesheet: number;
     const timesheetArray = this.getLocalStorageTimesheetsList();
 
@@ -179,7 +161,7 @@ export class TimesheetService {
     return timesheetToTransfer;
   }
 
-  setTimesheet(timesheet) {
+  setTimesheet(timesheet): void {
     this.timesheet = Object.assign({}, new Timesheet(), {
       ...timesheet,
       workingDays: 0,

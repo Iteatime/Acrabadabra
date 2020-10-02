@@ -1,13 +1,13 @@
 <div *ngIf="notifications" id="notifications" class="notifications">
-  <div *ngFor="let notification of notifications"
-    id="{{ notification.id }}"
-    class="notifications__item notifications__item--{{ notification.type }}"
-    [ngClass]="{'dismissable': notification.options.isDismissable}">
-    <div class="notifications__item__content" [innerHTML]="notification.message"></div>
-    <div *ngIf="notification.options.isDismissable"
-      class="notifications__item__close"
-      (click)="dismiss(notification)">
-      <em class="notifications__item__close__icon material-icons">close</em>
+    <div *ngFor="let notification of notifications"
+         id="{{ notification.id }}"
+         class="notifications__item notifications__item--{{ notification.type }}"
+         [ngClass]="{'dismissable': notification.options.isDismissable}">
+        <div class="notifications__item__content" [innerHTML]="notification.message"></div>
+        <div *ngIf="notification.options.isDismissable"
+             class="notifications__item__close"
+             (click)="dismiss(notification)">
+            <em class="notifications__item__close__icon material-icons">close</em>
+        </div>
     </div>
-  </div>
 </div>

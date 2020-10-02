@@ -11,8 +11,15 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "paths": {
+      "@model/*": ["src/app/shared/models/*"],
+      "@services/*": ["src/app/shared/services/*"],
+      "@directives/*": ["src/app/shared/directives/*"]
+    },
     "target": "es2015",
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "typeRoots": [
       "@types",
       "node_modules/@types"

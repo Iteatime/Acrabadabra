@@ -24,6 +24,7 @@
 /.sass-cache
 /connect.lock
 /coverage
+/scripts/coverage
 /libpeerconnection.log
 npm-debug.log
 yarn-error.log
@@ -42,3 +43,4 @@ Thumbs.db
 /cypress/fixtures/.local-storage-backup
 /cypress/screenshots
 /cypress/videos
+/.stylelintcache

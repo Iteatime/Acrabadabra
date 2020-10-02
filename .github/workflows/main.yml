@@ -68,7 +68,7 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: YARN TEST
-        run: yarn test
+        run: yarn test:ci
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
 

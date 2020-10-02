@@ -1,46 +1,69 @@
-
 <div class="missions-list">
-  <div class="missions-list__wrapper">
-      <div class="missions-list__wrapper__title">
-        <h2> Liste des missions</h2>
-      </div>
-    <table class="missions-list__table" data-role="missions-table">
-      <thead class="missions-list__table__header">
-          <tr>
-              <th class="flat-fee__table__header__item">CLIENT:</th>
-              <th class="flat-fee__table__header__item">CONSULTANT:</th>
-              <th class="flat-fee__table__header__item">TITRE:</th>
-              <th class="flat-fee__table__header__item">DATE DÉBUT:</th>
-              <th class="flat-fee__table__header__item">DATE FIN:</th>
-              <th class="flat-fee__table__header__item"></th>
-              <th class="flat-fee__table__header__item"></th>
-          </tr>
-      </thead>
-      <tbody class="missions-list__table__body">
-          <tr *ngFor = "let mission of missionsArray$; let index = index;">
-              <td class="missions-list__table__body__item" data-text="client:" attr.data-role="mission-table-{{index}}-client">{{ mission.client }}</td>
-              <td class="missions-list__table__body__item" data-text="consultant:" attr.data-role="mission-table-{{index}}-consultant">{{ mission.consultant }}</td>
-              <td class="missions-list__table__body__item" data-text="titre:" attr.data-role="mission-table-{{index}}-title">{{ mission.title }}</td>
-              <td class="missions-list__table__body__item" data-text="date début:" attr.data-role="mission-table-{{index}}-date-start">{{ mission.startDate | date: 'dd/MM/yyyy' }}</td>
-              <td class="missions-list__table__body__item" data-text="date fin:" attr.data-role="mission-table-{{index}}-date-end">{{ mission.endDate | date: 'dd/MM/yyyy' }}</td>
-              <td class="missions-list__table__body__item">
-                <a
-                [copyToClipboard]="this.originUrl + '/mission/' + mission.id + '/timesheet/create'"
-                (click)="copyLinkToTimesheet()"
-                [copyToClipboardMessage]="'Lien de création de CRA copié'" [copyToClipboardMessageParent]="editLink.parentNode" #editLink attr.data-role="button-mission-{{index}}-cra">
-                <i class="material-icons">create_new_folder</i>
-                </a>
-              </td>
-              <td class="missions-list__table__body__item">
-                <a (click)="delete(mission.id)" attr.data-role="button-mission-{{index}}-delete">
-                  <i class="material-icons">delete</i>
-                </a>
-              </td>
-          </tr>
-      </tbody>
-    </table>
-    <div class="missions-list__table__alert" *ngIf="this.missionsArray$.length == 0">Vous n'avez aucune mission</div>
-  </div>
+    <div class="missions-list__wrapper">
+        <div class="missions-list__wrapper__title">
+            <h2> Liste des missions</h2>
+        </div>
+        <table class="missions-list__table" data-role="missions-table">
+            <thead class="missions-list__table__header">
+            <tr>
+                <th class="flat-fee__table__header__item">CLIENT:</th>
+                <th class="flat-fee__table__header__item">CONSULTANT:</th>
+                <th class="flat-fee__table__header__item">TITRE:</th>
+                <th class="flat-fee__table__header__item">DATE DÉBUT:</th>
+                <th class="flat-fee__table__header__item">DATE FIN:</th>
+                <th class="flat-fee__table__header__item"></th>
+                <th class="flat-fee__table__header__item"></th>
+            </tr>
+            </thead>
+            <tbody class="missions-list__table__body">
+            <tr *ngFor="let mission of missionsArray$; let index = index;">
+                <td class="missions-list__table__body__item"
+                    data-text="client:"
+                    attr.data-role="mission-table-{{index}}-client">
+                    {{ mission.client }}
+                </td>
+                <td class="missions-list__table__body__item"
+                    data-text="consultant:"
+                    attr.data-role="mission-table-{{index}}-consultant">
+                    {{ mission.consultant }}
+                </td>
+                <td class="missions-list__table__body__item"
+                    data-text="titre:"
+                    attr.data-role="mission-table-{{index}}-title">
+                    {{ mission.title }}
+                </td>
+                <td class="missions-list__table__body__item"
+                    data-text="date début:"
+                    attr.data-role="mission-table-{{index}}-date-start">
+                    {{ mission.startDate | date: 'dd/MM/yyyy' }}
+                </td>
+                <td class="missions-list__table__body__item"
+                    data-text="date fin:"
+                    attr.data-role="mission-table-{{index}}-date-end">
+                    {{ mission.endDate | date: 'dd/MM/yyyy' }}
+                </td>
+                <td class="missions-list__table__body__item">
+                    <a
+                        [copyToClipboard]="this.originUrl + '/mission/' + mission.id + '/timesheet/create'"
+                        (click)="copyLinkToTimesheet()"
+                        [copyToClipboardMessage]="'Lien de création de CRA copié'"
+                        [copyToClipboardMessageParent]="editLink.parentNode" #editLink
+                        attr.data-role="button-mission-{{index}}-cra">
+                        <i class="material-icons">create_new_folder</i>
+                    </a>
+                </td>
+                <td class="missions-list__table__body__item">
+                    <a (click)="delete(mission.id)"
+                       attr.data-role="button-mission-{{index}}-delete">
+                        <i class="material-icons">delete</i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="missions-list__table__alert"
+             *ngIf="this.missionsArray$.length == 0">
+            Vous n'avez aucune mission
+        </div>
+    </div>
 </div>
-
-<!-- {{ missionsArray$ | json }} -->

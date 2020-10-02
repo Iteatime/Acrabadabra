@@ -31,7 +31,7 @@ jobs:
       name: BUILD
       script: yarn build --progress=false
     - name: UNIT TEST
-      script: yarn test
+      script: yarn test:ci
     - name: LINT
       script: yarn lint:ci
     - name: CYPRESS

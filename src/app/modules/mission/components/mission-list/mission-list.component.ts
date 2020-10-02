@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
 import Swal from 'sweetalert2';
-
 import { MissionService } from '../../services/mission.service';
-import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
+import { AuthenticationService } from '@services/authentication/authentication.service';
 
 @Component({
   selector: 'app-mission-list',
@@ -28,9 +26,7 @@ export class MissionListComponent implements OnInit {
   }
 
   update(): void {
-    this.missionService.readMissionsByCreator(this._auth.user.id).then(response => {
-      this.missionsArray$ = response;
-    });
+    this.missionService.readMissionsByCreator(this._auth.user.id).then(response => (this.missionsArray$ = response));
   }
 
   delete(id: any) {
@@ -46,19 +42,18 @@ export class MissionListComponent implements OnInit {
       if (result.value) {
         this.missionService
           .deleteMission(id)
-          .then(res => {
+          .then(() => {
             this.update();
             this.reactToSubmition(false);
           })
-          .catch(error => {
+          .catch(() => {
             this.reactToSubmition(true);
-            console.log('error', error);
           });
       }
     });
   }
 
-  copyLinkToTimesheet() {
+  copyLinkToTimesheet(): void {
     this._notificationService.push(
       "Vous pouvez partager ce lien permettant la création d'un CRA intégrant les informations relatives à votre mission",
       'success',

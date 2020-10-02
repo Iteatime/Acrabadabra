@@ -11,15 +11,9 @@ import { AuthenticationService } from 'src/app/shared/services/authentication/au
   encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent {
-  title = 'Acrabadabra';
-
   constructor(public auth: AuthenticationService, public router: Router) {}
 
-  onProviderBtnClick() {
-    if (this.auth.isAuthenticated) {
-      this.router.navigate(['dashboard']);
-    } else {
-      this.auth.widget.open();
-    }
+  onProviderBtnClick(): void {
+    this.auth.isAuthenticated ? this.router.navigate(['dashboard']) : this.auth.widget.open();
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { Commute } from '../../../../shared/models/commute';
+import { Commute } from '@model/commute';
 
 import { TimesheetService } from 'src/app/modules/timesheet/services/timesheet.service';
 import { VehiclesService } from '../../services/vehicles.service';
@@ -22,7 +22,7 @@ export class ExpenseMileageFormComponent implements OnInit {
 
   constructor(public vehiclesService: VehiclesService, public timesheetService: TimesheetService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.vehicles = this.vehiclesService.vehicles;
     this.commutes = this.timesheetService.timesheet.commutes;
 
@@ -33,7 +33,7 @@ export class ExpenseMileageFormComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.form.valid) {
       if (!this.vehiclesService.isCustomizable(this.commute)) {
         this.commute.allowance = this.vehiclesService.vehicles[this.commute.vehicleSelected].allowance;

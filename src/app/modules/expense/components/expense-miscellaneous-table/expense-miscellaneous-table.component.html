@@ -1,14 +1,14 @@
 <table class="miscellaneous" data-role="miscellaneous-table">
     <thead class="miscellaneous__header">
-        <tr>
-            <th class="miscellaneous__header__item">Date</th>
-            <th class="miscellaneous__header__item left-text">Type</th>
-            <th class="miscellaneous__header__item">Taux de TVA</th>
-            <th class="miscellaneous__header__item">
-              <span *ngIf="vatExemption == false">Montant TTC</span>
-              <span *ngIf="vatExemption == true">Montant HT</span>
-            </th>
-        </tr>
+    <tr>
+        <th class="miscellaneous__header__item">Date</th>
+        <th class="miscellaneous__header__item left-text">Type</th>
+        <th class="miscellaneous__header__item">Taux de TVA</th>
+        <th class="miscellaneous__header__item">
+            <span *ngIf="vatExemption == false">Montant TTC</span>
+            <span *ngIf="vatExemption == true">Montant HT</span>
+        </th>
+    </tr>
     </thead>
     <tbody class="miscellaneous__body">
       <tr *ngFor = "let miscellaneous of timesheetService.timesheet.miscellaneous; let index = index;">
@@ -30,7 +30,8 @@
           <td class="miscellaneous__body__item totalOfAllowances" data-role="miscellaneous-table-total">
             <span *ngIf="vatExemption == false">Total TTC:</span>
             <span *ngIf="vatExemption == true">Total HT:</span>
-            {{ timesheetService.getTotalMiscellaneous() | currency:currencyCode:"symbol":'1.2-2':local }}</td>
-      </tr>
-</tbody>
+            {{ timesheetService.getTotalMiscellaneous() | currency:currencyCode:"symbol":'1.2-2':local }}
+        </td>
+    </tr>
+    </tbody>
 </table>

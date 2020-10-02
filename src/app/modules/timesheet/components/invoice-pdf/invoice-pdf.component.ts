@@ -6,13 +6,11 @@ import { CalendarService } from 'src/app/modules/calendar/calendar.service';
 import { TimesheetService } from '../../services/timesheet.service';
 import { MonetaryService } from 'src/app/shared/services/monetary/monetary.service';
 
-import { Invoice } from 'src/app/shared/models/invoice.model';
-import { Company } from 'src/app/shared/models/company.model';
-import { Timesheet } from 'src/app/shared/models/timesheet.model';
-
 import * as moment from 'moment';
 import { MiscellaneousExpensesService } from '../../../expense/services/miscellaneous-expenses.service';
 import { WorkingEvent } from 'src/app/shared/@types/workingEvent';
+import { Company } from '@model/company.model';
+import { Invoice } from '@model/invoice.model';
 
 @Component({
   selector: 'app-invoice-pdf',
@@ -99,7 +97,7 @@ export class InvoicePDFComponent {
     }
   }
 
-  getNumberOfFlatFees() {
+  getNumberOfFlatFees(): number {
     return this.timesheetService.timesheet.flatFees.length;
   }
 

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
-
-import { Mission, Timesheet } from 'src/app/shared/models';
 import { SerializationService } from 'src/app/shared/services/serialization/serialization.service';
+import { Mission } from '@model/mission.model';
+import { Timesheet } from '@model/timesheet.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,22 +12,6 @@ export class MissionService {
   timesheet: Timesheet;
 
   constructor(private readonly _serializer: SerializationService) {}
-
-  getCreateToken(): string {
-    return this._serializer.serializeObject({
-      mode: 'create',
-      timesheet: Object.assign({}, new Timesheet(), {
-        consultant: {
-          name: this.mission.consultant,
-          email: this.mission.consultantEmail,
-        },
-        mission: {
-          client: this.mission.client,
-          title: this.mission.title,
-        },
-      }),
-    });
-  }
 
   getEditToken(): string {
     return this._serializer.serializeObject({
@@ -50,34 +34,29 @@ export class MissionService {
   };
 
   createMission = async (data: Mission): Promise<Mission> => {
-    const result = await this.crud('post', null, data);
-    return result;
+    return this.crud('post', null, data);
   };
 
   readAllMissions = async (): Promise<Mission[]> => {
-    const result = await this.crud('get');
-    return result;
+    return this.crud('get');
   };
 
   readMission = async (missionId: string): Promise<Mission> => {
     if (!missionId) {
       throw new Error('Must specify an ID');
     }
-    const result = await this.crud('get', missionId);
-    return result;
+    return this.crud('get', missionId);
   };
 
   readMissionsByCreator = async (creatorId: string): Promise<Mission[]> => {
     if (!creatorId) {
       throw new Error('Must specify an ID');
     }
-    const result = await this.crud('get', 'user/' + creatorId);
-    return result;
+    return this.crud('get', 'user/' + creatorId);
   };
 
   updateMission = async (missionId: string, data: Mission): Promise<Mission> => {
-    const result = await this.crud('put', missionId, data);
-    return result;
+    return this.crud('put', missionId, data);
   };
 
   deleteMission = async (missionId: string): Promise<boolean> => {

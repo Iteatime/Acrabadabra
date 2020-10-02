@@ -1,21 +1,18 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
-
-import { Company } from 'src/app/shared/models';
-
-import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
 import { MissionService } from '../../services/mission.service';
 import { UrlShorteningService } from 'src/app/modules/timesheet/services/url-shortening.service';
+import { AuthenticationService } from '@services/authentication/authentication.service';
+import { Company } from '@model/company.model';
 
 @Component({
   selector: 'app-mission-edit',
   templateUrl: './mission-edit.component.html',
   styleUrls: ['./mission-edit.component.scss'],
 })
-export class MissionEditComponent implements OnInit {
+export class MissionEditComponent {
   @ViewChild('missionForm', { static: true }) form: NgForm;
   showLink = false;
   commentary = false;
@@ -32,18 +29,12 @@ export class MissionEditComponent implements OnInit {
     private readonly _urlShortener: UrlShorteningService,
   ) {}
 
-  ngOnInit(): void {}
-
-  openAuth() {
-    this.auth.widget.open();
-  }
-
   setShortUrl(action?: string): void {
     if (!!action) {
       const getToken = this.missionService.getEditToken();
-      this._urlShortener.shortenUrl(this.originUrl + `/timesheet/${action}/` + getToken).then(res => {
-        this.editUrl = res;
-      });
+      this._urlShortener
+        .shortenUrl(this.originUrl + `/timesheet/${action}/` + getToken)
+        .then(res => (this.editUrl = res));
       return;
     }
 
@@ -52,12 +43,12 @@ export class MissionEditComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.notificationService.dismissAll();
     if (!this.auth.isAuthenticated) {
       this.notificationService.push('Veuillez vous connecter', 'warning', { isSelfClosing: false });
     } else {
-      if (this.checkFormsValidity()) {
+      if (this.form.valid) {
         if (!this.isConsultantFreelance) {
           this.missionService.mission.consultantCompany = new Company();
           this.missionService.mission.consultantBankAccountHolder = '';
@@ -84,11 +75,6 @@ export class MissionEditComponent implements OnInit {
         this.showValidationMessages();
       }
     }
-  }
-
-  checkFormsValidity(): boolean {
-    const valid = this.form.valid;
-    return valid;
   }
 
   reactToSubmition(error: boolean): void {

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { FlatFee } from 'src/app/shared/models/flat-fee.model';
-import { TimesheetService } from 'src/app/modules/timesheet/services/timesheet.service';
+import { FlatFee } from '@model/flat-fee.model';
+import { TimesheetService } from '../../../timesheet/services/timesheet.service';
 
 @Component({
   selector: 'app-expense-flat-fee-form',
@@ -17,7 +17,7 @@ export class ExpenseFlatFeeFormComponent implements OnInit {
 
   constructor(public timesheetService: TimesheetService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.flatFees = this.timesheetService.timesheet.flatFees;
     this.form.valueChanges.subscribe(() => {
       if (this.form.dirty) {
@@ -26,7 +26,7 @@ export class ExpenseFlatFeeFormComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.form.valid) {
       this.submitted = true;
       this.flatFees.push(Object.assign(new FlatFee(), this.flatFee));

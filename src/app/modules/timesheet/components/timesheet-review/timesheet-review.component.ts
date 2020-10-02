@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { Params, ActivatedRoute } from '@angular/router';
 
 import { Timesheet } from 'src/app/shared/models/timesheet.model';
-import { Commute } from '../../../../shared/models/commute';
+import { Commute } from '@model/commute';
 
 import { CalendarService } from 'src/app/modules/calendar/calendar.service';
 import { TimesheetService } from '../../services/timesheet.service';
@@ -37,7 +37,7 @@ export class TimesheetReviewComponent implements OnInit {
     private readonly titleService: Title,
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       if (this.timesheetService.openTimesheet(params['data'], 'review')) {
         this.timesheet = this.timesheetService.timesheet;
