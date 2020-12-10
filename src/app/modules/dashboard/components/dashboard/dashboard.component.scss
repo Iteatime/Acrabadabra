@@ -1,0 +1,39 @@
+@import 'src/app/style/vars';
+@import 'src/app/style/mixins';
+
+.navbar {
+  position: fixed;
+  left: 0%;
+  background-color: $main_red;
+  width: $sidebar_width;
+  min-height: calc(100vh - #{$header_height} - 1em);
+  color: $white;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+ul {
+  padding-left: 0;
+  list-style: none;
+}
+
+.md-36 {
+  margin-right: 0.25em;
+  margin-bottom: 0.25em;
+  vertical-align: middle;
+  font-size: 2em;
+}
+
+li {
+  transition: all 0.15s ease-in-out;
+  opacity: 1;
+  border-radius: 0.4em;
+  cursor: pointer;
+  padding: 0.5em 1em;
+}
+
+li:hover {
+  opacity: 0.9;
+  background: rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}

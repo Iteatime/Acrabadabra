@@ -5,7 +5,7 @@ describe('CopyToClipboardDirective', () => {
   let notificationService: NotificationService;
 
   it('should create an instance', () => {
-    notificationService = new NotificationService;
+    notificationService = new NotificationService();
     const directive = new CopyToClipboardDirective(notificationService);
     expect(directive).toBeTruthy();
   });

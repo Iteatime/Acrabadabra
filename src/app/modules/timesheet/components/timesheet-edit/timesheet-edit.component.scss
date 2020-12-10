@@ -1,55 +1,129 @@
-@import "src/app/style/vars";
-@import "src/app/style/mixins";
+@import 'src/app/style/vars';
+@import 'src/app/style/mixins';
+
+.timesheet-form {
+  width: 100%;
+
+  &__block {
+    margin: 20px 0;
+
+    &__title {
+      @include header-form;
+    }
+
+    &__input-wrapper {
+      @include form-input;
+
+      display: flex;
+      flex-wrap: wrap;
+
+      &__item {
+        margin: 0 5px;
+        margin-bottom: 20px;
+        width: calc(100% - 10px);
+
+        @media (min-width: $screen-sm-min) {
+          margin: 0 5px;
+          margin-bottom: 20px;
+          width: calc(50% - 10px);
+        }
+      }
+
+      &__title {
+        @include sub-heading;
+      }
+
+      &__input-wrapper {
+        @include form-input;
+
+        display: flex;
+        flex-wrap: wrap;
+        border-bottom: none;
+        background: $white;
+
+        &:first-of-type {
+          border-top: 1px solid $grey_border_dark;
+        }
+
+        &:last-of-type {
+          border-bottom: 1px solid $grey_border_dark;
+        }
+
+        &__item {
+          margin: 0;
+          width: 100%;
+        }
+      }
+    }
+
+    @media (min-width: $screen-sm-min) {
+      margin: 30px 0;
+    }
+  }
+
+  &__half-block {
+    display: inline-table;
+    width: 100%;
+
+    &__title {
+      @include header-form;
+    }
+
+    &__input-wrapper {
+      @include form-input;
+    }
+
+    @media (min-width: $screen-sm-min) {
+      width: calc(50% - 20px);
+    }
+  }
+}
+
+.optional {
+  padding-left: 5px;
+  font-size: 13px;
+}
+
+#client {
+  @media (min-width: $screen-sm-min) {
+    margin-left: 40px;
+  }
+}
 
 .ng-invalid:not(form) {
-  border-left: 5px solid ;
+  border-left: 5px solid;
 }
 
 .timesheet-edit {
   &__wrapper {
     @include container;
 
-    @media (min-width: $screen-sm-min) {
-      padding: 40px;
-    }
-
-    @media (min-width: $screen-md-min) {
-      margin-top: 30px;
-    }
-
     margin-top: 10px;
+    box-shadow: 0 0 8px rgba($black, 0.2);
     background: $white;
     padding: 20px;
-    box-shadow: 0 0 8px rgba($black, 0.2);
 
     &__title {
-      font-size: 22px;
+      margin-top: 20px;
       color: $grey_mine_shaft;
+      font-size: 22px;
 
       & > h2 {
+        font-size: 20px;
+        font-weight: 700;
+
         @media (min-width: $screen-sm-min) {
           font-size: 28px;
         }
-
-        font-weight: 700;
-        font-size: 20px;
       }
     }
 
     &__form {
-      @media (min-width: $screen-sm-min) {
-        margin-top: 45px;
-      }
-
       display: flex;
       flex-wrap: wrap;
       margin-top: 25px;
 
       &__block {
-        @media (min-width: $screen-sm-min) {
-          width: calc(50% - 20px);
-        }
-
         width: 100%;
 
         &__title {
@@ -67,12 +141,16 @@
         }
 
         &#mission {
+          margin-top: 20px;
+
           @media (min-width: $screen-sm-min) {
             margin-top: 0;
             margin-left: 20px;
           }
+        }
 
-          margin-top: 20px;
+        @media (min-width: $screen-sm-min) {
+          width: calc(50% - 20px);
         }
       }
 
@@ -86,39 +164,40 @@
       }
 
       &__message {
-        min-height: 50px;
-        line-height: 50px;
-        width: 100%;
         border-radius: 5px;
+        width: 100%;
+        min-height: 50px;
         text-align: center;
+        line-height: 50px;
 
         &--success {
           background-color: $green_valid;
         }
 
         &--error {
+          background-color: $red_error;
           color: white;
           font-weight: 700;
-          background-color: $red_error;
         }
       }
 
       &__submit {
+        display: flex;
+        justify-content: space-around;
         margin-top: 40px;
         width: 100%;
-        text-align: center;
 
         &__button {
           @include hoveranim_glow($darker_blue);
 
-          border: none;
           display: inline-block;
+          border: none;
           background: $dark_blue;
-          padding: 0;
           cursor: pointer;
+          padding: 0;
           width: 40%;
-          height: 60px;
           min-width: 220px;
+          height: 60px;
           line-height: 60px;
           color: $white;
           font-size: 20px;
@@ -134,10 +213,6 @@
         width: 100%;
 
         &__item {
-          @media (min-width: $screen-sm-min) {
-            width: calc(100% / 4 - 40px);
-          }
-
           margin: 20px;
           width: calc(100% - 40px);
 
@@ -154,8 +229,8 @@
             &:hover,
             &:focus,
             &:active {
-              color: initial;
               text-decoration: none;
+              color: initial;
 
               span {
                 text-decoration: underline;
@@ -171,8 +246,24 @@
               font-size: 40px;
             }
           }
+
+          @media (min-width: $screen-sm-min) {
+            width: calc(100% / 4 - 40px);
+          }
         }
       }
+
+      @media (min-width: $screen-sm-min) {
+        margin-top: 45px;
+      }
+    }
+
+    @media (min-width: $screen-sm-min) {
+      padding: 40px;
+    }
+
+    @media (min-width: $screen-md-min) {
+      margin-top: 30px;
     }
   }
 }

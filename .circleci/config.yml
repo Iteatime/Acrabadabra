@@ -2,47 +2,89 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
-version: 2
-jobs:
-  test:
+version: 2.1
+executors:
+  node:
     docker:
-      # specify the version you desire here
-      - image: circleci/node:lts-browsers
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
+      - image: circleci/node:10-browsers
     working_directory: ~/repo
-
+jobs:
+  install:
+    executor: node
     steps:
       - checkout
-
-      # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+            - node-dependencies-{{ checksum "yarn.lock" }}
 
-      - run: yarn install
-
-      - run: sudo yarn global add @angular/cli@7
+      - run: sudo apt-get install build-essential
+      - run: yarn install --frozen-lockfile
 
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+          key: node-dependencies-{{ checksum "yarn.lock" }}
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  build:
+    executor: node
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: yarn run config
+      - run: yarn build --progress=false
+  test:
+    executor: node
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: sudo apt-get install libxss1
+      - run: yarn test:ci
+  cypress:
+    executor: node
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - restore_cache:
+          key: cypress
+      - run: sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+      - run: yarn cypress install
+      - save_cache:
+          key: cypress
+          paths:
+          - ../.cache/cypress
+      - run: yarn run config
+      - run: tools/cypress-start-and-test.sh
+      - store_artifacts:
+          path: cypress/screenshots
+      - store_artifacts:
+          path: cypress/videos
+  lint:
+    executor: node
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: yarn lint:ci
 
-      # run tests !
-      - run:
-          name: unit tests
-          command: |
-            set -e
-            yarn ci-validate
 workflows:
-  version: 2
   test:
     jobs:
-      - test
+      - install
+      - build:
+          requires:
+            - install
+      - test:
+          requires:
+            - install
+      - cypress:
+          requires:
+            - install
+      - lint:
+          requires:
+            - install

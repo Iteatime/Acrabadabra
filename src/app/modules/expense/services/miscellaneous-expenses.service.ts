@@ -3,41 +3,40 @@ import { MonetaryService } from 'src/app/shared/services/monetary/monetary.servi
 import { Miscellaneous } from 'src/app/shared/models/miscellaneous.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MiscellaneousExpensesService {
-
   miscellaneousTypes = [
     {
       type: 'Repas',
-      vatDeductible: true
+      vatDeductible: true,
     },
     {
       type: 'Péage',
       vat: this.monetaryService.vatRates.normal,
-      vatDeductible: true
+      vatDeductible: true,
     },
     {
       type: 'Transports',
       vat: this.monetaryService.vatRates.reduced,
-      vatDeductible: false
+      vatDeductible: false,
     },
     {
       type: 'Hébergement',
       vat: this.monetaryService.vatRates.reduced,
-      vatDeductible: false
+      vatDeductible: false,
     },
     {
       type: 'Autres',
-      vatDeductible: true
+      vatDeductible: true,
     },
     {
       type: 'Autres',
-      vatDeductible: false
-    }
-];
+      vatDeductible: false,
+    },
+  ];
 
-  constructor(public monetaryService: MonetaryService) { }
+  constructor(public monetaryService: MonetaryService) {}
 
   vatDeductible(misc: Miscellaneous): boolean {
     return misc.selectedType !== undefined && this.miscellaneousTypes[misc.selectedType].vatDeductible;

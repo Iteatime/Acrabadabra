@@ -7,16 +7,12 @@ import {
   ChangeDetectorRef,
   Output,
   EventEmitter,
-  OnDestroy
+  OnDestroy,
 } from '@angular/core';
-
 import { Subject } from 'rxjs';
-
 import {
-  addHours,
   addMinutes,
   addMonths,
-  differenceInMinutes,
   endOfMonth,
   isSameDay,
   isSameMonth,
@@ -30,34 +26,45 @@ import {
 } from 'date-fns';
 
 import { CalendarEvent, CalendarMonthViewDay, DAYS_OF_WEEK } from 'angular-calendar';
+import { CalendarService } from '../../calendar.service';
+import { TimeUnit } from 'src/app/shared/@types/timeUnit';
 
 @Component({
   selector: 'app-calendar-selector',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './calendar-selector.component.html',
   styleUrls: ['./calendar-selector.component.scss'],
+  // tslint:disable-next-line:use-component-view-encapsulation
   encapsulation: ViewEncapsulation.None,
 })
 export class CalendarSelectorComponent implements OnInit, OnDestroy {
-  @Input() public minifiedTimesheet: any;
-  @Input() public picking: boolean;
-  @Output() public changed = new EventEmitter<boolean>();
-  public timesheet: CalendarEvent[] = [];
-  public refresh: Subject<any> = new Subject();
-  public locale = 'fr';
-  public weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
-  public weekendDays: number[] = [DAYS_OF_WEEK.SATURDAY, DAYS_OF_WEEK.SUNDAY];
-  public viewDate: Date = new Date();
-  public totalWorkedTime = 0;
+  @Input() minifiedTimesheet: any;
+  @Input() picking: boolean;
+  @Output() changed = new EventEmitter<boolean>();
+  timesheet: CalendarEvent[] = [];
+  refresh: Subject<any> = new Subject();
+  locale = 'fr';
+  weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
+  weekendDays: number[] = [DAYS_OF_WEEK.SATURDAY, DAYS_OF_WEEK.SUNDAY];
+  viewDate: Date = new Date();
+  timeUnits: TimeUnit[] = [];
+  selectedTimeUnit: string;
+  totalWorkedTime = 0;
 
-  public constructor(private changeDetector: ChangeDetectorRef) {}
+  constructor(private readonly changeDetector: ChangeDetectorRef, private readonly calendarService: CalendarService) {}
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
+    this.setTimeUnits();
+
     this._initTimesheet();
+
+    this.selectedTimeUnit = this.calendarService.getSelectedTimeUnit(this.timesheet);
+
     this.refresh.subscribe(() => {
       this.changeDetector.detectChanges();
       this.changed.emit();
     });
+
     setTimeout(() => {
       if (!this.refresh.isStopped) {
         this.changeDetector.detectChanges();
@@ -65,26 +72,41 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
     });
   }
 
-  public ngOnDestroy(): void {
+  ngOnDestroy(): void {
     this.refresh.unsubscribe();
   }
 
-  public beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
+  beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
     this.totalWorkedTime = 0;
 
     body.forEach(day => {
       if (!this.picking) {
         day.cssClass = 'cal-disabled';
       }
-      day.events.forEach((event) => {
-        const dayTime = differenceInMinutes(event.end, event.start) / 60 / 8;
-        day.badgeTotal = dayTime;
-        this.totalWorkedTime += dayTime;
+
+      day.events.forEach(event => {
+        const time = this.calendarService.getTimeFromCalendarEvent(event);
+        day.badgeTotal = time;
+        this.totalWorkedTime += time;
       });
     });
   }
 
-  public dayClicked(date: Date): void {
+  getDayWorkedTime(day: any): number {
+    let time = 0;
+    day.events.forEach((event: CalendarEvent) => {
+      time = this.calendarService.getTimeFromCalendarEvent(event);
+    });
+
+    return time;
+  }
+
+  setTimeUnit(unit: string): void {
+    this.selectedTimeUnit = unit;
+    this.emptyDays();
+  }
+
+  dayClicked(date: Date): void {
     if (isSameMonth(date, this.viewDate)) {
       if (!this._isDayWorked(date)) {
         this._addTimesheetDay(date);
@@ -95,19 +117,19 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
     this.refresh.next();
   }
 
-  public nextMonth(): void {
+  nextMonth(): void {
     this.viewDate = addMonths(this.viewDate, 1);
     this.emptyDays();
   }
 
-  public previousMonth(): void {
+  previousMonth(): void {
     this.viewDate = subMonths(this.viewDate, 1);
     this.emptyDays();
   }
 
-  public selectAllBusinessDays(): void {
-    const monthStart = startOfMonth(this.viewDate).getDate(),
-          monthEnd = endOfMonth(this.viewDate).getDate();
+  selectAllBusinessDays(): void {
+    const monthStart = startOfMonth(this.viewDate).getDate();
+    const monthEnd = endOfMonth(this.viewDate).getDate();
 
     for (let date = monthStart; date <= monthEnd; date++) {
       const aDay = setDate(this.viewDate, date);
@@ -119,23 +141,34 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
     this.refresh.next();
   }
 
-  public emptyDays(): void {
+  emptyDays(): void {
     this.timesheet = [];
     this.refresh.next();
   }
 
-  public dayEdited(event: Event, date: Date, time: number): void {
+  dayEdited(event: Event, date: Date, time: number): void {
     event.stopPropagation();
 
-    const day = this._getDayWorkingTime(date),
-          end = addMinutes(day.start, 8 * 60 * time);
+    const day = this._getDayWorkingTime(date);
+    const end = this.calendarService.getNewEndDate(day, time);
 
     if (time !== 0 && end) {
       day.end = end;
     } else {
       this._deleteDay(date);
     }
+
     this.refresh.next();
+  }
+
+  private setTimeUnits(): void {
+    Object.keys(this.calendarService.timeUnits).forEach(key => {
+      const timeUnit: TimeUnit = this.calendarService.timeUnits[key];
+      this.timeUnits.push({
+        label: timeUnit.label,
+        key,
+      });
+    });
   }
 
   private _initTimesheet(): void {
@@ -151,43 +184,42 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
       for (let date = 0; date < daysValue.length; date++) {
         const day = new Date(+year, +month, date + 1);
 
-        if (daysValue[date] !== undefined && daysValue[date] !== 0) {
-          this._addTimesheetDay(day, addMinutes(day, daysValue[date] * 60 * 8));
+        if (daysValue[date].time !== undefined && daysValue[date].time !== 0) {
+          const time = this.calendarService.getTimeFromWorkingEvent(daysValue[date]);
+          this._addTimesheetDay(day, addMinutes(day, time), daysValue[date].unit);
         }
       }
     }
   }
 
   private _getDayWorkingTime(day: Date): CalendarEvent {
-    return this.timesheet.find((currenDay) => {
+    return this.timesheet.find(currenDay => {
       return isSameDay(currenDay.start, day);
     });
   }
 
   private _isDayWorked(day: Date): boolean {
-    return this.timesheet.some((currentDay) => {
+    return this.timesheet.some(currentDay => {
       return isSameDay(currentDay.start, day);
     });
   }
 
-  private _addTimesheetDay(date: Date, end?: Date): void {
+  private _addTimesheetDay(date: Date, end?: Date, timeUnit: string = this.selectedTimeUnit): void {
     date = startOfDay(date);
 
     if (end === undefined) {
-      end = addHours(date, 8);
+      end = addMinutes(date, this.calendarService.timeUnits[timeUnit].timeInMinutes);
     }
 
     this.timesheet.push({
-      title: '',
+      title: timeUnit,
       start: date,
       end: end,
       draggable: false,
     });
   }
 
-  private _deleteDay(day: Date): void  {
-    this.timesheet = this.timesheet.filter(
-      (iEvent) => !isSameDay(day, iEvent.start)
-    );
+  private _deleteDay(day: Date): void {
+    this.timesheet = this.timesheet.filter(iEvent => !isSameDay(day, iEvent.start));
   }
 }

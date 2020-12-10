@@ -1,147 +1,221 @@
 <app-header></app-header>
 <div class="timesheet-edit">
-  <div class="timesheet-edit__wrapper">
-    <div class="timesheet-edit__wrapper__title">
-      <h2>{{ getModeTitle() }} un compte rendu d'activité</h2>
+    <div class="timesheet-edit__wrapper">
+        <div class="timesheet-edit__wrapper__title">
+            <h2>{{ getModeTitle() }} un compte rendu d'activité</h2>
+        </div>
+        <form class="timesheet-edit__wrapper__form" #form="ngForm">
+            <div id="consultant"
+                 class="timesheet-edit__wrapper__form__block">
+                <h4 class="timesheet-edit__wrapper__form__block__title">Consultant</h4>
+                <div class="timesheet-edit__wrapper__form__block__input-wrapper">
+                    <div class="timesheet-edit__wrapper__form__block__input-wrapper__item form-group"
+                         data-role="consultant-block-name">
+                        <label for="consultantNameInput"
+                               class="timesheet-edit__wrapper__form__block__input-wrapper__item__label">
+                            Nom
+                        </label>
+                        <div class="timesheet-edit__wrapper__form__block__input-wrapper__item__input">
+                            <input type="text"
+                                   required
+                                   class="form-control"
+                                   id="consultantNameInput"
+                                   name="consultantNameInput"
+                                   data-role="consultant-input-name"
+                                   [(ngModel)]="timesheetService.timesheet.consultant.name"
+                                   #consultantNameInput="ngModel" />
+                            <div *ngIf="consultantNameInput.invalid && (consultantNameInput.dirty || consultantNameInput.touched)"
+                                 class="alert alert-danger">
+                                <div *ngIf="consultantNameInput.errors['required']">
+                                    Ce champ est obligatoire
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timesheet-edit__wrapper__form__block__input-wrapper__item form-group"
+                         data-role="consultant-block-email">
+                        <label for="consultantEmailInput"
+                               class="timesheet-edit__wrapper__form__block__input-wrapper__item__label">
+                            Email
+                        </label>
+                        <div class="timesheet-edit__wrapper__form__block__input-wrapper__item__input">
+                            <input type="email"
+                                   required
+                                   email
+                                   class="form-control"
+                                   id="consultantEmailInput"
+                                   name="consultantEmailInput"
+                                   data-role="consultant-input-email"
+                                   [(ngModel)]="timesheetService.timesheet.consultant.email"
+                                   #consultantEmailInput="ngModel" />
+                            <div *ngIf="consultantEmailInput.invalid && (consultantEmailInput.dirty || consultantEmailInput.touched)"
+                                 class="alert alert-danger">
+                                <div *ngIf="consultantEmailInput.errors['required']">
+                                    Ce champ est obligatoire
+                                </div>
+                                <div *ngIf="consultantEmailInput.errors['email']">
+                                    Adresse mail non valide
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="mission" class="timesheet-edit__wrapper__form__block">
+                <h4 class="timesheet-edit__wrapper__form__block__title">Mission</h4>
+                <div class="timesheet-edit__wrapper__form__block__input-wrapper">
+                    <div class="timesheet-edit__wrapper__form__block__input-wrapper__item form-group"
+                         data-role="mission-block-title">
+                        <label for="missionTitleInput"
+                               class="timesheet-edit__wrapper__form__block__input-wrapper__item__label">
+                            Intitulé
+                        </label>
+                        <div class="timesheet-edit__wrapper__form__block__input-wrapper__item__input">
+                            <input type="text"
+                                   required
+                                   class="form-control"
+                                   id="missionTitleInput"
+                                   name="missionTitleInput"
+                                   data-role="mission-input-title"
+                                   [(ngModel)]="timesheetService.timesheet.mission.title" #missionTitleInput="ngModel" />
+                            <div *ngIf="missionTitleInput.invalid && (missionTitleInput.dirty || missionTitleInput.touched)"
+                                 class="alert alert-danger">
+                                <div *ngIf="missionTitleInput.errors['required']">
+                                    Ce champ est obligatoire
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timesheet-edit__wrapper__form__block__input-wrapper__item form-group"
+                         data-role="mission-block-final-client">
+                        <label for="missionFinalClient"
+                               class="timesheet-edit__wrapper__form__block__input-wrapper__item__label">
+                            Client final
+                        </label>
+                        <div class="timesheet-edit__wrapper__form__block__input-wrapper__item__input">
+                            <input type="text"
+                                   required
+                                   class="form-control"
+                                   id="missionFinalClientInput"
+                                   name="missionFinalClientInput"
+                                   data-role="mission-input-final-client"
+                                   [(ngModel)]="timesheetService.timesheet.mission.client"
+                                   #missionFinalClientInput="ngModel" />
+                            <div *ngIf="missionFinalClientInput.invalid && (missionFinalClientInput.dirty || missionFinalClientInput.touched)"
+                                 class="alert alert-danger">
+                                <div *ngIf="missionFinalClientInput.errors['required']">
+                                    Ce champ est obligatoire
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="timesheet-edit__wrapper__form__component">
+                <h4 class="timesheet-edit__wrapper__form__component__title">Détail de l'intervention</h4>
+                <app-calendar-selector
+                    [minifiedTimesheet]="timesheetService.timesheet.workingDays"
+                    [picking]="true"
+                    (changed)="onUserInput()">
+                </app-calendar-selector>
+            </div>
+            <div class="timesheet-edit__wrapper__form__component">
+                <label class="timesheet-edit__wrapper__form__component__toggle">
+                    <input name="commutesToggle"
+                           data-role="checkbox-fees"
+                           type="checkbox"
+                           [(ngModel)]="generateExpenses"
+                           #commutesToggle />
+                    Ajouter des frais
+                </label>
+                <app-expense-mileage-form
+                    *ngIf="generateExpenses"
+                    [commutes]="timesheetService.timesheet.commutes"
+                    (changed)="onUserInput()">
+                </app-expense-mileage-form>
+                <app-expense-miscellaneous-form
+                    *ngIf="generateExpenses"
+                    [miscellaneous]="timesheetService.timesheet.miscellaneous"
+                    (changed)="onUserInput()">
+                </app-expense-miscellaneous-form>
+                <app-expense-flat-fee-form
+                    *ngIf="generateExpenses"
+                    [flatFees]="timesheetService.timesheet.flatFees"
+                    (changed)="onUserInput()"
+                ></app-expense-flat-fee-form>
+            </div>
+
+            <div class="timesheet-edit__wrapper__form__component">
+                <label class="timesheet-edit__wrapper__form__component__toggle">
+                    <input name="invoiceToggle"
+                           data-role="checkbox-invoice"
+                           type="checkbox"
+                           [(ngModel)]="generateInvoice"
+                           #invoiceToggle />
+                    Générer une facture
+                </label>
+                <app-invoice-form
+                    *ngIf="generateInvoice"
+                    [invoice]="timesheetService.timesheet.invoice"
+                    [mission]="timesheetService.timesheet.mission"
+                    (changed)="onUserInput()">
+                </app-invoice-form>
+            </div>
+
+            <div class="timesheet-edit__wrapper__form__submit">
+                <button data-text="Valider mon CRA"
+                        class="timesheet-edit__wrapper__form__submit__button"
+                        data-role="button-validate"
+                        (click)="onSubmit()">
+                    <span>Valider mon CRA</span>
+                </button>
+                <button *ngIf="this.auth.isAuthenticated"
+                        data-text="Retour"
+                        class="timesheet-edit__wrapper__form__submit__button"
+                        data-role="button-dashboard"
+                        [routerLink]="['/dashboard']">
+                    <span>Retour</span>
+                </button>
+            </div>
+
+            <div *ngIf="showLinks"
+                 id="action-links"
+                 class="timesheet-edit__wrapper__form__icons">
+                <div *ngIf="generateInvoice"
+                     class="timesheet-edit__wrapper__form__icons__item">
+                    <a target="_self"
+                       [href]="timesheetService.getInvoiceLink()">
+                        <i class="material-icons">cloud_download</i>
+                        <span>Télécharger la facture</span>
+                    </a>
+                </div>
+                <div class="timesheet-edit__wrapper__form__icons__item">
+                    <a href="#"
+                       [mailto]
+                       [mailContent]="reviewMail">
+                        <i class="material-icons">email</i>
+                        <span>Envoyer le CRA par mail</span>
+                    </a>
+                </div>
+                <div class="timesheet-edit__wrapper__form__icons__item">
+                    <a href="#"
+                       [copyToClipboard]="editShortUrl"
+                       [copyToClipboardMessage]="'Lien de modification copié'"
+                       [copyToClipboardMessageParent]="editLink.parentNode" #editLink>
+                        <i class="material-icons">edit</i>
+                        <span>Copier le lien de modification</span>
+                    </a>
+                </div>
+                <div class="timesheet-edit__wrapper__form__icons__item">
+                    <a href="#"
+                       [copyToClipboard]="reviewShortUrl"
+                       [copyToClipboardMessage]="'Lien de partage copié'"
+                       [copyToClipboardMessageParent]="shareLink.parentNode" #shareLink>
+                        <i class="material-icons">remove_red_eye</i>
+                        <span>Copier le lien de partage</span>
+                    </a>
+                </div>
+            </div>
+        </form>
     </div>
-
-    <form class="timesheet-edit__wrapper__form" #form="ngForm">
-      <div id="consultant" class="timesheet-edit__wrapper__form__block">
-        <h4 class="timesheet-edit__wrapper__form__block__title">Consultant</h4>
-        <div class="timesheet-edit__wrapper__form__block__input-wrapper">
-          <div class="timesheet-edit__wrapper__form__block__input-wrapper__item form-group">
-            <label for="consultantNameInput"
-              class="timesheet-edit__wrapper__form__block__input-wrapper__item__label">Nom</label>
-            <div class="timesheet-edit__wrapper__form__block__input-wrapper__item__input">
-              <input type="text" required class="form-control" name="consultantNameInput"
-                [(ngModel)]="timesheetService.timesheet.consultant.name" #consultantNameInput="ngModel">
-              <div *ngIf="consultantNameInput.invalid && (consultantNameInput.dirty || consultantNameInput.touched)"
-                class="alert alert-danger">
-                <div *ngIf="consultantNameInput.errors['required']">
-                  Ce champ est obligatoire
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="timesheet-edit__wrapper__form__block__input-wrapper__item form-group">
-            <label for="consultantEmailInput"
-              class="timesheet-edit__wrapper__form__block__input-wrapper__item__label">Email</label>
-            <div class="timesheet-edit__wrapper__form__block__input-wrapper__item__input">
-              <input type="email" required email class="form-control" name="consultantEmailInput"
-                [(ngModel)]="timesheetService.timesheet.consultant.email" #consultantEmailInput="ngModel">
-              <div *ngIf="consultantEmailInput.invalid && (consultantEmailInput.dirty || consultantEmailInput.touched)"
-                class="alert alert-danger">
-                <div *ngIf="consultantEmailInput.errors['required']">
-                  Ce champ est obligatoire
-                </div>
-                <div *ngIf="consultantEmailInput.errors['email']">
-                  Adresse mail non valide
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="mission" class="timesheet-edit__wrapper__form__block">
-        <h4 class="timesheet-edit__wrapper__form__block__title">Mission</h4>
-        <div class="timesheet-edit__wrapper__form__block__input-wrapper">
-          <div class="timesheet-edit__wrapper__form__block__input-wrapper__item form-group">
-            <label for="missionTitleInput"
-              class="timesheet-edit__wrapper__form__block__input-wrapper__item__label">Intitulé</label>
-            <div class="timesheet-edit__wrapper__form__block__input-wrapper__item__input">
-              <input type="text" required class="form-control" name="missionTitleInput"
-                [(ngModel)]="timesheetService.timesheet.mission.title" #missionTitleInput="ngModel">
-              <div *ngIf="missionTitleInput.invalid && (missionTitleInput.dirty || missionTitleInput.touched)"
-                class="alert alert-danger">
-                <div *ngIf="missionTitleInput.errors['required']">
-                  Ce champ est obligatoire
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="timesheet-edit__wrapper__form__block__input-wrapper__item form-group">
-            <label for="missionFinalClient" class="timesheet-edit__wrapper__form__block__input-wrapper__item__label">Client
-              final</label>
-            <div class="timesheet-edit__wrapper__form__block__input-wrapper__item__input">
-              <input type="text" required class="form-control" name="missionFinalClientInput"
-                [(ngModel)]="timesheetService.timesheet.mission.client" #missionFinalClientInput="ngModel">
-              <div
-                *ngIf="missionFinalClientInput.invalid && (missionFinalClientInput.dirty || missionFinalClientInput.touched)"
-                class="alert alert-danger">
-                <div *ngIf="missionFinalClientInput.errors['required']">
-                  Ce champ est obligatoire
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="timesheet-edit__wrapper__form__component">
-        <h4 class="timesheet-edit__wrapper__form__component__title">Journées d'intervention</h4>
-        <app-calendar-selector [minifiedTimesheet]="timesheetService.timesheet.workingDays" [picking]="true"
-          (changed)="onUserInput()">
-        </app-calendar-selector>
-      </div>
-
-      <div class="timesheet-edit__wrapper__form__component">
-        <label class="timesheet-edit__wrapper__form__component__toggle">
-          <input name="commutesToggle" type="checkbox" [(ngModel)]="generateExpenses" #commutesToggle>
-          Ajouter des frais
-        </label>
-        <app-expense-mileage-form *ngIf="generateExpenses" [commutes]="timesheetService.timesheet.commutes"
-          (changed)="onUserInput()"></app-expense-mileage-form>
-        <app-expense-miscellaneous-form *ngIf="generateExpenses" [miscellaneous]="timesheetService.timesheet.miscellaneous"
-        (changed)="onUserInput()"></app-expense-miscellaneous-form>
-        <app-expense-flat-fee-form *ngIf="generateExpenses" [flatFees]="timesheetService.timesheet.flatFees"
-        (changed)="onUserInput()"></app-expense-flat-fee-form>
-      </div>
-
-      <div class="timesheet-edit__wrapper__form__component">
-        <label class="timesheet-edit__wrapper__form__component__toggle">
-          <input name="invoiceToggle" type="checkbox" [(ngModel)]="generateInvoice" #invoiceToggle>
-          Générer une facture
-        </label>
-        <app-invoice-form *ngIf="generateInvoice" [invoice]="timesheetService.timesheet.invoice"
-          (changed)="onUserInput()"></app-invoice-form>
-      </div>
-
-      <div class="timesheet-edit__wrapper__form__submit">
-        <button data-text="Valider mon CRA" class="timesheet-edit__wrapper__form__submit__button" (click)="onSubmit()">
-          <span>Valider mon CRA</span>
-        </button>
-      </div>
-
-      <div *ngIf="showLinks" id="action-links" class="timesheet-edit__wrapper__form__icons">
-        <div *ngIf="generateInvoice" class="timesheet-edit__wrapper__form__icons__item">
-          <a target="_self" [href]="timesheetService.getInvoiceLink()">
-            <i class="material-icons">cloud_download</i>
-            <span>Télécharger la facture</span>
-          </a>
-        </div>
-        <div class="timesheet-edit__wrapper__form__icons__item">
-          <a href="#" [mailto] [mailContent]="reviewMail">
-            <i class="material-icons">email</i>
-            <span>Envoyer le CRA par mail</span>
-          </a>
-        </div>
-        <div class="timesheet-edit__wrapper__form__icons__item">
-          <a href="#" [copyToClipboard]="editShortUrl"
-            [copyToClipboardMessage]="'Lien de modification copié'" [copyToClipboardMessageParent]="editLink.parentNode" #editLink>
-            <i class="material-icons">edit</i>
-            <span>Copier le lien de modification</span>
-          </a>
-        </div>
-        <div class="timesheet-edit__wrapper__form__icons__item">
-          <a href="#" [copyToClipboard]="reviewShortUrl"
-            [copyToClipboardMessage]="'Lien de partage copié'" [copyToClipboardMessageParent]="shareLink.parentNode" #shareLink>
-            <i class="material-icons">remove_red_eye</i>
-            <span>Copier le lien de partage</span>
-          </a>
-        </div>
-      </div>
-    </form>
-  </div>
 </div>

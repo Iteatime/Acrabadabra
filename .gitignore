@@ -24,6 +24,7 @@
 /.sass-cache
 /connect.lock
 /coverage
+/scripts/coverage
 /libpeerconnection.log
 npm-debug.log
 yarn-error.log
@@ -34,3 +35,12 @@ src/environments/environment.*.ts
 # System Files
 .DS_Store
 Thumbs.db
+
+/functions/*.js
+.env
+
+# Cypress
+/cypress/fixtures/.local-storage-backup
+/cypress/screenshots
+/cypress/videos
+/.stylelintcache

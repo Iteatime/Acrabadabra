@@ -1,29 +1,20 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MonetaryService } from 'src/app/shared/services/monetary/monetary.service';
 import { TimesheetService } from 'src/app/modules/timesheet/services/timesheet.service';
-import { Commute } from 'src/app/shared/models/commute';
+import { AbstractExpenseTable } from '../abstract-expense-table';
+import { Commute } from '@model/commute';
 
 @Component({
   selector: 'app-expense-mileage-table',
   templateUrl: './expense-mileage-table.component.html',
-  styleUrls: ['./expense-mileage-table.component.scss']
+  styleUrls: ['./expense-mileage-table.component.scss'],
 })
-export class ExpenseMileageTableComponent implements OnInit {
-
-  @Output() changed: EventEmitter<boolean> = new EventEmitter();
-  @Input() hideDeleteButton = false;
-
+export class ExpenseMileageTableComponent extends AbstractExpenseTable implements OnInit {
   commutes: Commute[];
 
-  public local = 'fr';
-  public currencyCode: string;
-
-  constructor(public timesheetService: TimesheetService,
-              private _monetaryService: MonetaryService
-    ) {
-      this.currencyCode = this._monetaryService.currencyCode;
-
-    }
+  constructor(public timesheetService: TimesheetService, readonly _monetaryService: MonetaryService) {
+    super(_monetaryService);
+  }
 
   ngOnInit() {
     this.commutes = this.timesheetService.timesheet.commutes;

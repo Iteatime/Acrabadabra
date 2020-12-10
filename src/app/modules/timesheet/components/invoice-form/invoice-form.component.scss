@@ -1,14 +1,11 @@
-@import "src/app/style/vars";
-@import "src/app/style/mixins";
+@import 'src/app/style/vars';
+@import 'src/app/style/mixins';
 
 .invoice-form {
   width: 100%;
 
   &__block {
-    @media (min-width: $screen-sm-min) {
-      margin: 30px 0px;
-    }
-    margin: 20px 0px;
+    margin: 20px 0;
 
     &__title {
       @include header-form;
@@ -16,22 +13,21 @@
 
     &__input-wrapper {
       @include form-input;
+
       display: flex;
       flex-wrap: wrap;
 
       &__item {
+        margin: 0 5px;
+        width: calc(100% - 10px);
+
         @media (min-width: $screen-sm-min) {
+          margin: 0 5px;
           width: calc(50% - 10px);
-          margin: 0 5px;
         }
-          width: calc(100% - 10px);
-          margin: 0 5px;
       }
 
       &__sub-block {
-        @media (min-width: $screen-sm-min) {
-          margin-bottom: 30px;
-        }
         margin-bottom: 20px;
         width: 100%;
 
@@ -41,10 +37,11 @@
 
         &__input-wrapper {
           @include form-input;
+
           display: flex;
           flex-wrap: wrap;
-          background: $white;
           border-bottom: none;
+          background: $white;
 
           &:first-of-type {
             border-top: 1px solid $grey_border_dark;
@@ -55,22 +52,26 @@
           }
 
           &__item {
+            margin: 0;
             width: 100%;
-            margin: 0px;
           }
         }
+
+        @media (min-width: $screen-sm-min) {
+          margin-bottom: 30px;
+        }
       }
+    }
+
+    @media (min-width: $screen-sm-min) {
+      margin: 30px 0;
     }
   }
 
   &__half-block {
-    @media (min-width: $screen-sm-min) {
-      width: calc(50% - 20px);
-    }
-
     display: inline-table;
-    width: 100%;
     margin-bottom: 20px;
+    width: 100%;
 
     &__title {
       @include header-form;
@@ -91,14 +92,18 @@
         }
       }
     }
+
+    @media (min-width: $screen-sm-min) {
+      width: calc(50% - 20px);
+    }
   }
 }
 
-input[name="invoiceClientVATNumberInput"] {
+input[name='invoiceClientVATNumberInput'] {
   margin-bottom: 32px;
 }
 
-.optional{
+.optional {
   padding-left: 5px;
   font-size: 13px;
 }

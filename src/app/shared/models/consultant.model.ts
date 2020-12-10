@@ -5,7 +5,5 @@ export class Consultant {
   constructor(consultantEmail: string, consultantName: string) {
     this.email = consultantEmail;
     this.name = consultantName;
-
   }
-
 }

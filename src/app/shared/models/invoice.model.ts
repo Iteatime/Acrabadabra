@@ -5,7 +5,7 @@ export class Invoice {
   number: string;
   date: string;
   clientRef: string;
-  dailyRate: number;
+  workedRate: number;
   provider: Company;
   client: Company;
 
@@ -22,7 +22,7 @@ export class Invoice {
     number?: string,
     date?: string,
     clientRef?: string,
-    dailyRate?: number,
+    workedRate?: number,
     provider?: Company,
     client?: Company,
 
@@ -38,7 +38,7 @@ export class Invoice {
     this.number = number || null;
     this.date = date || '';
     this.clientRef = clientRef || '';
-    this.dailyRate = dailyRate || null;
+    this.workedRate = workedRate || null;
     this.provider = provider || new Company();
     this.client = client || new Company();
 
@@ -53,10 +53,12 @@ export class Invoice {
   }
 
   isBankingDetails(): boolean {
-    return  !_.isEmpty(this.bankAccountHolder) ||
-            !_.isEmpty(this.bankingAgency) ||
-            !_.isEmpty(this.bankingDomiciliation) ||
-            !_.isEmpty(this.bankIBAN) ||
-            !_.isEmpty(this.bankSWIFT);
+    return (
+      !_.isEmpty(this.bankAccountHolder) ||
+      !_.isEmpty(this.bankingAgency) ||
+      !_.isEmpty(this.bankingDomiciliation) ||
+      !_.isEmpty(this.bankIBAN) ||
+      !_.isEmpty(this.bankSWIFT)
+    );
   }
 }

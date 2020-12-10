@@ -1,0 +1,158 @@
+@import 'src/app/style/vars';
+@import 'src/app/style/mixins';
+
+i:hover {
+  cursor: pointer;
+}
+
+.missions-list {
+  position: relative;
+  margin-top: 10px;
+  margin-left: $sidebar-width;
+  width: calc(100vw - #{$sidebar-width});
+  border-collapse: collapse;
+  text-align: center;
+
+  &__wrapper {
+    @include container;
+
+    margin-top: 10px;
+    box-shadow: 0 0 8px rgba($black, 0.2);
+    background: $white;
+    padding: 20px;
+
+    &__title {
+      margin-top: 20px;
+      color: $grey_mine_shaft;
+      font-size: 22px;
+
+      & > h2 {
+        font-size: 20px;
+        font-weight: 700;
+
+        @media (min-width: $screen-sm-min) {
+          font-size: 28px;
+        }
+      }
+    }
+
+    @media (min-width: $screen-sm-min) {
+      padding: 40px;
+    }
+
+    @media (min-width: $screen-md-min) {
+      margin-top: 30px;
+    }
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+
+    &__header {
+      background-color: $dark_blue;
+      height: 42.5px;
+      color: white;
+
+      &__item {
+        border: 1px solid $grey_border_dark;
+        padding: 6px;
+        width: auto;
+        color: white;
+      }
+    }
+
+    &__body {
+      &__item {
+        border: 1px solid $grey_border_dark;
+        padding: 6px;
+
+        &:empty:not(.keep-border) {
+          border: 0;
+        }
+
+        &:last-of-type {
+          font-weight: bold;
+        }
+
+        &.trashCan {
+          width: 60px;
+        }
+      }
+
+      & > tr {
+        &:nth-of-type(odd) {
+          background-color: $grey_border;
+        }
+      }
+    }
+
+    &__alert {
+      margin-top: 20px;
+      color: red;
+      font-weight: bold;
+    }
+
+    @media (min-width: $screen_sm_min) {
+      .left-text {
+        padding-left: 15px !important;
+        text-align: left;
+      }
+    }
+
+    @media only screen and (max-width: 599px), (min-device-width: 350px) and (max-device-width: 599px) {
+      table,
+      thead,
+      tbody,
+      th,
+      td,
+      tr {
+        display: block;
+        empty-cells: show;
+      }
+
+      thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+      }
+
+      tr {
+        border: 1px solid #ccc;
+      }
+
+      td {
+        position: relative;
+        border: none;
+        border-bottom: 1px solid #eee;
+        padding-left: 50%;
+      }
+
+      td:before {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        padding-right: 10px;
+        width: 45%;
+        white-space: nowrap;
+      }
+
+      td:nth-of-type(1):before {
+        content: attr(data-text);
+      }
+      td:nth-of-type(2):before {
+        content: attr(data-text);
+      }
+      td:nth-of-type(3):before {
+        content: attr(data-text);
+      }
+      td:nth-of-type(4):before {
+        content: attr(data-text);
+      }
+      td:nth-of-type(5):before {
+        content: attr(data-text);
+      }
+    }
+  }
+}

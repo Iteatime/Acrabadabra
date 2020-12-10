@@ -3,17 +3,19 @@ import { Title } from '@angular/platform-browser';
 import { Params, ActivatedRoute } from '@angular/router';
 
 import { Timesheet } from 'src/app/shared/models/timesheet.model';
-import { Commute } from '../../../../shared/models/commute';
+import { Commute } from '@model/commute';
 
 import { CalendarService } from 'src/app/modules/calendar/calendar.service';
 import { TimesheetService } from '../../services/timesheet.service';
 import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
+import { WorkingEvent } from 'src/app/shared/@types/workingEvent';
 
 @Component({
   selector: 'app-review',
   templateUrl: './timesheet-review.component.html',
   styleUrls: ['./timesheet-review.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  // tslint:disable-next-line:use-component-view-encapsulation
+  encapsulation: ViewEncapsulation.None,
 })
 export class TimesheetReviewComponent implements OnInit {
   timesheet = new Timesheet();
@@ -21,7 +23,7 @@ export class TimesheetReviewComponent implements OnInit {
   invoiceLink: string;
   date: Date;
   locale = 'fr';
-  workingTime: number;
+  workedTime: WorkingEvent[];
   commutes: Commute[];
   showAllowanceTable = false;
   showMiscellaneousTable = false;
@@ -29,18 +31,18 @@ export class TimesheetReviewComponent implements OnInit {
 
   constructor(
     public auth: AuthenticationService,
-    private calendarManager: CalendarService,
-    private route: ActivatedRoute,
-    private timesheetService: TimesheetService,
-    private titleService: Title
-  ) { }
+    public calendarService: CalendarService,
+    private readonly route: ActivatedRoute,
+    private readonly timesheetService: TimesheetService,
+    private readonly titleService: Title,
+  ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       if (this.timesheetService.openTimesheet(params['data'], 'review')) {
         this.timesheet = this.timesheetService.timesheet;
-        this.date = this.calendarManager.getDate(this.timesheet);
-        this.workingTime = this.calendarManager.getWorkedTime(this.timesheet);
+        this.date = this.calendarService.getDate(this.timesheet);
+        this.workedTime = this.calendarService.getWorkedTime(this.timesheet);
         this.transferToken = this.timesheetService.getTransferToken();
         this.generateInvoice = false;
 
@@ -50,9 +52,6 @@ export class TimesheetReviewComponent implements OnInit {
         }
       }
     });
-
-    this.titleService.setTitle('Acradababra - Consulter un compte rendu d\'activité');
-
+    this.titleService.setTitle("Acradababra - Consulter un compte rendu d'activité");
   }
-
 }

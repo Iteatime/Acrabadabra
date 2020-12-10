@@ -2,15 +2,26 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "downlevelIteration": true,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
+    "inlineSourceMap": true,
     "declaration": false,
-    "module": "es2015",
+    "module": "esnext",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es5",
+    "paths": {
+      "@model/*": ["src/app/shared/models/*"],
+      "@services/*": ["src/app/shared/services/*"],
+      "@directives/*": ["src/app/shared/directives/*"]
+    },
+    "target": "es2015",
+    "types": [
+      "node"
+    ],
     "typeRoots": [
+      "@types",
       "node_modules/@types"
     ],
     "lib": [

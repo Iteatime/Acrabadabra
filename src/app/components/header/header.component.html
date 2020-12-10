@@ -1,17 +1,19 @@
 <div class="header">
-  <div class="header__container">
-    <a title="Retour à l'accueil" [routerLink]="['']">
-      <img class="header__container__logo" src="assets/images/logo.white.svg" alt="logo acrabadabra"
-        (error)="$event.target.removeAttribute('onerror'); $event.target.src = 'assets/images/logo.white.png';">
-    </a>
-    <div class="header__container__user" (click)="auth.widget.open()">
-        <div *ngIf="auth.isAuthenticated; else providerBtn">
-          <i  class="header__container__user__icon material-icons">account_circle</i>
-          {{ auth.username }}
+    <div class="header__container">
+        <a title="Retour à l'accueil" [routerLink]="['/']">
+            <img class="header__container__logo"
+                 src="assets/images/logo.white.svg"
+                 alt="logo acrabadabra"
+                 (error)="$event.target.removeAttribute('onerror'); $event.target.src = 'assets/images/logo.white.png';">
+        </a>
+        <div class="header__container__user" (click)="auth.widget.open()">
+            <div *ngIf="auth.isAuthenticated; else providerBtn">
+                <i class="header__container__user__icon material-icons">account_circle</i>
+                {{ auth.username }}
+            </div>
+            <ng-template #providerBtn>
+                Se connecter
+            </ng-template>
         </div>
-      <ng-template #providerBtn>
-        Se connecter
-      </ng-template>
     </div>
-  </div>
 </div>

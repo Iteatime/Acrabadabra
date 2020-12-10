@@ -1,10 +1,10 @@
-import { Company } from '../models/company.model';
+import { Company } from '../models';
 
 export interface Invoice {
   number: string;
   date: string;
   clientRef: string;
-  dailyRate: number;
+  workedRate: number;
   provider: Company;
   client: Company;
 

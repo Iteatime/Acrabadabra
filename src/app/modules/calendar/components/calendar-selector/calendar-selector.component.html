@@ -1,74 +1,128 @@
 <div class="calendar">
-  <div
-  *ngIf="picking"
-  class="calendar__header"
-  >
-    <div class="calendar__header__daycount">
-      <span>Nombre total de journées :&nbsp;</span><span class="highlight">{{ totalWorkedTime.toLocaleString(locale) }}</span>
-    </div>
-    <div class="calendar__header__month-choice">
-      <div class="calendar__header__month-choice__btn" [ngClass]="picking ? '' : 'disabled-element'" (click)="previousMonth()" >
-        &#60;
-      </div>
-      <div class="calendar__header__month-choice__detail">
-        {{ viewDate.toLocaleString(locale, { month: 'long', year: 'numeric' }) }}
-      </div>
-      <div class="calendar__header__month-choice__btn" [ngClass]="picking ? '' : 'disabled-element'" (click)="nextMonth()" >
-        &#62;
-      </div>
-    </div>
-  </div>
-
-  <div class="calendar__content">
-    <div class="calendar__content__tools">
-        <ng-container *ngIf="totalWorkedTime === 0; then thenTemplate; else elseTemplate"></ng-container>
-        <ng-template #thenTemplate>
-          <div class="calendar__content__tools__selectall" [ngClass]="picking ? '' : 'disabled-element'" (click)="selectAllBusinessDays()">
-            Sélectionner les jours ouvrés
-          </div>
-        </ng-template>
-        <ng-template #elseTemplate>
-          <div class="calendar__content__tools__selectall" [ngClass]="picking ? '' : 'disabled-element'" (click)="emptyDays()">
-            Désélectionner tout
-          </div>
-        </ng-template>
-    </div>
-
-    <div class="calendar__content__dayselect">
-      <ng-template #customCellTemplate let-day="day" let-locale="locale">
-        <div class="calendar__content__dayselect__dayitem">
-          <div class="calendar__content__dayselect__dayitem__cell">
-            <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
-            <div class="calendar__content__dayselect__dayitem__cell__changer" *ngIf="day.badgeTotal > 0">
-              <div class="calendar__content__dayselect__dayitem__cell__changer__options">
-                <span class="calendar__content__dayselect__dayitem__cell__changer__options__item cal-day-badge-selector"  (click)="dayEdited($event, day.date, 0)">
-                  0
-                </span>
-                <span class="calendar__content__dayselect__dayitem__cell__changer__options__item cal-day-badge-selector" [ngClass]="{'selected': day.badgeTotal === 0.5}" (click)="dayEdited($event, day.date, 0.5)">
-                  0,5
-                </span>
-                <span class="calendar__content__dayselect__dayitem__cell__changer__options__item cal-day-badge-selector" [ngClass]="{'selected': day.badgeTotal === 1}" (click)="dayEdited($event, day.date, 1)">
-                  1
-                </span>
-              </div>
-              <span class="calendar__content__dayselect__dayitem__cell__changer__maintext">
-                {{ day.badgeTotal.toLocaleString(locale) }}<span> jour</span>
-              </span>
-            </div>
-          </div>
+    <div *ngIf="picking" class="calendar__header">
+        <div class="calendar__header__daycount">
+            <span>Nombre d'unités d'oeuvre :&nbsp;</span>
+            <span class="highlight" data-role="unit-count">{{ totalWorkedTime.toLocaleString(locale) }}</span>
         </div>
-      </ng-template>
-      <mwl-calendar-month-view
-        [viewDate]="viewDate"
-        [events]="timesheet"
-        [refresh]="refresh"
-        [locale]="locale"
-        [weekStartsOn]="weekStartsOn"
-        [weekendDays]="weekendDays"
-        [cellTemplate]="customCellTemplate"
-        (dayClicked)="dayClicked($event.day.date)"
-        (beforeViewRender)="beforeMonthViewRender($event)">
-      </mwl-calendar-month-view>
+        <div class="calendar__header__time-unit">
+            <label class="calendar__header__time-unit__label">Type d'unité d'oeuvre :</label>
+            <select class="calendar__header__time-unit__input form-control"
+                    name="timeUnitSelector"
+                    id="timeUnitSelector"
+                    (change)="setTimeUnit($event.target.value)">
+                <option *ngFor="let unit of timeUnits" [value]="unit.key"
+                        [selected]="unit.key === this.selectedTimeUnit">{{ unit.label }}</option>
+            </select>
+        </div>
+        <div *ngIf="picking" class="calendar__header__month-choice">
+            <div class="calendar__header__month-choice__btn" (click)="previousMonth()">
+                &#60;
+            </div>
+            <div class="calendar__header__month-choice__detail">
+                {{ viewDate.toLocaleString(locale, {month: 'long', year: 'numeric'}) }}
+            </div>
+            <div class="calendar__header__month-choice__btn" (click)="nextMonth()">
+                &#62;
+            </div>
+        </div>
     </div>
-  </div>
+
+    <div class="calendar__content">
+        <div *ngIf="picking" class="calendar__content__tools">
+            <div *ngIf="picking && selectedTimeUnit === 'days'">
+                <ng-container *ngIf="totalWorkedTime === 0; then thenTemplate; else elseTemplate"></ng-container>
+                <ng-template #thenTemplate>
+                    <div class="calendar__content__tools__selectall"
+                         data-role="button-select-open-days"
+                         (click)="selectAllBusinessDays()">
+                        Sélectionner les jours ouvrés
+                    </div>
+                </ng-template>
+                <ng-template #elseTemplate>
+                    <div class="calendar__content__tools__selectall"
+                         data-role="button-unselect-open-days"
+                         (click)="emptyDays()">
+                        Désélectionner tout
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+
+        <div class="calendar__content__dayselect">
+            <ng-template #customCellTemplate let-day="day" let-locale="locale">
+                <div class="calendar__content__dayselect__dayitem"
+                     attr.data-role="calendar-{{day.inMonth}}-{{day.date|date:'dd'}}">
+                    <div class="calendar__content__dayselect__dayitem__cell">
+                        <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+                        <div class="calendar__content__dayselect__dayitem__cell__changer" *ngIf="day.badgeTotal > 0">
+                            <ng-container [ngSwitch]="day.events[0].title">
+                                <ng-container *ngSwitchCase="'hours'">
+                                    <div class="calendar__content__dayselect__dayitem__cell__changer__options">
+                                        <button
+                                            class="calendar__content__dayselect__dayitem__cell__changer__options__item cal-day-badge-selector"
+                                            (click)="dayEdited($event, day.date, getDayWorkedTime(day) - 1)">
+                                            -
+                                        </button>
+                                        <span
+                                            class="calendar__content__dayselect__dayitem__cell__changer__options__item cal-day-badge-selector"
+                                            (click)="dayEdited($event, day.date, getDayWorkedTime(day))">
+                                            {{ getDayWorkedTime(day) }}
+                                        </span>
+                                        <button
+                                            class="calendar__content__dayselect__dayitem__cell__changer__options__item cal-day-badge-selector"
+                                            [ngClass]="{'disabled': getDayWorkedTime(day) + 1 > 24}"
+                                            (click)="getDayWorkedTime(day) + 1 > 24 ? dayEdited($event, day.date, getDayWorkedTime(day)) : dayEdited($event, day.date, getDayWorkedTime(day) + 1)">
+                                            +
+                                        </button>
+                                    </div>
+                                    <span class="calendar__content__dayselect__dayitem__cell__changer__maintext">
+                                        {{ getDayWorkedTime(day) }}h
+                                    </span>
+                                </ng-container>
+                                <ng-container *ngSwitchDefault>
+                                    <div class="calendar__content__dayselect__dayitem__cell__changer__options">
+                                        <span
+                                            class="calendar__content__dayselect__dayitem__cell__changer__options__item cal-day-badge-selector"
+                                            attr.data-role="calendar-{{day.inMonth}}-{{day.date|date:'dd'}}-button-zero-day"
+                                            (click)="dayEdited($event, day.date, 0)">
+                                            0
+                                        </span>
+                                        <span
+                                            class="calendar__content__dayselect__dayitem__cell__changer__options__item cal-day-badge-selector"
+                                            attr.data-role="calendar-{{day.inMonth}}-{{day.date|date:'dd'}}-button-half-day"
+                                            [ngClass]="{'selected': day.badgeTotal === 0.5}"
+                                            (click)="dayEdited($event, day.date, 0.5)">
+                                            0,5
+                                        </span>
+                                        <span
+                                            class="calendar__content__dayselect__dayitem__cell__changer__options__item cal-day-badge-selector"
+                                            attr.data-role="calendar-{{day.inMonth}}-{{day.date|date:'dd'}}-button-one-day"
+                                            [ngClass]="{'selected': day.badgeTotal === 1}"
+                                            (click)="dayEdited($event, day.date, 1)">
+                                            1
+                                        </span>
+                                    </div>
+                                    <span class="calendar__content__dayselect__dayitem__cell__changer__maintext"
+                                          attr.data-role="calendar-{{day.inMonth}}-{{day.date|date:'dd'}}-day-changer">
+                                        {{ day.badgeTotal.toLocaleString(locale) }}<span> jour</span>
+                                    </span>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <mwl-calendar-month-view
+                [viewDate]="viewDate"
+                [events]="timesheet"
+                [refresh]="refresh"
+                [locale]="locale"
+                [weekStartsOn]="weekStartsOn"
+                [weekendDays]="weekendDays"
+                [cellTemplate]="customCellTemplate"
+                (dayClicked)="dayClicked($event.day.date)"
+                (beforeViewRender)="beforeMonthViewRender($event)">
+            </mwl-calendar-month-view>
+        </div>
+    </div>
 </div>

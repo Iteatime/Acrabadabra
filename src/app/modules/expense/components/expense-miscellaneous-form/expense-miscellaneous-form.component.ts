@@ -1,18 +1,17 @@
 import { Component, OnInit, ViewChild, Input, EventEmitter, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Miscellaneous } from 'src/app/shared/models/miscellaneous.model';
-import { MonetaryService } from 'src/app/shared/services/monetary/monetary.service';
 import { TimesheetService } from 'src/app/modules/timesheet/services/timesheet.service';
 import { MiscellaneousExpensesService } from '../../services/miscellaneous-expenses.service';
+import { Miscellaneous } from '@model/miscellaneous.model';
+import { MonetaryService } from '@services/monetary/monetary.service';
 
 @Component({
   selector: 'app-expense-miscellaneous-form',
   templateUrl: './expense-miscellaneous-form.component.html',
-  styleUrls: ['./expense-miscellaneous-form.component.scss']
+  styleUrls: ['./expense-miscellaneous-form.component.scss'],
 })
 export class ExpenseMiscellaneousFormComponent implements OnInit {
-
-  @ViewChild('expenseForm') form: NgForm;
+  @ViewChild('expenseForm', { static: true }) form: NgForm;
   @Input() miscellaneous: Miscellaneous[];
   @Output() changed: EventEmitter<boolean> = new EventEmitter();
   misc: Miscellaneous;
@@ -20,9 +19,11 @@ export class ExpenseMiscellaneousFormComponent implements OnInit {
   miscellaneousTypes = [];
   vatRates = [];
 
-  constructor(public miscellaneousExpensesService: MiscellaneousExpensesService,
-              public timesheetService: TimesheetService,
-              private _monetaryService: MonetaryService) { }
+  constructor(
+    public miscellaneousExpensesService: MiscellaneousExpensesService,
+    public timesheetService: TimesheetService,
+    private readonly _monetaryService: MonetaryService,
+  ) {}
 
   ngOnInit() {
     this.misc = new Miscellaneous();
