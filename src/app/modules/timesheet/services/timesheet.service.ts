@@ -68,11 +68,21 @@ export class TimesheetService {
   }
 
   public getInvoiceLink() {
-    return  environment.pdf_api_url +
-            '?url=' + window.location.origin + '/invoice/' + this.getReviewToken() +
-            '&format=A4&scale=2&margin.top=15px&margin.left=10px&margin.bottom=10px&margin.right=10px' +
-            '&api=' + environment.pdf_api_key +
-            '&title=' + this.timesheet.invoice.number;
+    const params = new URLSearchParams({
+      url: window.location.origin + '/invoice/' + this.getReviewToken(),
+      form: 'A4',
+      scale: '2',
+      'margin.top': '15px',
+      'margin.right': '10px',
+      'margin.bottom': '10px',
+      'margin.left': '10px',
+      landscape: 'false',
+      printBackground: 'true',
+      api: environment.pdf_api_key,
+      title: this.timesheet.invoice.number,
+    });
+
+    return `${environment.pdf_api_url}?${params}`;
   }
 
   public getTotalAllowance() {
