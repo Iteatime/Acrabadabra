@@ -37,3 +37,5 @@ Thumbs.db
 
 /functions/*.js
 .env
+
+.vscode
