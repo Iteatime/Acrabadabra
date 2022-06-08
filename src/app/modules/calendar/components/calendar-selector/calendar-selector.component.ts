@@ -92,7 +92,7 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
         this._deleteDay(date);
       }
     }
-    this.refresh.next();
+    this.refresh.next({});
   }
 
   public nextMonth(): void {
@@ -116,12 +116,12 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
         this._addTimesheetDay(aDay);
       }
     }
-    this.refresh.next();
+    this.refresh.next({});
   }
 
   public emptyDays(): void {
     this.timesheet = [];
-    this.refresh.next();
+    this.refresh.next({});
   }
 
   public dayEdited(event: Event, date: Date, time: number): void {
@@ -135,7 +135,7 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
     } else {
       this._deleteDay(date);
     }
-    this.refresh.next();
+    this.refresh.next({});
   }
 
   private _initTimesheet(): void {
