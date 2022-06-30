@@ -163,7 +163,7 @@ export class TimesheetService {
           ...timesheetToTransfer,
           invoice: Object.assign({}, timesheetToTransfer.invoice, {
             clientRef: storedTimesheet.invoice.clientRef,
-            dailyRate: storedTimesheet.invoice.dailyRate,
+            workedRate: storedTimesheet.invoice.workedRate,
             client: Object.assign(new Company(), storedTimesheet.invoice.client),
             paymentLatePenalty: storedTimesheet.invoice.paymentLatePenalty,
             paymentModality: storedTimesheet.invoice.paymentModality,
