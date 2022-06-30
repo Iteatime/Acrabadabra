@@ -1,178 +1,178 @@
-@import "src/app/style/vars";
-@import "src/app/style/mixins";
+@import 'src/app/style/vars';
+@import 'src/app/style/mixins';
 
 .review {
-  &__wrapper {
-    @include container;
+	&__wrapper {
+		@include container;
 
-    @media (min-width: $screen-sm-min) {
-      padding: 40px;
-    }
+		@media (min-width: $screen-sm-min) {
+			padding: 40px;
+		}
 
-    @media (min-width: $screen-md-min) {
-      margin-top: 30px;
-    }
+		@media (min-width: $screen-md-min) {
+			margin-top: 30px;
+		}
 
-    margin-top: 10px;
-    background: $white;
-    padding: 20px;
-    box-shadow: 0 0 8px rgba($black, 0.2);
+		margin-top: 10px;
+		background: $white;
+		padding: 20px;
+		box-shadow: 0 0 8px rgba($black, 0.2);
 
-    &__title {
-      font-size: 22px;
-      color: $grey_mine_shaft;
+		&__title {
+			font-size: 22px;
+			color: $grey_mine_shaft;
 
-      & > h2 {
-        @media (min-width: $screen-sm-min) {
-          font-size: 28px;
-        }
+			& > h2 {
+				@media (min-width: $screen-sm-min) {
+					font-size: 28px;
+				}
 
-        font-weight: 700;
-        font-size: 20px;
-      }
+				font-weight: 700;
+				font-size: 20px;
+			}
 
-      & > h3 {
-        @media (min-width: $screen-sm-min) {
-          font-size: 24px;
-        }
+			& > h3 {
+				@media (min-width: $screen-sm-min) {
+					font-size: 24px;
+				}
 
-        font-weight: 400;
-        font-size: 16px;
-        margin-left: 20px;
-      }
-    }
+				font-weight: 400;
+				font-size: 16px;
+				margin-left: 20px;
+			}
+		}
 
-    &__fields {
-      @media (min-width: $screen-sm-min) {
-        margin-top: 45px;
-      }
+		&__fields {
+			@media (min-width: $screen-sm-min) {
+				margin-top: 45px;
+			}
 
-      margin-top: 25px;
+			margin-top: 25px;
 
-      &__block {
-        &__title {
-          @include header-form;
-        }
+			&__block {
+				&__title {
+					@include header-form;
+				}
 
-        &__item-wrapper {
-          @media (min-width: $screen-sm-min) {
-            display: flex;
-            flex-wrap: wrap;
-          }
+				&__item-wrapper {
+					@media (min-width: $screen-sm-min) {
+						display: flex;
+						flex-wrap: wrap;
+					}
 
-          border: 1px solid $grey_border_dark;
-          border-top: 0;
-          background: $grey_light;
-          padding: 18px;
+					border: 1px solid $grey_border_dark;
+					border-top: 0;
+					background: $grey_light;
+					padding: 18px;
 
-          & > hr {
-            @media (min-width: $screen-sm-min) {
-              display: block;
-              width: 1px;
-              height: 90px;
-              background-color: $grey_border_dark;
-              margin: 0px;
-            }
-            display: none;
-          }
+					& > hr {
+						@media (min-width: $screen-sm-min) {
+							display: block;
+							width: 1px;
+							height: 90px;
+							background-color: $grey_border_dark;
+							margin: 0px;
+						}
+						display: none;
+					}
 
-          &__part {
-            @media (min-width: $screen-sm-min) {
-              width: calc(50% - 11px);
+					&__part {
+						@media (min-width: $screen-sm-min) {
+							width: calc(50% - 11px);
 
-              &#left-part {
-                margin-right: 10px;
-              }
+							&#left-part {
+								margin-right: 10px;
+							}
 
-              &#right-part {
-                margin-left: 10px;
-              }
-            }
+							&#right-part {
+								margin-left: 10px;
+							}
+						}
 
-            width: 100%;
+						width: 100%;
 
-            &__text {
-              height: 30px;
+						&__text {
+							height: 30px;
 
-              &__label {
-                float: left;
-                font-weight: 700;
-                font-size: 14px;
-              }
+							&__label {
+								float: left;
+								font-weight: 700;
+								font-size: 14px;
+							}
 
-              &__value {
-                float: right;
-              }
-            }
-          }
-        }
-      }
+							&__value {
+								float: right;
+							}
+						}
+					}
+				}
+			}
 
-      &__invoice {
-        @media (min-width: $screen-sm-min) {
-          margin-top: 45px;
-        }
+			&__invoice {
+				@media (min-width: $screen-sm-min) {
+					margin-top: 45px;
+				}
 
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: center;
-        margin-top: 25px;
+				display: flex;
+				flex-flow: row wrap;
+				justify-content: center;
+				margin-top: 25px;
 
-        &__item {
-          @media (min-width: $screen-sm-min) {
-            width: calc(100% / 4 - 40px);
-          }
+				&__item {
+					@media (min-width: $screen-sm-min) {
+						width: calc(100% / 4 - 40px);
+					}
 
-          margin: 20px;
-          width: calc(100% - 40px);
+					margin: 20px;
+					width: calc(100% - 40px);
 
-          &__link {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
+					&__link {
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						text-align: center;
 
-            &:hover,
-            &:focus,
-            &:active {
-              color: initial;
-              text-decoration: none;
+						&:hover,
+						&:focus,
+						&:active {
+							color: initial;
+							text-decoration: none;
 
-              span {
-                text-decoration: underline;
-              }
-            }
+							span {
+								text-decoration: underline;
+							}
+						}
 
-            i,
-            span {
-              color: initial;
-            }
+						i,
+						span {
+							color: initial;
+						}
 
-            i {
-              font-size: 40px;
-            }
-          }
-        }
-      }
+						i {
+							font-size: 40px;
+						}
+					}
+				}
+			}
 
-      &__calendar {
-        margin-top: 30px;
-        width: 100%;
+			&__calendar {
+				margin-top: 30px;
+				width: 100%;
 
-        &__title {
-          @include header-form;
-        }
-      }
+				&__title {
+					@include header-form;
+				}
+			}
 
-      &__allowance {
-        margin-top: 30px;
-        width: 100%;
+			&__allowance {
+				margin-top: 30px;
+				width: 100%;
 
-        &__title {
-          @include header-form;
-          margin-bottom: 30px;
-        }
-      }
-    }
-  }
+				&__title {
+					@include header-form;
+					margin-bottom: 30px;
+				}
+			}
+		}
+	}
 }

@@ -4,33 +4,32 @@ import { TimesheetService } from 'src/app/modules/timesheet/services/timesheet.s
 import { Commute } from 'src/app/shared/models/commute';
 
 @Component({
-  selector: 'app-expense-mileage-table',
-  templateUrl: './expense-mileage-table.component.html',
-  styleUrls: ['./expense-mileage-table.component.scss']
+	selector: 'app-expense-mileage-table',
+	templateUrl: './expense-mileage-table.component.html',
+	styleUrls: ['./expense-mileage-table.component.scss'],
 })
 export class ExpenseMileageTableComponent implements OnInit {
+	@Output() changed: EventEmitter<boolean> = new EventEmitter();
+	@Input() hideDeleteButton = false;
 
-  @Output() changed: EventEmitter<boolean> = new EventEmitter();
-  @Input() hideDeleteButton = false;
+	commutes: Commute[];
 
-  commutes: Commute[];
+	public local = 'fr';
+	public currencyCode: string;
 
-  public local = 'fr';
-  public currencyCode: string;
+	constructor(
+		public timesheetService: TimesheetService,
+		private _monetaryService: MonetaryService
+	) {
+		this.currencyCode = this._monetaryService.currencyCode;
+	}
 
-  constructor(public timesheetService: TimesheetService,
-              private _monetaryService: MonetaryService
-    ) {
-      this.currencyCode = this._monetaryService.currencyCode;
+	ngOnInit() {
+		this.commutes = this.timesheetService.timesheet.commutes;
+	}
 
-    }
-
-  ngOnInit() {
-    this.commutes = this.timesheetService.timesheet.commutes;
-  }
-
-  delete(commute) {
-    this.commutes.splice(this.commutes.indexOf(commute), 1);
-    this.changed.emit(true);
-  }
+	delete(commute) {
+		this.commutes.splice(this.commutes.indexOf(commute), 1);
+		this.changed.emit(true);
+	}
 }

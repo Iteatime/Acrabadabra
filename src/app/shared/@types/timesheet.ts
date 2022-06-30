@@ -3,8 +3,8 @@ import { Mission } from './mission';
 import { Invoice } from './invoice';
 
 export interface Timesheet {
-  consultant: Consultant;
-  mission: Mission;
-  workingDays: any;
-  invoice: Invoice;
+	consultant: Consultant;
+	mission: Mission;
+	workingDays: any;
+	invoice: Invoice;
 }

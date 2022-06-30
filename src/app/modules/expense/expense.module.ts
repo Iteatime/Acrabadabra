@@ -11,27 +11,23 @@ import { ExpenseFlatFeeTableComponent } from './components/expense-flat-fee-tabl
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    ExpenseMileageFormComponent,
-    ExpenseMileageTableComponent,
-    ExpenseMiscellaneousFormComponent,
-    ExpenseMiscellaneousTableComponent,
-    ExpenseFlatFeeFormComponent,
-    ExpenseFlatFeeTableComponent
-  ],
-  imports: [
-    CommonModule,
-    ExpenseRoutingModule,
-    FormsModule,
-  ],
-  exports: [
-    CommonModule,
-    ExpenseMileageFormComponent,
-    ExpenseMileageTableComponent,
-    ExpenseMiscellaneousFormComponent,
-    ExpenseMiscellaneousTableComponent,
-    ExpenseFlatFeeFormComponent,
-    ExpenseFlatFeeTableComponent
-  ]
+	declarations: [
+		ExpenseMileageFormComponent,
+		ExpenseMileageTableComponent,
+		ExpenseMiscellaneousFormComponent,
+		ExpenseMiscellaneousTableComponent,
+		ExpenseFlatFeeFormComponent,
+		ExpenseFlatFeeTableComponent,
+	],
+	imports: [CommonModule, ExpenseRoutingModule, FormsModule],
+	exports: [
+		CommonModule,
+		ExpenseMileageFormComponent,
+		ExpenseMileageTableComponent,
+		ExpenseMiscellaneousFormComponent,
+		ExpenseMiscellaneousTableComponent,
+		ExpenseFlatFeeFormComponent,
+		ExpenseFlatFeeTableComponent,
+	],
 })
-export class ExpenseModule { }
+export class ExpenseModule {}

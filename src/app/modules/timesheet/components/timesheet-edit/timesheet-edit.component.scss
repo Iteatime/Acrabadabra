@@ -1,178 +1,178 @@
-@import "src/app/style/vars";
-@import "src/app/style/mixins";
+@import 'src/app/style/vars';
+@import 'src/app/style/mixins';
 
 .ng-invalid:not(form) {
-  border-left: 5px solid ;
+	border-left: 5px solid;
 }
 
 .timesheet-edit {
-  &__wrapper {
-    @include container;
+	&__wrapper {
+		@include container;
 
-    @media (min-width: $screen-sm-min) {
-      padding: 40px;
-    }
+		@media (min-width: $screen-sm-min) {
+			padding: 40px;
+		}
 
-    @media (min-width: $screen-md-min) {
-      margin-top: 30px;
-    }
+		@media (min-width: $screen-md-min) {
+			margin-top: 30px;
+		}
 
-    margin-top: 10px;
-    background: $white;
-    padding: 20px;
-    box-shadow: 0 0 8px rgba($black, 0.2);
+		margin-top: 10px;
+		background: $white;
+		padding: 20px;
+		box-shadow: 0 0 8px rgba($black, 0.2);
 
-    &__title {
-      font-size: 22px;
-      color: $grey_mine_shaft;
+		&__title {
+			font-size: 22px;
+			color: $grey_mine_shaft;
 
-      & > h2 {
-        @media (min-width: $screen-sm-min) {
-          font-size: 28px;
-        }
+			& > h2 {
+				@media (min-width: $screen-sm-min) {
+					font-size: 28px;
+				}
 
-        font-weight: 700;
-        font-size: 20px;
-      }
-    }
+				font-weight: 700;
+				font-size: 20px;
+			}
+		}
 
-    &__form {
-      @media (min-width: $screen-sm-min) {
-        margin-top: 45px;
-      }
+		&__form {
+			@media (min-width: $screen-sm-min) {
+				margin-top: 45px;
+			}
 
-      display: flex;
-      flex-wrap: wrap;
-      margin-top: 25px;
+			display: flex;
+			flex-wrap: wrap;
+			margin-top: 25px;
 
-      &__block {
-        @media (min-width: $screen-sm-min) {
-          width: calc(50% - 20px);
-        }
+			&__block {
+				@media (min-width: $screen-sm-min) {
+					width: calc(50% - 20px);
+				}
 
-        width: 100%;
+				width: 100%;
 
-        &__title {
-          @include header-form;
-        }
+				&__title {
+					@include header-form;
+				}
 
-        &__input-wrapper {
-          @include form-input;
-        }
+				&__input-wrapper {
+					@include form-input;
+				}
 
-        &#consultant {
-          @media (min-width: $screen-sm-min) {
-            margin-right: 20px;
-          }
-        }
+				&#consultant {
+					@media (min-width: $screen-sm-min) {
+						margin-right: 20px;
+					}
+				}
 
-        &#mission {
-          @media (min-width: $screen-sm-min) {
-            margin-top: 0;
-            margin-left: 20px;
-          }
+				&#mission {
+					@media (min-width: $screen-sm-min) {
+						margin-top: 0;
+						margin-left: 20px;
+					}
 
-          margin-top: 20px;
-        }
-      }
+					margin-top: 20px;
+				}
+			}
 
-      &__component {
-        margin-top: 30px;
-        width: 100%;
+			&__component {
+				margin-top: 30px;
+				width: 100%;
 
-        &__title {
-          @include header-form;
-        }
-      }
+				&__title {
+					@include header-form;
+				}
+			}
 
-      &__message {
-        min-height: 50px;
-        line-height: 50px;
-        width: 100%;
-        border-radius: 5px;
-        text-align: center;
+			&__message {
+				min-height: 50px;
+				line-height: 50px;
+				width: 100%;
+				border-radius: 5px;
+				text-align: center;
 
-        &--success {
-          background-color: $green_valid;
-        }
+				&--success {
+					background-color: $green_valid;
+				}
 
-        &--error {
-          color: white;
-          font-weight: 700;
-          background-color: $red_error;
-        }
-      }
+				&--error {
+					color: white;
+					font-weight: 700;
+					background-color: $red_error;
+				}
+			}
 
-      &__submit {
-        margin-top: 40px;
-        width: 100%;
-        text-align: center;
+			&__submit {
+				margin-top: 40px;
+				width: 100%;
+				text-align: center;
 
-        &__button {
-          @include hoveranim_glow($darker_blue);
+				&__button {
+					@include hoveranim_glow($darker_blue);
 
-          border: none;
-          display: inline-block;
-          background: $dark_blue;
-          padding: 0;
-          cursor: pointer;
-          width: 40%;
-          height: 60px;
-          min-width: 220px;
-          line-height: 60px;
-          color: $white;
-          font-size: 20px;
-          font-weight: 700;
-        }
-      }
+					border: none;
+					display: inline-block;
+					background: $dark_blue;
+					padding: 0;
+					cursor: pointer;
+					width: 40%;
+					height: 60px;
+					min-width: 220px;
+					line-height: 60px;
+					color: $white;
+					font-size: 20px;
+					font-weight: 700;
+				}
+			}
 
-      &__icons {
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: center;
-        margin-top: 40px;
-        width: 100%;
+			&__icons {
+				display: flex;
+				flex-flow: row wrap;
+				justify-content: center;
+				margin-top: 40px;
+				width: 100%;
 
-        &__item {
-          @media (min-width: $screen-sm-min) {
-            width: calc(100% / 4 - 40px);
-          }
+				&__item {
+					@media (min-width: $screen-sm-min) {
+						width: calc(100% / 4 - 40px);
+					}
 
-          margin: 20px;
-          width: calc(100% - 40px);
+					margin: 20px;
+					width: calc(100% - 40px);
 
-          &__disabled {
-            cursor: not-allowed;
-          }
+					&__disabled {
+						cursor: not-allowed;
+					}
 
-          > a {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
+					> a {
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						text-align: center;
 
-            &:hover,
-            &:focus,
-            &:active {
-              color: initial;
-              text-decoration: none;
+						&:hover,
+						&:focus,
+						&:active {
+							color: initial;
+							text-decoration: none;
 
-              span {
-                text-decoration: underline;
-              }
-            }
+							span {
+								text-decoration: underline;
+							}
+						}
 
-            i,
-            span {
-              color: initial;
-            }
+						i,
+						span {
+							color: initial;
+						}
 
-            i {
-              font-size: 40px;
-            }
-          }
-        }
-      }
-    }
-  }
+						i {
+							font-size: 40px;
+						}
+					}
+				}
+			}
+		}
+	}
 }

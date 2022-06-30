@@ -1,51 +1,54 @@
-import { Directive, Input, Output, EventEmitter, HostListener, OnChanges} from '@angular/core';
+import {
+	Directive,
+	Input,
+	Output,
+	EventEmitter,
+	HostListener,
+	OnChanges,
+} from '@angular/core';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 
 @Directive({
-
-  selector: '[copyToClipboard]',
+	selector: '[copyToClipboard]',
 })
 export class CopyToClipboardDirective {
+	@Input('copyToClipboard')
+	public payload: string;
 
-  @Input('copyToClipboard')
-  public payload: string;
+	@Input('copyToClipboardMessage')
+	public message: string;
 
-  @Input('copyToClipboardMessage')
-  public message: string;
+	@Input('copyToClipboardMessageParent')
+	public parent: HTMLElement;
 
-  @Input('copyToClipboardMessageParent')
-  public parent: HTMLElement;
+	@Output()
+	public copied: EventEmitter<string> = new EventEmitter<string>();
 
-  @Output()
-  public copied: EventEmitter<string> = new EventEmitter<string>();
+	@HostListener('click', ['$event'])
+	public onCopy(event: MouseEvent): void {
+		event.preventDefault();
+		if (!this.payload) {
+			return;
+		}
 
-  @HostListener('click', ['$event'])
-  public onCopy(event: MouseEvent): void {
+		const listener = (e: ClipboardEvent) => {
+			const clipboard = e.clipboardData || window['clipboardData'];
+			clipboard.setData('text', this.payload.toString());
+			e.preventDefault();
 
-    event.preventDefault();
-    if (!this.payload) {
-      return;
-    }
+			this.copied.emit(this.payload);
+		};
 
-    const listener = (e: ClipboardEvent) => {
-      const clipboard = e.clipboardData || window['clipboardData'];
-      clipboard.setData('text', this.payload.toString());
-      e.preventDefault();
+		document.addEventListener('copy', listener, false);
+		document.execCommand('copy');
+		document.removeEventListener('copy', listener, false);
 
-      this.copied.emit(this.payload);
-    };
+		if (!this.message) {
+			this.message = 'Copied';
+		}
 
-    document.addEventListener('copy', listener, false);
-    document.execCommand('copy');
-    document.removeEventListener('copy', listener, false);
+		this.notificationService.push(this.message, 'info');
+	}
 
-    if (!this.message) {
-      this.message = 'Copied';
-    }
-
-    this.notificationService.push(this.message, 'info');
-  }
-
-  constructor(private notificationService: NotificationService) { }
-
+	constructor(private notificationService: NotificationService) {}
 }

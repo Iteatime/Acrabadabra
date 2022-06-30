@@ -1,4 +1,4 @@
 export interface Mission {
-  client: string;
-  title: string;
+	client: string;
+	title: string;
 }

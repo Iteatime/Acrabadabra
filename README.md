@@ -6,27 +6,29 @@ This repo contains the sources of the app, netlify functions and configuration f
 
 ### 1 Requirements:
 
-* Node.js version 10.x: [latest](https://nodejs.org/en/download/current/)
-* Angular CLI: `npm install -g @angular/cli`
-* Netlify lambda CLI : `npm install netlify-lambda`
-    
+- Node.js version 10.x: [latest](https://nodejs.org/en/download/current/)
+- Angular CLI: `npm install -g @angular/cli`
+- Netlify lambda CLI : `npm install netlify-lambda`
+
 ### 2 Installation:
 
 Here you have to:
-* clone this repo
-* init the _pdf-to-url_ submodule by running `git submodule init ; git submodule update` (cf. [section 3.3](#3.3-pdf-api))
-* run `npm install`
-* finally you have to set `PDF_API_URL` as environment variable.
-    
+
+- clone this repo
+- init the _pdf-to-url_ submodule by running `git submodule init ; git submodule update` (cf. [section 3.3](#3.3-pdf-api))
+- run `npm install`
+- finally you have to set `PDF_API_URL` as environment variable.
+
 ### 3 Dev server:
 
-* To test your code you can run `npm run dev`.
-   
- By default, the front runs on `localhost:4200/`.
+- To test your code you can run `npm run dev`.
+
+By default, the front runs on `localhost:4200/`.
 
 #### 3.1 Lambda usage
 
 To call a lambda, you can call this endpoint:
+
 - `<root>/.netlify/functions/{function_name}`
 
 Ex: A get on this root `localhost:4200/.netlify/functions/status` will return a 200
@@ -42,20 +44,21 @@ Details [here](https://nodejs.org/en/docs/guides/debugging-getting-started/)
 #### 3.3 PDF api
 
 We use the our url-to-pdf service to build pdf from HTML template.
+
 > To install it locally you can run: `git submodule init` and `git submodule update` then:`npm install`
 
 ### 4 Unit tests:
 
- To perform unit tests run:
-    `npm run test`
+To perform unit tests run:
+`npm run test`
 
 Edit [this file](https://github.com/Iteatime/Acrabadabra/blob/master/src/karma.conf.js) to change the configuration
 (ex the [browser](https://karma-runner.github.io/3.0/config/browsers.html)).
 
 ### 5 End to end tests:
 
- To perform end to end tests run:
-    `npm run e2e`
+To perform end to end tests run:
+`npm run e2e`
 
 Edit [this file](https://github.com/Iteatime/Acrabadabra/blob/master/e2e/protractor.conf.js) to change the configuration
 (ex the [browser](https://github.com/angular/protractor/blob/master/docs/browser-setup.md)).
@@ -78,10 +81,7 @@ In order to reduce the test and build times during the local dev and to launch t
 
 ## Used Libraries
 
-
 - [Angular Calendar](https://github.com/mattlewis92/angular-calendar)
 - [Moment](https://momentjs.com/), a date management library
 - [Concurrently](https://www.npmjs.com/package/concurrently), allows to run multiple commands concurrently
 - [Lodash](https://lodash.com/), provides utility functions for common programming tasks
-
-

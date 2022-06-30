@@ -7,18 +7,25 @@ const folder = path.resolve(__dirname);
 const services = [];
 
 fs.readdir(folder, (err, elements) => {
-  elements.forEach(element => {
-    const dir = path.resolve(folder, element);
-    if (fs.lstatSync(dir).isDirectory() && fs.existsSync(dir + '/package.json')) {
-      services.push({ command: `cd ${ dir } && npm run dev`, name: element, prefixColor: 'reset.bgGreen.bold' });
-    }
-  });
+	elements.forEach((element) => {
+		const dir = path.resolve(folder, element);
+		if (
+			fs.lstatSync(dir).isDirectory() &&
+			fs.existsSync(dir + '/package.json')
+		) {
+			services.push({
+				command: `cd ${dir} && npm run dev`,
+				name: element,
+				prefixColor: 'reset.bgGreen.bold',
+			});
+		}
+	});
 
-  if (services.length > 0) {
-    concurrently(services, {
-      prefix: 'name',
-      killOthers: ['failure', 'success'],
-      restartTries: 3,
-    });
-  }
+	if (services.length > 0) {
+		concurrently(services, {
+			prefix: 'name',
+			killOthers: ['failure', 'success'],
+			restartTries: 3,
+		});
+	}
 });

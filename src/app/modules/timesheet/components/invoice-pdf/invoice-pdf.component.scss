@@ -1,326 +1,325 @@
-@import "src/app/style/vars";
-@import url("https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700");
+@import 'src/app/style/vars';
+@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700');
 
 .invoice {
-  position: absolute;
-  top: 0px;
-  width: 827px;
-  height: 1170px;
+	position: absolute;
+	top: 0px;
+	width: 827px;
+	height: 1170px;
 
-  .adress-height{
-    line-height: 20px;
-    margin-bottom: -4px;
-  }
+	.adress-height {
+		line-height: 20px;
+		margin-bottom: -4px;
+	}
 
-  #QuantityColSize {
-    min-width: 30px;
-  }
+	#QuantityColSize {
+		min-width: 30px;
+	}
 
-  &__header {
-    line-height: 13px;
-    font-size: 14.14px;
+	&__header {
+		line-height: 13px;
+		font-size: 14.14px;
 
-    &__provider {
-      position: absolute;
-      left: 43px;
-      top: 52px;
-      width: calc(50% - 43px);
+		&__provider {
+			position: absolute;
+			left: 43px;
+			top: 52px;
+			width: calc(50% - 43px);
 
-      &__name {
-        font-weight: bold;
-        font-size: 15.5px;
-      }
+			&__name {
+				font-weight: bold;
+				font-size: 15.5px;
+			}
 
-      div {
-        position: relative;
-        padding: 5px 0px;
-      }
-    }
+			div {
+				position: relative;
+				padding: 5px 0px;
+			}
+		}
 
-    &__client {
-      position: absolute;
-      right: 43px;
-      top: 52px;
-      text-align: right;
-      width: calc(50% - 43px);
+		&__client {
+			position: absolute;
+			right: 43px;
+			top: 52px;
+			text-align: right;
+			width: calc(50% - 43px);
 
-      &__name {
-        font-weight: bold;
-        font-size: 15.5px;
-      }
+			&__name {
+				font-weight: bold;
+				font-size: 15.5px;
+			}
 
-      div {
-        position: relative;
-        padding: 5px 0px;
-      }
-    }
-  }
+			div {
+				position: relative;
+				padding: 5px 0px;
+			}
+		}
+	}
 
-  &__reference {
-    position: relative;
-    left: 43px;
-    top: 250px;
-    font-size: 24px;
-    height: 150px;
+	&__reference {
+		position: relative;
+		left: 43px;
+		top: 250px;
+		font-size: 24px;
+		height: 150px;
 
-    &__invoice {
-      font-size: 32px;
+		&__invoice {
+			font-size: 32px;
 
-      &__number {
-        font-weight: bold;
-      }
-    }
+			&__number {
+				font-weight: bold;
+			}
+		}
 
-    &__order {
-      padding-top: 5px;
+		&__order {
+			padding-top: 5px;
 
-      &__left {
-        display: inline-block;
-        text-align:left;
-        width: calc(50% - 43px);
-      }
+			&__left {
+				display: inline-block;
+				text-align: left;
+				width: calc(50% - 43px);
+			}
 
-      &__right {
-        display: inline-block;
-        text-align: right;
-        width: calc(50% - 43px);
-      }
-      &__right-alone {
-        display: inline-block;
-        text-align: right;
-        width: calc(100% - 86px);
-      }
+			&__right {
+				display: inline-block;
+				text-align: right;
+				width: calc(50% - 43px);
+			}
+			&__right-alone {
+				display: inline-block;
+				text-align: right;
+				width: calc(100% - 86px);
+			}
 
-      &__number {
-        font-weight: bold;
-      }
-    }
+			&__number {
+				font-weight: bold;
+			}
+		}
 
-    &__date {
-      position: relative;
-      left: 43px;
-      top: 300px;
-      font-size: 27px;
-      height: 150px;
-    }
+		&__date {
+			position: relative;
+			left: 43px;
+			top: 300px;
+			font-size: 27px;
+			height: 150px;
+		}
 
-    div {
-      position: relative;
-    }
-  }
+		div {
+			position: relative;
+		}
+	}
 
-  &__table {
-    font-family: "Open Sans Condensed", sans-serif;
-    position: relative;
-    left: 43px;
-    top: 230px;
-    font-size: 13px;
-    width: calc(100% - 86px);
+	&__table {
+		font-family: 'Open Sans Condensed', sans-serif;
+		position: relative;
+		left: 43px;
+		top: 230px;
+		font-size: 13px;
+		width: calc(100% - 86px);
 
-    &__left-text {
-      text-align: left !important;
-      padding-left: 10px !important;
-    }
+		&__left-text {
+			text-align: left !important;
+			padding-left: 10px !important;
+		}
 
-    table {
-      width: 100%;
-    }
+		table {
+			width: 100%;
+		}
 
-    thead {
-      background-color: $dark_blue;
-      color: white;
-      font-weight: bold !important;
-      border-collapse: collapse !important;
-      border-style: hidden !important;
-    }
+		thead {
+			background-color: $dark_blue;
+			color: white;
+			font-weight: bold !important;
+			border-collapse: collapse !important;
+			border-style: hidden !important;
+		}
 
-    thead th {
-      border: 1px solid white;
-    }
+		thead th {
+			border: 1px solid white;
+		}
 
-    table,
-    th,
-    td {
-      text-align: center;
-      vertical-align: middle;
-      border: 1px solid $grey_mine_shaft;
-      border-collapse: collapse;
-      height: 24px;
-      border: none;
-    }
+		table,
+		th,
+		td {
+			text-align: center;
+			vertical-align: middle;
+			border: 1px solid $grey_mine_shaft;
+			border-collapse: collapse;
+			height: 24px;
+			border: none;
+		}
 
-    td {
-      border-right: 1px solid $grey_mine_lighter !important;
-      border-left: 1px solid $grey_mine_lighter !important;
-    }
-    tr:nth-of-type(even):nth-last-of-type(1) {
-      border-bottom: 1px solid $grey_mine_lighter !important;
-    }
-    tr:nth-of-type(odd) {
-      background: $grey_border;
-    }
+		td {
+			border-right: 1px solid $grey_mine_lighter !important;
+			border-left: 1px solid $grey_mine_lighter !important;
+		}
+		tr:nth-of-type(even):nth-last-of-type(1) {
+			border-bottom: 1px solid $grey_mine_lighter !important;
+		}
+		tr:nth-of-type(odd) {
+			background: $grey_border;
+		}
+	}
 
-  }
+	&__total {
+		position: relative;
+		right: 43px;
+		top: 250px;
+		font-family: 'Open Sans Condensed', sans-serif;
 
-  &__total {
-    position: relative;
-    right: 43px;
-    top: 250px;
-    font-family: "Open Sans Condensed", sans-serif;
+		&__label {
+			padding-right: 20px;
+		}
 
-    &__label {
-      padding-right: 20px;
-    }
+		&__value {
+			width: 1%;
+			white-space: nowrap;
+			font-weight: bold;
+		}
 
-    &__value {
-      width: 1%;
-      white-space: nowrap;
-      font-weight: bold;
-    }
+		&__vat {
+			font-weight: bold !important;
+		}
 
-    &__vat {
-      font-weight: bold !important;
-    }
+		&__no-vat {
+			font-weight: normal;
+		}
 
-    &__no-vat {
-      font-weight: normal;
-    }
+		#totalTTC {
+			font-size: 20px;
+		}
 
-    #totalTTC {
-      font-size: 20px;
-    }
+		#valueTotalTTC {
+			font-size: 20px;
+		}
 
-    #valueTotalTTC {
-      font-size: 20px;
-    }
+		tr {
+			text-align: right;
+			font-size: 17px;
+			line-height: 16px;
+			height: 15px;
 
-    tr {
-      text-align: right;
-      font-size: 17px;
-      line-height: 16px;
-      height: 15px;
+			span {
+				font-weight: normal;
+				font-size: 15.5px;
+			}
 
-      span {
-        font-weight: normal;
-        font-size: 15.5px;
-      }
+			p {
+				margin-bottom: 0px;
+				position: relative;
+				right: -1px;
+				margin-right: 1px;
+			}
+		}
+	}
 
-      p {
-        margin-bottom: 0px;
-        position: relative;
-        right: -1px;
-        margin-right: 1px;
-      }
-    }
-  }
+	&__additional-information {
+		position: relative;
+		left: 43px;
+		top: 300px;
+		width: calc(100% - 86px);
+		font-size: 15px;
+		font-family: 'Open Sans Condensed', sans-serif;
 
-  &__additional-information {
-    position: relative;
-    left: 43px;
-    top: 300px;
-    width: calc(100% - 86px);
-    font-size: 15px;
-    font-family: "Open Sans Condensed", sans-serif;
+		table {
+			background-color: $grey_border;
+			border-radius: 1px;
+		}
+		td {
+			padding: 5px;
+			width: 1%;
+			white-space: nowrap;
+		}
 
-    table {
-      background-color: $grey_border;
-      border-radius: 1px;
-    }
-    td {
-      padding: 5px;
-      width: 1%;
-      white-space: nowrap;
-    }
+		#global-information {
+			width: 50%;
+			white-space: initial;
+			border-right: solid 1px white;
+			vertical-align: top;
+			padding-left: 20px;
+		}
 
-    #global-information {
-      width: 50%;
-      white-space: initial;
-      border-right: solid 1px white;
-      vertical-align: top;
-      padding-left: 20px;
-    }
+		#bank-information {
+			text-align: left;
+			vertical-align: top;
+		}
+		#penalty {
+			margin-top: 4px;
+			font-size: 12px;
+			font-style: italic;
+			line-height: 11px;
+		}
 
-    #bank-information {
-      text-align: left;
-      vertical-align: top;
-    }
-    #penalty {
-      margin-top:4px;
-      font-size: 12px;
-      font-style: italic;
-      line-height: 11px;
-    }
+		&__title {
+			font-weight: bold;
+			font-size: 18px;
+		}
 
-    &__title {
-      font-weight: bold;
-      font-size: 18px;
-    }
+		&__bolding {
+			font-weight: bold;
+		}
+	}
 
-    &__bolding {
-      font-weight: bold;
-    }
-  }
+	&__footer {
+		position: fixed;
+		bottom: 52px;
+		text-align: center;
+		width: 827px;
+		font-size: 14.14px;
+	}
 
-  &__footer {
-    position: fixed;
-    bottom: 52px;
-    text-align: center;
-    width: 827px;
-    font-size: 14.14px;
-  }
+	&__tables {
+		position: absolute;
+		top: 1222px;
+		left: 43px;
+		font-size: 13px;
+		width: calc(100% - 86px);
 
-  &__tables {
-    position: absolute;
-    top: 1222px;
-    left: 43px;
-    font-size: 13px;
-    width: calc(100% - 86px);
+		&__expenses {
+			& > app-expense-mileage-table,
+			& > app-expense-miscellaneous-table,
+			& > app-expense-flat-fee-table {
+				& > table {
+					width: 100% !important;
+					font-family: 'Open Sans Condensed', sans-serif !important;
+				}
 
-    &__expenses {
-      & > app-expense-mileage-table,
-      & > app-expense-miscellaneous-table,
-      & > app-expense-flat-fee-table {
-        & > table {
-          width: 100% !important;
-          font-family: "Open Sans Condensed", sans-serif !important;
-        }
+				& > table,
+				td,
+				th,
+				tr {
+					height: 24px !important;
+					padding: 1px !important;
+					white-space: nowrap !important;
+					max-width: 100% !important;
+					min-width: 1% !important;
+				}
+			}
+		}
 
-        & > table,
-        td,
-        th,
-        tr {
-          height: 24px !important;
-          padding: 1px !important;
-          white-space: nowrap !important;
-          max-width: 100% !important;
-          min-width: 1% !important;
-        }
-      }
-    }
+		tr:nth-of-type(even):nth-last-child(2) {
+			td:not(:last-of-type) {
+				border-bottom: 1px solid $grey_mid !important;
+			}
+		}
 
-    tr:nth-of-type(even):nth-last-child(2) {
-      td:not(:last-of-type) {
-        border-bottom: 1px solid $grey_mid !important;
-      }
-    }
+		thead {
+			border-collapse: collapse !important;
+			border-style: hidden !important;
+		}
 
-    thead {
-      border-collapse: collapse !important;
-      border-style: hidden !important;
-    }
+		thead th {
+			border: 1px solid white !important;
+		}
 
-    thead th {
-      border: 1px solid white !important;
-    }
+		#left-text {
+			td:nth-child(2) {
+				padding-left: 15px !important;
+			}
+		}
 
-    #left-text {
-      td:nth-child(2){
-        padding-left:15px !important;
-      }
-    }
-
-    p {
-      text-decoration: underline;
-    }
-  }
+		p {
+			text-decoration: underline;
+		}
+	}
 }

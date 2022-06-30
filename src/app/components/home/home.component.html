@@ -1,26 +1,42 @@
 <div id="homepage" class="homepage">
-  <div class="homepage__header">
-    <div class="homepage__header__container">
-      <img class="homepage__header__container__logo" src="assets/images/logo.white.svg" alt="logo {{ title }}"
-        (error)="$event.target.removeAttribute('onerror'); $event.target.src = 'assets/images/logo.white.png';">
-    </div>
-  </div>
+	<div class="homepage__header">
+		<div class="homepage__header__container">
+			<img
+				class="homepage__header__container__logo"
+				src="assets/images/logo.white.svg"
+				alt="logo {{ title }}"
+				(error)="
+					$event.target.removeAttribute('onerror');
+					$event.target.src = 'assets/images/logo.white.png'
+				"
+			/>
+		</div>
+	</div>
 
+	<div class="homepage__main">
+		<div class="homepage__main__title">
+			<span class="brand_name">{{ title }} </span>
+			<h1>Une solution en ligne pour les SSII</h1>
+		</div>
 
-  <div class="homepage__main">
-    <div class="homepage__main__title">
-      <span class="brand_name">{{ title }} </span>
-      <h1>Une solution en ligne pour les SSII</h1>
-    </div>
+		<button
+			id="consultant"
+			type="button"
+			class="homepage__main__btn"
+			data-text="Je suis un consultant"
+			[routerLink]="['timesheet', 'create']"
+		>
+			<span>Je suis un consultant</span>
+		</button>
 
-    <button id="consultant" type="button" class="homepage__main__btn" data-text="Je suis un consultant"
-      [routerLink]="['timesheet','create']">
-      <span>Je suis un consultant</span>
-    </button>
-
-    <button id="provider" type="button" class="homepage__main__btn" data-text="Je suis une société de services"
-      (click)="onProviderBtnClick()">
-      <span>Je suis une société de services</span>
-    </button>
-  </div>
+		<button
+			id="provider"
+			type="button"
+			class="homepage__main__btn"
+			data-text="Je suis une société de services"
+			(click)="onProviderBtnClick()"
+		>
+			<span>Je suis une société de services</span>
+		</button>
+	</div>
 </div>
