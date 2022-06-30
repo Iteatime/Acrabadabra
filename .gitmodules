@@ -1,3 +1,0 @@
-[submodule "src/web-services/url-to-pdf"]
-	path = src/web-services/url-to-pdf
-	url = https://github.com/Iteatime/url-to-pdf.git
