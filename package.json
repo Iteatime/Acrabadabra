@@ -7,9 +7,9 @@
     "test": "ENV=dev node scripts/set-env.js && ng test",
     "lint": "ng lint",
     "e2e": "ENV=prod node scripts/set-env.js && ng e2e",
-    "watch:front": "ENV=dev node scripts/set-env.js && ng serve --configuration developpement",
-    "watch:back": "concurrently --names \"LAMBDA,SERVICES\" \"netlify-lambda serve src/functions\" \"node src/web-services/launch.js\"",
-    "dev": "concurrently --names \"FRONT,BACK\" --prefix-colors \"reset.bgBlue.bold,reset.bgRed.bold\"  \"yarn watch:front\" \"yarn watch:back\"",
+    "watch:front": "ENV=dev ng serve --configuration developpement",
+    "watch:back": "concurrently --names \"LAMBDA,SERVICES\" \"netlify-lambda -c ./webpack.config.js serve src/functions\" \"node src/web-services/launch.js\" \"./webpack.config.js\"",
+    "dev": "concurrently --names \"FRONT,BACK\" --prefix-colors \"reset.bgBlue.bold,reset.bgRed.bold\"  \"yarn:watch:front\" \"yarn:watch:back\"",
     "ci-validate": "node scripts/ci-validate.js",
     "postinstall": "node src/web-services/install.js"
   },
