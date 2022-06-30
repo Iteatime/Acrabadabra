@@ -77,17 +77,27 @@
         <th *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">Total T.T.C</th>
       </thead>
       <tbody>
-        <tr *ngIf="workedTime > 0">
-          <td class="invoice__table__left-text">Journée d’intervention {{ timesheetService.timesheet.mission.title }}
-          </td>
-          <td>{{ timesheetService.timesheet.invoice.dailyRate | currency:currencyCode:"symbol":"1.2-2":local }}</td>
-          <td>{{ workedTime }}</td>
-          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">
-            {{ monetaryService.vatRates.normal / 100 | percent:"1.2-2":local }}</td>
-          <td>{{ performanceTotal | currency:currencyCode:"symbol":"1.2-2":local }}</td>
-          <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">
-            {{ performanceTotal * ( 1 + monetaryService.vatRates.normal / 100 ) | currency:currencyCode:"symbol":"1.2-2":local }}
-          </td>
+        <tr *ngIf="workedTime.length > 0">
+          <ng-container *ngFor="let entry of workedTime">
+            <td class="invoice__table__left-text">
+              {{ calendarService.getTimeUnitLabel(entry.unit) | titlecase }} d'intervention {{ timesheetService.timesheet.mission.title }}
+            </td>
+            <td>
+              {{ timesheetService.timesheet.invoice.workedRate | currency:currencyCode:"symbol":"1.2-2":local }}
+            </td>
+            <td>
+              {{ entry.time }}
+            </td>
+            <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">
+              {{ monetaryService.vatRates.normal / 100 | percent:"1.2-2":local }}
+            </td>
+            <td>
+              {{ performanceTotal | currency:currencyCode:"symbol":"1.2-2":local }}
+            </td>
+            <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">
+              {{ performanceTotal * ( 1 + monetaryService.vatRates.normal / 100 ) | currency:currencyCode:"symbol":"1.2-2":local }}
+            </td>
+          </ng-container>
         </tr>
 
         <tr *ngIf="expenseMileageTotal > 0">
@@ -150,7 +160,7 @@
         </tr>
 
         <tr
-          *ngIf="(workedTime > 0 ? 1 : 0) + (expenseMileageTotal > 0 ? 1 : 0) + (expenseFlatFeeTotal > 0 ? 1 : 0) + sortByMiscsVatState().deductible.length  + (sortByMiscsVatState().nondeductible.amount > 0 ? 1 : 0) < 2">
+          *ngIf="(workedTime.length > 0 ? 1 : 0) + (expenseMileageTotal > 0 ? 1 : 0) + (expenseFlatFeeTotal > 0 ? 1 : 0) + sortByMiscsVatState().deductible.length  + (sortByMiscsVatState().nondeductible.amount > 0 ? 1 : 0) < 2">
           <td></td>
           <td></td>
           <td></td>
@@ -160,7 +170,7 @@
         </tr>
 
         <tr
-          *ngIf="(workedTime > 0 ? 1 : 0) + (expenseMileageTotal > 0 ? 1 : 0) + (expenseFlatFeeTotal > 0 ? 1 : 0) + sortByMiscsVatState().deductible.length  + (sortByMiscsVatState().nondeductible.amount > 0 ? 1 : 0) < 3">
+          *ngIf="(workedTime.length > 0 ? 1 : 0) + (expenseMileageTotal > 0 ? 1 : 0) + (expenseFlatFeeTotal > 0 ? 1 : 0) + sortByMiscsVatState().deductible.length  + (sortByMiscsVatState().nondeductible.amount > 0 ? 1 : 0) < 3">
           <td></td>
           <td></td>
           <td></td>
@@ -170,7 +180,7 @@
         </tr>
 
         <tr
-          *ngIf="(workedTime > 0 ? 1 : 0) + (expenseMileageTotal > 0 ? 1 : 0) + (expenseFlatFeeTotal > 0 ? 1 : 0) + sortByMiscsVatState().deductible.length  + (sortByMiscsVatState().nondeductible.amount > 0 ? 1 : 0) < 4">
+          *ngIf="(workedTime.length > 0 ? 1 : 0) + (expenseMileageTotal > 0 ? 1 : 0) + (expenseFlatFeeTotal > 0 ? 1 : 0) + sortByMiscsVatState().deductible.length  + (sortByMiscsVatState().nondeductible.amount > 0 ? 1 : 0) < 4">
           <td></td>
           <td></td>
           <td></td>

@@ -3,26 +3,30 @@
 
 .calendar {
   &__header {
-    @media (min-width: $screen_xs_min) {
+    @media (min-width: $screen_sm_min) {
+      flex-flow: row nowrap;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 0;
       height: 50px;
+      line-height: initial;
     }
 
-    padding: 0;
-    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 20px;
     border-bottom: 1px solid $grey_border;
-    line-height: 50px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    line-height: 40px;
 
     &__daycount {
-      @media (min-width: $screen_xs_min) {
-        float: left;
-        width: 50%;
+      @media (min-width: $screen_sm_min) {
         text-align: left;
       }
 
       font-weight: 700;
       font-size: 14px;
-      width: 100%;
       text-align: center;
 
       & > span {
@@ -35,14 +39,33 @@
       }
     }
 
+    &__time-unit {
+      text-align: center;
+
+      &__label,
+      &__input {
+        font-size: 14px;
+      }
+
+      &__label {
+        display: inline;
+        margin-right: 5px;
+        font-weight: 700;
+      }
+
+      &__input {
+        display: inline;
+        padding: 0 1rem 0 .25rem;
+        width: 100px;
+        height: 26px;
+      }
+    }
+
     &__month-choice {
-      @media (min-width: $screen_xs_min) {
-        float: left;
-        width: 50%;
+      @media (min-width: $screen_sm_min) {
         text-align: right;
       }
 
-      width: 100%;
       text-align: center;
 
       &__btn {
@@ -193,16 +216,31 @@
                 margin: 0 1px;
                 border-radius: 24px;
                 border: 1px solid rgba($white, 0);
+                background-color: transparent;
+                padding: 0;
                 line-height: 26px;
+                color: $white;
                 transition: all 0.2s ease-in-out;
 
                 &:hover {
                   border-color: rgba($white, 1);
                 }
 
+                &:focus {
+                  outline: none;
+                }
+
                 &.selected {
                   background: $white;
                   color: $main_blue;
+                }
+
+                &.disabled {
+                  opacity: .5;
+
+                  &:hover {
+                    border: none;
+                  }
                 }
               }
             }
@@ -340,8 +378,4 @@
   &.cal-has-events .cal-day-number {
     filter: opacity(100%);
   }
-}
-
-.disabled-element {
-  visibility: hidden;
 }
