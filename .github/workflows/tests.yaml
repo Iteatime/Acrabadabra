@@ -6,6 +6,10 @@ on:
       - opened
       - synchronize
       - reopened
+  push:
+    branches:
+      - "master"
+      - "staging"
 
 jobs:
   tests:
