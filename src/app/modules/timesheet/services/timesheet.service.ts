@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import { environment } from 'src/environments/environment';
+import { environment } from "src/environments/environment";
 
-import { Company, Invoice, Timesheet } from 'src/app/shared/models';
+import { Company, Invoice, Timesheet } from "src/app/shared/models";
 
-import { LocalSaveService } from 'src/app/shared/services/localSave/local-save.service';
+import { LocalSaveService } from "src/app/shared/services/localSave/local-save.service";
 
-import { SerializationService } from 'src/app/shared/services/serialization/serialization.service';
+import { SerializationService } from "src/app/shared/services/serialization/serialization.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class TimesheetService {
   public timesheet: Timesheet;
@@ -24,35 +24,34 @@ export class TimesheetService {
 
   public getEditToken(): string {
     return this._serializer.serializeObject({
-        mode: 'edit',
-        timesheet: this.timesheet
+      mode: "edit",
+      timesheet: this.timesheet,
     });
   }
 
   public getReviewToken(): string {
     return this._serializer.serializeObject({
-        mode: 'review',
-        timesheet: this.timesheet
+      mode: "review",
+      timesheet: this.timesheet,
     });
   }
 
   public getTransferToken(): string {
-
     let transferedTimesheet = this.timesheet;
 
     if (this.timesheet.invoice) {
       transferedTimesheet = this.getIfExistAlreadyPresentInvoice({
         ...this.timesheet,
-        invoice: Object.assign({}, new Invoice(),  {
-        provider: Object.assign(new Company(), this.timesheet.invoice.client),
-        client: new Company()
+        invoice: Object.assign({}, new Invoice(), {
+          provider: Object.assign(new Company(), this.timesheet.invoice.client),
+          client: new Company(),
         }),
       });
     }
 
     return this._serializer.serializeObject({
-      mode: 'edit',
-      timesheet: transferedTimesheet
+      mode: "edit",
+      timesheet: transferedTimesheet,
     });
   }
 
@@ -69,15 +68,15 @@ export class TimesheetService {
 
   public getInvoiceLink() {
     const params = new URLSearchParams({
-      url: window.location.origin + '/invoice/' + this.getReviewToken(),
-      form: 'A4',
-      scale: '2',
-      'margin.top': '15px',
-      'margin.right': '10px',
-      'margin.bottom': '10px',
-      'margin.left': '10px',
-      landscape: 'false',
-      printBackground: 'true',
+      url: window.location.origin + "/invoice/" + this.getReviewToken(),
+      form: "A4",
+      scale: "2",
+      "margin.top": "15px",
+      "margin.right": "10px",
+      "margin.bottom": "10px",
+      "margin.left": "10px",
+      landscape: "false",
+      printBackground: "true",
       api: environment.pdf_api_key,
       title: this.timesheet.invoice.number,
     });
@@ -112,8 +111,8 @@ export class TimesheetService {
   public getLocalStorageTimesheetsList() {
     let timesheetArray = [];
 
-    Object.keys(localStorage).forEach(function(localKey) {
-      if ((localKey.split('.')[0]) === 'timesheet') {
+    Object.keys(localStorage).forEach(function (localKey) {
+      if (localKey.split(".")[0] === "timesheet") {
         timesheetArray.push(localKey);
       }
     });
@@ -121,7 +120,7 @@ export class TimesheetService {
     // sort timesheets in timesheetArray by their name.
 
     return timesheetArray.sort((aTimesheet, anotherTimesheet) => {
-      return aTimesheet.split('.')[1] - anotherTimesheet.split('.')[1];
+      return aTimesheet.split(".")[1] - anotherTimesheet.split(".")[1];
     });
   }
 
@@ -132,23 +131,33 @@ export class TimesheetService {
     if (timesheetArray.length === 0) {
       lastTimesheet = 0;
     } else {
-      lastTimesheet = +(timesheetArray[timesheetArray.length - 1].split('.')[1]);
+      lastTimesheet = +timesheetArray[timesheetArray.length - 1].split(".")[1];
     }
-    this._localSaveService.setLocalItem(`timesheet.${lastTimesheet + 1}`, this.timesheet);
+    this._localSaveService.setLocalItem(
+      `timesheet.${lastTimesheet + 1}`,
+      this.timesheet
+    );
   }
 
   public openLastTimesheetInLocal(): boolean {
     const timesheetsOfLocalStorage = this.getLocalStorageTimesheetsList();
     if (timesheetsOfLocalStorage.length > 0) {
-      this.setTimesheet(this._localSaveService.getLocalItem(timesheetsOfLocalStorage[timesheetsOfLocalStorage.length - 1]));
+      this.setTimesheet(
+        this._localSaveService.getLocalItem(
+          timesheetsOfLocalStorage[timesheetsOfLocalStorage.length - 1]
+        )
+      );
       return true;
     }
     return false;
   }
 
-  public getIfExistAlreadyPresentInvoice(timesheetToTransfer: Timesheet): Timesheet {
+  public getIfExistAlreadyPresentInvoice(
+    timesheetToTransfer: Timesheet
+  ): Timesheet {
     const localStorageTimesheetsList = this.getLocalStorageTimesheetsList();
-    const localStorageTimesheetsListSize = this.getLocalStorageTimesheetsList().length;
+    const localStorageTimesheetsListSize =
+      this.getLocalStorageTimesheetsList().length;
     for (let i = localStorageTimesheetsListSize; i >= 0; i--) {
       const storedTimesheet: Timesheet = Object.assign(
         {},
@@ -156,22 +165,28 @@ export class TimesheetService {
         this._localSaveService.getLocalItem(localStorageTimesheetsList[i])
       );
 
-      if (storedTimesheet.consultant.name === timesheetToTransfer.consultant.name &&
-        storedTimesheet.invoice.provider.name === timesheetToTransfer.invoice.provider.name) {
-
+      if (
+        storedTimesheet.consultant.name ===
+          timesheetToTransfer.consultant.name &&
+        storedTimesheet.invoice.provider.name ===
+          timesheetToTransfer.invoice.provider.name
+      ) {
         return {
           ...timesheetToTransfer,
           invoice: Object.assign({}, timesheetToTransfer.invoice, {
             clientRef: storedTimesheet.invoice.clientRef,
             workedRate: storedTimesheet.invoice.workedRate,
-            client: Object.assign(new Company(), storedTimesheet.invoice.client),
+            client: Object.assign(
+              new Company(),
+              storedTimesheet.invoice.client
+            ),
             paymentLatePenalty: storedTimesheet.invoice.paymentLatePenalty,
             paymentModality: storedTimesheet.invoice.paymentModality,
             bankAccountHolder: storedTimesheet.invoice.bankAccountHolder,
             bankingAgency: storedTimesheet.invoice.bankingAgency,
             bankingDomiciliation: storedTimesheet.invoice.bankingDomiciliation,
             bankIBAN: storedTimesheet.invoice.bankIBAN,
-            bankSWIFT: storedTimesheet.invoice.bankSWIFT
+            bankSWIFT: storedTimesheet.invoice.bankSWIFT,
           }),
         };
       }
@@ -180,22 +195,17 @@ export class TimesheetService {
   }
 
   public setTimesheet(timesheet) {
-      this.timesheet = Object.assign(
-        {},
-        new Timesheet(),
-        {
-          ...timesheet,
-          workingDays: 0,
-          commutes: [],
-          flatFees: [],
-          miscellaneous : [],
-          invoice: Object.assign({}, new Invoice(), timesheet.invoice, {
-            date: '',
-            number: null,
-            paymentDate: '',
-            paymentLatePenalty: false
-          })
-        }
-      );
-    }
+    this.timesheet = Object.assign({}, new Timesheet(), {
+      ...timesheet,
+      workingDays: 0,
+      commutes: [],
+      flatFees: [],
+      miscellaneous: [],
+      invoice: Object.assign({}, new Invoice(), timesheet.invoice, {
+        number: null,
+        paymentDate: "",
+        paymentLatePenalty: false,
+      }),
+    });
+  }
 }
