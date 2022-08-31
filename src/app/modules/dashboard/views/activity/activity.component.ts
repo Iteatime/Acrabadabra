@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
+import { Component, OnInit } from "@angular/core";
+import { AuthenticationService } from "src/app/shared/services/authentication/authentication.service";
+import { MissionService } from "../../../../shared/services/missions/missions.service";
 
-import { Mission } from '../../models';
-import { MissionService, StoreService } from '../../services';
+import { Mission } from "../../models";
+import { StoreService } from "../../services";
 
 @Component({
-  selector: 'app-activity',
-  templateUrl: './activity.component.html',
+  selector: "app-activity",
+  templateUrl: "./activity.component.html",
 })
 export class ActivityComponent implements OnInit {
   // TODO: move this to a store at the dashboard level
@@ -31,7 +32,7 @@ export class ActivityComponent implements OnInit {
   updateMissions(): void {
     this._missionService
       .readMissionsByCreator(this._auth.user.id)
-      .then(response => {
+      .then((response) => {
         this.setMissionsLength(response);
         this.ready = true;
       });
@@ -47,7 +48,7 @@ export class ActivityComponent implements OnInit {
   getCurrentMissionsCount(missions: Mission[]): number {
     const currentDate = new Date();
 
-    return missions.filter(mission => {
+    return missions.filter((mission) => {
       const startDate = new Date(mission.startDate);
       const endDate = new Date(mission.endDate);
 
@@ -58,7 +59,7 @@ export class ActivityComponent implements OnInit {
   getFutureMissionsCount(missions: Mission[]): number {
     const currentDate = new Date();
 
-    return missions.filter(mission => {
+    return missions.filter((mission) => {
       const startDate = new Date(mission.startDate);
 
       return currentDate < startDate;
