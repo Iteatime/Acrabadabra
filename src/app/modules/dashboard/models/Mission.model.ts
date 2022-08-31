@@ -1,5 +1,5 @@
-import { BankAccount } from './BankAccount.model';
-import { Company } from './Company.model';
+import { BankAccount } from "./BankAccount.model";
+import { Company } from "./company.model";
 
 export class Mission {
   id: string;

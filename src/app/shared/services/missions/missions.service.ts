@@ -54,6 +54,14 @@ export class MissionService {
     }
   };
 
+  private async getFunction(functionName: string, params: Record<string, any>) {
+    return (
+      await axios.get(`/.netlify/functions/${functionName}`, {
+        params,
+      })
+    ).data;
+  }
+
   createMission = async (data: Mission): Promise<Mission> => {
     const result = await this.crud("post", null, data);
     return result;
@@ -76,8 +84,10 @@ export class MissionService {
     if (!creatorId) {
       throw new Error("Must specify an ID");
     }
-    const result = await this.crud("get", "user/" + creatorId);
-    return result;
+
+    return this.getFunction("readMissionsByCreator", {});
+    // const result = await this.crud("get", "user/" + creatorId);
+    // return result;
   };
 
   updateMission = async (

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
+import { Component, OnInit } from "@angular/core";
+import { AuthenticationService } from "src/app/shared/services/authentication/authentication.service";
+import { Mission } from "../../../../../shared/models";
+import { MissionService } from "../../../../../shared/services/missions/missions.service";
 
-import { State } from '../../../@type';
-import { Mission } from '../../../models';
-import { MissionService, StoreService } from '../../../services';
+import { State } from "../../../@type";
+import { StoreService } from "../../../services";
 
 interface MissionsByStatus {
   current: Mission[];
@@ -12,13 +13,17 @@ interface MissionsByStatus {
 }
 
 @Component({
-  selector: 'app-mission-all',
-  templateUrl: './mission-all.component.html',
+  selector: "app-mission-all",
+  templateUrl: "./mission-all.component.html",
 })
 export class MissionAllComponent implements OnInit {
   public ready: boolean;
-  public missionsByStatus: MissionsByStatus = { current: [], future: [], past: [] };
-  public headings = ['title', 'consultant', 'client', 'startDate', 'endDate'];
+  public missionsByStatus: MissionsByStatus = {
+    current: [],
+    future: [],
+    past: [],
+  };
+  public headings = ["title", "consultant", "client", "startDate", "endDate"];
 
   constructor(
     private _missionService: MissionService,
@@ -34,14 +39,11 @@ export class MissionAllComponent implements OnInit {
   updateMissions(): void {
     this._missionService
       .readMissionsByCreator(this._auth.user.id)
-      .then(response => {
-        this.store.setState(
-          { missions: response },
-          (state: State) => {
-            this.missionsByStatus = this.getMissionsByStatus(state.missions);
-            this.ready = true;
-          }
-        );
+      .then((response) => {
+        this.store.setState({ missions: response }, (state: State) => {
+          this.missionsByStatus = this.getMissionsByStatus(state.missions);
+          this.ready = true;
+        });
       });
   }
 
@@ -49,10 +51,10 @@ export class MissionAllComponent implements OnInit {
     const missionsByStatus = {
       current: [],
       future: [],
-      past: []
+      past: [],
     };
 
-    this.sortMissionsByDateDescending(missions).map(mission => {
+    this.sortMissionsByDateDescending(missions).map((mission) => {
       const status = this.getMissionStatus(mission);
       missionsByStatus[status] = [mission, ...missionsByStatus[status]];
     });
@@ -66,12 +68,12 @@ export class MissionAllComponent implements OnInit {
     const endDate = new Date(mission.endDate);
 
     if (currentDate >= startDate && currentDate <= endDate) {
-      return 'current';
+      return "current";
     } else if (currentDate < startDate) {
-      return 'future';
+      return "future";
     }
 
-    return 'past';
+    return "past";
   }
 
   sortMissionsByDateDescending(missions: Mission[]): Mission[] {
