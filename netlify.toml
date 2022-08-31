@@ -23,7 +23,7 @@
   command = "npm run build"
 
   # Directory with the lambda functions to deploy to AWS.
-  functions = "./functions/"
+  # functions = "./functions/"
 
 # Production context: All deploys to the main
 # repository branch will inherit these settings.

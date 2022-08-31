@@ -1,8 +1,5 @@
 {
   "/.netlify/functions": {
-    "target": "http://localhost:9001",
-    "pathRewrite": {
-      "^/\\.netlify/functions": ""
-    }
+    "target": "http://localhost:9001"
   }
 }
