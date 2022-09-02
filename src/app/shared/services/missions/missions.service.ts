@@ -3,15 +3,18 @@ import axios from "axios";
 
 import { Mission, Timesheet } from "src/app/shared/models";
 import { SerializationService } from "src/app/shared/services/serialization/serialization.service";
+import { FunctionsService } from "../functions.service";
 
 @Injectable({
   providedIn: "root",
 })
-export class MissionService {
+export class MissionService extends FunctionsService {
   public mission = new Mission();
   public timesheet: Timesheet;
 
-  constructor(private _serializer: SerializationService) {}
+  constructor(private _serializer: SerializationService) {
+    super();
+  }
 
   public getCreateToken(): string {
     return this._serializer.serializeObject({
@@ -54,17 +57,8 @@ export class MissionService {
     }
   };
 
-  private async getFunction(functionName: string, params: Record<string, any>) {
-    return (
-      await axios.get(`/.netlify/functions/${functionName}`, {
-        params,
-      })
-    ).data;
-  }
-
   createMission = async (data: Mission): Promise<Mission> => {
-    const result = await this.crud("post", null, data);
-    return result;
+    return this.postFunction("createMission", null, data);
   };
 
   readAllMissions = async (): Promise<Mission[]> => {
