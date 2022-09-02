@@ -11,8 +11,8 @@
   </div>
 </div>
 
-<div>
-  <form #detailsForm="ngForm" class="card shadow mb-4" (ngSubmit)="onDetailsSubmit()">
+<div *ngIf="ready">
+  <form #detailsForm="ngForm" class="card shadow mb-4" (ngSubmit)="onDetailsSubmit(detailsForm)">
     <div class="card-header py-3">
       <h2 class="m-0 font-weight-bold text-primary h6">
         Informations générales
@@ -68,7 +68,7 @@
     </div>
   </form>
 
-  <form #bankForm="ngForm" class="card shadow mb-4" (ngSubmit)="onBankSubmit()">
+  <form #bankForm="ngForm" class="card shadow mb-4" (ngSubmit)="onBankSubmit(bankForm)">
     <div class="card-header py-3">
       <h2 class="m-0 font-weight-bold text-primary h6">
         Coordonnées bancaires

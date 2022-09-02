@@ -1,10 +1,5 @@
 <!-- Page Heading -->
-<h1 class="h2 mb-2 text-gray-800">Nouvelle mission</h1>
-<p class="mb-4">
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum officia sunt
-  culpa saepe quae ea, quam perferendis iure distinctio voluptatum, odit
-  delectus dolorem! Distinctio laudantium voluptates nihil error debitis sit.
-</p>
+<h1 class="h2 mb-4 text-gray-800">Nouvelle mission</h1>
 
 <div *ngIf="!ready" class="row">
   <div class="col-12 mb-4">
@@ -22,53 +17,32 @@
 </div>
 
 <div *ngIf="ready">
-  <form>
+  <form #form="ngForm" (ngSubmit)="onSubmit(form)">
     <fieldset class="card shadow mb-4">
-      <a
-        href="#mission-content"
-        class="d-block card-header text-body py-3"
-        data-toggle="collapse"
-        role="button"
-        attr.aria-expanded="true"
-        attr.aria-controls="mission-content"
-      >
+      <a href="#mission-content" class="d-block card-header text-body py-3" data-toggle="collapse" role="button"
+        attr.aria-expanded="true" attr.aria-controls="mission-content">
         <h2 class="m-0 font-weight-bold text-primary h6">Mission</h2>
       </a>
       <div id="mission-content" class="collapse show">
         <div class="card-body">
           <div class="row">
             <div class="col-lg">
-              <app-form-input
-                id="mission_title"
-                name="mission[title]"
-                label="Intitulé"
-                [required]="true"
-              ></app-form-input>
+              <app-form-input id="mission_title" name="mission[title]" label="Intitulé" [required]="true">
+              </app-form-input>
             </div>
             <div class="col-lg">
-              <app-form-input
-                id="mission_client-ref"
-                name="mission[clientRef]"
-                label="Référence client (BDC)"
-              ></app-form-input>
+              <app-form-input id="mission_client-ref" name="mission[clientRef]" label="Référence client (BDC)">
+              </app-form-input>
             </div>
           </div>
           <div class="row">
             <div class="col-lg">
-              <app-form-input
-                id="mission_start-date"
-                name="mission[startDate]"
-                label="Date de début"
-                [required]="true"
-              ></app-form-input>
+              <app-form-input id="mission_start-date" name="mission[startDate]" label="Date de début" [required]="true">
+              </app-form-input>
             </div>
             <div class="col-lg">
-              <app-form-input
-                id="mission_end-date"
-                name="mission[endDate]"
-                label="Date de fin"
-                [required]="true"
-              ></app-form-input>
+              <app-form-input id="mission_end-date" name="mission[endDate]" label="Date de fin" [required]="true">
+              </app-form-input>
             </div>
           </div>
         </div>
@@ -76,35 +50,20 @@
     </fieldset>
 
     <fieldset class="card shadow mb-4">
-      <a
-        href="#consultant-content"
-        class="d-block card-header text-body py-3"
-        data-toggle="collapse"
-        role="button"
-        attr.aria-expanded="true"
-        attr.aria-controls="consultant-content"
-      >
+      <a href="#consultant-content" class="d-block card-header text-body py-3" data-toggle="collapse" role="button"
+        attr.aria-expanded="true" attr.aria-controls="consultant-content">
         <h2 class="m-0 font-weight-bold text-primary h6">Consultant</h2>
       </a>
       <div id="consultant-content" class="collapse show">
         <div class="card-body">
           <div class="row">
             <div class="col-lg">
-              <app-form-input
-                id="mission_consultant"
-                name="mission[consultant]"
-                label="Nom complet"
-                [required]="true"
-              ></app-form-input>
+              <app-form-input id="mission_consultant" name="mission[consultant]" label="Nom complet" [required]="true">
+              </app-form-input>
             </div>
             <div class="col-lg">
-              <app-form-input
-                id="mission_consultant-email"
-                type="email"
-                name="mission[consultantEmail]"
-                label="Email"
-                [required]="true"
-              ></app-form-input>
+              <app-form-input id="mission_consultant-email" type="email" name="mission[consultantEmail]" label="Email"
+                [required]="true"></app-form-input>
             </div>
           </div>
         </div>
@@ -112,35 +71,20 @@
     </fieldset>
 
     <fieldset class="card shadow mb-4">
-      <a
-        href="#client-content"
-        class="d-block card-header text-body py-3"
-        data-toggle="collapse"
-        role="button"
-        attr.aria-expanded="true"
-        attr.aria-controls="client-content"
-      >
+      <a href="#client-content" class="d-block card-header text-body py-3" data-toggle="collapse" role="button"
+        attr.aria-expanded="true" attr.aria-controls="client-content">
         <h2 class="m-0 font-weight-bold text-primary h6">Client</h2>
       </a>
       <div id="client-content" class="collapse show">
         <div class="card-body">
           <div class="row">
             <div class="col-lg">
-              <app-form-input
-                id="mission_client"
-                name="mission[client]"
-                label="Nom complet"
-                [required]="true"
-              ></app-form-input>
+              <app-form-input id="mission_client" name="mission[client]" label="Nom complet" [required]="true">
+              </app-form-input>
             </div>
             <div class="col-lg">
-              <app-form-input
-                id="mission_client-email"
-                type="email"
-                name="mission[clientEmail]"
-                label="Email"
-                [required]="true"
-              ></app-form-input>
+              <app-form-input id="mission_client-email" type="email" name="mission[clientEmail]" label="Email"
+                [required]="true"></app-form-input>
             </div>
           </div>
         </div>
@@ -148,130 +92,70 @@
     </fieldset>
 
     <fieldset class="card shadow mb-4">
-      <a
-        href="#provider-content"
-        class="d-block card-header text-body py-3 collapsed"
-        data-toggle="collapse"
-        role="button"
-        attr.aria-expanded="false"
-        attr.aria-controls="provider-content"
-      >
+      <a href="#provider-content" class="d-block card-header text-body py-3 collapsed" data-toggle="collapse"
+        role="button" attr.aria-expanded="false" attr.aria-controls="provider-content">
         <h2 class="m-0 font-weight-bold text-primary h6">Prestataire</h2>
       </a>
       <div id="provider-content" class="collapse">
         <div class="card-body">
           <div class="row">
             <div class="col-lg-6">
-              <app-form-input
-                id="mission_provider_name"
-                name="mission[provider[name]]"
-                label="Dénomination"
-                [required]="true"
-                [value]="company.name"
-              ></app-form-input>
-              <app-form-input
-                id="mission_provider_address"
-                name="mission[provider[address]]"
-                label="Adresse"
-                [required]="true"
-                [value]="company.address"
-              ></app-form-input>
+              <app-form-input id="mission_provider_name" name="mission[provider[name]]" label="Dénomination"
+                [required]="true" [value]="company.name"></app-form-input>
+              <app-form-input id="mission_provider_address" name="mission[provider[address]]" label="Adresse"
+                [required]="true" [value]="company.address"></app-form-input>
               <div class="row">
                 <div class="col-lg-4">
-                  <app-form-input
-                    id="mission_provider_zip-code"
-                    name="mission[provider[zipCode]]"
-                    label="Code postal"
-                    [required]="true"
-                    [value]="company.zipCode"
-                  ></app-form-input>
+                  <app-form-input id="mission_provider_zip-code" name="mission[provider[zipCode]]" label="Code postal"
+                    [required]="true" [value]="company.zipCode"></app-form-input>
                 </div>
                 <div class="col-lg-8">
-                  <app-form-input
-                    id="mission_provider_city"
-                    name="mission[provider[city]]"
-                    label="Ville"
-                    [required]="true"
-                    [value]="company.city"
-                  ></app-form-input>
+                  <app-form-input id="mission_provider_city" name="mission[provider[city]]" label="Ville"
+                    [required]="true" [value]="company.city"></app-form-input>
                 </div>
               </div>
-              <app-form-input
-                id="mission_provider_phone"
-                type="tel"
-                name="mission[provider[phone]]"
-                label="Téléphone"
-                [value]="company.phone"
-              ></app-form-input>
+              <app-form-input id="mission_provider_phone" type="tel" name="mission[provider[phone]]" label="Téléphone"
+                [value]="company.phone"></app-form-input>
             </div>
             <div class="col-lg-6">
-              <app-form-input
-                id="mission_provider_siren"
-                name="mission[provider[siren]]"
-                label="Numéro de SIREN"
-                [required]="true"
-                [value]="company.siren"
-              ></app-form-input>
-              <app-form-input
-                id="mission_provider_trade-and-companies-register-city"
-                name="mission[provider[tradeAndCompaniesRegisterCity]]"
-                label="Ville d'immatriculation au RCS"
-                [value]="company.tradeAndCompaniesRegisterCity"
-              ></app-form-input>
-              <app-form-input
-                id="mission_provider_vat-number"
-                name="mission[provider[vatNumber]]"
-                label="Numéro de TVA intra-communautaire"
-                [value]="company.vatNumber"
-              ></app-form-input>
+              <app-form-input id="mission_provider_siren" name="mission[provider[siren]]" label="Numéro de SIREN"
+                [required]="true" [value]="company.siren"></app-form-input>
+              <app-form-input id="mission_provider_trade-and-companies-register-city"
+                name="mission[provider[tradeAndCompaniesRegisterCity]]" label="Ville d'immatriculation au RCS"
+                [value]="company.tradeAndCompaniesRegisterCity"></app-form-input>
+              <app-form-input id="mission_provider_vat-number" name="mission[provider[vatNumber]]"
+                label="Numéro de TVA intra-communautaire" [value]="company.vatNumber"></app-form-input>
             </div>
           </div>
           <hr class="border-light w-100" />
           <h3 class="h5 mb-2 text-primary">Coordonnées bancaires</h3>
           <div class="row">
             <div class="col-lg">
-              <app-form-input
-                id="mission_provider_provider-bank-account-holder"
-                name="mission[provider[providerBankAccountHolder]]"
-                label="Titulaire du compte"
-                [value]="company.providerBankAccountHolder"
-              ></app-form-input>
+              <app-form-input id="mission_provider_provider-bank-account-holder"
+                name="mission[provider[providerBankAccountHolder]]" label="Titulaire du compte"
+                [value]="company.providerBankAccountHolder"></app-form-input>
             </div>
             <div class="col-lg">
-              <app-form-input
-                id="mission_provider_provider-bank-swift"
-                name="mission[provider[providerBankSWIFT]]"
-                label="SWIFT"
-                [value]="company.providerBankSWIFT"
-              ></app-form-input>
+              <app-form-input id="mission_provider_provider-bank-swift" name="mission[provider[providerBankSWIFT]]"
+                label="SWIFT" [value]="company.providerBankSWIFT"></app-form-input>
             </div>
           </div>
           <div class="row">
             <div class="col-lg">
-              <app-form-input
-                id="mission_provider_provider-bank-iban"
-                name="mission[provider[providerBankIBAN]]"
-                label="IBAN"
-                [value]="company.providerBankIBAN"
-              ></app-form-input>
+              <app-form-input id="mission_provider_provider-bank-iban" name="mission[provider[providerBankIBAN]]"
+                label="IBAN" [value]="company.providerBankIBAN"></app-form-input>
             </div>
           </div>
           <div class="row">
             <div class="col-lg">
-              <app-form-input
-                id="mission_provider_provider-banking-domiciliation"
-                name="mission[provider[providerBankingDomiciliation]]"
-                label="Banque"
-                [value]="company.providerBankingDomiciliation"
-              ></app-form-input>
+              <app-form-input id="mission_provider_provider-banking-domiciliation"
+                name="mission[provider[providerBankingDomiciliation]]" label="Banque"
+                [value]="company.providerBankingDomiciliation"></app-form-input>
             </div>
             <div class="col-lg">
-              <app-form-input
-                id="mission_provider_provider-banking-agency"
-                name="mission[provider[providerBankingAgency]]"
-                label="Agence"
-                [value]="company.providerBankingAgency"
-              ></app-form-input>
+              <app-form-input id="mission_provider_provider-banking-agency"
+                name="mission[provider[providerBankingAgency]]" label="Agence" [value]="company.providerBankingAgency">
+              </app-form-input>
             </div>
           </div>
         </div>
