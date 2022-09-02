@@ -72,7 +72,7 @@ export class MissionEditComponent implements OnInit {
         }
         this.missionService.mission.consultantFreelance =
           this.isConsultantFreelance;
-        this.missionService.mission.missionCreator = this.auth.user.id;
+        this.missionService.mission.creator = this.auth.user.id;
         this.missionService
           .createMission(this.missionService.mission)
           .then((response) => {

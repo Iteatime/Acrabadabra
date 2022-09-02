@@ -14,3 +14,6 @@ async function getCollection(name: string) {
 export async function getCompanies() {
   return getCollection("companies");
 }
+export async function getMissions() {
+  return getCollection("missions");
+}

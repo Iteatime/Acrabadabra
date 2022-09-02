@@ -84,7 +84,7 @@ describe("MissionService", () => {
 
     it("should only return missions whose creator matches the given id", () => {
       for (let mission of missions) {
-        expect(mission.missionCreator).toEqual(VALID_CREATOR_ID);
+        expect(mission.creator).toEqual(VALID_CREATOR_ID);
       }
     });
 
@@ -109,7 +109,7 @@ describe("MissionService", () => {
     beforeEach(() => {
       mission = new Mission();
       mission.title = "Dummy Title";
-      mission.missionCreator = VALID_CREATOR_ID;
+      mission.creator = VALID_CREATOR_ID;
     });
 
     it("should return a copy of the sent object along with an id", async () => {
@@ -159,7 +159,7 @@ describe("MissionService", () => {
     beforeEach(() => {
       mission = new Mission();
       mission.title = "Modified Dummy Title";
-      mission.missionCreator = VALID_CREATOR_ID;
+      mission.creator = VALID_CREATOR_ID;
     });
 
     it("should return a copy of the sent object, save for the encrypted id", async () => {
