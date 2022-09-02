@@ -1,8 +1,8 @@
-import { Company } from './company.model';
+import { Company } from "./company.model";
 
 export class Mission {
   id: string;
-  missionCreator: string;
+  creator: string;
   consultant: string;
   consultantEmail: string;
   client: string;
@@ -54,11 +54,10 @@ export class Mission {
     consultantBankingDomiciliation?: string,
     consultantBankIBAN?: string,
     consultantBankSWIFT?: string,
-    consultantFreelance?: boolean,
-
-    ) {
+    consultantFreelance?: boolean
+  ) {
     this.id = id;
-    this.missionCreator = missionCreator;
+    this.creator = missionCreator;
     this.consultant = missionConsultant;
     this.consultantEmail = missionConsultantEmail;
     this.client = missionClient;
@@ -72,17 +71,16 @@ export class Mission {
     this.consultantCompany = consultantCompany || new Company();
     this.providerCompany = providerCompany || new Company();
     this.clientCompany = clientCompany || new Company();
-    this.providerBankAccountHolder = providerBankAccountHolder || '';
-    this.providerBankingAgency = providerBankingAgency || '';
-    this.providerBankingDomiciliation = providerBankingDomiciliation || '';
-    this.providerBankIBAN = providerBankIBAN || '';
-    this.providerBankSWIFT = providerBankSWIFT || '';
-    this.consultantBankAccountHolder = consultantBankAccountHolder || '';
-    this.consultantBankingAgency = consultantBankingAgency || '';
-    this.consultantBankingDomiciliation = consultantBankingDomiciliation || '';
-    this.consultantBankIBAN = consultantBankIBAN || '';
-    this.consultantBankSWIFT = consultantBankSWIFT || '';
+    this.providerBankAccountHolder = providerBankAccountHolder || "";
+    this.providerBankingAgency = providerBankingAgency || "";
+    this.providerBankingDomiciliation = providerBankingDomiciliation || "";
+    this.providerBankIBAN = providerBankIBAN || "";
+    this.providerBankSWIFT = providerBankSWIFT || "";
+    this.consultantBankAccountHolder = consultantBankAccountHolder || "";
+    this.consultantBankingAgency = consultantBankingAgency || "";
+    this.consultantBankingDomiciliation = consultantBankingDomiciliation || "";
+    this.consultantBankIBAN = consultantBankIBAN || "";
+    this.consultantBankSWIFT = consultantBankSWIFT || "";
     this.consultantFreelance = consultantFreelance;
-
   }
 }

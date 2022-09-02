@@ -1,9 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthenticationService } from "src/app/shared/services/authentication/authentication.service";
-import { Mission } from "../../../../../shared/models";
 import { MissionService } from "../../../../../shared/services/missions/missions.service";
+import { Mission as MissionSharedType } from "../../../../../shared/models";
 
 import { State } from "../../../@type";
+import { Mission } from "../../../models";
 import { StoreService } from "../../../services";
 
 interface MissionsByStatus {
@@ -47,7 +48,9 @@ export class MissionAllComponent implements OnInit {
       });
   }
 
-  getMissionsByStatus(missions: Mission[]): MissionsByStatus {
+  getMissionsByStatus(
+    missions: (Mission | MissionSharedType)[]
+  ): MissionsByStatus {
     const missionsByStatus = {
       current: [],
       future: [],
@@ -55,7 +58,7 @@ export class MissionAllComponent implements OnInit {
     };
 
     this.sortMissionsByDateDescending(missions).map((mission) => {
-      const status = this.getMissionStatus(mission);
+      const status = this.getMissionStatus(mission as any);
       missionsByStatus[status] = [mission, ...missionsByStatus[status]];
     });
 
@@ -76,7 +79,9 @@ export class MissionAllComponent implements OnInit {
     return "past";
   }
 
-  sortMissionsByDateDescending(missions: Mission[]): Mission[] {
+  sortMissionsByDateDescending(
+    missions: (Mission | MissionSharedType)[]
+  ): (Mission | MissionSharedType)[] {
     return missions.sort((missionA, missionB) => {
       const dateA = new Date(missionA.startDate);
       const dateB = new Date(missionB.startDate);

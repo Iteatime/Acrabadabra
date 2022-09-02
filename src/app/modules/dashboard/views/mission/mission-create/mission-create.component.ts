@@ -1,5 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { NgForm } from "@angular/forms";
+import { set } from "lodash";
+import { Mission } from "../../../../../shared/models";
+import { MissionService } from "../../../../../shared/services/missions/missions.service";
 
 import { State } from "../../../@type";
 import { Company } from "../../../models";
@@ -14,7 +17,8 @@ export class MissionCreateComponent implements OnInit {
   public company: Company;
 
   constructor(
-    private _companyService: CompanyService,
+    private companies: CompanyService,
+    private missions: MissionService,
     public store: StoreService
   ) {}
 
@@ -22,7 +26,7 @@ export class MissionCreateComponent implements OnInit {
     this.ready = false;
 
     if (!this.store.state.company) {
-      this._companyService
+      this.companies
         .readCompanyByOwnerId(this.store.state.user.id)
         .then((response) => {
           this.store.setState({ company: response }, (state: State) => {
@@ -36,7 +40,12 @@ export class MissionCreateComponent implements OnInit {
     }
   }
 
-  onSubmit(form: NgForm) {
-    console.log(form.value);
+  async onSubmit(form: NgForm) {
+    const parts = Object.entries(form.value).reduce(
+      (o, [key, value]) => set(o, key, value),
+      {}
+    ) as Mission;
+
+    const res = await this.missions.createMission(parts);
   }
 }
