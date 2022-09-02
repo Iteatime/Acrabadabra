@@ -70,6 +70,18 @@
               "sourceMap": true,
               "namedChunks": true,
               "vendorChunk": true
+            },
+            "staging": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.staging.ts"
+                }
+              ],
+              "optimization": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "vendorChunk": true
             }
           }
         },
@@ -85,6 +97,9 @@
             },
             "developpement": {
               "browserTarget": "acrabadabra:build:developpement"
+            },
+            "staging": {
+              "browserTarget": "acrabadabra:build:staging"
             }
           }
         },

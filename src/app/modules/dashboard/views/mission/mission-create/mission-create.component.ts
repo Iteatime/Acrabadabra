@@ -46,6 +46,8 @@ export class MissionCreateComponent implements OnInit {
       {}
     ) as Mission;
 
+    (parts as any).creatorId = this.store.state.user.id;
+
     const res = await this.missions.createMission(parts);
   }
 }
