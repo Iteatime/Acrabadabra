@@ -11,8 +11,6 @@ import { CompanyService, StoreService } from "../../services";
   styleUrls: ["./company.component.scss"],
 })
 export class CompanyComponent implements OnInit {
-  @ViewChild("detailsForm") detailsForm: NgForm;
-  @ViewChild("bankForm") bankForm: NgForm;
   public ready: boolean;
   public company: Company = new Company("Test");
 
@@ -51,18 +49,16 @@ export class CompanyComponent implements OnInit {
       });
   }
 
-  onDetailsSubmit() {
-    console.log(this.detailsForm.value);
+  onDetailsSubmit(form: NgForm) {
     this.updateCompany({
       ...this.company,
-      ...this.detailsForm.value,
+      ...form.value,
     });
   }
-  onBankSubmit() {
-    console.log(this.bankForm.value);
+  onBankSubmit(form: NgForm) {
     this.updateCompany({
       ...this.company,
-      bankAccount: this.bankForm.value,
+      bankAccount: form.value,
     } as any);
   }
 }

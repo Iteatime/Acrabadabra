@@ -25,6 +25,7 @@
             ],
             "styles": [
               "node_modules/startbootstrap-sb-admin-2/vendor/fontawesome-free/css/all.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/app/style/main.scss"
             ],
             "scripts": [
