@@ -20,7 +20,7 @@
   publish = "./dist/acrabadabra/"
 
   # Default build command.
-  command = "npm run build"
+  command = "yarn build"
 
   # Directory with the lambda functions to deploy to AWS.
   # functions = "./functions/"
@@ -28,14 +28,15 @@
 # Production context: All deploys to the main
 # repository branch will inherit these settings.
 [context.production]
-  command = "npm run build"
+  command = "yarn build:prod"
 #  [context.production.environment]
 #    ACCESS_TOKEN = "super secret"
 
 # Deploy Preview context: all deploys resulting from a pull/merge request will
 # inherit these settings.
 [context.deploy-preview]
-  command = "npm run build"
+  command = "yarn build:dev"
+  MONGO_DB = "acra_test"
 
 # Deploy Preview context: All Deploy Previews
 # will inherit these settings.
@@ -45,12 +46,14 @@
 # Branch Deploy context: All deploys that are not in
 # an active Deploy Preview will inherit these settings.
 [context.branch-deploy]
-  command = "npm run build"
+  command = "yarn build:dev"
+  MONGO_DB = "acra_test"
 
 # Specific branch context: all deploys from this specific branch will inherit
 # these settings.
 [context.staging] # 'staging' is a branch name
-  command = "npm run build"
+  command = "yarn build:staging"
+  MONGO_DB = "acra_test"
 #  base = "staging"
 
 # A redirect rule with all the supported properties
@@ -107,3 +110,6 @@
     # Basic-Auth allows you to password protect your whole site.
     # Only available to paid accounts.
 #    Basic-Auth = "someuser:somepassword anotheruser:anotherpassword"
+
+[functions]
+  external_node_modules = ["mongodb"]

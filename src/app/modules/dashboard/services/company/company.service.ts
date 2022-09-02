@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import axios from "axios";
+import { environment } from "../../../../../environments/environment";
 
 import { Company } from "../../models";
 
@@ -9,33 +10,28 @@ import { Company } from "../../models";
 export class CompanyService {
   public company = new Company();
 
-  private async getFunction(functionName: string, params: Record<string, any>) {
-    return (
-      await axios.get(`/.netlify/functions/${functionName}`, {
-        params,
-      })
-    ).data;
-  }
-
-  private async postFunction(
-    functionName: string,
-    params: Record<string, any>,
-    body: any
-  ) {
-    return (
-      await axios.post(`/.netlify/functions/${functionName}`, body, {
-        params,
-      })
-    ).data;
-  }
+  private crud = async (
+    method: string,
+    id?: string,
+    payload?: any
+  ): Promise<any> => {
+    try {
+      if (typeof axios[method] === "undefined") {
+        throw new Error(`Invalid REST method: '${method}'`);
+      }
+      const uri = `${environment.API_URl}/companies${id ? `/${id}` : ""}`;
+      const response = await axios[method](uri, payload);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
 
   readCompanyByOwnerId = async (ownerId: string): Promise<Company> => {
     if (!ownerId) {
       throw new Error("Must specify an ID");
     }
-    const result = await this.getFunction("readCompanyByOwnerId", {
-      id: ownerId,
-    });
+    const result = await this.crud("get", ownerId);
     return result.length > 0 ? result[0] : null;
   };
 
@@ -43,13 +39,6 @@ export class CompanyService {
     ownerId: string,
     company: Company
   ): Promise<Company> => {
-    const result = await this.postFunction(
-      "updateCompanyDetails",
-      {
-        id: ownerId,
-      },
-      company
-    );
-    return result;
+    return this.crud("post", ownerId, company);
   };
 }

@@ -1,51 +1,54 @@
-import { Directive, Input, Output, EventEmitter, HostListener, OnChanges} from '@angular/core';
-import { NotificationService } from 'src/app/modules/notification/services/notification.service';
+import {
+  Directive,
+  Input,
+  Output,
+  EventEmitter,
+  HostListener,
+  OnChanges,
+} from "@angular/core";
+import { NotificationService } from "src/app/modules/notification/services/notification.service";
 
 @Directive({
-
-  selector: '[copyToClipboard]',
+  selector: "[copyToClipboard]",
 })
 export class CopyToClipboardDirective {
-
-  @Input('copyToClipboard')
+  @Input("copyToClipboard")
   public payload: string;
 
-  @Input('copyToClipboardMessage')
+  @Input("copyToClipboardMessage")
   public message: string;
 
-  @Input('copyToClipboardMessageParent')
-  public parent: HTMLElement;
+  @Input("copyToClipboardMessageParent")
+  public parent: ParentNode;
 
   @Output()
   public copied: EventEmitter<string> = new EventEmitter<string>();
 
-  @HostListener('click', ['$event'])
+  @HostListener("click", ["$event"])
   public onCopy(event: MouseEvent): void {
-
     event.preventDefault();
     if (!this.payload) {
       return;
     }
 
     const listener = (e: ClipboardEvent) => {
-      const clipboard = e.clipboardData || window['clipboardData'];
-      clipboard.setData('text', this.payload.toString());
+      const clipboard = e.clipboardData || window["clipboardData"];
+      clipboard.setData("text", this.payload.toString());
       e.preventDefault();
 
       this.copied.emit(this.payload);
     };
 
-    document.addEventListener('copy', listener, false);
-    document.execCommand('copy');
-    document.removeEventListener('copy', listener, false);
+    document.addEventListener("copy", listener, false);
+    document.execCommand("copy");
+    document.removeEventListener("copy", listener, false);
 
     if (!this.message) {
-      this.message = 'Copied';
+      this.message = "Copied";
     }
 
-    this.notificationService.push(this.message, 'info');
+    this.notificationService.push(this.message, "info");
   }
 
-  constructor(private notificationService: NotificationService) { }
-
+  constructor(private notificationService: NotificationService) {}
 }

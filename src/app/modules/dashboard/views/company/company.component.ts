@@ -23,6 +23,7 @@ export class CompanyComponent implements OnInit {
     this.ready = false;
 
     if (!this.store.state.company) {
+      console.log(this.store.state.user.id);
       this._companyService
         .readCompanyByOwnerId(this.store.state.user.id)
         .then((response) => {
