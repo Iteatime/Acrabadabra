@@ -3,6 +3,7 @@ import axios from "axios";
 
 import { Mission, Timesheet } from "src/app/shared/models";
 import { SerializationService } from "src/app/shared/services/serialization/serialization.service";
+import { environment } from "../../../../environments/environment";
 
 @Injectable({
   providedIn: "root",
@@ -46,13 +47,21 @@ export class MissionService {
       if (typeof axios[method] === "undefined") {
         throw new Error(`Invalid REST method: '${method}'`);
       }
-      const uri = `/.netlify/functions/missions${id ? `/${id}` : ""}`;
+      const uri = `${environment.API_URl}${id ? `/${id}` : ""}`;
       const response = await axios[method](uri, payload);
       return response.data;
     } catch (error) {
       throw error;
     }
   };
+
+  private async getFunction(functionName: string, params: Record<string, any>) {
+    return (
+      await axios.get(`/.netlify/functions/${functionName}`, {
+        params,
+      })
+    ).data;
+  }
 
   createMission = async (data: Mission): Promise<Mission> => {
     const result = await this.crud("post", null, data);
@@ -76,6 +85,8 @@ export class MissionService {
     if (!creatorId) {
       throw new Error("Must specify an ID");
     }
+
+    // return this.getFunction("readMissionsByCreator", {});
     const result = await this.crud("get", "user/" + creatorId);
     return result;
   };

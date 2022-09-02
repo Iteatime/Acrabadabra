@@ -1726,7 +1726,7 @@
   resolved "https://registry.yarnpkg.com/@netlify/esbuild-linux-32/-/esbuild-linux-32-0.14.25.tgz#0a401b9ef7a5938de09ef8cf6ea5395afe19e62d"
   integrity sha512-BGRAge/+6m8/lCejgLzCdq+GpN9ah3/XBp88YGgufb4h3c2CAxrq9fIlizHyZA4THHh2T/ka3rYdBOC5ciEwEw==
 
-"@netlify/esbuild-linux-64@0.14.25":
+"@netlify/esbuild-linux-64@0.14.25", "@netlify/esbuild-linux-64@^0.14.25":
   version "0.14.25"
   resolved "https://registry.yarnpkg.com/@netlify/esbuild-linux-64/-/esbuild-linux-64-0.14.25.tgz#c813ea6c52617d0cd94c2b024c5042dad0cb68f2"
   integrity sha512-yD579mskxDXrDR2vC7Dw/mEFTEuQoNYBcoKsIq+ctLiyQcKI1WCgAapJ+MCNpIDkmZp4O1uVuqIiMSyoMlv1QQ==
@@ -1791,7 +1791,7 @@
   resolved "https://registry.yarnpkg.com/@netlify/esbuild-windows-arm64/-/esbuild-windows-arm64-0.14.25.tgz#ddd8535b2cd003adc575f3275ccb1619eace9bc6"
   integrity sha512-B5Neu8aXqucUthCvAwVX7IvKbNSD/n3VFiQQcH0YQ+mtbzEIRIFaEAIanGdkmLx0shVBOlY9JxIeRThGPt2/2A==
 
-"@netlify/esbuild@0.14.25":
+"@netlify/esbuild@0.14.25", "@netlify/esbuild@^0.14.25":
   version "0.14.25"
   resolved "https://registry.yarnpkg.com/@netlify/esbuild/-/esbuild-0.14.25.tgz#8299e8ac8e32b0bf71cdc0860c26e6d904b3ef60"
   integrity sha512-ko0cMTbYpajNr0Sy6kvSqR+JDvgU/vjJhO061K1h8+Zs4MlF5AUhaITkpSOrP3g45zp++IEwN1Brxr+/BIez+g==

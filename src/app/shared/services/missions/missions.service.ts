@@ -3,18 +3,16 @@ import axios from "axios";
 
 import { Mission, Timesheet } from "src/app/shared/models";
 import { SerializationService } from "src/app/shared/services/serialization/serialization.service";
-import { FunctionsService } from "../functions.service";
+import { environment } from "../../../../environments/environment";
 
 @Injectable({
   providedIn: "root",
 })
-export class MissionService extends FunctionsService {
+export class MissionService {
   public mission = new Mission();
   public timesheet: Timesheet;
 
-  constructor(private _serializer: SerializationService) {
-    super();
-  }
+  constructor(private _serializer: SerializationService) {}
 
   public getCreateToken(): string {
     return this._serializer.serializeObject({
@@ -49,7 +47,8 @@ export class MissionService extends FunctionsService {
       if (typeof axios[method] === "undefined") {
         throw new Error(`Invalid REST method: '${method}'`);
       }
-      const uri = `/.netlify/functions/missions${id ? `/${id}` : ""}`;
+
+      const uri = `${environment.API_URl}/missions${id ? `/${id}` : ""}`;
       const response = await axios[method](uri, payload);
       return response.data;
     } catch (error) {
@@ -57,8 +56,17 @@ export class MissionService extends FunctionsService {
     }
   };
 
+  private async getFunction(functionName: string, params: Record<string, any>) {
+    return (
+      await axios.get(`/.netlify/functions/${functionName}`, {
+        params,
+      })
+    ).data;
+  }
+
   createMission = async (data: Mission): Promise<Mission> => {
-    return this.postFunction("createMission", null, data);
+    const result = await this.crud("post", null, data);
+    return result;
   };
 
   readAllMissions = async (): Promise<Mission[]> => {
@@ -79,9 +87,8 @@ export class MissionService extends FunctionsService {
       throw new Error("Must specify an ID");
     }
 
-    return this.getFunction("readMissionsByCreator", {});
-    // const result = await this.crud("get", "user/" + creatorId);
-    // return result;
+    const result = await this.crud("get", creatorId);
+    return result;
   };
 
   updateMission = async (
