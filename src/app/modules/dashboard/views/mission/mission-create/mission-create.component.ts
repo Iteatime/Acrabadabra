@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { NgForm } from "@angular/forms";
+import { Router } from "@angular/router";
 import { set } from "lodash";
 import { Mission } from "../../../../../shared/models";
 import { MissionService } from "../../../../../shared/services/missions/missions.service";
@@ -19,7 +20,8 @@ export class MissionCreateComponent implements OnInit {
   constructor(
     private companies: CompanyService,
     private missions: MissionService,
-    public store: StoreService
+    public store: StoreService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -49,5 +51,6 @@ export class MissionCreateComponent implements OnInit {
     (parts as any).creatorId = this.store.state.user.id;
 
     const res = await this.missions.createMission(parts);
+    this.router.navigate(["dashboard/mission/all"]);
   }
 }
