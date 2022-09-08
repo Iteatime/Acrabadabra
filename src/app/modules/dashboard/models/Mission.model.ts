@@ -3,7 +3,7 @@ import { Company } from "./company.model";
 
 export class Mission {
   id: string;
-  missionCreator: string;
+  creatorId: string;
   title: string;
   startDate: string;
   endDate: string;
@@ -11,44 +11,31 @@ export class Mission {
   unitOfworkPrice: string;
   client: {
     ref: string;
-    name: string;
     email: string;
     company: Company;
   };
   consultant: {
     name: string;
     email: string;
+    isFreelance: boolean;
     company: Company;
-    bankAccount: BankAccount;
   };
-  providerCompany: Company;
-  providerBankAccount: BankAccount;
+  provider: Company;
 
   constructor(
     id?: string,
-    missionCreator?: string,
+    creatorId?: string,
     title?: string,
     startDate?: string,
     endDate?: string,
-    client?: {
-      ref: string;
-      name: string;
-      email: string;
-      company: Company;
-    },
-    consultant?: {
-      name: string;
-      email: string;
-      company: Company;
-      bankAccount: BankAccount;
-    },
+    client?: Mission["client"],
+    consultant?: Mission["consultant"],
     unitOfWorkType?: string,
     unitOfWorkPrice?: string,
-    providerCompany?: Company,
-    providerBankAccount?: BankAccount
+    providerCompany?: Company
   ) {
     this.id = id || null;
-    this.missionCreator = missionCreator || null;
+    this.creatorId = creatorId || null;
     this.title = title || null;
     this.startDate = startDate || null;
     this.endDate = endDate || null;
@@ -56,7 +43,6 @@ export class Mission {
     this.unitOfworkPrice = unitOfWorkPrice || null;
     this.client = client || null;
     this.consultant = consultant || null;
-    this.providerCompany = providerCompany || new Company();
-    this.providerBankAccount = providerBankAccount || new BankAccount();
+    this.provider = providerCompany || new Company();
   }
 }

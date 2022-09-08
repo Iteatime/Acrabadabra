@@ -17,7 +17,8 @@
 </div>
 
 <div *ngIf="ready">
-  <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
     <fieldset class="card shadow mb-4">
       <a href="#mission-content" class="d-block card-header text-body py-3" data-toggle="collapse" role="button"
         aria-expanded="true" aria-controls="mission-content">
@@ -29,13 +30,7 @@
             <div class="col-lg">
               <div class="form-group">
                 <label for="mission_title">Intitulé</label>
-                <input class="form-control" name="title" id="mission_title" ngModel />
-              </div>
-            </div>
-            <div class="col-lg">
-              <div class="form-group">
-                <label for="mission_client-ref">Référence client (BDC)</label>
-                <input class="form-control" name="client.ref" id="mission_client-ref" ngModel />
+                <input class="form-control" id="mission_title" formControlName="title" />
               </div>
             </div>
           </div>
@@ -43,13 +38,13 @@
             <div class="col-lg">
               <div class="form-group">
                 <label for="mission_start-date">Date de début</label>
-                <input class="form-control" name="startDate" id="mission_start-date" type="date" ngModel />
+                <input class="form-control" id="mission_start-date" type="date" formControlName="startDate" />
               </div>
             </div>
             <div class="col-lg">
               <div class="form-group">
                 <label for="mission_end-date">Date de fin</label>
-                <input class="form-control" name="endDate" id="mission_end-date" type="date" ngModel />
+                <input class="form-control" id="mission_end-date" type="date" formControlName="endDate" />
               </div>
             </div>
           </div>
@@ -57,7 +52,7 @@
       </div>
     </fieldset>
 
-    <fieldset class="card shadow mb-4">
+    <fieldset class="card shadow mb-4" formGroupName="consultant">
       <a href="#consultant-content" class="d-block card-header text-body py-3" data-toggle="collapse" role="button"
         aria-expanded="true" aria-controls="consultant-content">
         <h2 class="m-0 font-weight-bold text-primary h6">Consultant</h2>
@@ -68,22 +63,35 @@
             <div class="col-lg">
               <div class="form-group">
                 <label for="mission_consultant">Nom complet</label>
-                <input class="form-control" name="consultant.name" id="mission_consultant" ngModel />
+                <input class="form-control" formControlName="name" id="mission_consultant" />
               </div>
             </div>
             <div class="col-lg">
               <div class="form-group">
                 <label for="mission_consultant-email">Email</label>
-                <input class="form-control" name="consultant.email" id="mission_consultant-email" type="email"
-                  ngModel />
+                <input class="form-control" formControlName="email" id="mission_consultant-email" type="email" />
               </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg">
+              <div class="form-check">
+                <input class="form-check-input" formControlName="isFreelance" id="mission_consultant-isFreelance"
+                  type="checkbox" />
+                <label for="mission_consultant-isFreelance" class="form-check-label">Consultant indépendant</label>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="isConsultantFreelance" class="row">
+            <div class="col-lg">
+              <p>Hello there</p>
             </div>
           </div>
         </div>
       </div>
     </fieldset>
 
-    <fieldset class="card shadow mb-4">
+    <fieldset class="card shadow mb-4" formGroupName="client">
       <a href="#client-content" class="d-block card-header text-body py-3" data-toggle="collapse" role="button"
         aria-expanded="true" aria-controls="client-content">
         <h2 class="m-0 font-weight-bold text-primary h6">Client</h2>
@@ -93,14 +101,82 @@
           <div class="row">
             <div class="col-lg">
               <div class="form-group">
-                <label for="mission_client">Nom complet</label>
-                <input class="form-control" name="client.name" id="mission_client" ngModel />
+                <label for="mission_client-ref">Référence client (BDC)</label>
+                <input class="form-control" formControlName="ref" id="mission_client-ref" />
+              </div>
+            </div>
+          </div>
+          <div class="row" formGroupName="company">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="mission_client_name">Dénomination</label>
+                <input class="form-control" formControlName="name" id="mission_client_name" />
+              </div>
+              <div class="form-group">
+                <label for="mission_client_address">Adresse</label>
+                <input class="form-control" formControlName="address" id="mission_client_address" />
+              </div>
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label for="mission_client_zip">Code postal</label>
+                    <input class="form-control" formControlName="zipCode" id="mission_client_zip" />
+                  </div>
+                </div>
+                <div class="col-lg-8">
+                  <div class="form-group">
+                    <label for="mission_client_city">Ville</label>
+                    <input class="form-control" formControlName="city" id="mission_client_city" />
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="mission_client_phone">Téléphone</label>
+                <input class="form-control" formControlName="phone" id="mission_client_phone" />
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="mission_client_siren">Numéro de SIREN</label>
+                <input class="form-control" formControlName="siren" id="mission_client_siren" />
+              </div>
+              <div class="form-group">
+                <label for="mission_client_trade-and-companies-register-city">Ville d'immatriculation au RCS</label>
+                <input class="form-control" formControlName="tradeAndCompaniesRegisterCity"
+                  id="mission_client_trade-and-companies-register-city" />
+              </div>
+              <div class="form-group">
+                <label for="mission_client_vat-number">Numéro de TVA intra-communautaire</label>
+                <input class="form-control" formControlName="vatNumber" id="mission_client_vat-number" />
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset class="card shadow mb-4">
+      <a href="#details" class="d-block card-header text-body py-3" data-toggle="collapse" role="button"
+        aria-expanded="true" aria-controls="details">
+        <h2 class="m-0 font-weight-bold text-primary h6">Détails de l'intervention</h2>
+      </a>
+      <div id="details" class="collapse show">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg">
+              <div class="form-group">
+                <label for="mission_details-unitOfWorkType">Type d'unité d'oeuvre</label>
+                <select class="form-select" formControlName="unitOfWorkType" id="mission_details-unitOfWorkType">
+                  <option value="days">Journées</option>
+                  <option value="hours">Heures</option>
+                </select>
               </div>
             </div>
             <div class="col-lg">
               <div class="form-group">
-                <label for="mission_client-email">Email</label>
-                <input class="form-control" name="client.email" id="mission_client-email" type="email" ngModel />
+                <label for="mission_details-unitOfWorkPrice">Prix de l'unité d'oeuvre</label>
+                <input class="form-control" formControlName="unitOfWorkPrice" id="mission_details-unitOfWorkPrice" />
               </div>
             </div>
           </div>
@@ -108,7 +184,7 @@
       </div>
     </fieldset>
 
-    <fieldset class="card shadow mb-4">
+    <fieldset class="card shadow mb-4" formGroupName="provider">
       <a href="#provider-content" class="d-block card-header text-body py-3 collapsed" data-toggle="collapse"
         role="button" aria-expanded="false" aria-controls="provider-content">
         <h2 class="m-0 font-weight-bold text-primary h6">Prestataire</h2>
@@ -119,94 +195,86 @@
             <div class="col-lg-6">
               <div class="form-group">
                 <label for="mission_provider_name">Dénomination</label>
-                <input class="form-control" name="provider.name" id="mission_provider_name" [ngModel]="company.name" />
+                <input class="form-control" formControlName="name" id="mission_provider_name" />
               </div>
               <div class="form-group">
                 <label for="mission_provider_address">Adresse</label>
-                <input class="form-control" name="provider.address" id="mission_provider_address"
-                  [ngModel]="company.address" />
+                <input class="form-control" formControlName="address" id="mission_provider_address" />
               </div>
               <div class="row">
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label for="mission_provider_zip">Code postal</label>
-                    <input class="form-control" name="provider.zipCode" id="mission_provider_zip"
-                      [ngModel]="company.zipCode" />
+                    <input class="form-control" formControlName="zipCode" id="mission_provider_zip" />
                   </div>
                 </div>
                 <div class="col-lg-8">
                   <div class="form-group">
                     <label for="mission_provider_city">Ville</label>
-                    <input class="form-control" name="provider.city" id="mission_provider_city"
-                      [ngModel]="company.city" />
+                    <input class="form-control" formControlName="city" id="mission_provider_city" />
                   </div>
                 </div>
               </div>
               <div class="form-group">
                 <label for="mission_provider_phone">Téléphone</label>
-                <input class="form-control" name="provider.phone" id="mission_provider_phone"
-                  [ngModel]="company.phone" />
+                <input class="form-control" formControlName="phone" id="mission_provider_phone" />
               </div>
             </div>
             <div class="col-lg-6">
               <div class="form-group">
                 <label for="mission_provider_siren">Numéro de SIREN</label>
-                <input class="form-control" name="provider.siren" id="mission_provider_siren"
-                  [ngModel]="company.siren" />
+                <input class="form-control" formControlName="siren" id="mission_provider_siren" />
               </div>
               <div class="form-group">
                 <label for="mission_provider_trade-and-companies-register-city">Ville d'immatriculation au RCS</label>
-                <input class="form-control" name="provider.tradeAndCompaniesRegisterCity"
-                  id="mission_provider_trade-and-companies-register-city"
-                  [ngModel]="company.tradeAndCompaniesRegisterCity" />
+                <input class="form-control" formControlName="tradeAndCompaniesRegisterCity"
+                  id="mission_provider_trade-and-companies-register-city" />
               </div>
               <div class="form-group">
                 <label for="mission_provider_vat-number">Numéro de TVA intra-communautaire</label>
-                <input class="form-control" name="provider.vatNumber" id="mission_provider_vat-number"
-                  [ngModel]="company.vatNumber" />
+                <input class="form-control" formControlName="vatNumber" id="mission_provider_vat-number" />
               </div>
             </div>
           </div>
           <hr class="border-light w-100" />
-          <h3 class="h5 mb-2 text-primary">Coordonnées bancaires</h3>
-          <div class="row">
-            <div class="col-lg">
-              <div class="form-group">
-                <label for="mission_provider_provider-bank-account-holder">Titulaire du compte</label>
-                <input class="form-control" name="provider.bankAccount.holder"
-                  id="mission_provider_provider-bank-account-holder" [ngModel]="company.bankAccount.holder" />
+          <div formGroupName="bankAccount">
+            <h3 class="h5 mb-2 text-primary">Coordonnées bancaires</h3>
+            <div class="row">
+              <div class="col-lg">
+                <div class="form-group">
+                  <label for="mission_provider_provider-bank-account-holder">Titulaire du compte</label>
+                  <input class="form-control" formControlName="holder"
+                    id="mission_provider_provider-bank-account-holder" />
+                </div>
+              </div>
+              <div class="col-lg">
+                <div class="form-group">
+                  <label for="mission_provider_provider-bank-swift">SWIFT</label>
+                  <input class="form-control" formControlName="swift" id="mission_provider_provider-bank-swift" />
+                </div>
               </div>
             </div>
-            <div class="col-lg">
-              <div class="form-group">
-                <label for="mission_provider_provider-bank-swift">SWIFT</label>
-                <input class="form-control" name="provider.bankAccount.swift" id="mission_provider_provider-bank-swift"
-                  [ngModel]="company.bankAccount.swift" />
+            <div class="row">
+              <div class="col-lg">
+                <div class="form-group">
+                  <label for="mission_provider_provider-bank-iban">IBAN</label>
+                  <input class="form-control" formControlName="iban" id="mission_provider_provider-bank-iban" />
+                </div>
               </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-lg">
-              <div class="form-group">
-                <label for="mission_provider_provider-bank-iban">IBAN</label>
-                <input class="form-control" name="provider.bankAccount.iban" id="mission_provider_provider-bank-iban"
-                  [ngModel]="company.bankAccount.iban" />
+            <div class="row">
+              <div class="col-lg">
+                <div class="form-group">
+                  <label for="mission_provider_provider-banking-domiciliation">Banque</label>
+                  <input class="form-control" formControlName="domiciliation"
+                    id="mission_provider_provider-banking-domiciliation" />
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg">
-              <div class="form-group">
-                <label for="mission_provider_provider-banking-domiciliation">Banque</label>
-                <input class="form-control" name="provider.bankAccount.domiciliation"
-                  id="mission_provider_provider-banking-domiciliation" [ngModel]="company.bankAccount.domiciliation" />
-              </div>
-            </div>
-            <div class="col-lg">
-              <div class="form-group">
-                <label for="mission_provider_provider-banking-agency">Agence</label>
-                <input class="form-control" name="provider.bankAccount.agency"
-                  id="mission_provider_provider-banking-agency" [ngModel]="company.bankAccount.agency" />
+              <div class="col-lg">
+                <div class="form-group">
+                  <label for="mission_provider_provider-banking-agency">Agence</label>
+                  <input class="form-control" formControlName="agency" id="mission_provider_provider-banking-agency" />
+                </div>
               </div>
             </div>
           </div>
