@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
 import axios from "axios";
 
-import { Mission, Timesheet } from "src/app/shared/models";
+import { Timesheet } from "src/app/shared/models";
 import { SerializationService } from "src/app/shared/services/serialization/serialization.service";
 import { environment } from "../../../../environments/environment";
+import { Mission } from "../../../modules/dashboard/models";
 
 @Injectable({
   providedIn: "root",
@@ -19,8 +20,8 @@ export class MissionService {
       mode: "create",
       timesheet: Object.assign({}, new Timesheet(), {
         consultant: {
-          name: this.mission.consultant,
-          email: this.mission.consultantEmail,
+          name: this.mission.consultant.name,
+          email: this.mission.consultant.email,
         },
         mission: {
           client: this.mission.client,

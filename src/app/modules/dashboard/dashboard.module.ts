@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SharedModuleModule } from "src/app/shared/modules/shared-module/shared-module.module";
 
 import { ActivityCardComponent } from "./components/activity-card/activity-card.component";
@@ -43,6 +43,7 @@ import { ProfileComponent } from "./views/profile/profile.component";
     DashboardRoutingModule,
     SharedModuleModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
 })
 export class DashboardModule {}

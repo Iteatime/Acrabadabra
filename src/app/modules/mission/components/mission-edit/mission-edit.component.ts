@@ -4,11 +4,10 @@ import { Router } from "@angular/router";
 
 import { NotificationService } from "src/app/modules/notification/services/notification.service";
 
-import { Company } from "src/app/shared/models";
-
 import { AuthenticationService } from "src/app/shared/services/authentication/authentication.service";
 import { UrlShorteningService } from "src/app/modules/timesheet/services/url-shortening.service";
 import { MissionService } from "../../../../shared/services/missions/missions.service";
+import { Company } from "../../../dashboard/models";
 
 @Component({
   selector: "app-mission-edit",
@@ -55,44 +54,40 @@ export class MissionEditComponent implements OnInit {
   }
 
   onSubmit() {
-    this.notificationService.dismissAll();
-    if (!this.auth.isAuthenticated) {
-      this.notificationService.push("Veuillez vous connecter", "warning", {
-        isSelfClosing: false,
-      });
-    } else {
-      if (this.checkFormsValidity()) {
-        if (this.isConsultantFreelance === false) {
-          this.missionService.mission.consultantCompany = new Company();
-          this.missionService.mission.consultantBankAccountHolder = "";
-          this.missionService.mission.consultantBankingAgency = "";
-          this.missionService.mission.consultantBankingDomiciliation = "";
-          this.missionService.mission.consultantBankIBAN = "";
-          this.missionService.mission.consultantBankSWIFT = "";
-        }
-        this.missionService.mission.consultantFreelance =
-          this.isConsultantFreelance;
-        this.missionService.mission.creator = this.auth.user.id;
-        this.missionService
-          .createMission(this.missionService.mission)
-          .then((response) => {
-            this.reactToSubmition(false);
-            this.missionReference = response.id;
-            this.editUrl =
-              this.originUrl +
-              "/mission/" +
-              this.missionReference +
-              "/timesheet/create";
-            this.router.navigate(["dashboard"]);
-          })
-          .catch((error) => {
-            console.log("API error", error);
-          });
-      } else {
-        this.reactToSubmition(true);
-        this.showValidationMessages();
-      }
-    }
+    // this.notificationService.dismissAll();
+    // if (!this.auth.isAuthenticated) {
+    //   this.notificationService.push("Veuillez vous connecter", "warning", {
+    //     isSelfClosing: false,
+    //   });
+    // } else {
+    //   if (this.checkFormsValidity()) {
+    //     if (this.isConsultantFreelance === false) {
+    //       this.missionService.mission.consultant.company = new Company();
+    //       this.missionService.mission.consultant.
+    //     }
+    //     this.missionService.mission.consultantFreelance =
+    //       this.isConsultantFreelance;
+    //     this.missionService.mission.creator = this.auth.user.id;
+    //     this.missionService
+    //       .createMission(this.missionService.mission)
+    //       .then((response) => {
+    //         this.reactToSubmition(false);
+    //         this.missionReference = response.id;
+    //         this.editUrl =
+    //           this.originUrl +
+    //           "/mission/" +
+    //           this.missionReference +
+    //           "/timesheet/create";
+    //         this.router.navigate(["dashboard"]);
+    //       })
+    //       .catch((error) => {
+    //         console.log("API error", error);
+    //       });
+    //   } else {
+    //     this.reactToSubmition(true);
+    //     this.showValidationMessages();
+    //   }
+    // }
   }
 
   checkFormsValidity(): boolean {

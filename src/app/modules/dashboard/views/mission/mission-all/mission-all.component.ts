@@ -1,11 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthenticationService } from "src/app/shared/services/authentication/authentication.service";
 import { MissionService } from "../../../../../shared/services/missions/missions.service";
-import { Mission as MissionSharedType } from "../../../../../shared/models";
 
 import { State } from "../../../@type";
-import { Mission } from "../../../models";
 import { StoreService } from "../../../services";
+import { Mission } from "../../../models";
 
 interface MissionsByStatus {
   current: Mission[];
@@ -48,9 +47,7 @@ export class MissionAllComponent implements OnInit {
       });
   }
 
-  getMissionsByStatus(
-    missions: (Mission | MissionSharedType)[]
-  ): MissionsByStatus {
+  getMissionsByStatus(missions: Mission[]): MissionsByStatus {
     const missionsByStatus = {
       current: [],
       future: [],
@@ -79,9 +76,7 @@ export class MissionAllComponent implements OnInit {
     return "past";
   }
 
-  sortMissionsByDateDescending(
-    missions: (Mission | MissionSharedType)[]
-  ): (Mission | MissionSharedType)[] {
+  sortMissionsByDateDescending(missions: Mission[]): Mission[] {
     return missions.sort((missionA, missionB) => {
       const dateA = new Date(missionA.startDate);
       const dateB = new Date(missionB.startDate);
