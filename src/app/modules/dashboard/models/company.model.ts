@@ -1,4 +1,4 @@
-import { BankAccount } from './BankAccount.model';
+import { BankAccount } from "./BankAccount.model";
 
 export class Company {
   name?: string;
@@ -33,55 +33,72 @@ export class Company {
     this.phone = phone ? this.getFormattedPhone(phone) : null;
     this.siren = siren ? this.getFormattedSiren(siren) : null;
     this.tradeAndCompaniesRegisterCity = tradeAndCompaniesRegisterCity || null;
-    this.tradeAndCompaniesRegisterExemption = tradeAndCompaniesRegisterExemption || false;
-    this.vatNumber = vatExemption && vatNumber ? this.getFormattedVatNumber(vatNumber) : null;
+    this.tradeAndCompaniesRegisterExemption =
+      tradeAndCompaniesRegisterExemption || false;
+    this.vatNumber =
+      vatExemption && vatNumber ? this.getFormattedVatNumber(vatNumber) : null;
     this.vatExemption = vatExemption || false;
     this.bankAccount = bankAccount || new BankAccount();
   }
 
   getFormattedPhone(phone: string): string {
-    const chars = phone.match(/\d/g);
-    let formatted = '';
+    try {
+      const chars = phone.match(/\d/g);
+      let formatted = "";
 
-    chars.forEach((char, index) => {
-      if (index % 2 === 0 && index != 0) {
-        formatted += ' ';
-      }
+      chars.forEach((char, index) => {
+        if (index % 2 === 0 && index != 0) {
+          formatted += " ";
+        }
 
-      formatted += `${char}`;
-    });
+        formatted += `${char}`;
+      });
 
-    return formatted;
+      return formatted;
+    } catch (error) {
+      console.error(error);
+      return phone;
+    }
   }
 
   getFormattedSiren(siren: string): string {
-    const chars = siren.match(/\d/g);
-    let formatted = '';
+    try {
+      const chars = siren.match(/\d/g);
+      let formatted = "";
 
-    chars.forEach((char, index) => {
-      if (index % 3 === 0 && index != 0) {
-        formatted += ' ';
-      }
+      chars.forEach((char, index) => {
+        if (index % 3 === 0 && index != 0) {
+          formatted += " ";
+        }
 
-      formatted += `${char}`;
-    });
+        formatted += `${char}`;
+      });
 
-    return formatted;
+      return formatted;
+    } catch (error) {
+      console.error(error);
+      return siren;
+    }
   }
 
   getFormattedVatNumber(vatNumber: string): string {
-    const chars = vatNumber.match(/[a-z]|\d/gi);
-    const pattern = [2,4,7,10];
-    let formatted = '';
+    try {
+      const chars = vatNumber.match(/[a-z]|\d/gi);
+      const pattern = [2, 4, 7, 10];
+      let formatted = "";
 
-    chars.forEach((char, index) => {
-      if (pattern.includes(index)) {
-        formatted += ' ';
-      }
+      chars.forEach((char, index) => {
+        if (pattern.includes(index)) {
+          formatted += " ";
+        }
 
-      formatted += `${char}`;
-    });
+        formatted += `${char}`;
+      });
 
-    return formatted;
+      return formatted;
+    } catch (error) {
+      console.error(error);
+      return vatNumber;
+    }
   }
 }
