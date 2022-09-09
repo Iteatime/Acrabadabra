@@ -1,50 +1,33 @@
-<ul
-  class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
-  id="accordionSidebar"
->
-  <a
-    class="sidebar-brand d-flex align-items-center justify-content-center"
-    routerLink="/"
-  >
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" routerLink="/">
     <div class="sidebar-brand-icon">
       <img src="assets/images/logo.white.small.svg" width="36" height="36" alt="Acrabadabra logo">
     </div>
     <div class="sidebar-brand-text mx-3">Acrabadabra</div>
   </a>
 
-  <hr class="sidebar-divider my-0" />
+  <hr class="sidebar-divider" />
 
-  <li class="nav-item" routerLinkActive="active">
+  <!-- <li class="nav-item" routerLinkActive="active">
     <a class="nav-link" routerLink="/dashboard/activity">
       <i class="fas fa-fw fa-tachometer-alt"></i>
       <span>Tableau de bord</span>
     </a>
   </li>
 
-  <hr class="sidebar-divider" />
+  <hr class="sidebar-divider" /> -->
 
   <div class="sidebar-heading">
     Compte rendu d'activité
   </div>
 
   <li class="nav-item" routerLinkActive="active">
-    <a
-      class="nav-link collapsed"
-      href="#"
-      data-toggle="collapse"
-      data-target="#collapseTwo"
-      aria-expanded="true"
-      aria-controls="collapseTwo"
-    >
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+      aria-controls="collapseTwo">
       <i class="fas fa-fw fa-briefcase"></i>
       <span>Missions</span>
     </a>
-    <div
-      id="collapseTwo"
-      class="collapse"
-      aria-labelledby="headingTwo"
-      data-parent="#accordionSidebar"
-    >
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <a class="collapse-item" routerLink="/dashboard/mission/create" routerLinkActive="active">
           Créer une mission

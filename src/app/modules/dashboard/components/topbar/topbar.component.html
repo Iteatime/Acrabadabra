@@ -1,15 +1,10 @@
-<nav
-  class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
->
-  <button
-    id="sidebarToggleTop"
-    class="btn btn-link d-md-none rounded-circle mr-3"
-  >
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+  <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
     <i class="fa fa-bars"></i>
   </button>
 
   <ul class="navbar-nav ml-auto">
-    <li class="nav-item dropdown no-arrow mx-1">
+    <!-- <li class="nav-item dropdown no-arrow mx-1">
       <a
         class="nav-link dropdown-toggle"
         href="#"
@@ -39,61 +34,39 @@
           Show All Alerts
         </a>
       </div>
-    </li>
+    </li> -->
 
-    <li class="nav-item dropdown no-arrow mx-1">
-      <a
-        class="nav-link dropdown-toggle"
-        href="#"
-        id="messagesDropdown"
-        role="button"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
+    <!-- <li class="nav-item dropdown no-arrow mx-1">
+      <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-envelope fa-fw"></i>
         <span class="badge badge-secondary badge-counter">{{
           store.state.messages.length
-        }}</span>
+          }}</span>
       </a>
-      <div
-        class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-        aria-labelledby="messagesDropdown"
-      >
+      <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+        aria-labelledby="messagesDropdown">
         <div class="dropdown-header h6">
           Messagerie
         </div>
-        <app-message
-          *ngFor="let message of store.state.messages"
-          [message]="message"
-        ></app-message>
+        <app-message *ngFor="let message of store.state.messages" [message]="message"></app-message>
         <a class="dropdown-item text-center small text-gray-500" href="#">
           Read More Messages
         </a>
       </div>
-    </li>
+    </li> -->
 
-    <div class="topbar-divider d-none d-sm-block"></div>
+    <!-- <div class="topbar-divider d-none d-sm-block"></div> -->
 
     <li class="nav-item dropdown no-arrow">
-      <a
-        class="nav-link dropdown-toggle"
-        href="#"
-        id="userDropdown"
-        role="button"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
+      <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
         <span class="mr-2 d-none d-lg-inline text-gray-600 small">
           {{ store.state.user.name }}
         </span>
         <i class="fas fa-user-circle fa-2x fa-fw text-gray-400"></i>
       </a>
-      <div
-        class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-        aria-labelledby="userDropdown"
-      >
+      <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
         <a class="dropdown-item" routerLink="/dashboard/profile">
           <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
           Profil
