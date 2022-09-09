@@ -20,6 +20,10 @@ export class Mission {
     isFreelance: boolean;
     company: Company;
   };
+  paymentDetails: {
+    mode: string;
+    penalties: boolean;
+  };
   provider: Company;
 
   constructor(
@@ -32,7 +36,8 @@ export class Mission {
     consultant?: Mission["consultant"],
     unitOfWorkType?: string,
     unitOfWorkPrice?: string,
-    providerCompany?: Company
+    providerCompany?: Company,
+    paymentDetails?: Mission["paymentDetails"]
   ) {
     this.id = id || null;
     this.creatorId = creatorId || null;
@@ -44,5 +49,6 @@ export class Mission {
     this.client = client || null;
     this.consultant = consultant || null;
     this.provider = providerCompany || new Company();
+    this.paymentDetails = paymentDetails || null;
   }
 }

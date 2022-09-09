@@ -107,6 +107,10 @@ export class MissionCreateComponent implements OnInit {
         company: getCompanyForm(this.fb),
       }),
       provider: getCompanyForm(this.fb, this.company),
+      paymentDetails: this.fb.group({
+        penalties: [false],
+        mode: [""],
+      }),
     });
 
     this.form.valueChanges.subscribe(console.log);
@@ -138,6 +142,11 @@ export class MissionCreateComponent implements OnInit {
       ref: values.client.ref,
       email: values.client.email,
       company: getCompanyFromForm(values.client.company),
+    };
+
+    mission.paymentDetails = {
+      mode: values.paymentDetails.mode,
+      penalties: values.paymentDetails.penalties,
     };
 
     mission.provider = getCompanyFromForm(values.provider);
