@@ -156,6 +156,33 @@
       </div>
     </fieldset>
 
+    <fieldset class="card shadow mb-4" formGroupName="paymentDetails">
+      <a href="#details" class="d-block card-header text-body py-3" data-toggle="collapse" role="button"
+        aria-expanded="true" aria-controls="details">
+        <h2 class="m-0 font-weight-bold text-primary h6">Modalités de règlement</h2>
+      </a>
+      <div id="details" class="collapse show">
+        <div class="card-body">
+          <div class="col">
+            <div class="row">
+              <div class="form-check ml-3 mb-3">
+                <input class="form-check-input" formControlName="penalties" id="mission_consultant-penalties"
+                  type="checkbox" />
+                <label for="mission_consultant-penalties" class="form-check-label"> Pénalités de retard légales (40€
+                  par facture + 10% par an)</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group">
+                <label for="mission_details-paymentMode">Mode de règlement</label>
+                <input class="form-control" formControlName="mode" id="mission_details-paymentMode" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
     <fieldset class="card shadow mb-4">
       <a href="#details" class="d-block card-header text-body py-3" data-toggle="collapse" role="button"
         aria-expanded="true" aria-controls="details">
