@@ -1,8 +1,7 @@
 import { Injectable } from "@angular/core";
 import axios from "axios";
 import { environment } from "../../../../../environments/environment";
-
-import { Company } from "../../models";
+import { Company } from "../../../../shared/models";
 
 @Injectable({
   providedIn: "root",

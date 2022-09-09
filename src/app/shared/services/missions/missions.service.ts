@@ -1,10 +1,9 @@
 import { Injectable } from "@angular/core";
 import axios from "axios";
 
-import { Timesheet } from "src/app/shared/models";
+import { Mission, Timesheet } from "src/app/shared/models";
 import { SerializationService } from "src/app/shared/services/serialization/serialization.service";
 import { environment } from "../../../../environments/environment";
-import { Mission } from "../../../modules/dashboard/models";
 
 @Injectable({
   providedIn: "root",

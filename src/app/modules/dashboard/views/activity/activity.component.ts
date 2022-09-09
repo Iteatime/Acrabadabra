@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthenticationService } from "src/app/shared/services/authentication/authentication.service";
+import { Mission } from "../../../../shared/models";
 import { MissionService } from "../../../../shared/services/missions/missions.service";
 
-import { Mission } from "../../models";
 import { StoreService } from "../../services";
 
 @Component({

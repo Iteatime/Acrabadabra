@@ -1,5 +1,5 @@
 import { Alert, Message, User } from ".";
-import { Company, Mission } from "../models";
+import { Company, Mission } from "../../../shared/models";
 
 export interface State {
   alerts?: Alert[];

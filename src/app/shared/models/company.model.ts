@@ -1,102 +1,104 @@
-export class Company {
+import { BankAccount } from "./bank-account.model";
 
-  name: string;
-  address: string;
-  telephone: string;
-  siren: string;
-  tradeAndCompaniesRegisterCity: string;
-  tradeAndCompaniesRegisterExemption: boolean;
-  vatNumber: string;
-  vatExemption: boolean;
+export class Company {
+  name?: string;
+  address?: string;
+  zipCode?: string;
+  city?: string;
+  phone?: string;
+  siren?: string;
+  tradeAndCompaniesRegisterCity?: string;
+  tradeAndCompaniesRegisterExemption?: boolean;
+  vatNumber?: string;
+  vatExemption?: boolean;
+  bankAccount?: BankAccount;
 
   constructor(
-
     name?: string,
     address?: string,
-    telephone?: string,
+    zipCode?: string,
+    city?: string,
+    phone?: string,
     siren?: string,
     tradeAndCompaniesRegisterCity?: string,
     tradeAndCompaniesRegisterExemption?: boolean,
     vatNumber?: string,
-    vatExemption?: boolean
+    vatExemption?: boolean,
+    bankAccount?: BankAccount
   ) {
-
-    this.name = name || '';
-    this.address = address || '';
-    this.telephone = telephone || '';
-    this.siren = siren || '';
-    this.tradeAndCompaniesRegisterCity = tradeAndCompaniesRegisterCity || '';
-    this.tradeAndCompaniesRegisterExemption = tradeAndCompaniesRegisterExemption || false;
-    this.vatNumber = vatNumber || null;
+    this.name = name || null;
+    this.address = address || null;
+    this.zipCode = zipCode || null;
+    this.city = city || null;
+    this.phone = phone ? this.getFormattedPhone(phone) : null;
+    this.siren = siren ? this.getFormattedSiren(siren) : null;
+    this.tradeAndCompaniesRegisterCity = tradeAndCompaniesRegisterCity || null;
+    this.tradeAndCompaniesRegisterExemption =
+      tradeAndCompaniesRegisterExemption || false;
+    this.vatNumber =
+      vatExemption && vatNumber ? this.getFormattedVatNumber(vatNumber) : null;
     this.vatExemption = vatExemption || false;
+    this.bankAccount = bankAccount || new BankAccount();
   }
 
-  getFormattedAddress(): string {
-    const lines = this.address.split(';');
-          lines.forEach(line => {
-            line.trim();
-          });
-    return lines.join('<br/>');
-  }
+  getFormattedPhone(phone: string): string {
+    try {
+      const chars = phone.match(/\d/g);
+      let formatted = "";
 
-  getFormattedVATNumber(): string {
-    if (this.vatExemption) {
-      return undefined;
-    } else {
-      return  this.vatNumber.substring(0, 2) + ' ' +
-              this.vatNumber.substring(2, 4) + ' ' +
-              this.vatNumber.substring(4, 7) + ' ' +
-              this.vatNumber.substring(7, 10) + ' ' +
-              this.vatNumber.substring(10, 13) + '.';
+      chars.forEach((char, index) => {
+        if (index % 2 === 0 && index != 0) {
+          formatted += " ";
+        }
+
+        formatted += `${char}`;
+      });
+
+      return formatted;
+    } catch (error) {
+      console.error(error);
+      return phone;
     }
   }
 
-  getFormattedTelephoneNumber(): string {
-    switch (this.telephone.length) {
-      case 10:
-      const newTelephoneNumber = [];
-      for (let index = 0; index <= this.telephone.length; index++) {
-        if (index % 2 === 0 && index !== 0) {
-          newTelephoneNumber.push(this.telephone.substring(index - 2, index));
+  getFormattedSiren(siren: string): string {
+    try {
+      const chars = siren.match(/\d/g);
+      let formatted = "";
+
+      chars.forEach((char, index) => {
+        if (index % 3 === 0 && index != 0) {
+          formatted += " ";
         }
-      }
-      return newTelephoneNumber.join('.');
-      default:
-        return  this.telephone;
+
+        formatted += `${char}`;
+      });
+
+      return formatted;
+    } catch (error) {
+      console.error(error);
+      return siren;
     }
   }
 
-  getFormattedSIRENNumber(): string {
-    const newSiren = [];
+  getFormattedVatNumber(vatNumber: string): string {
+    try {
+      const chars = vatNumber.match(/[a-z]|\d/gi);
+      const pattern = [2, 4, 7, 10];
+      let formatted = "";
 
-    switch (this.siren.length) {
-      case 9:
-        for (let index = 0; index <= 9; index++) {
-          if (index % 3 === 0 && index !== 0) {
-            newSiren.push(this.siren.substring(index - 3, index));
-          }
+      chars.forEach((char, index) => {
+        if (pattern.includes(index)) {
+          formatted += " ";
         }
-        return newSiren.join(' ');
-      case 10:
-        for (let index = 1; index <= 10; index++) {
-          if (index % 3 === 0 && index !== 0) {
-            newSiren.push(this.siren.substring(index - 2, index + 1));
-          }
-        }
-        return newSiren.join(' ');
-      case 15:
-        for (let index = 1; index <= 10; index++) {
-          if (index % 3 === 0 && index !== 0) {
-            newSiren.push(this.siren.substring(index - 2, index + 1));
-          }
-        }
-        return `${this.siren[0]} ${newSiren.join(' ')}`;
-      default:
-        return this.siren;
+
+        formatted += `${char}`;
+      });
+
+      return formatted;
+    } catch (error) {
+      console.error(error);
+      return vatNumber;
     }
-  }
-
-  addProperty(name: string, value: any) {
-    Object.defineProperty(this, name, value);
   }
 }
