@@ -11,8 +11,8 @@ import { NgForm } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 
 import { Invoice, Mission } from "src/app/shared/models";
+import { MissionService } from "../../../../shared/services/missions/missions.service";
 
-import { MissionService } from "src/app/modules/mission/services/mission.service";
 import { TimesheetService } from "../../services/timesheet.service";
 
 @Component({
@@ -37,24 +37,25 @@ export class InvoiceFormComponent implements OnInit, AfterViewInit {
 
     if (this.mission) {
       const invoiceData = {
-        bankAccountHolder: this.mission.consultantBankAccountHolder,
-        bankingAgency: this.mission.consultantBankingAgency,
-        bankingDomiciliation: this.mission.consultantBankingDomiciliation,
-        bankIBAN: this.mission.consultantBankIBAN,
-        bankSWIFT: this.mission.consultantBankSWIFT,
-        clientRef: this.mission.clientRef,
+        bankAccountHolder: this.mission.consultant.company.bankAccount.holder,
+        bankingAgency: this.mission.consultant.company.bankAccount.agency,
+        bankingDomiciliation:
+          this.mission.consultant.company.bankAccount.domiciliation,
+        bankIBAN: this.mission.consultant.company.bankAccount.iban,
+        bankSWIFT: this.mission.consultant.company.bankAccount.swift,
+        clientRef: this.mission.client.ref,
       };
 
-      if (this.mission.consultantFreelance && context === "mission") {
+      if (this.mission.consultant.isFreelance && context === "mission") {
         this.fillInvoice(
-          this.mission.consultantCompany,
-          this.mission.providerCompany,
+          this.mission.consultant.company,
+          this.mission.provider,
           invoiceData
         );
       } else {
         this.fillInvoice(
-          this.mission.providerCompany,
-          this.mission.clientCompany,
+          this.mission.provider,
+          this.mission.client.company,
           invoiceData
         );
       }

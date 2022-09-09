@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { NgForm } from "@angular/forms";
+import { Company } from "../../../../shared/models";
 
 import { State } from "../../@type";
-import { Company } from "../../models";
 import { CompanyService, StoreService } from "../../services";
 
 @Component({

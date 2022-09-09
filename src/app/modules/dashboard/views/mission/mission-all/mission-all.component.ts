@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthenticationService } from "src/app/shared/services/authentication/authentication.service";
+import { Mission } from "../../../../../shared/models";
 import { MissionService } from "../../../../../shared/services/missions/missions.service";
 
 import { State } from "../../../@type";
 import { StoreService } from "../../../services";
-import { Mission } from "../../../models";
 
 interface MissionsByStatus {
   current: Mission[];
@@ -83,5 +83,9 @@ export class MissionAllComponent implements OnInit {
 
       return dateA < dateB ? -1 : dateA > dateB ? 1 : 0;
     });
+  }
+
+  getMissionTimesheetLink(id: string) {
+    return "http://localhost:3000/timesheet/create?mission=" + id;
   }
 }

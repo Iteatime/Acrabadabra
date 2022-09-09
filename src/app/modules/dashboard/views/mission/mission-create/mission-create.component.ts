@@ -2,10 +2,11 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
 import { set } from "lodash";
+import { Company, Mission } from "../../../../../shared/models";
+import { BankAccount } from "../../../../../shared/models/bank-account.model";
 import { MissionService } from "../../../../../shared/services/missions/missions.service";
 
 import { State } from "../../../@type";
-import { BankAccount, Company, Mission } from "../../../models";
 import { CompanyService, StoreService } from "../../../services";
 
 function getCompanyForm(fb: FormBuilder, company?: Company) {

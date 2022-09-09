@@ -42,7 +42,8 @@
           </div>
         </div>
         <div class="invoice-form__block__input-wrapper__item form-group">
-          <label for="invoiceWorkedRateInput" class="invoice-form__block__input-wrapper__item__label">Prix unitaire de l'unité d'oeuvre
+          <label for="invoiceWorkedRateInput" class="invoice-form__block__input-wrapper__item__label">Prix unitaire de
+            l'unité d'oeuvre
             (HT)</label>
           <div class="invoice-form__block__input-wrapper__item__input">
             <input type="text" required pattern="([0-9]+(\.[0-9]+)?)" class="form-control" name="invoiceWorkedRateInput"
@@ -95,10 +96,11 @@
         </div>
         <div class="invoice-form__half-block__input-wrapper__item form-group">
           <label for="invoiceProviderTelephoneInput"
-            class="invoice-form__half-block__input-wrapper__item__label">Téléphone<span class="optional">(optionnel)</span></label>
+            class="invoice-form__half-block__input-wrapper__item__label">Téléphone<span
+              class="optional">(optionnel)</span></label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
             <input type="tel" class="form-control" name="invoiceProviderTelephoneInput"
-              [(ngModel)]="invoice.provider.telephone">
+              [(ngModel)]="invoice.provider.phone">
           </div>
         </div>
         <div class="invoice-form__half-block__input-wrapper__item form-group">
@@ -197,10 +199,11 @@
         </div>
         <div class="invoice-form__half-block__input-wrapper__item form-group">
           <label for="invoiceClientTelephoneInput"
-            class="invoice-form__half-block__input-wrapper__item__label">Téléphone<span class="optional">(optionnel)</span></label>
+            class="invoice-form__half-block__input-wrapper__item__label">Téléphone<span
+              class="optional">(optionnel)</span></label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
             <input type="tel" class="form-control" name="invoiceClientTelephoneInput"
-              [(ngModel)]="invoice.client.telephone">
+              [(ngModel)]="invoice.client.phone">
           </div>
         </div>
         <div class="invoice-form__half-block__input-wrapper__item form-group">
@@ -208,12 +211,13 @@
             Numéro de SIREN<span class="optional">(optionnel)</span>
           </label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
-            <input type="text" class="form-control" name="invoiceClientSIRENInput"
-              [(ngModel)]="invoice.client.siren" #clientSIREN="ngModel">
+            <input type="text" class="form-control" name="invoiceClientSIRENInput" [(ngModel)]="invoice.client.siren"
+              #clientSIREN="ngModel">
           </div>
         </div>
         <div class="invoice-form__half-block__input-wrapper__item form-group">
-          <label for="invoiceClientTradeAndCompaniesRegisterCityInput" class="invoice-form__half-block__input-wrapper__item__label">
+          <label for="invoiceClientTradeAndCompaniesRegisterCityInput"
+            class="invoice-form__half-block__input-wrapper__item__label">
             Ville d'immatriculation au RCS<span class="optional">(optionnel)</span>
           </label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
@@ -253,8 +257,8 @@
             Date de règlement<span class="optional">(optionnel)</span>
           </label>
           <div class="invoice-form__block__input-wrapper__item__input">
-            <input type="date"  class="form-control" name="invoicePaymentDateInput"
-              [(ngModel)]="invoice.paymentDate" #paymentDate="ngModel">
+            <input type="date" class="form-control" name="invoicePaymentDateInput" [(ngModel)]="invoice.paymentDate"
+              #paymentDate="ngModel">
           </div>
         </div>
         <div class="invoice-form__block__input-wrapper__item form-group">
@@ -274,7 +278,8 @@
       </div>
       <div class="invoice-form__block__input-wrapper">
         <div class="invoice-form__block__input-wrapper__sub-block">
-          <h4 class="invoice-form__block__input-wrapper__sub-block__title">Coordonnées bancaires<span class="optional">(optionnel)</span></h4>
+          <h4 class="invoice-form__block__input-wrapper__sub-block__title">Coordonnées bancaires<span
+              class="optional">(optionnel)</span></h4>
           <div class="invoice-form__block__input-wrapper__sub-block__input-wrapper">
             <div class="invoice-form__block__input-wrapper__item form-group">
               <label for="invoiceBankAccountHolderInput"

@@ -1,24 +1,20 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
 
-import { AppRoutingModule } from './app.routes';
+import { AppRoutingModule } from "./app.routes";
 
-import { AppComponent } from './components/app/app.component';
-import { HomeComponent } from './components/home/home.component';
+import { AppComponent } from "./components/app/app.component";
+import { HomeComponent } from "./components/home/home.component";
 
-import { TimesheetModule } from './modules/timesheet/timesheet.module';
-import { ExpenseModule } from './modules/expense/expense.module';
-import { NotificationModule } from './modules/notification/notification.module';
-import { HttpClientModule } from '@angular/common/http';
-import { DashboardModule } from './modules/dashboard/dashboard.module';
-import { MissionModule } from './modules/mission/mission.module';
-import { SharedModuleModule } from './shared/modules/shared-module/shared-module.module';
+import { TimesheetModule } from "./modules/timesheet/timesheet.module";
+import { ExpenseModule } from "./modules/expense/expense.module";
+import { NotificationModule } from "./modules/notification/notification.module";
+import { HttpClientModule } from "@angular/common/http";
+import { DashboardModule } from "./modules/dashboard/dashboard.module";
+import { SharedModuleModule } from "./shared/modules/shared-module/shared-module.module";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-  ],
+  declarations: [AppComponent, HomeComponent],
   imports: [
     AppRoutingModule,
     BrowserModule,
@@ -27,11 +23,9 @@ import { SharedModuleModule } from './shared/modules/shared-module/shared-module
     NotificationModule,
     HttpClientModule,
     DashboardModule,
-    MissionModule,
     SharedModuleModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
-
+export class AppModule {}

@@ -57,9 +57,10 @@
             </p>
           </div>
           <div class="card-footer">
-            <a href="#" class="card-link"><i class="fas fa-info-circle"></i> Voir les détails</a>
-            <a *ngIf="$any(status).key === 'current'" routerLink="/dashboard/mission/create"
-              class="card-link text-info"><i class="fas fa-calendar-plus"></i> Créer un CRA</a>
+            <!-- <a href="#" class="card-link"><i class="fas fa-info-circle"></i> Voir les détails</a> -->
+            <button [copyToClipboard]="getMissionTimesheetLink(mission.id)"
+              class="p-0 btn btn-link card-link text-info"><i class="fas fa-calendar-plus"></i>
+              Copier le lien de saisie de CRA</button>
           </div>
         </div>
       </div>
