@@ -2,85 +2,52 @@ import { Company } from "./company.model";
 
 export class Mission {
   id: string;
-  creator: string;
-  consultant: string;
-  consultantEmail: string;
-  client: string;
-  clientEmail: string;
+  creatorId: string;
   title: string;
-  clientRef: string;
   startDate: string;
   endDate: string;
   unitOfWorkType: string;
   unitOfworkPrice: string;
-  consultantCompany: Company;
-  providerCompany: Company;
-  clientCompany: Company;
-  providerBankAccountHolder: string;
-  providerBankingAgency: string;
-  providerBankingDomiciliation: string;
-  providerBankIBAN: string;
-  providerBankSWIFT: string;
-  consultantBankAccountHolder: string;
-  consultantBankingAgency: string;
-  consultantBankingDomiciliation: string;
-  consultantBankIBAN: string;
-  consultantBankSWIFT: string;
-  consultantFreelance: boolean;
+  client: {
+    ref: string;
+    email: string;
+    company: Company;
+  };
+  consultant: {
+    name: string;
+    email: string;
+    isFreelance: boolean;
+    company: Company;
+  };
+  paymentDetails: {
+    mode: string;
+    penalties: boolean;
+  };
+  provider: Company;
 
   constructor(
     id?: string,
-    missionCreator?: string,
-    missionClient?: string,
-    missionTitle?: string,
-    missionConsultant?: string,
-    missionConsultantEmail?: string,
-    missionClientEmail?: string,
-    missionclientRef?: string,
-    missionStartDate?: string,
-    missionEndDate?: string,
-    missionUnitOfWorkType?: string,
-    missionUnitOfWorkPrice?: string,
-    consultantCompany?: Company,
+    creatorId?: string,
+    title?: string,
+    startDate?: string,
+    endDate?: string,
+    client?: Mission["client"],
+    consultant?: Mission["consultant"],
+    unitOfWorkType?: string,
+    unitOfWorkPrice?: string,
     providerCompany?: Company,
-    clientCompany?: Company,
-    providerBankAccountHolder?: string,
-    providerBankingAgency?: string,
-    providerBankingDomiciliation?: string,
-    providerBankIBAN?: string,
-    providerBankSWIFT?: string,
-    consultantBankAccountHolder?: string,
-    consultantBankingAgency?: string,
-    consultantBankingDomiciliation?: string,
-    consultantBankIBAN?: string,
-    consultantBankSWIFT?: string,
-    consultantFreelance?: boolean
+    paymentDetails?: Mission["paymentDetails"]
   ) {
-    this.id = id;
-    this.creator = missionCreator;
-    this.consultant = missionConsultant;
-    this.consultantEmail = missionConsultantEmail;
-    this.client = missionClient;
-    this.clientEmail = missionClientEmail;
-    this.title = missionTitle;
-    this.clientRef = missionclientRef;
-    this.startDate = missionStartDate;
-    this.endDate = missionEndDate;
-    this.unitOfWorkType = missionUnitOfWorkType;
-    this.unitOfworkPrice = missionUnitOfWorkPrice;
-    this.consultantCompany = consultantCompany || new Company();
-    this.providerCompany = providerCompany || new Company();
-    this.clientCompany = clientCompany || new Company();
-    this.providerBankAccountHolder = providerBankAccountHolder || "";
-    this.providerBankingAgency = providerBankingAgency || "";
-    this.providerBankingDomiciliation = providerBankingDomiciliation || "";
-    this.providerBankIBAN = providerBankIBAN || "";
-    this.providerBankSWIFT = providerBankSWIFT || "";
-    this.consultantBankAccountHolder = consultantBankAccountHolder || "";
-    this.consultantBankingAgency = consultantBankingAgency || "";
-    this.consultantBankingDomiciliation = consultantBankingDomiciliation || "";
-    this.consultantBankIBAN = consultantBankIBAN || "";
-    this.consultantBankSWIFT = consultantBankSWIFT || "";
-    this.consultantFreelance = consultantFreelance;
+    this.id = id || null;
+    this.creatorId = creatorId || null;
+    this.title = title || null;
+    this.startDate = startDate || null;
+    this.endDate = endDate || null;
+    this.unitOfWorkType = unitOfWorkType || null;
+    this.unitOfworkPrice = unitOfWorkPrice || null;
+    this.client = client || null;
+    this.consultant = consultant || null;
+    this.provider = providerCompany || new Company();
+    this.paymentDetails = paymentDetails || null;
   }
 }

@@ -17,7 +17,6 @@ import { CalendarService } from "src/app/modules/calendar/calendar.service";
 import { TimesheetService } from "../../services/timesheet.service";
 import { UrlShorteningService } from "../../services/url-shortening.service";
 import { AuthenticationService } from "src/app/shared/services/authentication/authentication.service";
-import { MissionService } from "src/app/modules/mission/services/mission.service";
 import { NotificationService } from "src/app/modules/notification/services/notification.service";
 
 import { InvoiceFormComponent } from "../invoice-form/invoice-form.component";
@@ -25,6 +24,7 @@ import { ExpenseMileageFormComponent } from "src/app/modules/expense/components/
 import { ExpenseMiscellaneousFormComponent } from "src/app/modules/expense/components/expense-miscellaneous-form/expense-miscellaneous-form.component";
 import { ExpenseFlatFeeFormComponent } from "src/app/modules/expense/components/expense-flat-fee-form/expense-flat-fee-form.component";
 import { CalendarSelectorComponent } from "src/app/modules/calendar/components/calendar-selector/calendar-selector.component";
+import { MissionService } from "../../../../shared/services/missions/missions.service";
 
 @Component({
   selector: "app-timesheet-edit",
@@ -83,9 +83,10 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
         .readMission(this.route.snapshot.params.missionId)
         .then((response) => {
           this.generateInvoice = true;
-          this.timesheetService.timesheet.consultant.name = response.consultant;
+          this.timesheetService.timesheet.consultant.name =
+            response.consultant.name;
           this.timesheetService.timesheet.consultant.email =
-            response.consultantEmail;
+            response.consultant.email;
 
           this.timesheetService.timesheet.mission = response;
         });

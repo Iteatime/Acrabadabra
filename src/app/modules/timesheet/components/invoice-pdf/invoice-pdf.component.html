@@ -5,8 +5,8 @@
         {{ timesheetService.timesheet.invoice.provider.name }}
       </div>
       <div class="adress-height" [innerHTML]="timesheetService.timesheet.invoice.provider.address"></div>
-      <div *ngIf="timesheetService.timesheet.invoice.provider.telephone">
-        Tel : {{ timesheetService.timesheet.invoice.provider.telephone }}
+      <div *ngIf="timesheetService.timesheet.invoice.provider.phone">
+        Tel : {{ timesheetService.timesheet.invoice.provider.phone }}
       </div>
       <div *ngIf="!timesheetService.timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">
         {{ timesheetService.timesheet.invoice.provider.siren }} R.C.S.
@@ -27,8 +27,8 @@
         {{ timesheetService.timesheet.invoice.client.name }}
       </div>
       <div class="adress-height" [innerHTML]="timesheetService.timesheet.invoice.client.address"></div>
-      <div *ngIf="timesheetService.timesheet.invoice.client.telephone">
-        Tel : {{ timesheetService.timesheet.invoice.client.telephone }}
+      <div *ngIf="timesheetService.timesheet.invoice.client.phone">
+        Tel : {{ timesheetService.timesheet.invoice.client.phone }}
       </div>
       <div *ngIf="!timesheetService.timesheet.invoice.client.tradeAndCompaniesRegisterExemption &&
                   timesheetService.timesheet.invoice.client.tradeAndCompaniesRegisterCity ||
@@ -80,7 +80,8 @@
         <tr *ngIf="workedTime.length > 0">
           <ng-container *ngFor="let entry of workedTime">
             <td class="invoice__table__left-text">
-              {{ calendarService.getTimeUnitLabel(entry.unit) | titlecase }} d'intervention {{ timesheetService.timesheet.mission.title }}
+              {{ calendarService.getTimeUnitLabel(entry.unit) | titlecase }} d'intervention {{
+              timesheetService.timesheet.mission.title }}
             </td>
             <td>
               {{ timesheetService.timesheet.invoice.workedRate | currency:currencyCode:"symbol":"1.2-2":local }}
@@ -95,7 +96,8 @@
               {{ performanceTotal | currency:currencyCode:"symbol":"1.2-2":local }}
             </td>
             <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">
-              {{ performanceTotal * ( 1 + monetaryService.vatRates.normal / 100 ) | currency:currencyCode:"symbol":"1.2-2":local }}
+              {{ performanceTotal * ( 1 + monetaryService.vatRates.normal / 100 ) |
+              currency:currencyCode:"symbol":"1.2-2":local }}
             </td>
           </ng-container>
         </tr>
@@ -105,10 +107,11 @@
           <td>{{ expenseMileageTotal | currency:currencyCode:"symbol":"1.2-2":local }}</td>
           <td>{{ expenseMileageQuantity }}</td>
           <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">
-            {{ monetaryService.vatRates.normal / 100 | percent:"1.2-2":local  }}</td>
+            {{ monetaryService.vatRates.normal / 100 | percent:"1.2-2":local }}</td>
           <td>{{ expenseMileageTotal | currency:currencyCode:"symbol":'1.2-2':local }}</td>
           <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">
-            {{ expenseMileageTotal * ( 1 + monetaryService.vatRates.normal / 100 ) | currency:currencyCode:"symbol":"1.2-2":local }}
+            {{ expenseMileageTotal * ( 1 + monetaryService.vatRates.normal / 100 ) |
+            currency:currencyCode:"symbol":"1.2-2":local }}
           </td>
         </tr>
 
@@ -117,19 +120,20 @@
           <td>{{ flatFeesTotal.amounts[i] | currency:currencyCode:"symbol":'1.2-2':local }}</td>
           <td>{{ flatFeesTotal.quantity[i] }}</td>
           <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">
-            {{ monetaryService.vatRates.normal / 100 | percent:"1.2-2":local  }}</td>
+            {{ monetaryService.vatRates.normal / 100 | percent:"1.2-2":local }}</td>
           <td> {{ flatFeesTotal.amounts[i] * flatFeesTotal.quantity[i] | currency:currencyCode:"symbol":'1.2-2':local}}
           </td>
           <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">
             {{ flatFeesTotal.amounts[i]
-                * flatFeesTotal.quantity[i]
-                * ( 1 + monetaryService.vatRates.normal / 100 ) | currency:currencyCode:"symbol":"1.2-2":local }}</td>
+            * flatFeesTotal.quantity[i]
+            * ( 1 + monetaryService.vatRates.normal / 100 ) | currency:currencyCode:"symbol":"1.2-2":local }}</td>
         </tr>
 
         <tr *ngFor="let miscDeductible of sortByMiscsVatState().deductible">
           <td class="invoice__table__left-text">Frais sur justificatifs - TVA déductible</td>
           <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">
-            {{ miscDeductible.amount / ( 1 + miscDeductible.vatRate / 100) | currency:currencyCode:"symbol":"1.2-2":local }}
+            {{ miscDeductible.amount / ( 1 + miscDeductible.vatRate / 100) |
+            currency:currencyCode:"symbol":"1.2-2":local }}
           </td>
           <td *ngIf="timesheetService.timesheet.invoice.provider.vatExemption">
             {{ miscDeductible.amount | currency:currencyCode:"symbol":"1.2-2":local }}
@@ -138,7 +142,8 @@
           <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">
             {{ miscDeductible.vatRate / 100 | percent:"1.2-2":local }}</td>
           <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">
-            {{ miscDeductible.amount / ( 1 + miscDeductible.vatRate / 100) | currency:currencyCode:"symbol":"1.2-2":local }}
+            {{ miscDeductible.amount / ( 1 + miscDeductible.vatRate / 100) |
+            currency:currencyCode:"symbol":"1.2-2":local }}
           </td>
           <td *ngIf="timesheetService.timesheet.invoice.provider.vatExemption">
             {{ miscDeductible.amount | currency:currencyCode:"symbol":"1.2-2":local }}
@@ -155,7 +160,8 @@
             {{ monetaryService.vatRates.normal / 100 | percent:"1.2-2":local }}</td>
           <td>{{ sortByMiscsVatState().nondeductible.amount | currency:currencyCode:"symbol":"1.2-2":local }}</td>
           <td *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">
-            {{ sortByMiscsVatState().nondeductible.amount * (1 + monetaryService.vatRates.normal / 100) | currency:currencyCode:"symbol":"1.2-2":local }}
+            {{ sortByMiscsVatState().nondeductible.amount * (1 + monetaryService.vatRates.normal / 100) |
+            currency:currencyCode:"symbol":"1.2-2":local }}
           </td>
         </tr>
 
@@ -239,8 +245,8 @@
           <div class="invoice__additional-information__title">Informations sur la prestation</div>
           <div>
             Consultant chargé de la prestation :
-            <span
-              class="invoice__additional-information__bolding">{{ timesheetService.timesheet.consultant.name }}</span>
+            <span class="invoice__additional-information__bolding">{{ timesheetService.timesheet.consultant.name
+              }}</span>
           </div>
           <div>
             Date d’exécution :
@@ -249,12 +255,13 @@
           <div>
             Date de règlement :
             <span *ngIf="timesheetService.timesheet.invoice.paymentDate"
-              class="invoice__additional-information__bolding">{{ formatDate(timesheetService.timesheet.invoice.paymentDate) }}</span>
+              class="invoice__additional-information__bolding">{{
+              formatDate(timesheetService.timesheet.invoice.paymentDate) }}</span>
           </div>
           <div *ngIf="timesheetService.timesheet.invoice.paymentModality">
             Modalités de paiement :
-            <span
-              class="invoice__additional-information__bolding">{{ timesheetService.timesheet.invoice.paymentModality }}</span>
+            <span class="invoice__additional-information__bolding">{{ timesheetService.timesheet.invoice.paymentModality
+              }}</span>
           </div>
           <div *ngIf="timesheetService.timesheet.invoice.paymentLatePenalty" id="penalty">
             Tout retard de paiement donnera lieu, en plus des pénalités de retard (10 % par an), au versement d'une
@@ -267,24 +274,24 @@
           <div>
             <div class="invoice__additional-information__title">Coordonnées bancaires</div>
             <div>Titulaire du compte :
-              <span
-                class="invoice__additional-information__bolding">{{ timesheetService.timesheet.invoice.bankAccountHolder }}</span>
+              <span class="invoice__additional-information__bolding">{{
+                timesheetService.timesheet.invoice.bankAccountHolder }}</span>
             </div>
             <div>Banque :
-              <span
-                class="invoice__additional-information__bolding">{{ timesheetService.timesheet.invoice.bankingDomiciliation }}</span>
+              <span class="invoice__additional-information__bolding">{{
+                timesheetService.timesheet.invoice.bankingDomiciliation }}</span>
             </div>
             <div>Agence :
-              <span
-                class="invoice__additional-information__bolding">{{ timesheetService.timesheet.invoice.bankingAgency }}</span>
+              <span class="invoice__additional-information__bolding">{{ timesheetService.timesheet.invoice.bankingAgency
+                }}</span>
             </div>
             <div>IBAN :
-              <span
-                class="invoice__additional-information__bolding">{{ timesheetService.timesheet.invoice.bankIBAN }}</span>
+              <span class="invoice__additional-information__bolding">{{ timesheetService.timesheet.invoice.bankIBAN
+                }}</span>
             </div>
             <div>SWIFT :
-              <span
-                class="invoice__additional-information__bolding">{{ timesheetService.timesheet.invoice.bankSWIFT }}</span>
+              <span class="invoice__additional-information__bolding">{{ timesheetService.timesheet.invoice.bankSWIFT
+                }}</span>
             </div>
           </div>
         </td>
@@ -299,8 +306,8 @@
       -
       {{ timesheetService.timesheet.invoice.provider.address }}
       -
-      <span *ngIf="timesheetService.timesheet.invoice.provider.telephone">Tel :
-        {{ timesheetService.timesheet.invoice.provider.telephone }} - </span>
+      <span *ngIf="timesheetService.timesheet.invoice.provider.phone">Tel :
+        {{ timesheetService.timesheet.invoice.provider.phone }} - </span>
       <span *ngIf="!timesheetService.timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">R.C.S.
         {{ timesheetService.timesheet.invoice.provider.tradeAndCompaniesRegisterCity }} </span>
       <span *ngIf="timesheetService.timesheet.invoice.provider.tradeAndCompaniesRegisterExemption">SIREN : </span>
@@ -317,7 +324,8 @@
 
     <div class="invoice__tables__expenses" id="left-text" *ngIf="timesheetService.timesheet.miscellaneous.length > 0">
       <p>Détail des frais sur justificatif :</p>
-      <app-expense-miscellaneous-table [hideDeleteButton]="true" [vatExemption]="timesheetService.timesheet.invoice.provider.vatExemption">
+      <app-expense-miscellaneous-table [hideDeleteButton]="true"
+        [vatExemption]="timesheetService.timesheet.invoice.provider.vatExemption">
       </app-expense-miscellaneous-table>
     </div>
 
