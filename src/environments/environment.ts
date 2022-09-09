@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: "PROD_ENV",
+  production: "DEV_ENV",
 
   pdf_api_key: "PDF_API_KEY",
   pdf_api_url: "PDF_API_URL",
