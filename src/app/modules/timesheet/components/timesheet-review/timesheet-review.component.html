@@ -12,26 +12,32 @@
           <div id="left-part" class="review__wrapper__fields__block__item-wrapper__part">
             <div class="review__wrapper__fields__block__item-wrapper__part__text">
               <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Consultant</span>
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{ timesheet.consultant.name }}</span>
+              <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{ timesheet.consultant.name
+                }}</span>
             </div>
             <div class="review__wrapper__fields__block__item-wrapper__part__text">
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Intitulé de la mission</span>
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{ timesheet.mission.title }}</span>
+              <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Intitulé de la
+                mission</span>
+              <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{ timesheet.mission.title
+                }}</span>
             </div>
             <div class="review__wrapper__fields__block__item-wrapper__part__text">
               <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Client</span>
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{ timesheet.mission.client }}</span>
+              <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{
+                timesheet.mission.client.company.name }}</span>
             </div>
           </div>
           <hr>
           <div id="right-part" class="review__wrapper__fields__block__item-wrapper__part">
             <div *ngFor="let entry of workedTime" class="review__wrapper__fields__block__item-wrapper__part__text">
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Nombre d'unités d'oeuvre ({{ calendarService.getTimeUnitLabel(entry.unit) }})</span>
+              <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Nombre d'unités d'oeuvre ({{
+                calendarService.getTimeUnitLabel(entry.unit) }})</span>
               <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{ entry.time }}</span>
             </div>
             <div class="review__wrapper__fields__block__item-wrapper__part__text">
               <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Période</span>
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{ date.toLocaleString(locale, { month: 'long', year: 'numeric' }) | titlecase }}</span>
+              <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{
+                date.toLocaleString(locale, { month: 'long', year: 'numeric' }) | titlecase }}</span>
             </div>
           </div>
         </div>
@@ -69,7 +75,8 @@
           </a>
         </div>
         <div *ngIf="auth.isAuthenticated" class="review__wrapper__fields__invoice__item">
-          <a class="review__wrapper__fields__invoice__item__link" [href]="'/timesheet/edit/' + transferToken" target="_self">
+          <a class="review__wrapper__fields__invoice__item__link" [href]="'/timesheet/edit/' + transferToken"
+            target="_self">
             <i class="material-icons">send</i>
             <span>Facturer ce CRA</span>
           </a>

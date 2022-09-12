@@ -1,6 +1,14 @@
 @import "src/app/style/vars";
 @import "src/app/style/mixins";
 
+label {
+  margin-bottom: 0.5rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
 .timesheet-form {
   width: 100%;
 

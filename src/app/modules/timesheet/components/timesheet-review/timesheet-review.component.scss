@@ -1,6 +1,14 @@
 @import "src/app/style/vars";
 @import "src/app/style/mixins";
 
+label {
+  margin-bottom: 0.5rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
 .review {
   &__wrapper {
     @include container;
@@ -131,6 +139,7 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
+            text-decoration: none;
 
             &:hover,
             &:focus,
