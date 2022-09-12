@@ -7,7 +7,7 @@ export class Mission {
   startDate: string;
   endDate: string;
   unitOfWorkType: string;
-  unitOfworkPrice: string;
+  unitOfworkPrice: number;
   client: {
     ref: string;
     email: string;
@@ -34,7 +34,7 @@ export class Mission {
     client?: Mission["client"],
     consultant?: Mission["consultant"],
     unitOfWorkType?: string,
-    unitOfWorkPrice?: string,
+    unitOfWorkPrice?: number,
     providerCompany?: Company,
     paymentDetails?: Mission["paymentDetails"]
   ) {

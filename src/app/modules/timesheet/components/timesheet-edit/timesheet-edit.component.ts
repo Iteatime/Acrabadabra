@@ -78,9 +78,9 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
       } else {
         this.loadTimesheet(this.timesheetService.timesheet);
       }
-    } else if (this.route.snapshot.params.missionId !== undefined) {
+    } else if (this.route.snapshot.queryParams.mission !== undefined) {
       this._missionService
-        .readMission(this.route.snapshot.params.missionId)
+        .readMission(this.route.snapshot.queryParams.mission)
         .then((response) => {
           this.generateInvoice = true;
           this.timesheetService.timesheet.consultant.name =
