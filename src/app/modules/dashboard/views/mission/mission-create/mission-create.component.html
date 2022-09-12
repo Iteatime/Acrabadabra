@@ -75,16 +75,98 @@
           </div>
           <div class="row">
             <div class="col-lg">
-              <div class="form-check">
+              <div class="form-check ml-1">
                 <input class="form-check-input" formControlName="isFreelance" id="mission_consultant-isFreelance"
                   type="checkbox" />
                 <label for="mission_consultant-isFreelance" class="form-check-label">Consultant indépendant</label>
               </div>
             </div>
           </div>
-          <div *ngIf="isConsultantFreelance" class="row">
-            <div class="col-lg">
-              <p>Hello there</p>
+          <div *ngIf="isConsultantFreelance" class="mt-2" formGroupName="company">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="consultantCompanyName">Dénomination</label>
+                  <input class="form-control" formControlName="name" id="consultantCompanyName" />
+                </div>
+                <div class="form-group">
+                  <label for="consultantCompanyAddress">Adresse</label>
+                  <input class="form-control" formControlName="address" id="consultantCompanyAddress" />
+                </div>
+                <div class="row">
+                  <div class="col-lg-4">
+                    <div class="form-group">
+                      <label for="consultantCompanyZip">Code postal</label>
+                      <input class="form-control" formControlName="zipCode" id="consultantCompanyZip" />
+                    </div>
+                  </div>
+                  <div class="col-lg-8">
+                    <div class="form-group">
+                      <label for="consultantCompanyCity">Ville</label>
+                      <input class="form-control" formControlName="city" id="consultantCompanyCity" />
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="consultantCompanyPhone">Téléphone</label>
+                  <input class="form-control" formControlName="phone" id="consultantCompanyPhone" />
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="consultantCompanySiren">Numéro de SIREN</label>
+                  <input class="form-control" formControlName="siren" id="consultantCompanySiren" />
+                </div>
+                <div class="form-group">
+                  <label for="consultantCompanyTradeAndCompaniesRegisterCity">Ville d'immatriculation au RCS</label>
+                  <input class="form-control" formControlName="tradeAndCompaniesRegisterCity"
+                    id="consultantCompanyTradeAndCompaniesRegisterCity" />
+                </div>
+                <div class="form-group">
+                  <label for="consultantCompanyVatNumber">Numéro de TVA intra-communautaire</label>
+                  <input class="form-control" formControlName="vatNumber" id="consultantCompanyVatNumber" />
+                </div>
+              </div>
+            </div>
+            <hr class="border-light w-100" />
+            <div formGroupName="bankAccount">
+              <h3 class="h5 mb-2 text-primary">Coordonnées bancaires</h3>
+              <div class="row">
+                <div class="col-lg">
+                  <div class="form-group">
+                    <label for="consultantCompanyHolder">Titulaire du compte</label>
+                    <input class="form-control" formControlName="holder" id="consultantCompanyHolder" />
+                  </div>
+                </div>
+                <div class="col-lg">
+                  <div class="form-group">
+                    <label for="consultantCompanySwift">SWIFT</label>
+                    <input class="form-control" formControlName="swift" id="consultantCompanySwift" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg">
+                  <div class="form-group">
+                    <label for="consultantCompanyIban">IBAN</label>
+                    <input class="form-control" formControlName="iban" id="consultantCompanyIban" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg">
+                  <div class="form-group">
+                    <label for="consultantCompanyDomiciliation">Banque</label>
+                    <input class="form-control" formControlName="domiciliation" id="consultantCompanyDomiciliation" />
+                  </div>
+                </div>
+                <div class="col-lg">
+                  <div class="form-group">
+                    <label for="consultantCompanyAgency">Agence</label>
+                    <input class="form-control" formControlName="agency" id="consultantCompanyAgency" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -103,6 +185,12 @@
               <div class="form-group">
                 <label for="mission_client-ref">Référence client (BDC)</label>
                 <input class="form-control" formControlName="ref" id="mission_client-ref" />
+              </div>
+            </div>
+            <div class="col-lg">
+              <div class="form-group">
+                <label for="missionClientEmail">Email</label>
+                <input class="form-control" formControlName="email" id="missionClientEmail" type="email" />
               </div>
             </div>
           </div>
@@ -203,7 +291,8 @@
             <div class="col-lg">
               <div class="form-group">
                 <label for="mission_details-unitOfWorkPrice">Prix de l'unité d'oeuvre</label>
-                <input class="form-control" formControlName="unitOfWorkPrice" id="mission_details-unitOfWorkPrice" />
+                <input class="form-control" formControlName="unitOfWorkPrice" id="mission_details-unitOfWorkPrice"
+                  type="number" />
               </div>
             </div>
           </div>

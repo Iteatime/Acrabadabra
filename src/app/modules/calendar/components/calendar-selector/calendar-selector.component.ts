@@ -7,10 +7,10 @@ import {
   ChangeDetectorRef,
   Output,
   EventEmitter,
-  OnDestroy
-} from '@angular/core';
+  OnDestroy,
+} from "@angular/core";
 
-import { Subject } from 'rxjs';
+import { Subject } from "rxjs";
 
 import {
   addHours,
@@ -27,31 +27,35 @@ import {
   setMonth,
   subMonths,
   setYear,
-} from 'date-fns';
+} from "date-fns";
 
-import { CalendarEvent, CalendarMonthViewDay, DAYS_OF_WEEK } from 'angular-calendar';
-import { CalendarService } from '../../calendar.service';
-import { TimeUnit } from 'src/app/shared/@types/timeUnit';
+import {
+  CalendarEvent,
+  CalendarMonthViewDay,
+  DAYS_OF_WEEK,
+} from "angular-calendar";
+import { CalendarService } from "../../calendar.service";
+import { TimeUnit } from "src/app/shared/@types/timeUnit";
 
 @Component({
-  selector: 'app-calendar-selector',
+  selector: "app-calendar-selector",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './calendar-selector.component.html',
-  styleUrls: ['./calendar-selector.component.scss'],
+  templateUrl: "./calendar-selector.component.html",
+  styleUrls: ["./calendar-selector.component.scss"],
   encapsulation: ViewEncapsulation.None,
 })
 export class CalendarSelectorComponent implements OnInit, OnDestroy {
   @Input() public minifiedTimesheet: any;
   @Input() public picking: boolean;
+  @Input() public selectedTimeUnit: string;
   @Output() public changed = new EventEmitter<boolean>();
   public timesheet: CalendarEvent[] = [];
   public refresh: Subject<any> = new Subject();
-  public locale = 'fr';
+  public locale = "fr";
   public weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
   public weekendDays: number[] = [DAYS_OF_WEEK.SATURDAY, DAYS_OF_WEEK.SUNDAY];
   public viewDate: Date = new Date();
   public timeUnits: TimeUnit[] = [];
-  public selectedTimeUnit: string;
   public totalWorkedTime = 0;
 
   public constructor(
@@ -64,7 +68,10 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
 
     this._initTimesheet();
 
-    this.selectedTimeUnit = this.calendarService.getSelectedTimeUnit(this.timesheet);
+    if (!this.selectedTimeUnit)
+      this.selectedTimeUnit = this.calendarService.getSelectedTimeUnit(
+        this.timesheet
+      );
 
     this.refresh.subscribe(() => {
       this.changeDetector.detectChanges();
@@ -82,12 +89,16 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
     this.refresh.unsubscribe();
   }
 
-  public beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
+  public beforeMonthViewRender({
+    body,
+  }: {
+    body: CalendarMonthViewDay[];
+  }): void {
     this.totalWorkedTime = 0;
 
-    body.forEach(day => {
+    body.forEach((day) => {
       if (!this.picking) {
-        day.cssClass = 'cal-disabled';
+        day.cssClass = "cal-disabled";
       }
 
       day.events.forEach((event) => {
@@ -135,12 +146,15 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
 
   public selectAllBusinessDays(): void {
     const monthStart = startOfMonth(this.viewDate).getDate(),
-          monthEnd = endOfMonth(this.viewDate).getDate();
+      monthEnd = endOfMonth(this.viewDate).getDate();
 
     for (let date = monthStart; date <= monthEnd; date++) {
       const aDay = setDate(this.viewDate, date);
 
-      if (!this._isDayWorked(aDay) && this.weekendDays.indexOf(getDay(aDay)) === -1) {
+      if (
+        !this._isDayWorked(aDay) &&
+        this.weekendDays.indexOf(getDay(aDay)) === -1
+      ) {
         this._addTimesheetDay(aDay);
       }
     }
@@ -168,11 +182,11 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
   }
 
   private setTimeUnits(): void {
-    Object.keys(this.calendarService.timeUnits).forEach(key => {
+    Object.keys(this.calendarService.timeUnits).forEach((key) => {
       const timeUnit: TimeUnit = this.calendarService.timeUnits[key];
       this.timeUnits.push({
         label: timeUnit.label,
-        key
+        key,
       });
     });
   }
@@ -181,8 +195,8 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
     const timesheetDate = Object.keys(this.minifiedTimesheet)[0];
 
     if (timesheetDate !== undefined) {
-      const month = Number.parseInt(timesheetDate.split('.')[0], 10);
-      const year = Number.parseInt(timesheetDate.split('.')[1], 10);
+      const month = Number.parseInt(timesheetDate.split(".")[0], 10);
+      const year = Number.parseInt(timesheetDate.split(".")[1], 10);
       const daysValue = this.minifiedTimesheet[timesheetDate];
 
       this.viewDate = setMonth(setYear(this.viewDate, year), month);
@@ -191,8 +205,14 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
         const day = new Date(+year, +month, date + 1);
 
         if (daysValue[date].time !== undefined && daysValue[date].time !== 0) {
-          const time = this.calendarService.getTimeFromWorkingEvent(daysValue[date]);
-          this._addTimesheetDay(day, addMinutes(day, time), daysValue[date].unit);
+          const time = this.calendarService.getTimeFromWorkingEvent(
+            daysValue[date]
+          );
+          this._addTimesheetDay(
+            day,
+            addMinutes(day, time),
+            daysValue[date].unit
+          );
         }
       }
     }
@@ -210,22 +230,29 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
     });
   }
 
-  private _addTimesheetDay(date: Date, end?: Date, timeUnit: string = this.selectedTimeUnit): void {
+  private _addTimesheetDay(
+    date: Date,
+    end?: Date,
+    timeUnit: string = this.selectedTimeUnit
+  ): void {
     date = startOfDay(date);
 
     if (end === undefined) {
-      end = addMinutes(date, this.calendarService.timeUnits[timeUnit].timeInMinutes);
+      end = addMinutes(
+        date,
+        this.calendarService.timeUnits[timeUnit].timeInMinutes
+      );
     }
 
     this.timesheet.push({
       title: timeUnit,
       start: date,
       end: end,
-      draggable: false
+      draggable: false,
     });
   }
 
-  private _deleteDay(day: Date): void  {
+  private _deleteDay(day: Date): void {
     this.timesheet = this.timesheet.filter(
       (iEvent) => !isSameDay(day, iEvent.start)
     );

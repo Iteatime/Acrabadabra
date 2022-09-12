@@ -12,6 +12,7 @@ export const environment = {
   short_url_workspace: "e8989a355dc84230b79bf51d50e07377",
   FAUNADB_SECRET: "fnADPZOHdLACAbcc4eWL7T7vQn3a9dobGcKDiVde",
   API_URl: "http://localhost:3000",
+  PUBLIC_URL: "http://localhost:4200",
 };
 
 /*

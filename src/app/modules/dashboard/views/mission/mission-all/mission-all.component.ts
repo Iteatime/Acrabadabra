@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthenticationService } from "src/app/shared/services/authentication/authentication.service";
+import { environment } from "../../../../../../environments/environment";
 import { Mission } from "../../../../../shared/models";
 import { MissionService } from "../../../../../shared/services/missions/missions.service";
 
@@ -23,6 +24,7 @@ export class MissionAllComponent implements OnInit {
     future: [],
     past: [],
   };
+  public missionsCount: number;
   public headings = ["title", "consultant", "client", "startDate", "endDate"];
 
   constructor(
@@ -43,6 +45,7 @@ export class MissionAllComponent implements OnInit {
         this.store.setState({ missions: response }, (state: State) => {
           this.missionsByStatus = this.getMissionsByStatus(state.missions);
           this.ready = true;
+          this.missionsCount = response.length;
         });
       });
   }
@@ -86,6 +89,6 @@ export class MissionAllComponent implements OnInit {
   }
 
   getMissionTimesheetLink(id: string) {
-    return "http://localhost:3000/timesheet/create?mission=" + id;
+    return `${window.location.host}/timesheet/create?mission=${id}`;
   }
 }

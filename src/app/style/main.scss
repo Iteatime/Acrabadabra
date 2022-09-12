@@ -1,8 +1,9 @@
-$material-icons-font-path: '~material-icons/iconfont/';
+$material-icons-font-path: "~material-icons/iconfont/";
 /* import */
 
-@import '~material-icons/iconfont/material-icons.scss';
+@import "~material-icons/iconfont/material-icons.scss";
 @import "../../../node_modules/angular-calendar/css/angular-calendar.css";
-@import 'vars';
-@import 'mixins';
-@import 'global';
+@import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import "vars";
+@import "mixins";
+@import "global";

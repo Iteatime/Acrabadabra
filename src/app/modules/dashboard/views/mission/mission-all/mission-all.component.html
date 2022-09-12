@@ -10,6 +10,9 @@
 </div>
 
 <div *ngIf="ready">
+  <div *ngIf="missionsCount === 0">
+    <p>Aucune missions trouvées</p>
+  </div>
   <div *ngFor="let status of missionsByStatus | keyvalue" class="row">
     <div *ngFor="let mission of status.value; index as i" class="col-lg-6 mb-2">
       <div class="card shadow mb-4" [ngClass]="{

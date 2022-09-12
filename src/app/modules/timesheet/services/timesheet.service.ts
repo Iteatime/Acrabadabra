@@ -38,17 +38,31 @@ export class TimesheetService {
 
   public getTransferToken(): string {
     let transferedTimesheet = this.timesheet;
-
+    console.log("1", transferedTimesheet);
     if (this.timesheet.invoice) {
+      console.log("if", transferedTimesheet);
+
+      const invoice = new Invoice();
+      invoice.provider = this.timesheet.invoice.client;
+      invoice.client = new Company();
+
       transferedTimesheet = this.getIfExistAlreadyPresentInvoice({
         ...this.timesheet,
-        invoice: Object.assign({}, new Invoice(), {
-          provider: Object.assign(new Company(), this.timesheet.invoice.client),
-          client: new Company(),
-        }),
+        invoice,
       });
+
+      // transferedTimesheet = this.getIfExistAlreadyPresentInvoice({
+      //   ...this.timesheet,
+      //   invoice: Object.assign({}, new Invoice(), {
+      //     provider: Object.assign(new Company(), this.timesheet.invoice.client),
+      //     client: new Company(),
+      //   }),
+      // });
+
+      console.log("ifget", transferedTimesheet);
     }
 
+    console.log("return", transferedTimesheet);
     return this._serializer.serializeObject({
       mode: "edit",
       timesheet: transferedTimesheet,
@@ -79,6 +93,7 @@ export class TimesheetService {
       printBackground: "true",
       api: environment.pdf_api_key,
       title: this.timesheet.invoice.number,
+      waitUntil: "networkidle0",
     });
 
     return `${environment.pdf_api_url}?${params}`;
@@ -168,8 +183,8 @@ export class TimesheetService {
       if (
         storedTimesheet.consultant.name ===
           timesheetToTransfer.consultant.name &&
-        storedTimesheet.invoice.provider.name ===
-          timesheetToTransfer.invoice.provider.name
+        storedTimesheet.invoice?.provider?.name ===
+          timesheetToTransfer.invoice.provider?.name
       ) {
         return {
           ...timesheetToTransfer,

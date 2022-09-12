@@ -62,11 +62,13 @@
           </div>
 
           <div class="timesheet-edit__wrapper__form__block__input-wrapper__item form-group">
-            <label for="missionFinalClient" class="timesheet-edit__wrapper__form__block__input-wrapper__item__label">Client
+            <label for="missionFinalClient"
+              class="timesheet-edit__wrapper__form__block__input-wrapper__item__label">Client
               final</label>
             <div class="timesheet-edit__wrapper__form__block__input-wrapper__item__input">
               <input type="text" required class="form-control" name="missionFinalClientInput"
-                [(ngModel)]="timesheetService.timesheet.mission.client" #missionFinalClientInput="ngModel">
+                [(ngModel)]="timesheetService.timesheet.mission.client?.company.name"
+                #missionFinalClientInput="ngModel">
               <div
                 *ngIf="missionFinalClientInput.invalid && (missionFinalClientInput.dirty || missionFinalClientInput.touched)"
                 class="alert alert-danger">
@@ -82,7 +84,7 @@
       <div class="timesheet-edit__wrapper__form__component">
         <h4 class="timesheet-edit__wrapper__form__component__title">Détail de l'intervention</h4>
         <app-calendar-selector [minifiedTimesheet]="timesheetService.timesheet.workingDays" [picking]="true"
-          (changed)="onUserInput()">
+          [selectedTimeUnit]="timesheetService.timesheet.mission.unitOfWorkType" (changed)="onUserInput()">
         </app-calendar-selector>
       </div>
 
@@ -93,10 +95,11 @@
         </label>
         <app-expense-mileage-form *ngIf="generateExpenses" [commutes]="timesheetService.timesheet.commutes"
           (changed)="onUserInput()"></app-expense-mileage-form>
-        <app-expense-miscellaneous-form *ngIf="generateExpenses" [miscellaneous]="timesheetService.timesheet.miscellaneous"
-        (changed)="onUserInput()"></app-expense-miscellaneous-form>
+        <app-expense-miscellaneous-form *ngIf="generateExpenses"
+          [miscellaneous]="timesheetService.timesheet.miscellaneous" (changed)="onUserInput()">
+        </app-expense-miscellaneous-form>
         <app-expense-flat-fee-form *ngIf="generateExpenses" [flatFees]="timesheetService.timesheet.flatFees"
-        (changed)="onUserInput()"></app-expense-flat-fee-form>
+          (changed)="onUserInput()"></app-expense-flat-fee-form>
       </div>
 
       <div class="timesheet-edit__wrapper__form__component">
@@ -104,15 +107,16 @@
           <input name="invoiceToggle" type="checkbox" [(ngModel)]="generateInvoice" #invoiceToggle>
           Générer une facture
         </label>
-        <app-invoice-form *ngIf="generateInvoice" [invoice]="timesheetService.timesheet.invoice" [mission]="timesheetService.timesheet.mission"
-          (changed)="onUserInput()"></app-invoice-form>
+        <app-invoice-form *ngIf="generateInvoice" [invoice]="timesheetService.timesheet.invoice"
+          [mission]="timesheetService.timesheet.mission" (changed)="onUserInput()"></app-invoice-form>
       </div>
 
       <div class="timesheet-edit__wrapper__form__submit">
         <button data-text="Valider mon CRA" class="timesheet-edit__wrapper__form__submit__button" (click)="onSubmit()">
           <span>Valider mon CRA</span>
         </button>
-        <button *ngIf="this.auth.isAuthenticated" data-text="Retour" class="timesheet-edit__wrapper__form__submit__button" [routerLink]="['/dashboard']">
+        <button *ngIf="this.auth.isAuthenticated" data-text="Retour"
+          class="timesheet-edit__wrapper__form__submit__button" [routerLink]="['/dashboard']">
           <span>Retour</span>
         </button>
       </div>
@@ -131,15 +135,15 @@
           </a>
         </div>
         <div class="timesheet-edit__wrapper__form__icons__item">
-          <a href="#" [copyToClipboard]="editShortUrl"
-            [copyToClipboardMessage]="'Lien de modification copié'" [copyToClipboardMessageParent]="editLink.parentNode" #editLink>
+          <a href="#" [copyToClipboard]="editShortUrl" [copyToClipboardMessage]="'Lien de modification copié'"
+            [copyToClipboardMessageParent]="editLink.parentNode" #editLink>
             <i class="material-icons">edit</i>
             <span>Copier le lien de modification</span>
           </a>
         </div>
         <div class="timesheet-edit__wrapper__form__icons__item">
-          <a href="#" [copyToClipboard]="reviewShortUrl"
-            [copyToClipboardMessage]="'Lien de partage copié'" [copyToClipboardMessageParent]="shareLink.parentNode" #shareLink>
+          <a href="#" [copyToClipboard]="reviewShortUrl" [copyToClipboardMessage]="'Lien de partage copié'"
+            [copyToClipboardMessageParent]="shareLink.parentNode" #shareLink>
             <i class="material-icons">remove_red_eye</i>
             <span>Copier le lien de partage</span>
           </a>
