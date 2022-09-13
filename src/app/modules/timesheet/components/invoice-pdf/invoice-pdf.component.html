@@ -1,4 +1,4 @@
-<div class="invoice">
+<div class="invoice" *ngIf="ready">
   <div class="invoice__header">
     <div class="invoice__header__provider">
       <div class="invoice__header__provider__name">
@@ -269,8 +269,8 @@
             forfaitaire de 40€ pour frais de recouvrement.
           </div>
         </td>
-        <td *ngIf="timesheetService.timesheet.invoice.isBankingDetails()"></td>
-        <td *ngIf="timesheetService.timesheet.invoice.isBankingDetails()" id="bank-information">
+        <td *ngIf="timesheetService.timesheet.invoice"></td>
+        <td *ngIf="timesheetService.timesheet.invoice" id="bank-information">
           <div>
             <div class="invoice__additional-information__title">Coordonnées bancaires</div>
             <div>Titulaire du compte :
@@ -295,7 +295,7 @@
             </div>
           </div>
         </td>
-        <td *ngIf="timesheetService.timesheet.invoice.isBankingDetails()"></td>
+        <td *ngIf="timesheetService.timesheet.invoice"></td>
       </tr>
     </table>
   </div>

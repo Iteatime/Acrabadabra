@@ -37,54 +37,28 @@ export class TimesheetService {
   }
 
   public getTransferToken(): string {
-    let transferedTimesheet = this.timesheet;
-    console.log("1", transferedTimesheet);
-    if (this.timesheet.invoice) {
-      console.log("if", transferedTimesheet);
-
-      const invoice = new Invoice();
-      invoice.provider = this.timesheet.invoice.client;
-      invoice.client = new Company();
-
-      transferedTimesheet = this.getIfExistAlreadyPresentInvoice({
-        ...this.timesheet,
-        invoice,
-      });
-
-      // transferedTimesheet = this.getIfExistAlreadyPresentInvoice({
-      //   ...this.timesheet,
-      //   invoice: Object.assign({}, new Invoice(), {
-      //     provider: Object.assign(new Company(), this.timesheet.invoice.client),
-      //     client: new Company(),
-      //   }),
-      // });
-
-      console.log("ifget", transferedTimesheet);
-    }
-
-    console.log("return", transferedTimesheet);
-    return this._serializer.serializeObject({
-      mode: "edit",
-      timesheet: transferedTimesheet,
-    });
+    return this.timesheet.id;
   }
 
-  public openTimesheet(token: string, mode: string): boolean {
-    const a = this._serializer.deserializeObject(token);
-    if (!a || a.mode !== mode) {
+  public async openTimesheet(id: string, mode: string): Promise<boolean> {
+    const timesheet = await this.getTimesheet(id);
+    console.log("fromapi:", timesheet);
+    if (!timesheet) {
       return false;
     } else {
       this.mode = mode;
-      this.timesheet = Object.assign(this.timesheet, a.timesheet);
+      this.timesheet = timesheet;
+      if (!timesheet.consultant) timesheet.consultant = {};
       return true;
     }
   }
 
   public getInvoiceLink() {
+    console.log(this.timesheet);
     const params = new URLSearchParams({
-      url: window.location.origin + "/invoice/" + this.getReviewToken(),
+      url: window.location.origin + "/invoice/" + this.timesheet.id,
       form: "A4",
-      scale: "2",
+      scale: "1.45",
       "margin.top": "15px",
       "margin.right": "10px",
       "margin.bottom": "10px",
@@ -152,6 +126,26 @@ export class TimesheetService {
       `timesheet.${lastTimesheet + 1}`,
       this.timesheet
     );
+  }
+
+  public async createTimesheet() {
+    return (
+      await (
+        await fetch(`${environment.API_URl}/timesheets`, {
+          method: "POST",
+          body: JSON.stringify(this.timesheet),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+      ).json()
+    ).timesheetId;
+  }
+
+  public async getTimesheet(shortId: string) {
+    return await (
+      await fetch(`${environment.API_URl}/timesheets/${shortId}`)
+    ).json();
   }
 
   public openLastTimesheetInLocal(): boolean {

@@ -51,6 +51,7 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
   generateExpenses = false;
   showLinks = false;
   currentUrl = "";
+  ready: boolean;
 
   constructor(
     public timesheetService: TimesheetService,
@@ -63,14 +64,14 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
     private _missionService: MissionService
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.currentUrl = window.location.href;
     if (this.route.snapshot.params.data !== undefined) {
       if (
-        !this.timesheetService.openTimesheet(
-          this.route.snapshot.params["data"],
+        !(await this.timesheetService.openTimesheet(
+          this.route.snapshot.params.data,
           "edit"
-        )
+        ))
       ) {
         if (this.timesheetService.openLastTimesheetInLocal()) {
           this.loadTimesheet(this.timesheetService.timesheet);
@@ -79,22 +80,25 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
         this.loadTimesheet(this.timesheetService.timesheet);
       }
     } else if (this.route.snapshot.queryParams.mission !== undefined) {
-      this._missionService
-        .readMission(this.route.snapshot.queryParams.mission)
-        .then((response) => {
-          this.generateInvoice = true;
-          this.timesheetService.timesheet.consultant.name =
-            response.consultant.name;
-          this.timesheetService.timesheet.consultant.email =
-            response.consultant.email;
+      const response = await this._missionService.readMission(
+        this.route.snapshot.queryParams.mission
+      );
 
-          this.timesheetService.timesheet.mission = response;
-        });
+      this.generateInvoice = true;
+      this.timesheetService.timesheet.consultant.name =
+        response.consultant.name;
+      this.timesheetService.timesheet.consultant.email =
+        response.consultant.email;
+
+      this.timesheetService.timesheet.mission = response;
+    } else {
+      this.loadTimesheet(new Timesheet());
     }
 
     this.titleService.setTitle(
       `Acrabadabra - ${this.getModeTitle()} un compte rendu d'activité`
     );
+    this.ready = true;
   }
 
   ngAfterViewInit() {
@@ -139,32 +143,39 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
     });
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.notificationService.dismissAll();
-    if (this.checkFormsValidity()) {
-      this.timesheetService.timesheet.workingDays =
-        this.calendarService.getWorkingDays(this.calendar.timesheet);
-      this.timesheetService.timesheet.invoice = this.generateInvoice
-        ? this.invoiceForm.invoice
-        : null;
-      this.timesheetService.timesheet.miscellaneous = this.generateExpenses
-        ? this.miscellaneousForm.miscellaneous
-        : [];
-      this.timesheetService.timesheet.commutes = this.generateExpenses
-        ? this.commutesForm.commutes
-        : [];
-      this.timesheetService.timesheet.flatFees = this.generateExpenses
-        ? this.flatFeesForm.flatFees
-        : [];
-      this.timesheetService.saveTimesheet();
-      this.timesheetService.timesheet.id = this.route.snapshot.params.missionId;
-      this.setShortUrl("edit");
-      this.setShortUrl("review");
-      this.reactToSubmition(false);
-    } else {
+
+    if (!this.checkFormsValidity()) {
       this.reactToSubmition(true);
       this.showValidationMessages();
+      return;
     }
+
+    this.timesheetService.timesheet.workingDays =
+      this.calendarService.getWorkingDays(this.calendar.timesheet);
+    this.timesheetService.timesheet.invoice = this.generateInvoice
+      ? this.invoiceForm.invoice
+      : null;
+    this.timesheetService.timesheet.miscellaneous = this.generateExpenses
+      ? this.miscellaneousForm.miscellaneous
+      : [];
+    this.timesheetService.timesheet.commutes = this.generateExpenses
+      ? this.commutesForm.commutes
+      : [];
+    this.timesheetService.timesheet.flatFees = this.generateExpenses
+      ? this.flatFeesForm.flatFees
+      : [];
+
+    const timesheetId = await this.timesheetService.createTimesheet();
+    this.timesheetService.timesheet.id = timesheetId;
+
+    this.timesheetService.saveTimesheet();
+
+    this.editShortUrl = `${this.originUrl}/timesheet/edit/${timesheetId}`;
+    this.reviewShortUrl = `${this.originUrl}/timesheet/review/${timesheetId}`;
+
+    this.reactToSubmition(false);
   }
 
   reactToSubmition(error: boolean): void {
@@ -241,5 +252,6 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
       timesheet.flatFees.length > 0 ||
       timesheet.miscellaneous.length > 0;
     this.setShortUrl();
+    console.log(this.timesheetService.timesheet);
   }
 }

@@ -46,7 +46,17 @@ export class Mission {
     this.unitOfWorkType = unitOfWorkType || null;
     this.unitOfworkPrice = unitOfWorkPrice || null;
     this.client = client || null;
-    this.consultant = consultant || null;
+    this.consultant = consultant || {
+      company: new Company(),
+      email: null,
+      isFreelance: false,
+      name: null,
+    };
+    this.client = {
+      company: new Company(),
+      email: null,
+      ref: null,
+    };
     this.provider = providerCompany || new Company();
     this.paymentDetails = paymentDetails || null;
   }

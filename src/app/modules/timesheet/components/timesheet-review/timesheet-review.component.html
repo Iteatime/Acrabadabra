@@ -5,7 +5,7 @@
       <h2>Compte rendu d'activité</h2>
     </div>
 
-    <div class="review__wrapper__fields">
+    <div class="review__wrapper__fields" *ngIf="ready">
       <div class="review__wrapper__fields__block">
         <h3 class="review__wrapper__fields__block__title">Résumé</h3>
         <div class="review__wrapper__fields__block__item-wrapper">
@@ -24,7 +24,7 @@
             <div class="review__wrapper__fields__block__item-wrapper__part__text">
               <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Client</span>
               <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{
-                timesheet.mission.client.company.name }}</span>
+                timesheet.mission.client?.company?.name }}</span>
             </div>
           </div>
           <hr>
@@ -75,7 +75,7 @@
           </a>
         </div>
         <div *ngIf="auth.isAuthenticated" class="review__wrapper__fields__invoice__item">
-          <a class="review__wrapper__fields__invoice__item__link" [href]="'/timesheet/edit/' + transferToken"
+          <a class="review__wrapper__fields__invoice__item__link" [href]="'/timesheet/edit/' + timesheet.id"
             target="_self">
             <i class="material-icons">send</i>
             <span>Facturer ce CRA</span>
