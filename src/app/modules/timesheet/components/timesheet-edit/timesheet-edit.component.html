@@ -6,7 +6,7 @@
     </div>
 
     <form class="timesheet-edit__wrapper__form" #form="ngForm">
-      <div id="consultant" class="timesheet-edit__wrapper__form__block">
+      <div id="consultant" class="timesheet-edit__wrapper__form__block" *ngIf="ready">
         <h4 class="timesheet-edit__wrapper__form__block__title">Consultant</h4>
         <div class="timesheet-edit__wrapper__form__block__input-wrapper">
           <div class="timesheet-edit__wrapper__form__block__input-wrapper__item form-group">
@@ -43,7 +43,7 @@
         </div>
       </div>
 
-      <div id="mission" class="timesheet-edit__wrapper__form__block">
+      <div id="mission" class="timesheet-edit__wrapper__form__block" *ngIf="ready">
         <h4 class="timesheet-edit__wrapper__form__block__title">Mission</h4>
         <div class="timesheet-edit__wrapper__form__block__input-wrapper">
           <div class="timesheet-edit__wrapper__form__block__input-wrapper__item form-group">
@@ -81,14 +81,14 @@
         </div>
       </div>
 
-      <div class="timesheet-edit__wrapper__form__component">
+      <div class="timesheet-edit__wrapper__form__component" *ngIf="ready">
         <h4 class="timesheet-edit__wrapper__form__component__title">Détail de l'intervention</h4>
         <app-calendar-selector [minifiedTimesheet]="timesheetService.timesheet.workingDays" [picking]="true"
           [selectedTimeUnit]="timesheetService.timesheet.mission.unitOfWorkType" (changed)="onUserInput()">
         </app-calendar-selector>
       </div>
 
-      <div class="timesheet-edit__wrapper__form__component">
+      <div class="timesheet-edit__wrapper__form__component" *ngIf="ready">
         <label class="timesheet-edit__wrapper__form__component__toggle">
           <input name="commutesToggle" type="checkbox" [(ngModel)]="generateExpenses" #commutesToggle>
           Ajouter des frais
@@ -102,7 +102,7 @@
           (changed)="onUserInput()"></app-expense-flat-fee-form>
       </div>
 
-      <div class="timesheet-edit__wrapper__form__component">
+      <div class="timesheet-edit__wrapper__form__component" *ngIf="ready">
         <label class="timesheet-edit__wrapper__form__component__toggle">
           <input name="invoiceToggle" type="checkbox" [(ngModel)]="generateInvoice" #invoiceToggle>
           Générer une facture
@@ -111,7 +111,7 @@
           [mission]="timesheetService.timesheet.mission" (changed)="onUserInput()"></app-invoice-form>
       </div>
 
-      <div class="timesheet-edit__wrapper__form__submit">
+      <div class="timesheet-edit__wrapper__form__submit" *ngIf="ready">
         <button data-text="Valider mon CRA" class="timesheet-edit__wrapper__form__submit__button" (click)="onSubmit()">
           <span>Valider mon CRA</span>
         </button>
