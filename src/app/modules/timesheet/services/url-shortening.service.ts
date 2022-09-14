@@ -11,9 +11,9 @@ export class UrlShorteningService {
 
   public shortenUrl(url): Promise<string> {
     const headers = new HttpHeaders({
-      apikey: environment.short_url_api_key,
+      apikey: "",
       "Content-Type": "application/json",
-      workspace: environment.short_url_workspace,
+      workspace: "",
     });
 
     const body = JSON.stringify({
@@ -22,7 +22,7 @@ export class UrlShorteningService {
     });
 
     return this._http
-      .post<any>(environment.short_url_api, body, { headers })
+      .post<any>("", body, { headers })
       .toPromise()
       .then((res) => {
         return res.shortUrl;

@@ -65,7 +65,6 @@ export class TimesheetService {
       "margin.left": "10px",
       landscape: "false",
       printBackground: "true",
-      api: environment.pdf_api_key,
       title: this.timesheet.invoice.number,
       waitUntil: "networkidle0",
     });
