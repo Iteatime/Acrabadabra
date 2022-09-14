@@ -1,5 +1,0 @@
-{
-  "/.netlify/functions": {
-    "target": "http://localhost:9001"
-  }
-}

@@ -55,26 +55,6 @@ export class TimesheetReviewComponent implements OnInit {
       }
     });
 
-    // if (this.route.snapshot.params.data) {
-    //   const timesheet = await this.timesheetService.getTimesheet(
-    //     this.route.snapshot.params.data
-    //   );
-
-    //   this.timesheetService.timesheet = timesheet;
-    //   this.timesheet = this.timesheetService.timesheet;
-    //   this.date = this.calendarService.getDate(this.timesheet);
-    //   this.workedTime = this.calendarService.getWorkedTime(this.timesheet);
-    //   this.transferToken = this.timesheetService.getTransferToken();
-    //   this.generateInvoice = false;
-
-    //   if (this.timesheet.invoice) {
-    //     this.invoiceLink = this.timesheetService.getInvoiceLink();
-    //     this.generateInvoice = true;
-    //   }
-    //   this.ready = true;
-    //   console.log(this.timesheetService.timesheet);
-    // }
-
     this.titleService.setTitle(
       "Acradababra - Consulter un compte rendu d'activité"
     );
