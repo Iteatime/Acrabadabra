@@ -6,7 +6,6 @@ import { SharedModuleModule } from "src/app/shared/modules/shared-module/shared-
 import { ActivityCardComponent } from "./components/activity-card/activity-card.component";
 import { AlertComponent } from "./components/alert/alert.component";
 import { ActivityCardSkeletonComponent } from "./components/card-skeleton/card-skeleton.component";
-import { CompanyFormComponent } from "./components/company-form/company-form.component";
 import { FormInputComponent } from "./components/form-input/form-input.component";
 import { FromNowComponent } from "./components/from-now/from-now.component";
 import { MessageComponent } from "./components/message/message.component";
@@ -36,7 +35,6 @@ import { ProfileComponent } from "./views/profile/profile.component";
     ActivityCardComponent,
     MissionCreateComponent,
     FormInputComponent,
-    CompanyFormComponent,
   ],
   imports: [
     CommonModule,

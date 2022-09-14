@@ -5,12 +5,7 @@
 export const environment = {
   production: "DEV_ENV",
 
-  pdf_api_key: "PDF_API_KEY",
-  pdf_api_url: "PDF_API_URL",
-  short_url_api_key: "815cc16fb90f4c5ebd4f07daf7a6f7f8",
-  short_url_api: "https://api.rebrandly.com/v1/links",
-  short_url_workspace: "e8989a355dc84230b79bf51d50e07377",
-  FAUNADB_SECRET: "fnADPZOHdLACAbcc4eWL7T7vQn3a9dobGcKDiVde",
+  pdf_api_url: "http://localhost:5000",
   API_URl: "http://localhost:3000",
   PUBLIC_URL: "http://localhost:4200",
 };
