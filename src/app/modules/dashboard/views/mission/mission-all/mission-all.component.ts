@@ -16,6 +16,7 @@ interface MissionsByStatus {
 @Component({
   selector: "app-mission-all",
   templateUrl: "./mission-all.component.html",
+  styleUrls: ["./mission-all.component.scss"],
 })
 export class MissionAllComponent implements OnInit {
   public ready: boolean;
@@ -35,19 +36,19 @@ export class MissionAllComponent implements OnInit {
 
   ngOnInit() {
     this.ready = false;
-    this.updateMissions();
+    this.loadMissions();
   }
 
-  updateMissions(): void {
-    this._missionService
-      .readMissionsByCreator(this._auth.user.id)
-      .then((response) => {
-        this.store.setState({ missions: response }, (state: State) => {
-          this.missionsByStatus = this.getMissionsByStatus(state.missions);
-          this.ready = true;
-          this.missionsCount = response.length;
-        });
-      });
+  async loadMissions() {
+    const missions = await this._missionService.readMissionsByCreator(
+      this._auth.user.id
+    );
+
+    this.store.setState({ missions }, (state: State) => {
+      this.missionsByStatus = this.getMissionsByStatus(state.missions);
+      this.ready = true;
+      this.missionsCount = missions.length;
+    });
   }
 
   getMissionsByStatus(missions: Mission[]): MissionsByStatus {
@@ -90,5 +91,11 @@ export class MissionAllComponent implements OnInit {
 
   getMissionTimesheetLink(id: string) {
     return `${window.location.host}/timesheet/create?mission=${id}`;
+  }
+
+  async deleteMission(id: string) {
+    this.ready = false;
+    await this._missionService.deleteMission(id);
+    await this.loadMissions();
   }
 }
