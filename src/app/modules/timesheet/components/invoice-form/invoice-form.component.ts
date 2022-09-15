@@ -33,7 +33,10 @@ export class InvoiceFormComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    const context = this._route.snapshot.url[0].path;
+    const snapshot = this._route.snapshot;
+    const context = snapshot.queryParams.mission
+      ? "mission"
+      : snapshot.url[0].path;
     if (this.mission.id) {
       const bankAccount = this.mission.consultant.isFreelance
         ? this.mission.consultant.company.bankAccount
