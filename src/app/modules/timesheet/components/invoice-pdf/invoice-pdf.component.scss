@@ -5,9 +5,8 @@
   position: absolute;
   top: 0px;
   width: 827px;
-  height: 1170px;
 
-  .adress-height{
+  .adress-height {
     line-height: 20px;
     margin-bottom: -4px;
   }
@@ -76,7 +75,7 @@
 
       &__left {
         display: inline-block;
-        text-align:left;
+        text-align: left;
         width: calc(50% - 43px);
       }
 
@@ -159,7 +158,6 @@
     tr:nth-of-type(odd) {
       background: $grey_border;
     }
-
   }
 
   &__total {
@@ -245,7 +243,7 @@
       vertical-align: top;
     }
     #penalty {
-      margin-top:4px;
+      margin-top: 4px;
       font-size: 12px;
       font-style: italic;
       line-height: 11px;
@@ -314,8 +312,8 @@
     }
 
     #left-text {
-      td:nth-child(2){
-        padding-left:15px !important;
+      td:nth-child(2) {
+        padding-left: 15px !important;
       }
     }
 
