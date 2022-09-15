@@ -100,8 +100,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "acrabadabra:build",
-            "proxyConfig": "proxy.conf.json"
+            "browserTarget": "acrabadabra:build"
           },
           "configurations": {
             "production": {

@@ -84,7 +84,7 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
         this.route.snapshot.queryParams.mission
       );
 
-      this.generateInvoice = true;
+      this.generateInvoice = response.consultant?.isFreelance || false;
       this.timesheetService.timesheet.consultant.name =
         response.consultant.name;
       this.timesheetService.timesheet.consultant.email =
