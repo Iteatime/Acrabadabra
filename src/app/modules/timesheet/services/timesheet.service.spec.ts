@@ -15,21 +15,6 @@ describe("TimesheetService", () => {
   let saveService: LocalSaveService;
   const testTimesheet = new Timesheet("test", "Simon");
 
-  const editToken = btoa(
-    unescape(
-      encodeURIComponent(
-        JSON.stringify({ mode: "edit", timesheet: testTimesheet })
-      )
-    )
-  );
-  const reviewToken = btoa(
-    unescape(
-      encodeURIComponent(
-        JSON.stringify({ mode: "review", timesheet: testTimesheet })
-      )
-    )
-  );
-
   beforeEach(() => {
     const serializer = new SerializationService();
     saveService = new LocalSaveService(serializer);
@@ -44,76 +29,6 @@ describe("TimesheetService", () => {
   it("should create an instance of Timesheet", () => {
     expect(service.timesheet instanceof Timesheet).toBeTruthy();
   });
-
-  describe("openTimesheet())", () => {
-    it('should return false if the "mode" argument does not match the "mode" stored in the token', () => {
-      expect(service.openTimesheet(reviewToken, "edit")).toBeFalsy();
-    });
-
-    it("should return false if the token is undefined", () => {
-      expect(service.openTimesheet(undefined, "edit")).toBeFalsy();
-    });
-
-    describe('if the "mode" argument matches the "mode" stored in the token', () => {
-      let returnValue;
-
-      beforeEach(() => {
-        returnValue = service.openTimesheet(editToken, "edit");
-      });
-
-      it("should return true", () => {
-        expect(returnValue).toBeTruthy();
-      });
-
-      it("should copy the data to the new timesheet", () => {
-        expect(service.timesheet.consultant.email).toBe("test");
-      });
-
-      it("should copy the `mode` the service property `mode`", () => {
-        expect(service.mode).toBe("edit");
-      });
-    });
-  });
-
-  describe("getEditToken()", () => {
-    it('should return a base64 encoded json object containing the timesheet property, and a "mode" property set to "edit"', () => {
-      expect(service.getEditToken()).toBe(editToken);
-    });
-  });
-
-  describe("getReviewToken()", () => {
-    it('should return a base64 encoded json object containing the timesheet property, and a "mode" property set to "review"', () => {
-      expect(service.getReviewToken()).toBe(reviewToken);
-    });
-  });
-
-  // describe('getTransferToken())', () => {
-  //   let transferToken;
-  //   let token;
-  //   beforeEach(() => {
-  //     service.timesheet.invoice = Object.assign({}, new Invoice(), {
-  //         number: '458789',
-  //         provider: new Company('Rémy dupont'),
-  //         client: new Company('Iteatime'),
-  //       });
-  //     transferToken = btoa(unescape(encodeURIComponent(JSON.stringify({
-  //         mode: 'edit',
-  //         timesheet: Object.assign({ ...service.timesheet }, {
-  //           invoice: Object.assign(new Invoice(), {
-  //             provider: new Company('Iteatime')
-  //           })
-  //         })
-  //    }))));
-  //    token = service.getTransferToken();
-  //   });
-
-  //   it('should return a new invoice edit page with the information correctly completed', () => {
-  //     expect(service.timesheet.invoice.number).toBe(null);
-  //     expect(service.timesheet.invoice.provider.name).toBe('Iteatime');
-  //     expect(service.timesheet.invoice.client.name).toBe('');
-  //     expect(token).toEqual(transferToken);
-  //   });
-  // });
 
   describe("getTotalAllowance()", () => {
     beforeEach(() => {
