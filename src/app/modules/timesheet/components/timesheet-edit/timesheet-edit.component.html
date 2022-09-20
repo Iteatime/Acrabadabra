@@ -102,7 +102,7 @@
           (changed)="onUserInput()"></app-expense-flat-fee-form>
       </div>
 
-      <div class="timesheet-edit__wrapper__form__component" *ngIf="ready">
+      <div class="timesheet-edit__wrapper__form__component" *ngIf="ready && canGenerateInvoice">
         <label class="timesheet-edit__wrapper__form__component__toggle">
           <input name="invoiceToggle" type="checkbox" [(ngModel)]="generateInvoice" #invoiceToggle>
           Générer une facture
