@@ -42,7 +42,6 @@ export class TimesheetService {
 
   public async openTimesheet(id: string, mode: string): Promise<boolean> {
     const timesheet = await this.getTimesheet(id);
-    console.log("fromapi:", timesheet);
     if (!timesheet) {
       return false;
     } else {

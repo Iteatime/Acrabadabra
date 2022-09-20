@@ -3,11 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: "",
+  production: "DEV_ENV",
 
-  pdf_api_url: "https://iteatime-url-to-pdf.herokuapp.com",
-  API_URl: "https://acrabadabra-dev.herokuapp.com",
-  PUBLIC_URL: "DEPLOY_URL",
+  pdf_api_url: "http://localhost:5000",
+  API_URl: "http://localhost:3000",
+  PUBLIC_URL: "http://localhost:4200",
 };
 
 /*

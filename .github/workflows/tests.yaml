@@ -49,6 +49,6 @@ jobs:
         run: yarn install
 
       - name: Run unit tests
-        run: yarn ci-validate
+        run: yarn ci:test
         env:
           REACT_APP_NAMESPACE: ${{ github.event_name == 'push' && steps.branch-name.outputs.ref_branch || 'preview' }}
