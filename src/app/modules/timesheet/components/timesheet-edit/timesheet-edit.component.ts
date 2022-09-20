@@ -52,6 +52,7 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
   showLinks = false;
   currentUrl = "";
   ready: boolean;
+  canGenerateInvoice: boolean;
 
   constructor(
     public timesheetService: TimesheetService,
@@ -99,6 +100,12 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
       `Acrabadabra - ${this.getModeTitle()} un compte rendu d'activité`
     );
     this.ready = true;
+
+    // When in a mission, only a freelance consultant can generate an invoice
+    // This check also allows to generate invoices in review mode
+    this.canGenerateInvoice = this.route.snapshot.queryParams.mission
+      ? this.timesheetService.timesheet?.mission?.consultant?.isFreelance
+      : true;
   }
 
   ngAfterViewInit() {
@@ -252,6 +259,6 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
       timesheet.flatFees.length > 0 ||
       timesheet.miscellaneous.length > 0;
     this.setShortUrl();
-    console.log(this.timesheetService.timesheet);
+    console.log(this.canGenerateInvoice);
   }
 }
