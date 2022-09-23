@@ -59,7 +59,8 @@
           </div>
           <div class="card-footer">
             <button [copyToClipboard]="getMissionTimesheetLink(mission.id)"
-              class="p-0 btn btn-link card-link text-info"><i class="fas fa-calendar-plus"></i>
+              copyToClipboardMessage="Lien de saisie du CRA copié" class="p-0 btn btn-link card-link text-info"><i
+                class="fas fa-calendar-plus"></i>
               Copier le lien de saisie de CRA</button>
             <button (click)="deleteMission(mission.id)" class="p-0 btn btn-link card-link text-danger"><i
                 class="fas fa-trash"></i>
