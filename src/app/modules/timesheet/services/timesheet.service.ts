@@ -53,7 +53,6 @@ export class TimesheetService {
   }
 
   public getInvoiceLink() {
-    console.log(this.timesheet);
     const params = new URLSearchParams({
       url: window.location.origin + "/invoice/" + this.timesheet.id,
       form: "A4",

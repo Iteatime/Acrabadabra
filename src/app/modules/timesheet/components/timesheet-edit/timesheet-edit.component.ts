@@ -99,6 +99,7 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
     this.titleService.setTitle(
       `Acrabadabra - ${this.getModeTitle()} un compte rendu d'activité`
     );
+    this.updateMailtoLink();
     this.ready = true;
 
     // When in a mission, only a freelance consultant can generate an invoice
@@ -181,7 +182,7 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
 
     this.editShortUrl = `${this.originUrl}/timesheet/edit/${timesheetId}`;
     this.reviewShortUrl = `${this.originUrl}/timesheet/review/${timesheetId}`;
-
+    this.updateMailtoLink();
     this.reactToSubmition(false);
   }
 
@@ -259,6 +260,5 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
       timesheet.flatFees.length > 0 ||
       timesheet.miscellaneous.length > 0;
     this.setShortUrl();
-    console.log(this.canGenerateInvoice);
   }
 }

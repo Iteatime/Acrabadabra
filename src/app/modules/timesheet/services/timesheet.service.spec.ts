@@ -125,38 +125,38 @@ describe("TimesheetService", () => {
     });
   });
 
-  describe("saveTimesheet()", () => {
-    let timesheetArray = [];
-    let store;
+  // describe("saveTimesheet()", () => {
+  //   let timesheetArray = [];
+  //   let store;
 
-    beforeEach(() => {
-      spyOn(service, "getLocalStorageTimesheetsList").and.callFake(() => {
-        return timesheetArray;
-      });
-      spyOn(saveService, "setLocalItem").and.callFake(
-        (key: string, value: any) => {
-          store[key] = value || null;
-        }
-      );
-      store = {};
-    });
+  //   beforeEach(() => {
+  //     spyOn(service, "getLocalStorageTimesheetsList").and.callFake(() => {
+  //       return timesheetArray;
+  //     });
+  //     spyOn(saveService, "setLocalItem").and.callFake(
+  //       (key: string, value: any) => {
+  //         store[key] = value || null;
+  //       }
+  //     );
+  //     store = {};
+  //   });
 
-    it("should stock a timesheet named timesheet.1 if there are no timesheet in local storage", () => {
-      service.saveTimesheet();
-      expect(Object.keys(store)).toEqual(["timesheet.1"]);
-    });
+  //   it("should stock a timesheet named timesheet.1 if there are no timesheet in local storage", () => {
+  //     service.saveTimesheet();
+  //     expect(Object.keys(store)).toEqual(["timesheet.1"]);
+  //   });
 
-    it("should stock the timesheet in local storage incrementing his name number", () => {
-      timesheetArray = ["timesheet.1", "timesheet.2"];
-      store = { "timesheet.1": "Oliva", "timesheet.2": "Paul" };
-      service.saveTimesheet();
-      expect(Object.keys(store)).toEqual([
-        "timesheet.1",
-        "timesheet.2",
-        "timesheet.3",
-      ]);
-    });
-  });
+  //   it("should stock the timesheet in local storage incrementing his name number", () => {
+  //     timesheetArray = ["timesheet.1", "timesheet.2"];
+  //     store = { "timesheet.1": "Oliva", "timesheet.2": "Paul" };
+  //     service.saveTimesheet();
+  //     expect(Object.keys(store)).toEqual([
+  //       "timesheet.1",
+  //       "timesheet.2",
+  //       "timesheet.3",
+  //     ]);
+  //   });
+  // });
 
   describe("openLastTimesheetInLocal()", () => {
     let timesheetArray = [];
