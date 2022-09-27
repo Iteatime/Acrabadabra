@@ -28,6 +28,7 @@ export class TimesheetReviewComponent implements OnInit {
   showMiscellaneousTable = false;
   transferToken: string;
   ready: boolean;
+  reviewUrl: string;
 
   constructor(
     public auth: AuthenticationService,
@@ -37,23 +38,23 @@ export class TimesheetReviewComponent implements OnInit {
     private titleService: Title
   ) {}
 
-  ngOnInit() {
-    this.route.params.subscribe(async (params: Params) => {
-      if (await this.timesheetService.openTimesheet(params.data, "review")) {
-        this.timesheet = this.timesheetService.timesheet;
-        this.date = this.calendarService.getDate(this.timesheet);
-        this.workedTime = this.calendarService.getWorkedTime(this.timesheet);
-        this.transferToken = this.timesheetService.getTransferToken();
-        this.generateInvoice = false;
+  async ngOnInit() {
+    const params = this.route.snapshot.params;
+    if (await this.timesheetService.openTimesheet(params.data, "review")) {
+      this.timesheet = this.timesheetService.timesheet;
+      this.date = this.calendarService.getDate(this.timesheet);
+      this.workedTime = this.calendarService.getWorkedTime(this.timesheet);
+      this.transferToken = this.timesheetService.getTransferToken();
+      this.generateInvoice = false;
 
-        if (this.timesheet.invoice) {
-          this.invoiceLink = this.timesheetService.getInvoiceLink();
-          this.generateInvoice = true;
-        }
-
-        this.ready = true;
+      if (this.timesheet.invoice) {
+        this.invoiceLink = this.timesheetService.getInvoiceLink();
+        this.generateInvoice = true;
       }
-    });
+
+      this.ready = true;
+    }
+    this.reviewUrl = `/timesheet/edit/${this.timesheet.id}?bill=true`;
 
     this.titleService.setTitle(
       "Acradababra - Consulter un compte rendu d'activité"
