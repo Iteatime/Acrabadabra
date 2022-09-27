@@ -66,11 +66,13 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
   ) {}
 
   async ngOnInit() {
+    const snapshot = this.route.snapshot;
+
     this.currentUrl = window.location.href;
-    if (this.route.snapshot.params.data !== undefined) {
+    if (snapshot.params.data !== undefined) {
       if (
         !(await this.timesheetService.openTimesheet(
-          this.route.snapshot.params.data,
+          snapshot.params.data,
           "edit"
         ))
       ) {
@@ -80,11 +82,10 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
       } else {
         this.loadTimesheet(this.timesheetService.timesheet);
       }
-    } else if (this.route.snapshot.queryParams.mission !== undefined) {
+    } else if (snapshot.queryParams.mission !== undefined) {
       const response = await this._missionService.readMission(
-        this.route.snapshot.queryParams.mission
+        snapshot.queryParams.mission
       );
-
       this.generateInvoice = response.consultant?.isFreelance || false;
       this.timesheetService.timesheet.consultant.name =
         response.consultant.name;
@@ -104,9 +105,10 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
 
     // When in a mission, only a freelance consultant can generate an invoice
     // This check also allows to generate invoices in review mode
-    this.canGenerateInvoice = this.route.snapshot.queryParams.mission
+    this.canGenerateInvoice = snapshot.queryParams.mission
       ? this.timesheetService.timesheet?.mission?.consultant?.isFreelance
       : true;
+    this.generateInvoice = snapshot.queryParams.bill || false;
   }
 
   ngAfterViewInit() {

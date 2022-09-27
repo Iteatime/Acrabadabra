@@ -7,7 +7,7 @@
     "build:staging": "ENV=staging ng build --configuration staging",
     "build:dev": "ENV=staging ng build --configuration developpement",
     "test": "ENV=dev ng test",
-    "ci:test": "yarn test --no-watch --browsers=CustomChromeHeadless --karma-config=karma.conf.js",
+    "ci:test": "ng test --no-watch --browsers=CustomChromeHeadless --karma-config=karma.conf.js",
     "lint": "ng lint",
     "e2e": "ENV=prod node scripts/set-env.js && ng e2e",
     "dev": "ng serve --configuration local",
