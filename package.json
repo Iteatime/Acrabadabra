@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "build:prod": "ENV=prod ng build --configuration production",
-    "build:staging": "ENV=staging ng build --configuration staging",
-    "build:dev": "ENV=staging ng build --configuration developpement",
+    "build:prod": "ng build --configuration production",
+    "build:staging": "ng build --configuration staging",
+    "build:dev": "ng build --configuration developpement",
     "test": "ENV=dev ng test",
     "ci:test": "ng test --no-watch --browsers=CustomChromeHeadless --karma-config=karma.conf.js",
     "lint": "ng lint",

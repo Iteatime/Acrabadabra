@@ -5,7 +5,7 @@
 export const environment = {
   production: "PROD_ENV",
 
-  pdf_api_url: "https://iteatime-url-to-pdf.herokuapp.com",
+  pdf_api_url: "https://url-to-pdf-prod.onrender.com",
   API_URl: "https://acrabadabra-prod.herokuapp.com",
   PUBLIC_URl: "https://acrabadabra.com",
 };
