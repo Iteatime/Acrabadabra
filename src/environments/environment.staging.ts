@@ -5,7 +5,7 @@
 export const environment = {
   production: "",
 
-  pdf_api_url: "https://iteatime-url-to-pdf.herokuapp.com",
+  pdf_api_url: "https://url-to-pdf-staging.onrender.com",
   API_URl: "https://acrabadabra-staging.herokuapp.com",
   PUBLIC_URL: "https://staging--acrabadabra.netlify.app/timesheet/create",
 };

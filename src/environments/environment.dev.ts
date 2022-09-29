@@ -5,9 +5,8 @@
 export const environment = {
   production: "DEV_ENV",
 
-  pdf_api_url: "http://localhost:5000",
-  API_URl: "http://localhost:3000",
-  PUBLIC_URL: "http://localhost:4200",
+  pdf_api_url: "https://url-to-pdf-staging.onrender.com",
+  API_URl: "https://acrabadabra-dev.herokuapp.com",
 };
 
 /*
