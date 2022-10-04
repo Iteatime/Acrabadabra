@@ -6,7 +6,7 @@ export const environment = {
   production: "DEV_ENV",
 
   pdf_api_url: "https://url-to-pdf-staging.onrender.com",
-  API_URl: "https://acrabadabra-dev.herokuapp.com",
+  API_URl: "https://acrabadabra-api-dev.onrender.com",
 };
 
 /*

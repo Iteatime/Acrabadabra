@@ -7,7 +7,6 @@ export const environment = {
 
   pdf_api_url: "http://localhost:5000",
   API_URl: "http://localhost:3000",
-  PUBLIC_URL: "http://localhost:4200",
 };
 
 /*
