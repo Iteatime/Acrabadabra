@@ -5,7 +5,7 @@
 export const environment = {
   production: "PROD_ENV",
 
-  pdf_api_url: "https://url-to-pdf-prod.onrender.com",
+  pdf_api_url: "https://url-to-pdf-production.up.railway.app",
   API_URl: "https://acrabadabra-api-prod.onrender.com",
 };
 
