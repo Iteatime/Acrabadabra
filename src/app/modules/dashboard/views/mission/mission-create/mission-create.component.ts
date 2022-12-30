@@ -31,7 +31,6 @@ function getCompanyForm(fb: FormBuilder, company?: Company) {
 
 function getCompanyFromForm(base: any) {
   const account = base.bankAccount;
-  console.log(base);
   const company = new Company(
     base.name,
     base.address,
@@ -115,8 +114,6 @@ export class MissionCreateComponent implements OnInit {
         mode: [""],
       }),
     });
-
-    this.form.valueChanges.subscribe((e) => console.log(e.consultant.company));
   }
 
   get isConsultantFreelance() {
@@ -153,7 +150,6 @@ export class MissionCreateComponent implements OnInit {
     };
 
     mission.provider = getCompanyFromForm(values.provider);
-    console.log(mission);
     const res = await this.missions.createMission(mission);
     this.router.navigate(["dashboard/mission/all"]);
   }
