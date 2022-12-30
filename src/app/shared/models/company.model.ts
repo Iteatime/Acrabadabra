@@ -35,8 +35,9 @@ export class Company {
     this.tradeAndCompaniesRegisterCity = tradeAndCompaniesRegisterCity || null;
     this.tradeAndCompaniesRegisterExemption =
       tradeAndCompaniesRegisterExemption || false;
-    this.vatNumber =
-      vatExemption && vatNumber ? this.getFormattedVatNumber(vatNumber) : null;
+    this.vatNumber = vatNumber
+      ? this.getFormattedVatNumber(vatNumber)
+      : vatNumber;
     this.vatExemption = vatExemption || false;
     this.bankAccount = bankAccount || new BankAccount();
   }

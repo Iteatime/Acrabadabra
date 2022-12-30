@@ -23,7 +23,6 @@ export class CompanyComponent implements OnInit {
     this.ready = false;
 
     if (!this.store.state.company) {
-      console.log(this.store.state.user.id);
       this._companyService
         .readCompanyByOwnerId(this.store.state.user.id)
         .then((response) => {
@@ -42,7 +41,6 @@ export class CompanyComponent implements OnInit {
     this._companyService
       .updateCompanyDetails(this.store.state.user.id, company)
       .then((response) => {
-        console.log(response);
         this.store.setState({ company: response }, (state: State) => {
           if (this.company) this.company = state.company || new Company();
           this.ready = true;

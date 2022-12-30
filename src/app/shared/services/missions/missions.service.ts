@@ -42,7 +42,6 @@ export class MissionService {
     id?: string,
     payload?: any
   ): Promise<any> => {
-    console.log("crud", method, id, payload);
     try {
       if (typeof axios[method] === "undefined") {
         throw new Error(`Invalid REST method: '${method}'`);
