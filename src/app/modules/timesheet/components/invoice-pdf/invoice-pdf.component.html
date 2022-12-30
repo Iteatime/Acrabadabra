@@ -30,15 +30,11 @@
       <div *ngIf="timesheetService.timesheet.invoice.client.phone">
         Tel : {{ timesheetService.timesheet.invoice.client.phone }}
       </div>
-      <div *ngIf="!timesheetService.timesheet.invoice.client.tradeAndCompaniesRegisterExemption &&
-                  timesheetService.timesheet.invoice.client.tradeAndCompaniesRegisterCity ||
-                  timesheetService.timesheet.invoice.client.siren">
-        {{ timesheetService.timesheet.invoice.client.siren }}
-        <span *ngIf="timesheetService.timesheet.invoice.client.tradeAndCompaniesRegisterCity">R.C.S.</span>
+      <div *ngIf="!timesheetService.timesheet.invoice.client.tradeAndCompaniesRegisterExemption">
+        {{ timesheetService.timesheet.invoice.client.siren }} R.C.S.
         {{ timesheetService.timesheet.invoice.client.tradeAndCompaniesRegisterCity }}
       </div>
-      <div *ngIf="timesheetService.timesheet.invoice.client.tradeAndCompaniesRegisterExemption &&
-                  timesheetService.timesheet.invoice.client.siren">
+      <div *ngIf="timesheetService.timesheet.invoice.client.tradeAndCompaniesRegisterExemption">
         SIREN : {{ timesheetService.timesheet.invoice.client.siren }}
       </div>
       <div *ngIf="!!timesheetService.timesheet.invoice.client.vatNumber">
