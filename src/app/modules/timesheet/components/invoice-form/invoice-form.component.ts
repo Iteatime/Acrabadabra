@@ -55,6 +55,10 @@ export class InvoiceFormComponent implements OnInit, AfterViewInit {
       };
 
       if (this.mission.consultant.isFreelance && context === "mission") {
+        if (!snapshot.queryParams.bill) {
+          invoiceData.paymentModality = "";
+          invoiceData.paymentLatePenalty = false;
+        }
         this.fillInvoice(
           this.mission.consultant.company,
           this.mission.provider,
