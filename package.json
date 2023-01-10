@@ -50,7 +50,6 @@
     "@angular/cli": "^13.3.7",
     "@angular/compiler-cli": "^13.3.11",
     "@angular/language-service": "^13.3.11",
-    "@netlify/esbuild-linux-64": "^0.14.25",
     "@types/jasmine": "^4.0.3",
     "@types/jasminewd2": "^2.0.10",
     "@types/lodash": "^4.14.182",
