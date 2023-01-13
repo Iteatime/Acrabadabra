@@ -58,9 +58,7 @@ export class InvoiceFormComponent implements OnInit, AfterViewInit {
         if (!snapshot.queryParams.bill) {
           invoiceData.paymentModality = "";
           invoiceData.paymentLatePenalty = false;
-          invoiceData.workedRate =
-            this.mission.consultant.unitOfWorkPrice ??
-            this.mission.unitOfworkPrice;
+          invoiceData.workedRate = this.mission.consultant.unitOfWorkPrice;
           delete invoiceData.clientRef;
         }
         this.fillInvoice(
