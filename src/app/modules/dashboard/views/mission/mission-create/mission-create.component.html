@@ -132,10 +132,21 @@
                   <label for="consultantCompanySiren">Numéro de SIREN</label>
                   <input class="form-control" formControlName="siren" id="consultantCompanySiren" />
                 </div>
+                <div class="form-check ml-1 mt-4 mb-2">
+                  <input class="form-check-input" formControlName="tradeAndCompaniesRegisterExemption"
+                    id="mission_consultant_company-tradeAndCompaniesRegisterExemption" type="checkbox" />
+                  <label for="mission_consultant_company-tradeAndCompaniesRegisterExemption"
+                    class="form-check-label">Dispensé d'immatriculation au RCS et au RM</label>
+                </div>
                 <div class="form-group">
                   <label for="consultantCompanyTradeAndCompaniesRegisterCity">Ville d'immatriculation au RCS</label>
                   <input class="form-control" formControlName="tradeAndCompaniesRegisterCity"
                     id="consultantCompanyTradeAndCompaniesRegisterCity" />
+                </div>
+                <div class="form-check ml-1 mt-4 mb-2">
+                  <input class="form-check-input" formControlName="vatExemption"
+                    id="mission_consultant_company-vatExemption" type="checkbox" />
+                  <label for="mission_consultant_company-vatExemption" class="form-check-label">Franchise TVA</label>
                 </div>
                 <div class="form-group">
                   <label for="consultantCompanyVatNumber">Numéro de TVA intra-communautaire</label>
@@ -254,6 +265,12 @@
               <div class="form-group">
                 <label for="mission_client_siren">Numéro de SIREN</label>
                 <input class="form-control" formControlName="siren" id="mission_client_siren" />
+              </div>
+              <div class="form-check ml-1 mt-4 mb-2">
+                <input class="form-check-input" formControlName="tradeAndCompaniesRegisterExemption"
+                  id="mission_client_tradeAndCompaniesRegisterExemption" type="checkbox" />
+                <label for="mission_client_tradeAndCompaniesRegisterExemption" class="form-check-label">Dispensé
+                  d'immatriculation au RCS et au RM</label>
               </div>
               <div class="form-group">
                 <label for="mission_client_trade-and-companies-register-city">Ville d'immatriculation au RCS</label>
