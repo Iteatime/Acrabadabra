@@ -8,6 +8,7 @@ export class Mission {
   endDate: string;
   unitOfWorkType: string;
   unitOfworkPrice: number;
+  freelanceUnitOfworkPrice: number | null;
   client: {
     ref: string;
     email: string;
@@ -17,6 +18,7 @@ export class Mission {
     name: string;
     email: string;
     isFreelance: boolean;
+    unitOfWorkPrice?: number;
     company: Company;
   };
   paymentDetails: {
@@ -35,6 +37,7 @@ export class Mission {
     consultant?: Mission["consultant"],
     unitOfWorkType?: string,
     unitOfWorkPrice?: number,
+    freelanceUnitOfworkPrice?: number,
     providerCompany?: Company,
     paymentDetails?: Mission["paymentDetails"]
   ) {
@@ -45,6 +48,7 @@ export class Mission {
     this.endDate = endDate || null;
     this.unitOfWorkType = unitOfWorkType || null;
     this.unitOfworkPrice = unitOfWorkPrice || null;
+    this.freelanceUnitOfworkPrice = freelanceUnitOfworkPrice || null;
     this.client = client || null;
     this.consultant = consultant || {
       company: new Company(),
