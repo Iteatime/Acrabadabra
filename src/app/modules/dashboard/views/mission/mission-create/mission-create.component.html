@@ -79,8 +79,8 @@
               </div>
             </div>
           </div>
-          <div *ngIf="isConsultantFreelance" class="mt-2" formGroupName="company">
-            <div class="row">
+          <div *ngIf="isConsultantFreelance" class="mt-2">
+            <div class="row" formGroupName="company">
               <div class="col-lg-6">
                 <div class="form-group">
                   <label for="consultantCompanyName">Dénomination</label>
@@ -125,42 +125,54 @@
                 </div>
               </div>
             </div>
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="mission_consultant-unitOfWorkPrice">Prix de l'unité d'oeuvre (payé au
+                    consultant)</label>
+                  <input class="form-control" formControlName="unitOfWorkPrice" id="mission_consultant-unitOfWorkPrice"
+                    type="number" />
+                </div>
+              </div>
+            </div>
             <hr class="border-light w-100" />
-            <div formGroupName="bankAccount">
-              <h3 class="h5 mb-2 text-primary">Coordonnées bancaires</h3>
-              <div class="row">
-                <div class="col-lg">
-                  <div class="form-group">
-                    <label for="consultantCompanyHolder">Titulaire du compte</label>
-                    <input class="form-control" formControlName="holder" id="consultantCompanyHolder" />
+            <div formGroupName="company">
+              <div formGroupName="bankAccount">
+                <h3 class="h5 mb-2 text-primary">Coordonnées bancaires</h3>
+                <div class="row">
+                  <div class="col-lg">
+                    <div class="form-group">
+                      <label for="consultantCompanyHolder">Titulaire du compte</label>
+                      <input class="form-control" formControlName="holder" id="consultantCompanyHolder" />
+                    </div>
+                  </div>
+                  <div class="col-lg">
+                    <div class="form-group">
+                      <label for="consultantCompanySwift">SWIFT</label>
+                      <input class="form-control" formControlName="swift" id="consultantCompanySwift" />
+                    </div>
                   </div>
                 </div>
-                <div class="col-lg">
-                  <div class="form-group">
-                    <label for="consultantCompanySwift">SWIFT</label>
-                    <input class="form-control" formControlName="swift" id="consultantCompanySwift" />
+                <div class="row">
+                  <div class="col-lg">
+                    <div class="form-group">
+                      <label for="consultantCompanyIban">IBAN</label>
+                      <input class="form-control" formControlName="iban" id="consultantCompanyIban" />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-lg">
-                  <div class="form-group">
-                    <label for="consultantCompanyIban">IBAN</label>
-                    <input class="form-control" formControlName="iban" id="consultantCompanyIban" />
+                <div class="row">
+                  <div class="col-lg">
+                    <div class="form-group">
+                      <label for="consultantCompanyDomiciliation">Banque</label>
+                      <input class="form-control" formControlName="domiciliation" id="consultantCompanyDomiciliation" />
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-lg">
-                  <div class="form-group">
-                    <label for="consultantCompanyDomiciliation">Banque</label>
-                    <input class="form-control" formControlName="domiciliation" id="consultantCompanyDomiciliation" />
-                  </div>
-                </div>
-                <div class="col-lg">
-                  <div class="form-group">
-                    <label for="consultantCompanyAgency">Agence</label>
-                    <input class="form-control" formControlName="agency" id="consultantCompanyAgency" />
+                  <div class="col-lg">
+                    <div class="form-group">
+                      <label for="consultantCompanyAgency">Agence</label>
+                      <input class="form-control" formControlName="agency" id="consultantCompanyAgency" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -292,6 +304,7 @@
                   type="number" />
               </div>
             </div>
+
           </div>
         </div>
       </div>
