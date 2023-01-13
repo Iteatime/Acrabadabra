@@ -97,6 +97,7 @@ export class MissionCreateComponent implements OnInit {
       endDate: [""],
       unitOfWorkType: ["days"],
       unitOfWorkPrice: [""],
+      freelanceUnitOfWorkPrice: [""],
       client: this.fb.group({
         ref: [""],
         email: [""],
@@ -106,6 +107,7 @@ export class MissionCreateComponent implements OnInit {
         name: [""],
         email: [""],
         isFreelance: [false],
+        unitOfWorkPrice: [],
         company: getCompanyForm(this.fb),
       }),
       provider: getCompanyForm(this.fb, this.company),
@@ -121,35 +123,43 @@ export class MissionCreateComponent implements OnInit {
   }
 
   async onSubmit() {
-    const mission = new Mission();
-
     const values = this.form.value;
-    mission.title = values.title;
-    mission.startDate = values.startDate;
-    mission.endDate = values.endDate;
-    mission.creatorId = this.store.auth.user.id;
-    mission.unitOfWorkType = values.unitOfWorkType;
-    mission.unitOfworkPrice = values.unitOfWorkPrice;
 
-    mission.consultant = {
+    const consultant = {
       name: values.consultant.name,
       email: values.consultant.email,
       isFreelance: values.consultant.isFreelance,
+      unitOfWorkPrice: values.consultant.unitOfWorkPrice,
       company: getCompanyFromForm(values.consultant.company),
     };
 
-    mission.client = {
+    const client = {
       ref: values.client.ref,
       email: values.client.email,
       company: getCompanyFromForm(values.client.company),
     };
 
-    mission.paymentDetails = {
+    const paymentDetails = {
       mode: values.paymentDetails.mode,
       penalties: values.paymentDetails.penalties,
     };
 
-    mission.provider = getCompanyFromForm(values.provider);
+    const mission = new Mission(
+      null,
+      this.store.auth.user.id,
+      values.title,
+      values.startDate,
+      values.endDate,
+      client,
+      consultant,
+      values.unitOfWorkType,
+      values.unitOfWorkPrice,
+      values.freelanceUnitOfWorkPrice,
+      getCompanyFromForm(values.provider),
+      paymentDetails
+    );
+    console.log(mission);
+
     const res = await this.missions.createMission(mission);
     this.router.navigate(["dashboard/mission/all"]);
   }
