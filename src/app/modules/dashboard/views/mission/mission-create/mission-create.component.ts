@@ -18,7 +18,11 @@ function getCompanyForm(fb: FormBuilder, company?: Company) {
     phone: [company?.phone],
     siren: [company?.siren],
     tradeAndCompaniesRegisterCity: [company?.tradeAndCompaniesRegisterCity],
+    tradeAndCompaniesRegisterExemption: [
+      company?.tradeAndCompaniesRegisterExemption,
+    ],
     vatNumber: [company?.vatNumber],
+    vatExemption: [company?.vatExemption],
     bankAccount: fb.group({
       holder: [company?.bankAccount?.holder],
       swift: [company?.bankAccount?.swift],
@@ -106,7 +110,7 @@ export class MissionCreateComponent implements OnInit {
       consultant: this.fb.group({
         name: [""],
         email: [""],
-        isFreelance: [false],
+        isFreelance: [true],
         unitOfWorkPrice: [],
         company: getCompanyForm(this.fb),
       }),
