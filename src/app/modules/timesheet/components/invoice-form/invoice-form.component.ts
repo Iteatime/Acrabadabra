@@ -26,7 +26,7 @@ export class InvoiceFormComponent implements OnInit, AfterViewInit {
   @Input() mission: Mission;
   @Output() changed: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private _route: ActivatedRoute) {}
+  constructor(private _route: ActivatedRoute) { }
 
   ngOnInit() {
     const snapshot = this._route.snapshot;
@@ -36,7 +36,7 @@ export class InvoiceFormComponent implements OnInit, AfterViewInit {
     if (this.mission.id) {
       let bankAccount = this.mission.consultant.isFreelance
         ? this.mission.consultant.company.bankAccount
-        : this.mission.provider.bankAccount;
+        : this.mission.provider.bankAccount
       if (snapshot.queryParams.bill) {
         bankAccount = this.mission.provider.bankAccount;
       }
@@ -95,5 +95,9 @@ export class InvoiceFormComponent implements OnInit, AfterViewInit {
     };
     this.invoice.provider = provider;
     this.invoice.client = client;
+    if (this.mission) {
+      this.invoice.client.address = `${client.address.split(",")[0]}, ${client.zipCode} ${client.city}`;
+      this.invoice.provider.address = `${provider.address.split(",")[0]}, ${provider.zipCode} ${provider.city}`;
+    }
   }
 }
