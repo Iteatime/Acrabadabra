@@ -41,3 +41,4 @@ Thumbs.db
 .netlify
 .angular
 cypress/cypress.env.json
+cypress.env.json
