@@ -17,6 +17,7 @@ describe("When browsing the HomePage :", () => {
 
   it("should have a button to access the SSI's dashboard", () => {
     cy.get("#provider").should("exist");
+    // Button's behaviour is tested implicitely in login command
   });
 
   it("should redirect to create a CRA page", () => {
@@ -24,11 +25,5 @@ describe("When browsing the HomePage :", () => {
     cy.url().then(
       (url) => expect(url.endsWith("/timesheet/create")).to.be.true
     );
-  });
-
-  it("should open a popup to login to the dashboard", () => {
-    cy.get("#netlify-identity-widget").should("not.be.visible");
-    cy.get("#provider").click();
-    cy.get("#netlify-identity-widget", { timeout: 10000 }).should("be.visible");
   });
 });
