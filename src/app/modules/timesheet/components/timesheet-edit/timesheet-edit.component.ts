@@ -63,7 +63,7 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
     private notificationService: NotificationService,
     private _urlShortener: UrlShorteningService,
     private _missionService: MissionService
-  ) { }
+  ) {}
 
   async ngOnInit() {
     const snapshot = this.route.snapshot;
@@ -172,7 +172,8 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
       ? this.invoiceForm.invoice
       : null;
     if (this.invoiceForm?.invoice) {
-      this.timesheetService.timesheet.invoice.client.address = this.invoiceForm.invoice.client.address;
+      this.timesheetService.timesheet.invoice.client.address =
+        this.invoiceForm.invoice.client.address;
       this.timesheetService.timesheet.invoice.provider.address =
         this.invoiceForm.invoice.provider.address;
     }

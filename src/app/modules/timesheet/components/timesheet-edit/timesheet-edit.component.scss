@@ -1,6 +1,15 @@
 @import "src/app/style/vars";
 @import "src/app/style/mixins";
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 label {
   margin-bottom: 0.5rem;
 }
@@ -114,6 +123,19 @@ label {
     background: $white;
     padding: 20px;
     box-shadow: 0 0 8px rgba($black, 0.2);
+
+    &__spinner {
+      margin-top: 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+
+      animation-name: spin;
+      animation-duration: 1000ms;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
 
     &__title {
       margin-top: 20px;

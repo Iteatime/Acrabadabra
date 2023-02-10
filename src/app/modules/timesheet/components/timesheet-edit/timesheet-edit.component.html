@@ -5,6 +5,10 @@
       <h2>{{ getModeTitle() }} un compte rendu d'activité</h2>
     </div>
 
+    <div *ngIf="!ready">
+      <i class="material-icons timesheet-edit__wrapper__spinner">rotate_right</i>
+    </div>
+
     <form class="timesheet-edit__wrapper__form" #form="ngForm">
       <div id="consultant" class="timesheet-edit__wrapper__form__block" *ngIf="ready">
         <h4 class="timesheet-edit__wrapper__form__block__title">Consultant</h4>
