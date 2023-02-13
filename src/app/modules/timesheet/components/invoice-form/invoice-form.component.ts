@@ -66,6 +66,8 @@ export class InvoiceFormComponent implements OnInit, AfterViewInit {
           this.mission.provider,
           invoiceData
         );
+        const checkbox = document.querySelector("div.timesheet-edit__wrapper__form__component:nth-child(5) > label:nth-child(1) > input:nth-child(1)") as HTMLInputElement
+        checkbox.checked = true
       } else {
         this.fillInvoice(
           this.mission.provider,
@@ -73,6 +75,13 @@ export class InvoiceFormComponent implements OnInit, AfterViewInit {
           invoiceData
         );
       }
+    } else if (snapshot.queryParams.bill) {
+      this.fillInvoice(
+        this.invoice.client,
+        {},
+        {}
+      );
+
     }
 
     if (!this.invoice) {
@@ -99,5 +108,6 @@ export class InvoiceFormComponent implements OnInit, AfterViewInit {
       this.invoice.client.address = `${client.address.split(",")[0]}, ${client.zipCode} ${client.city}`;
       this.invoice.provider.address = `${provider.address.split(",")[0]}, ${provider.zipCode} ${provider.city}`;
     }
+
   }
 }

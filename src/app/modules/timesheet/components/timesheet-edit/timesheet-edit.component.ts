@@ -63,7 +63,7 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
     private notificationService: NotificationService,
     private _urlShortener: UrlShorteningService,
     private _missionService: MissionService
-  ) {}
+  ) { }
 
   async ngOnInit() {
     const snapshot = this.route.snapshot;
@@ -91,8 +91,8 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
         response.consultant.name;
       this.timesheetService.timesheet.consultant.email =
         response.consultant.email;
-
       this.timesheetService.timesheet.mission = response;
+
     } else {
       this.loadTimesheet(new Timesheet());
     }
@@ -113,6 +113,7 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
       this.timesheetService.timesheet.invoice.number = "";
     }
     this.generateInvoice = snapshot.queryParams.bill || false;
+
   }
 
   ngAfterViewInit() {
@@ -172,8 +173,7 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
       ? this.invoiceForm.invoice
       : null;
     if (this.invoiceForm?.invoice) {
-      this.timesheetService.timesheet.invoice.client.address =
-        this.invoiceForm.invoice.client.address;
+      this.timesheetService.timesheet.invoice.client.address = this.invoiceForm.invoice.client.address;
       this.timesheetService.timesheet.invoice.provider.address =
         this.invoiceForm.invoice.provider.address;
     }
