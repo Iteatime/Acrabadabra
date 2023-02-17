@@ -8,107 +8,113 @@
 </div>
 
 <div *ngIf="ready">
-  <form #detailsForm="ngForm" class="card shadow mb-4" (ngSubmit)="onDetailsSubmit(detailsForm)">
-    <div class="card-header py-3">
-      <h2 class="m-0 font-weight-bold text-primary h6">
-        Informations générales
-      </h2>
-      <button class="btn btn-success" type="submit" [disabled]="!detailsForm.form.dirty">Sauvegarder</button>
-    </div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-lg-6">
-          <div class="form-group">
-            <label for="id">Dénomination</label>
-            <input class="form-control" name="name" id="name" [ngModel]="company.name" />
-          </div>
-          <div class="form-group">
-            <label for="id">Adresse</label>
-            <input class="form-control" name="address" id="address" [ngModel]="company.address" />
-          </div>
-          <div class="row">
-            <div class="col-lg-4">
-              <div class="form-group">
-                <label for="id">Code postal</label>
-                <input class="form-control" name="zipCode" id="zipCode" [ngModel]="company.zipCode" />
+  <form #detailsForm="ngForm" (ngSubmit)="onDetailsSubmit(detailsForm)">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h2 class="m-0 font-weight-bold text-primary h6">
+          Informations générales
+        </h2>
+
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label for="id">Dénomination</label>
+              <input class="form-control" name="name" id="name" [ngModel]="company.name" />
+            </div>
+            <div class="form-group">
+              <label for="id">Adresse</label>
+              <input class="form-control" name="address" id="address" [ngModel]="company.address" />
+            </div>
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label for="id">Code postal</label>
+                  <input class="form-control" name="zipCode" id="zipCode" [ngModel]="company.zipCode" />
+                </div>
+              </div>
+              <div class="col-lg-8">
+                <div class="form-group">
+                  <label for="id">Ville</label>
+                  <input class="form-control" name="city" id="city" [ngModel]="company.city" />
+                </div>
               </div>
             </div>
-            <div class="col-lg-8">
-              <div class="form-group">
-                <label for="id">Ville</label>
-                <input class="form-control" name="city" id="city" [ngModel]="company.city" />
-              </div>
+            <div class="form-group">
+              <label for="id">Téléphone</label>
+              <input class="form-control" name="phone" id="phone" [ngModel]="company.phone" type="tel" />
             </div>
           </div>
-          <div class="form-group">
-            <label for="id">Téléphone</label>
-            <input class="form-control" name="phone" id="phone" [ngModel]="company.phone" />
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <div class="form-group">
-            <label for="id">Numéro de SIREN</label>
-            <input class="form-control" name="siren" id="siren" [ngModel]="company.siren" />
-          </div>
-          <div class="form-group">
-            <label for="id">Ville d'immatriculation au RCS</label>
-            <input class="form-control" name="tradeAndCompaniesRegisterCity" id="tradeAndCompaniesRegisterCity"
-              [ngModel]="company.tradeAndCompaniesRegisterCity" />
-          </div>
-          <div class="form-group">
-            <label for="id">Numéro de TVA intra-communautaire</label>
-            <input class="form-control" name="vatNumber" id="vatNumber" [ngModel]="company.vatNumber" />
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label for="id">Numéro de SIREN</label>
+              <input class="form-control" name="siren" id="siren" [ngModel]="company.siren" />
+            </div>
+            <div class="form-group">
+              <label for="id">Ville d'immatriculation au RCS</label>
+              <input class="form-control" name="tradeAndCompaniesRegisterCity" id="tradeAndCompaniesRegisterCity"
+                [ngModel]="company.tradeAndCompaniesRegisterCity" />
+            </div>
+            <div class="form-group">
+              <label for="id">Numéro de TVA intra-communautaire</label>
+              <input class="form-control" name="vatNumber" id="vatNumber" [ngModel]="company.vatNumber" />
+            </div>
           </div>
         </div>
       </div>
+    </div>
+    <div class="card card-shadow mb-4">
+      <div class="card-header py-3">
+        <h2 class="m-0 font-weight-bold text-primary h6">
+          Coordonnées bancaires
+        </h2>
+      </div>
+      <div class="card-body">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg">
+              <div class="form-group">
+                <label for="id">Titulaire du compte</label>
+                <input class="form-control" name="holder" id="holder" [ngModel]="company.bankAccount.holder" />
+              </div>
+            </div>
+            <div class="col-lg">
+              <div class="form-group">
+                <label for="id">SWIFT</label>
+                <input class="form-control" name="swift" id="swift" [ngModel]="company.bankAccount.swift" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg">
+              <div class="form-group">
+                <label for="id">IBAN</label>
+                <input class="form-control" name="iban" id="iban" [ngModel]="company.bankAccount.iban" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg">
+              <div class="form-group">
+                <label for="id">Banque</label>
+                <input class="form-control" name="domiciliation" id="domiciliation"
+                  [ngModel]="company.bankAccount.domiciliation" />
+              </div>
+            </div>
+            <div class="col-lg">
+              <div class="form-group">
+                <label for="id">Agence</label>
+                <input class="form-control" name="agency" id="agency" [ngModel]="company.bankAccount.agency" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flexcenter mb-4">
+      <button class="btn btn-primary" type="submit" [disabled]="!detailsForm.form.dirty">Sauvegarder</button>
     </div>
   </form>
 
-  <form #bankForm="ngForm" class="card shadow mb-4" (ngSubmit)="onBankSubmit(bankForm)">
-    <div class="card-header py-3">
-      <h2 class="m-0 font-weight-bold text-primary h6">
-        Coordonnées bancaires
-      </h2>
-      <button class="btn btn-success" type="submit" [disabled]="!bankForm.form.dirty">Sauvegarder</button>
-    </div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-lg">
-          <div class="form-group">
-            <label for="id">Titulaire du compte</label>
-            <input class="form-control" name="holder" id="holder" [ngModel]="company.bankAccount.holder" />
-          </div>
-        </div>
-        <div class="col-lg">
-          <div class="form-group">
-            <label for="id">SWIFT</label>
-            <input class="form-control" name="swift" id="swift" [ngModel]="company.bankAccount.swift" />
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg">
-          <div class="form-group">
-            <label for="id">IBAN</label>
-            <input class="form-control" name="iban" id="iban" [ngModel]="company.bankAccount.iban" />
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg">
-          <div class="form-group">
-            <label for="id">Banque</label>
-            <input class="form-control" name="domiciliation" id="domiciliation"
-              [ngModel]="company.bankAccount.domiciliation" />
-          </div>
-        </div>
-        <div class="col-lg">
-          <div class="form-group">
-            <label for="id">Agence</label>
-            <input class="form-control" name="agency" id="agency" [ngModel]="company.bankAccount.agency" />
-          </div>
-        </div>
-      </div>
-    </div>
-  </form>
 </div>
