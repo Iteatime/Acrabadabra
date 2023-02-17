@@ -3,6 +3,7 @@ import { AuthenticationService } from "src/app/shared/services/authentication/au
 import { environment } from "../../../../../../environments/environment";
 import { Mission } from "../../../../../shared/models";
 import { MissionService } from "../../../../../shared/services/missions/missions.service";
+import { FormGroup, FormControl, FormArray, NgForm } from '@angular/forms'
 
 import { State } from "../../../@type";
 import { StoreService } from "../../../services";
@@ -27,7 +28,7 @@ export class MissionAllComponent implements OnInit {
   };
   public missionsCount: number;
   public headings = ["title", "consultant", "client", "startDate", "endDate"];
-
+  public updatingMission: string;
   constructor(
     private _missionService: MissionService,
     private _auth: AuthenticationService,
@@ -37,6 +38,7 @@ export class MissionAllComponent implements OnInit {
   ngOnInit() {
     this.ready = false;
     this.loadMissions();
+    this.updatingMission = "-1";
   }
 
   async loadMissions() {
@@ -99,5 +101,33 @@ export class MissionAllComponent implements OnInit {
       await this._missionService.deleteMission(id);
       await this.loadMissions();
     }
+  }
+  async showUpdateScreen(id: string) {
+    if (this.updatingMission != id) {
+      this.updatingMission = id;
+    }
+    else {
+      this.updatingMission = "-1";
+    }
+  }
+  async updateMission(id: string, data: NgForm) {
+    this.ready = false;
+    const parseddata = {
+      title: data.form.value.title,
+      startDate: data.form.value.startDate,
+      endDate: data.form.value.endDate,
+      consultant: {
+        name: data.form.value.consultantName,
+        email: data.form.value.consultantEmail,
+      },
+      client: {
+        email: data.form.value.clientEmail,
+        company: {
+          name: data.form.value.clientCompanyName,
+        }
+      }
+    }
+    await this._missionService.updateMission(id, parseddata);
+    await this.loadMissions();
   }
 }

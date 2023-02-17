@@ -12,7 +12,7 @@ export class MissionService {
   public mission = new Mission();
   public timesheet: Timesheet;
 
-  constructor(private _serializer: SerializationService) {}
+  constructor(private _serializer: SerializationService) { }
 
   public getCreateToken(): string {
     return this._serializer.serializeObject({
@@ -84,7 +84,7 @@ export class MissionService {
 
   updateMission = async (
     missionId: string,
-    data: Mission
+    data: any
   ): Promise<Mission> => {
     const result = await this.crud("put", missionId, data);
     return result;
