@@ -1,43 +1,31 @@
-// ***********************************************
-// This example namespace declaration will help
-// with Intellisense and code completion in your
-// IDE or Text Editor.
-// ***********************************************
-// declare namespace Cypress {
-//   interface Chainable<Subject = any> {
-//     customCommand(param: any): typeof customCommand;
-//   }
-// }
-//
-// function customCommand(param: any): void {
-//   console.warn(param);
-// }
-//
-// NOTE: You can use it like so:
-// Cypress.Commands.add('customCommand', customCommand);
-//
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add("login", (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+Cypress.Commands.add("getNetlifyIdentityFrame", () =>
+  cy
+    .get("iframe")
+    .then(($elements) => cy.wrap($elements.contents().find("body").last()))
+);
+
+Cypress.Commands.add("netlifyLogin", (sessionName = "default-user") => {
+  cy.session(sessionName, () => {
+    window.localStorage.setItem("netlifySiteURL", Cypress.env("authUrl"));
+
+    cy.visit("/");
+    cy.get("#provider").click();
+
+    cy.getNetlifyIdentityFrame()
+      .find('input[name="email"]')
+      .type(Cypress.env("email"));
+
+    cy.getNetlifyIdentityFrame()
+      .find('input[name="password"]')
+      .type(Cypress.env("password"));
+
+    cy.getNetlifyIdentityFrame().find('button[type="submit"]').click();
+
+    cy.wait(10000);
+  });
+});
+
+Cypress.Commands.add("urlEndsWith", (value: string) => {
+  cy.log("Url should starts with", value);
+  cy.url({ log: false }).then((url) => expect(url.endsWith(value)).to.be.true);
+});
