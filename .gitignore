@@ -40,4 +40,4 @@ Thumbs.db
 .vscode
 .netlify
 .angular
-cypress.env.json
+cypress/cypress.env.json
