@@ -26,7 +26,7 @@ export class InvoiceFormComponent implements OnInit, AfterViewInit {
   @Input() mission: Mission;
   @Output() changed: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private _route: ActivatedRoute) { }
+  constructor(private _route: ActivatedRoute) {}
 
   ngOnInit() {
     const snapshot = this._route.snapshot;
@@ -36,7 +36,7 @@ export class InvoiceFormComponent implements OnInit, AfterViewInit {
     if (this.mission.id) {
       let bankAccount = this.mission.consultant.isFreelance
         ? this.mission.consultant.company.bankAccount
-        : this.mission.provider.bankAccount
+        : this.mission.provider.bankAccount;
       if (snapshot.queryParams.bill) {
         bankAccount = this.mission.provider.bankAccount;
       }
@@ -66,8 +66,10 @@ export class InvoiceFormComponent implements OnInit, AfterViewInit {
           this.mission.provider,
           invoiceData
         );
-        const checkbox = document.querySelector("div.timesheet-edit__wrapper__form__component:nth-child(5) > label:nth-child(1) > input:nth-child(1)") as HTMLInputElement
-        checkbox.checked = true
+        const checkbox = document.querySelector(
+          "div.timesheet-edit__wrapper__form__component:nth-child(5) > label:nth-child(1) > input:nth-child(1)"
+        ) as HTMLInputElement;
+        checkbox.checked = true;
       } else {
         this.fillInvoice(
           this.mission.provider,
@@ -76,12 +78,7 @@ export class InvoiceFormComponent implements OnInit, AfterViewInit {
         );
       }
     } else if (snapshot.queryParams.bill) {
-      this.fillInvoice(
-        this.invoice.client,
-        {},
-        {}
-      );
-
+      this.fillInvoice(this.invoice.client, {}, {});
     }
 
     if (!this.invoice) {
@@ -104,10 +101,13 @@ export class InvoiceFormComponent implements OnInit, AfterViewInit {
     };
     this.invoice.provider = provider;
     this.invoice.client = client;
-    if (this.mission) {
-      this.invoice.client.address = `${client.address.split(",")[0]}, ${client.zipCode} ${client.city}`;
-      this.invoice.provider.address = `${provider.address.split(",")[0]}, ${provider.zipCode} ${provider.city}`;
+    if (this.mission.id) {
+      this.invoice.client.address = `${client.address.split(",")[0]}, ${
+        client.zipCode
+      } ${client.city}`;
+      this.invoice.provider.address = `${provider.address.split(",")[0]}, ${
+        provider.zipCode
+      } ${provider.city}`;
     }
-
   }
 }
