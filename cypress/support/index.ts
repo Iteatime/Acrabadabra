@@ -1,4 +1,19 @@
 declare namespace Cypress {
+  interface BaseTimesheet {
+    title: string;
+    finalClientName: string;
+    consultant: { name: string; email: string };
+    invoice: {
+      number: string;
+      date: string;
+      workedRate: number;
+      provider: {};
+      client: {
+        ref: string;
+      };
+    };
+  }
+
   interface Chainable<Subject = any> {
     /**
      * Create and initialize a new Cypress session that will be reused for evey tests requiring a login
@@ -24,5 +39,37 @@ declare namespace Cypress {
      * @param seedName seed to use (defaults to main)
      */
     seed(seedName?: string): void;
+
+    shouldBeVisibleAfterScroll(): Chainable<JQuery<HTMLElement>>;
+
+    enterMileageAllowance(
+      date: Date,
+      journey: string,
+      distance: string,
+      type: number,
+      indexWhenAdded: number,
+      mileageRate?: string,
+      totalMileage?: string
+    ): void;
+    checkMileageAllowance(
+      date: string,
+      journey: string,
+      distance: string,
+      indexWhenAdded: number,
+      mileageRate: string,
+      totalMileage: string,
+      editMode: boolean
+    ): void;
+
+    goToReviewTimesheet(): void;
+    goToInvoiceTimesheet(): void;
+    goToReInvoiceTimesheet(): void;
+
+    getByCyAttr(
+      name: string,
+      options?: { log?: boolean }
+    ): Chainable<JQuery<HTMLElement>>;
+
+    fillBaseTimesheet(timesheet: Partial<BaseTimesheet>): void;
   }
 }

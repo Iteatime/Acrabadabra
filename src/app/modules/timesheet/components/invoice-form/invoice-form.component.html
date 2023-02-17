@@ -8,7 +8,7 @@
             facture</label>
           <div class="invoice-form__block__input-wrapper__item__input">
             <input type="text" required class="form-control" name="invoiceNumber" [(ngModel)]="invoice.number"
-              #number="ngModel">
+              #number="ngModel" data-cy="invoice-number">
             <div *ngIf="number.invalid && (number.dirty || number.touched)" class="alert alert-danger">
 
               <div *ngIf="number.errors['required']">
@@ -21,7 +21,7 @@
           <label for="invoiceDateInput" class="invoice-form__block__input-wrapper__item__label">Date</label>
           <div class="invoice-form__block__input-wrapper__item__input">
             <input type="date" required pattern="\d{4}-\d{2}-\d{2}" class="form-control" name="invoiceDateInput"
-              [(ngModel)]="invoice.date" #date="ngModel">
+              [(ngModel)]="invoice.date" #date="ngModel" data-cy="invoice-date">
             <div *ngIf="date.invalid && (date.dirty || date.touched)" class="alert alert-danger">
 
               <div *ngIf="date.errors['required']">
@@ -38,7 +38,8 @@
           <label for="invoiceClientRefInput" class="invoice-form__block__input-wrapper__item__label">Référence client
             (BDC)<span class="optional">(optionnel)</span></label>
           <div class="invoice-form__block__input-wrapper__item__input">
-            <input type="text" class="form-control" name="invoiceClientRefInput" [(ngModel)]="invoice.clientRef">
+            <input type="text" class="form-control" name="invoiceClientRefInput" [(ngModel)]="invoice.clientRef"
+              data-cy="invoice-client-ref">
           </div>
         </div>
         <div class="invoice-form__block__input-wrapper__item form-group">
@@ -47,7 +48,7 @@
             (HT)</label>
           <div class="invoice-form__block__input-wrapper__item__input">
             <input type="text" required pattern="([0-9]+(\.[0-9]+)?)" class="form-control" name="invoiceWorkedRateInput"
-              [(ngModel)]="invoice.workedRate" #workedRate="ngModel">
+              [(ngModel)]="invoice.workedRate" #workedRate="ngModel" data-cy="invoice-workedRate">
             <div *ngIf="workedRate.invalid && (workedRate.dirty || workedRate.touched)" class="alert alert-danger">
 
               <div *ngIf="workedRate.errors['required']">

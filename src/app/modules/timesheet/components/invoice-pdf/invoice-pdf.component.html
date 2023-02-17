@@ -63,7 +63,7 @@
   </div>
 
   <div class="invoice__table">
-    <table>
+    <table data-cy="invoice-table">
       <thead>
         <th class="invoice__table__left-text">Produit ou prestation</th>
         <th>Prix unitaire H.T</th>
@@ -72,7 +72,7 @@
         <th>Total H.T</th>
         <th *ngIf="!timesheetService.timesheet.invoice.provider.vatExemption">Total T.T.C</th>
       </thead>
-      <tbody>
+      <tbody data-cy="invoice-table-body">
         <tr *ngIf="workedTime.length > 0">
           <ng-container *ngFor="let entry of workedTime">
             <td class="invoice__table__left-text">
