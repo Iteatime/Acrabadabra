@@ -84,7 +84,7 @@ export class MissionService {
 
   updateMission = async (
     missionId: string,
-    data: any
+    data: Mission
   ): Promise<Mission> => {
     const result = await this.crud("put", missionId, data);
     return result;

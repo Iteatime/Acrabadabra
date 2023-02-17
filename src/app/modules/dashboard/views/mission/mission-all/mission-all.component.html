@@ -25,7 +25,7 @@
           <h2 class="m-0 font-weight-bold h6">
             <span class="mr-2 text-dark">{{ mission.consultant.name }}</span>
 
-            <small class="text-nowrap" *ngIf="updatingMission!=mission.id">
+            <small class="text-nowrap">
               {{ mission.client.company.name }} |
               {{ mission.startDate | date: "dd/MM/yy":"Europe/Paris":"fr" }}
             </small>
@@ -79,16 +79,24 @@
 
             </div>
             <div class="card-footer">
-              <button *ngIf="updatingMission=='-1'" [copyToClipboard]="getMissionTimesheetLink(mission.id)"
+              <button *ngIf="!updatingMission" [copyToClipboard]="getMissionTimesheetLink(mission.id)"
                 copyToClipboardMessage="Lien de saisie du CRA copié" class="p-0 btn btn-link card-link text-info"><i
                   class="fas fa-calendar-plus"></i>
                 Copier le lien de saisie de CRA</button>
-              <input type="submit" *ngIf="updatingMission==mission.id" class="p-0 btn btn-link card-link text-info">
 
-              <button (click)="showUpdateScreen(mission.id)" class="p-0 btn btn-link card-link text-info">
-                {{ updatingMission==mission.id ? 'Annuler' : 'Modifier' }}
+              <button *ngIf="!updatingMission" (click)="showUpdateScreen(mission.id)"
+                class="p-0 btn btn-link card-link text-info"><i class="fas fa-pen"></i>
+                Modifier
               </button>
-              <button *ngIf="updatingMission=='-1'" (click)="deleteMission(mission.id)"
+              <button *ngIf="updatingMission==mission.id" (click)="cancelUpdateScreen()"
+                class="p-0 btn btn-link card-link text-info text-danger"><i class="fas fa-times"></i>
+                Annuler
+              </button>
+              <button *ngIf="updatingMission==mission.id" type="submit" class="p-0 btn btn-link card-link text-info"><i
+                  class="fas fa-save"></i>
+                Enregistrer
+              </button>
+              <button *ngIf="!updatingMission" (click)="deleteMission(mission.id)"
                 class="p-0 btn btn-link card-link text-danger"><i class="fas fa-trash"></i>
                 Supprimer la mission</button>
 
