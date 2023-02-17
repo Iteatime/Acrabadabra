@@ -4,6 +4,7 @@ import { environment } from "../../../../../../environments/environment";
 import { Mission } from "../../../../../shared/models";
 import { MissionService } from "../../../../../shared/services/missions/missions.service";
 import { FormGroup, FormControl, FormArray, NgForm } from '@angular/forms'
+import { NotificationService } from "src/app/modules/notification/services/notification.service";
 
 import { State } from "../../../@type";
 import { StoreService } from "../../../services";
@@ -29,7 +30,9 @@ export class MissionAllComponent implements OnInit {
   public missionsCount: number;
   public headings = ["title", "consultant", "client", "startDate", "endDate"];
   public updatingMission: string;
+  public missions: Mission[];
   constructor(
+    private NotificationService: NotificationService,
     private _missionService: MissionService,
     private _auth: AuthenticationService,
     public store: StoreService
@@ -38,13 +41,14 @@ export class MissionAllComponent implements OnInit {
   ngOnInit() {
     this.ready = false;
     this.loadMissions();
-    this.updatingMission = "-1";
+    this.updatingMission = null;
   }
 
   async loadMissions() {
     const missions = await this._missionService.readMissionsByCreator(
       this._auth.user.id
     );
+    this.missions = missions;
 
     this.store.setState({ missions }, (state: State) => {
       this.missionsByStatus = this.getMissionsByStatus(state.missions);
@@ -87,7 +91,7 @@ export class MissionAllComponent implements OnInit {
       const dateA = new Date(missionA.startDate);
       const dateB = new Date(missionB.startDate);
 
-      return dateA < dateB ? -1 : dateA > dateB ? 1 : 0;
+      return dateA < dateB ? null : dateA > dateB ? 1 : 0;
     });
   }
 
@@ -103,31 +107,40 @@ export class MissionAllComponent implements OnInit {
     }
   }
   async showUpdateScreen(id: string) {
-    if (this.updatingMission != id) {
-      this.updatingMission = id;
-    }
-    else {
-      this.updatingMission = "-1";
-    }
+    this.updatingMission = id;
+
   }
+  async cancelUpdateScreen() {
+    this.updatingMission = null;
+  }
+
   async updateMission(id: string, data: NgForm) {
+    if (!data.form.dirty) return
     this.ready = false;
-    const parseddata = {
-      title: data.form.value.title,
-      startDate: data.form.value.startDate,
-      endDate: data.form.value.endDate,
+    const value = data.form.value;
+    const mission = this.missions.find(mission => mission.id === id)
+    const parseddata: Mission = {
+      ...mission,
+      title: value.title,
+      startDate: value.startDate,
+      endDate: value.endDate,
       consultant: {
-        name: data.form.value.consultantName,
-        email: data.form.value.consultantEmail,
+        ...value.consultant,
+        name: value.consultantName,
+        email: value.consultantEmail,
       },
       client: {
-        email: data.form.value.clientEmail,
+        ...mission.client,
+        email: value.clientEmail,
         company: {
-          name: data.form.value.clientCompanyName,
-        }
+          ...mission.client.company,
+          name: value.clientCompanyName,
+        } as any
       }
     }
     await this._missionService.updateMission(id, parseddata);
+    this.updatingMission = null
+    this.NotificationService.push("Sauvegarde effectuée!", "success")
     await this.loadMissions();
   }
 }
