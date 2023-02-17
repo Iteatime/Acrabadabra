@@ -70,7 +70,7 @@
             class="invoice-form__half-block__input-wrapper__item__label">Dénomination</label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
             <input type="text" required class="form-control" name="invoiceProviderNameInput"
-              [(ngModel)]="invoice.provider.name" #providerName="ngModel">
+              [(ngModel)]="invoice.provider.name" #providerName="ngModel" data-cy="invoice-provider-name">
             <div *ngIf="providerName.invalid && (providerName.dirty || providerName.touched)"
               class="alert alert-danger">
 
@@ -85,7 +85,7 @@
             class="invoice-form__half-block__input-wrapper__item__label">Adresse</label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
             <input type="text" required class="form-control" name="invoiceProviderAddressInput"
-              [(ngModel)]="invoice.provider.address" #providerAddress="ngModel">
+              [(ngModel)]="invoice.provider.address" #providerAddress="ngModel" data-cy="invoice-provider-address">
             <div *ngIf="providerAddress.invalid && (providerAddress.dirty || providerAddress.touched)"
               class="alert alert-danger">
 
@@ -100,7 +100,7 @@
             class="invoice-form__half-block__input-wrapper__item__label">Téléphone<span
               class="optional">(optionnel)</span></label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
-            <input type="tel" class="form-control" name="invoiceProviderTelephoneInput"
+            <input type="tel" class="form-control" name="invoiceProviderTelephoneInput" data-cy="invoice-provider-phone"
               [(ngModel)]="invoice.provider.phone">
           </div>
         </div>
@@ -109,7 +109,7 @@
             SIREN</label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
             <input type="text" required class="form-control" name="invoiceProviderSIRENInput"
-              [(ngModel)]="invoice.provider.siren" #providerSIREN="ngModel">
+              data-cy="invoice-provider-siren" [(ngModel)]="invoice.provider.siren" #providerSIREN="ngModel">
             <div *ngIf="providerSIREN.invalid && (providerSIREN.dirty || providerSIREN.touched)"
               class="alert alert-danger">
 
@@ -124,7 +124,7 @@
             class="invoice-form__half-block__input-wrapper__item__label">Ville d'immatriculation au RCS</label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
             <input type="text" required class="form-control" name="invoiceProviderTradeAndCompaniesRegisterCityInput"
-              [disabled]="providerTradeAndCompaniesRegisterExemption.checked"
+              data-cy="invoice-provider-rcs-number" [disabled]="providerTradeAndCompaniesRegisterExemption.checked"
               [(ngModel)]="invoice.provider.tradeAndCompaniesRegisterCity"
               #providerTradeAndCompaniesRegisterCity="ngModel">
             <div
@@ -136,6 +136,7 @@
             </div>
             <label class="invoice-form__half-block__input-wrapper__item__input__toggle">
               <input type="checkbox" name="invoiceProviderTradeAndCompaniesRegisterToggle"
+                data-cy="invoice-provider-vat-exemption"
                 [(ngModel)]="invoice.provider.tradeAndCompaniesRegisterExemption"
                 (change)="invoice.provider.tradeAndCompaniesRegisterCity = ''"
                 #providerTradeAndCompaniesRegisterExemption>
@@ -148,11 +149,11 @@
             de TVA intra-communautaire</label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
             <input type="text" class="form-control" name="invoiceProviderVATNumberInput"
-              [disabled]="providerVATExemption.checked" [(ngModel)]="invoice.provider.vatNumber"
-              #providerVATNumber="ngModel">
+              data-cy="invoice-provider-vat-number" [disabled]="providerVATExemption.checked"
+              [(ngModel)]="invoice.provider.vatNumber" #providerVATNumber="ngModel">
             <label class="invoice-form__half-block__input-wrapper__item__input__toggle">
               <input type="checkbox" name="invoiceProviderVATToggle" [(ngModel)]="invoice.provider.vatExemption"
-                (change)="invoice.provider.vatNumber = ''" #providerVATExemption>
+                data-cy="invoice-client-vat-exemption" (change)="invoice.provider.vatNumber = ''" #providerVATExemption>
               Franchise TVA
             </label>
           </div>
@@ -174,7 +175,7 @@
             class="invoice-form__half-block__input-wrapper__item__label">Dénomination</label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
             <input type="text" required class="form-control" name="invoiceClientNameInput"
-              [(ngModel)]="invoice.client.name" #clientName="ngModel">
+              [(ngModel)]="invoice.client.name" #clientName="ngModel" data-cy="invoice-client-name">
             <div *ngIf="clientName.invalid && (clientName.dirty || clientName.touched)" class="alert alert-danger">
 
               <div *ngIf="clientName.errors['required']">
@@ -188,7 +189,7 @@
             class="invoice-form__half-block__input-wrapper__item__label">Adresse</label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
             <input type="text" required class="form-control" name="invoiceClientAddressInput"
-              [(ngModel)]="invoice.client.address" #clientAddress="ngModel">
+              data-cy="invoice-client-address" [(ngModel)]="invoice.client.address" #clientAddress="ngModel">
             <div *ngIf="clientAddress.invalid && (clientAddress.dirty || clientAddress.touched)"
               class="alert alert-danger">
 
@@ -203,7 +204,7 @@
             class="invoice-form__half-block__input-wrapper__item__label">Téléphone<span
               class="optional">(optionnel)</span></label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
-            <input type="tel" class="form-control" name="invoiceClientTelephoneInput"
+            <input type="tel" class="form-control" name="invoiceClientTelephoneInput" data-cy="invoice-client-phone"
               [(ngModel)]="invoice.client.phone">
           </div>
         </div>
@@ -213,7 +214,7 @@
           </label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
             <input type="text" class="form-control" name="invoiceClientSIRENInput" [(ngModel)]="invoice.client.siren"
-              #clientSIREN="ngModel">
+              data-cy="invoice-client-siren" #clientSIREN="ngModel">
           </div>
         </div>
         <div class="invoice-form__half-block__input-wrapper__item form-group">
@@ -223,12 +224,12 @@
           </label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
             <input type="text" class="form-control" name="invoiceClientTradeAndCompaniesRegisterCityInput"
-              [disabled]="invoiceClientTradeAndCompaniesRegisterExemption.checked"
+              data-cy="invoice-client-rcs-number" [disabled]="invoiceClientTradeAndCompaniesRegisterExemption.checked"
               [(ngModel)]="invoice.client.tradeAndCompaniesRegisterCity"
               #invoiceClientTradeAndCompaniesRegisterCity="ngModel">
             <label class="invoice-form__half-block__input-wrapper__item__input__toggle">
               <input type="checkbox" name="invoiceClientTradeAndCompaniesRegisterToggle"
-                [(ngModel)]="invoice.client.tradeAndCompaniesRegisterExemption"
+                [(ngModel)]="invoice.client.tradeAndCompaniesRegisterExemption" data-cy="invoice-client-rcs-exemption"
                 (change)="invoice.client.tradeAndCompaniesRegisterCity = ''"
                 #invoiceClientTradeAndCompaniesRegisterExemption>
               Dispensé d'immatriculation au RCS et au RM
@@ -240,7 +241,7 @@
             de TVA intra-communautaire<span class="optional">(optionnel)</span></label>
           <div class="invoice-form__half-block__input-wrapper__item__input">
             <input type="text" class="form-control" name="invoiceClientVATNumberInput"
-              [(ngModel)]="invoice.client.vatNumber" #clientVATNumber="ngModel">
+              data-cy="invoice-client-vat-number" [(ngModel)]="invoice.client.vatNumber" #clientVATNumber="ngModel">
           </div>
         </div>
         <div *ngIf="false" class="invoice-form__half-block__input-wrapper__item form-group">
