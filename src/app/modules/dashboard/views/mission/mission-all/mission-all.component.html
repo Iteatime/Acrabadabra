@@ -24,49 +24,77 @@
           [attr.aria-controls]="'mission-' + $any(status).key + i">
           <h2 class="m-0 font-weight-bold h6">
             <span class="mr-2 text-dark">{{ mission.consultant.name }}</span>
-            <small class="text-nowrap">
+
+            <small class="text-nowrap" *ngIf="updatingMission!=mission.id">
               {{ mission.client.company.name }} |
               {{ mission.startDate | date: "dd/MM/yy":"Europe/Paris":"fr" }}
             </small>
           </h2>
         </a>
-        <div [id]="'mission-' + $any(status).key + i" class="collapse"
-          [ngClass]="{ show: $any(status).key === 'current' }">
-          <div class="card-body">
-            <h3 class="mb-3 lead">{{ mission.title }}</h3>
-            <h3 class="mb-0 text-xs text-primary text-uppercase">
-              Consultant
-            </h3>
-            <p class="mb-2">
-              {{ mission.consultant.name }} -
-              <a href="mailto:{{ mission.consultant.email }}">
-                {{ mission.consultant.email }}
-              </a>
-            </p>
-            <h3 class="mb-0 text-xs text-primary text-uppercase">Client</h3>
-            <p class="mb-2">
-              {{ mission.client.company.name }} -
-              <a href="mailto:{{ mission.client.email }}">
-                {{ mission.client.email }}
-              </a>
-            </p>
-            <h3 class="mb-0 text-xs text-primary text-uppercase">Période</h3>
-            <p class="mb-2">
-              {{ mission.startDate | date: "dd MMM y":"Europe/Paris":"fr" }}
-              -
-              {{ mission.endDate | date: "dd MMM y":"Europe/Paris":"fr" }}
-            </p>
+        <form #form="ngForm" (ngSubmit)="updateMission(mission.id,form)">
+          <div [id]="'mission-' + $any(status).key + i" class="collapse"
+            [ngClass]="{ show: $any(status).key === 'current' }">
+            <div class="card-body">
+              <input *ngIf="updatingMission==mission.id" type="text" class="form-control form-control-sm"
+                [(ngModel)]="mission.title" placeholder="Titre de la mission" name="title" />
+              <h3 class="mb-3 lead">{{ mission.title }}</h3>
+              <h3 class="mb-0 text-xs text-primary text-uppercase">
+                Consultant
+              </h3>
+              <input *ngIf="updatingMission==mission.id" type="text" class="form-control form-control-sm"
+                [(ngModel)]="mission.consultant.name" placeholder="Nom du consultant" name="consultantName" />
+              <input *ngIf="updatingMission==mission.id" type="email" class="form-control form-control-sm"
+                [(ngModel)]="mission.consultant.email" placeholder="Email du consultant" name="consultantEmail" />
+              <p class="mb-2">
+                {{ mission.consultant.name }} -
+                <a href="mailto:{{ mission.consultant.email }}">
+                  {{ mission.consultant.email }}
+                </a>
+              </p>
+
+
+              <h3 class="mb-0 text-xs text-primary text-uppercase">
+                Client
+              </h3>
+              <input *ngIf="updatingMission==mission.id" type="text" class="form-control form-control-sm"
+                [(ngModel)]="mission.client.company.name" placeholder="Nom de la société" name="clientCompanyName" />
+              <input *ngIf="updatingMission==mission.id" type="email" class="form-control form-control-sm"
+                [(ngModel)]="mission.client.email" placeholder="Email du client" name="clientEmail" />
+              <p class="mb-2">
+                {{ mission.client.company.name }} -
+                <a href="mailto:{{ mission.client.email }}">
+                  {{ mission.client.email }}
+                </a>
+              </p>
+              <h3 class="mb-0 text-xs text-primary text-uppercase">Période</h3>
+              <input *ngIf="updatingMission==mission.id" type="date" class="form-control form-control-sm"
+                [(ngModel)]="mission.startDate" placeholder="Date de début" name="startDate" />
+              <input *ngIf="updatingMission==mission.id" type="date" class="form-control form-control-sm"
+                [(ngModel)]="mission.endDate" placeholder="Date de fin" name="endDate" />
+              <p class="mb-2">
+                {{ mission.startDate | date: "dd MMM y":"Europe/Paris":"fr" }}
+                -
+                {{ mission.endDate | date: "dd MMM y":"Europe/Paris":"fr" }}
+              </p>
+
+            </div>
+            <div class="card-footer">
+              <button *ngIf="updatingMission=='-1'" [copyToClipboard]="getMissionTimesheetLink(mission.id)"
+                copyToClipboardMessage="Lien de saisie du CRA copié" class="p-0 btn btn-link card-link text-info"><i
+                  class="fas fa-calendar-plus"></i>
+                Copier le lien de saisie de CRA</button>
+              <input type="submit" *ngIf="updatingMission==mission.id" class="p-0 btn btn-link card-link text-info">
+
+              <button (click)="showUpdateScreen(mission.id)" class="p-0 btn btn-link card-link text-info">
+                {{ updatingMission==mission.id ? 'Annuler' : 'Modifier' }}
+              </button>
+              <button *ngIf="updatingMission=='-1'" (click)="deleteMission(mission.id)"
+                class="p-0 btn btn-link card-link text-danger"><i class="fas fa-trash"></i>
+                Supprimer la mission</button>
+
+            </div>
           </div>
-          <div class="card-footer">
-            <button [copyToClipboard]="getMissionTimesheetLink(mission.id)"
-              copyToClipboardMessage="Lien de saisie du CRA copié" class="p-0 btn btn-link card-link text-info"><i
-                class="fas fa-calendar-plus"></i>
-              Copier le lien de saisie de CRA</button>
-            <button (click)="deleteMission(mission.id)" class="p-0 btn btn-link card-link text-danger"><i
-                class="fas fa-trash"></i>
-              Supprimer la mission</button>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>
