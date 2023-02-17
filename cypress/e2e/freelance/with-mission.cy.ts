@@ -1,7 +1,5 @@
 describe("Freelance > mission > create", () => {
-  beforeEach(() => {
-    cy.seed("freelance_with_mission");
-  });
+  beforeEach(() => {});
 
   it("should create a freelance mission", () => {});
 });
