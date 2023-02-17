@@ -1,5 +1,5 @@
 declare namespace Cypress {
-  interface BaseTimesheet {
+  export interface BaseTimesheet {
     title: string;
     finalClientName: string;
     consultant: { name: string; email: string };
@@ -7,11 +7,20 @@ declare namespace Cypress {
       number: string;
       date: string;
       workedRate: number;
-      provider: {};
-      client: {
-        ref: string;
-      };
+      provider: Partial<InvoiceLegalEntity>;
+      client: Partial<InvoiceLegalEntity>;
     };
+  }
+
+  export interface InvoiceLegalEntity {
+    name: string;
+    address: string;
+    phone: string;
+    siren: string;
+    rcsExemption: boolean;
+    rcsNumber: string;
+    vatExemption: string;
+    vatNumber: string;
   }
 
   interface Chainable<Subject = any> {
@@ -61,6 +70,7 @@ declare namespace Cypress {
       editMode: boolean
     ): void;
 
+    submitTimesheet(): void;
     goToReviewTimesheet(): void;
     goToInvoiceTimesheet(): void;
     goToReInvoiceTimesheet(): void;

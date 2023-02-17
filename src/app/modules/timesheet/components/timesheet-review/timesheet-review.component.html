@@ -12,18 +12,20 @@
           <div id="left-part" class="review__wrapper__fields__block__item-wrapper__part">
             <div class="review__wrapper__fields__block__item-wrapper__part__text">
               <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Consultant</span>
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{ timesheet.consultant.name
+              <span class="review__wrapper__fields__block__item-wrapper__part__text__value" data-cy="consultant-name">{{
+                timesheet.consultant.name
                 }}</span>
             </div>
             <div class="review__wrapper__fields__block__item-wrapper__part__text">
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Intitulé de la
+              <span class="review__wrapper__fields__block__item-wrapper__part__text__label"
+                data-cy="mission-title">Intitulé de la
                 mission</span>
               <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{ timesheet.mission.title
                 }}</span>
             </div>
             <div class="review__wrapper__fields__block__item-wrapper__part__text">
               <span class="review__wrapper__fields__block__item-wrapper__part__text__label">Client</span>
-              <span class="review__wrapper__fields__block__item-wrapper__part__text__value">{{
+              <span class="review__wrapper__fields__block__item-wrapper__part__text__value" data-cy="client-name">{{
                 timesheet.mission.client?.company?.name }}</span>
             </div>
           </div>

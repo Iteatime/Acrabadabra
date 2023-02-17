@@ -98,7 +98,7 @@ describe("Timesheet > mileage", () => {
     cy.enterMileageAllowance(new Date(), "7CV", "20", 5, 4, "0.595", "11,90");
     cy.getByCyAttr(`mileage-table-total`).should("exist");
 
-    cy.getByCyAttr("submitTimesheetBtn").first().click();
+    cy.submitTimesheet();
     cy.goToReviewTimesheet();
 
     cy.getByCyAttr("mileage-table-row").should("have.length", 5);
@@ -124,7 +124,7 @@ describe("Timesheet > mileage", () => {
     cy.enterMileageAllowance(new Date(), "6CV", "20", 4, 3, "0.568", "11,36");
     cy.enterMileageAllowance(new Date(), "7CV", "20", 5, 4, "0.595", "11,90");
 
-    cy.getByCyAttr("submitTimesheetBtn").first().click();
+    cy.submitTimesheet();
 
     cy.goToReviewTimesheet();
     cy.goToReInvoiceTimesheet();
@@ -211,7 +211,7 @@ describe("Timesheet > mileage", () => {
     cy.enterMileageAllowance(new Date(), "6CV", "20", 4, 3, "0.568", "11,36");
     cy.enterMileageAllowance(new Date(), "7CV", "20", 5, 4, "0.595", "11,90");
 
-    cy.getByCyAttr("submitTimesheetBtn").first().click();
+    cy.submitTimesheet();
     cy.goToReviewTimesheet();
 
     checkMileageTable();
@@ -224,14 +224,14 @@ describe("Timesheet > mileage", () => {
         workedRate: 10,
         provider: {},
         client: {
-          ref: "Test client",
+          name: "Test client",
         },
       },
     });
 
     checkMileageTable(true);
 
-    cy.getByCyAttr("submitTimesheetBtn").first().click();
+    cy.submitTimesheet();
     cy.goToInvoiceTimesheet();
 
     cy.getByCyAttr("invoice-table-body")

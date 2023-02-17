@@ -134,7 +134,7 @@ Cypress.Commands.add(
 
 Cypress.Commands.add("goToReviewTimesheet", () => {
   return cy
-    .get('[data-cy="copyReviewTimesheetLink"', { log: false })
+    .get('[data-cy="copy-review-timesheet-link"', { log: false })
     .invoke({ log: false }, "attr", "data-cy-link")
     .then((url) =>
       cy.log(`Going to review timesheet ${url}`).visit(url, { log: false })
@@ -150,7 +150,7 @@ Cypress.Commands.add("goToReInvoiceTimesheet", () => {
 
 Cypress.Commands.add("goToInvoiceTimesheet", () => {
   return cy
-    .get('[data-cy="copyReviewTimesheetLink"', { log: false })
+    .get('[data-cy="copy-review-timesheet-link"', { log: false })
     .invoke({ log: false }, "attr", "data-cy-link")
     .then((url) => {
       cy.log(
@@ -171,11 +171,11 @@ Cypress.Commands.add("fillBaseTimesheet", (timesheet) => {
 
   timesheet?.title &&
     cy
-      .getByCyAttr("missionTitleInput", { log: false })
+      .getByCyAttr("mission-title-input", { log: false })
       .type(`{selectall}{backspace}${timesheet?.title || ""}`, { log: false });
   timesheet?.finalClientName &&
     cy
-      .getByCyAttr("missionFinalClientInput", { log: false })
+      .getByCyAttr("mission-final-client-input", { log: false })
       .type(`{selectall}{backspace}${timesheet?.finalClientName || ""}`, {
         log: false,
       });
@@ -185,14 +185,14 @@ Cypress.Commands.add("fillBaseTimesheet", (timesheet) => {
 
     consultant.name &&
       cy
-        .getByCyAttr("consultantNameInput", { log: false })
+        .getByCyAttr("consultant-name-input", { log: false })
         .type(`{selectall}{backspace}${timesheet.consultant?.name || ""}`, {
           log: false,
         });
 
     consultant.email &&
       cy
-        .getByCyAttr("consultantEmailInput", { log: false })
+        .getByCyAttr("consultant-email-input", { log: false })
         .type(`{selectall}{backspace}${timesheet.consultant?.email || ""}`, {
           log: false,
         });
@@ -221,11 +221,64 @@ Cypress.Commands.add("fillBaseTimesheet", (timesheet) => {
           log: false,
         });
 
-    invoice.client.ref &&
-      cy
-        .getByCyAttr("invoice-client-ref", { log: false })
-        .type(`{selectall}{backspace}${invoice.client.ref || ""}`, {
-          log: false,
-        });
+    const fillLegalEntity = (
+      entity: Partial<Cypress.InvoiceLegalEntity>,
+      name: string
+    ) => {
+      console.log(entity);
+      entity.name &&
+        cy
+          .getByCyAttr(`invoice-${name}-name`, { log: false })
+          .type(`{selectall}{backspace}${entity.name || ""}`, {
+            log: false,
+          });
+      entity.address &&
+        cy
+          .getByCyAttr(`invoice-${name}-address`, { log: false })
+          .type(`{selectall}{backspace}${entity.address || ""}`, {
+            log: false,
+          });
+      entity.phone &&
+        cy
+          .getByCyAttr(`invoice-${name}-phone`, { log: false })
+          .type(`{selectall}{backspace}${entity.phone || ""}`, {
+            log: false,
+          });
+      entity.siren &&
+        cy
+          .getByCyAttr(`invoice-${name}-siren`, { log: false })
+          .type(`{selectall}{backspace}${entity.siren || ""}`, {
+            log: false,
+          });
+      entity.rcsExemption &&
+        cy.getByCyAttr(`invoice-${name}-rcs-exemption`, { log: false }).check();
+      entity.rcsNumber &&
+        cy
+          .getByCyAttr(`invoice-${name}-rcs-number`, { log: false })
+          .type(`{selectall}{backspace}${entity.rcsNumber || ""}`, {
+            log: false,
+          });
+      entity.vatExemption &&
+        cy
+          .getByCyAttr(`invoice-${name}-vat-exemption`, { log: false })
+          .type(`{selectall}{backspace}${entity.vatExemption || ""}`, {
+            log: false,
+          });
+      entity.vatNumber &&
+        cy
+          .getByCyAttr(`invoice-${name}-vat-number`, { log: false })
+          .type(`{selectall}{backspace}${entity.vatNumber || ""}`, {
+            log: false,
+          });
+    };
+
+    invoice.provider && fillLegalEntity(invoice.provider, "provider");
+    invoice.client && fillLegalEntity(invoice.client, "client");
   }
+});
+
+Cypress.Commands.add("submitTimesheet", () => {
+  cy.getByCyAttr("submit-timesheet-btn", { log: false })
+    .scrollIntoView()
+    .click({ log: false });
 });
