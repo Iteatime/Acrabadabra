@@ -9,12 +9,12 @@ describe("Login", () => {
     cy.get("app-mission-all").should("exist");
   });
   it("should log out and redirect to homepage", () => {
-    cy.get("#userDropdown").click()
-    cy.get(".fa-sign-out-alt").click()
-    cy.wait(100)
-    cy.get("iframe").should("exist")
-    cy.get("iframe").its("form>button").click()
-    cy.wait(3000)
-    cy.get("#homepage").should("exist")
-  })
+    cy.get("#userDropdown").click();
+    cy.get(".fa-sign-out-alt").click();
+    cy.wait(100);
+    cy.get("iframe").should("exist");
+    cy.getNetlifyIdentityFrame().find('button[type="submit"]').click();
+    cy.wait(3000);
+    cy.get("#homepage").should("exist");
+  });
 });
