@@ -69,13 +69,15 @@
 
       <div class="review__wrapper__fields__invoice">
         <div *ngIf="generateInvoice" class="review__wrapper__fields__invoice__item">
-          <a class="review__wrapper__fields__invoice__item__link" [href]="invoiceLink" target="_self">
+          <a class="review__wrapper__fields__invoice__item__link" [href]="invoiceLink" target="_self"
+            data-cy="download-invoice-timesheet">
             <i class="material-icons">cloud_download</i>
             <span>Télécharger la facture</span>
           </a>
         </div>
         <div *ngIf="auth.isAuthenticated" class="review__wrapper__fields__invoice__item">
-          <a class="review__wrapper__fields__invoice__item__link" [href]="reviewUrl" target="_self">
+          <a class="review__wrapper__fields__invoice__item__link" [href]="reviewUrl" target="_self"
+            data-cy="re-invoice-timesheet">
             <i class="material-icons">send</i>
             <span>Facturer ce CRA</span>
           </a>

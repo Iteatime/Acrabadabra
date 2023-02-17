@@ -18,7 +18,8 @@
               class="timesheet-edit__wrapper__form__block__input-wrapper__item__label">Nom</label>
             <div class="timesheet-edit__wrapper__form__block__input-wrapper__item__input">
               <input type="text" required class="form-control" name="consultantNameInput"
-                [(ngModel)]="timesheetService.timesheet.consultant.name" #consultantNameInput="ngModel">
+                [(ngModel)]="timesheetService.timesheet.consultant.name" #consultantNameInput="ngModel"
+                data-cy="consultantNameInput">
               <div *ngIf="consultantNameInput.invalid && (consultantNameInput.dirty || consultantNameInput.touched)"
                 class="alert alert-danger">
                 <div *ngIf="consultantNameInput.errors['required']">
@@ -32,7 +33,8 @@
               class="timesheet-edit__wrapper__form__block__input-wrapper__item__label">Email</label>
             <div class="timesheet-edit__wrapper__form__block__input-wrapper__item__input">
               <input type="email" required email class="form-control" name="consultantEmailInput"
-                [(ngModel)]="timesheetService.timesheet.consultant.email" #consultantEmailInput="ngModel">
+                [(ngModel)]="timesheetService.timesheet.consultant.email" #consultantEmailInput="ngModel"
+                data-cy="consultantEmailInput">
               <div *ngIf="consultantEmailInput.invalid && (consultantEmailInput.dirty || consultantEmailInput.touched)"
                 class="alert alert-danger">
                 <div *ngIf="consultantEmailInput.errors['required']">
@@ -55,7 +57,8 @@
               class="timesheet-edit__wrapper__form__block__input-wrapper__item__label">Intitulé</label>
             <div class="timesheet-edit__wrapper__form__block__input-wrapper__item__input">
               <input type="text" required class="form-control" name="missionTitleInput"
-                [(ngModel)]="timesheetService.timesheet.mission.title" #missionTitleInput="ngModel">
+                [(ngModel)]="timesheetService.timesheet.mission.title" #missionTitleInput="ngModel"
+                data-cy="missionTitleInput">
               <div *ngIf="missionTitleInput.invalid && (missionTitleInput.dirty || missionTitleInput.touched)"
                 class="alert alert-danger">
                 <div *ngIf="missionTitleInput.errors['required']">
@@ -71,7 +74,7 @@
               final</label>
             <div class="timesheet-edit__wrapper__form__block__input-wrapper__item__input">
               <input type="text" required class="form-control" name="missionFinalClientInput"
-                [(ngModel)]="timesheetService.timesheet.mission.client?.company.name"
+                data-cy="missionFinalClientInput" [(ngModel)]="timesheetService.timesheet.mission.client?.company.name"
                 #missionFinalClientInput="ngModel">
               <div
                 *ngIf="missionFinalClientInput.invalid && (missionFinalClientInput.dirty || missionFinalClientInput.touched)"
@@ -94,7 +97,8 @@
 
       <div class="timesheet-edit__wrapper__form__component" *ngIf="ready">
         <label class="timesheet-edit__wrapper__form__component__toggle">
-          <input name="commutesToggle" type="checkbox" [(ngModel)]="generateExpenses" #commutesToggle>
+          <input name="commutesToggle" type="checkbox" [(ngModel)]="generateExpenses" #commutesToggle
+            data-cy="commutes-toggle">
           Ajouter des frais
         </label>
         <app-expense-mileage-form *ngIf="generateExpenses" [commutes]="timesheetService.timesheet.commutes"
@@ -108,7 +112,8 @@
 
       <div class="timesheet-edit__wrapper__form__component" *ngIf="ready && canGenerateInvoice">
         <label class="timesheet-edit__wrapper__form__component__toggle">
-          <input name="invoiceToggle" type="checkbox" [(ngModel)]="generateInvoice" #invoiceToggle>
+          <input name="invoiceToggle" type="checkbox" [(ngModel)]="generateInvoice" #invoiceToggle
+            data-cy="generate-invoice-toggle">
           Générer une facture
         </label>
         <app-invoice-form *ngIf="generateInvoice" [invoice]="timesheetService.timesheet.invoice"
@@ -116,18 +121,19 @@
       </div>
 
       <div class="timesheet-edit__wrapper__form__submit" *ngIf="ready">
-        <button data-text="Valider mon CRA" class="timesheet-edit__wrapper__form__submit__button" (click)="onSubmit()">
+        <button data-text="Valider mon CRA" class="timesheet-edit__wrapper__form__submit__button" (click)="onSubmit()"
+          data-cy="submitTimesheetBtn">
           <span>Valider mon CRA</span>
         </button>
         <button *ngIf="this.auth.isAuthenticated" data-text="Retour"
-          class="timesheet-edit__wrapper__form__submit__button" [routerLink]="['/dashboard']">
+          class="timesheet-edit__wrapper__form__submit__button" [routerLink]="['/dashboard']" data-cy="returnToHomeBtn">
           <span>Retour</span>
         </button>
       </div>
 
       <div *ngIf="showLinks" id="action-links" class="timesheet-edit__wrapper__form__icons">
         <div *ngIf="generateInvoice" class="timesheet-edit__wrapper__form__icons__item">
-          <a target="_self" [href]="timesheetService.getInvoiceLink()">
+          <a target="_self" [href]="timesheetService.getInvoiceLink()" data-cy="downloadInvoiceLink">
             <i class="material-icons">cloud_download</i>
             <span>Télécharger la facture</span>
           </a>
@@ -140,14 +146,15 @@
         </div>
         <div class="timesheet-edit__wrapper__form__icons__item">
           <a href="#" [copyToClipboard]="editShortUrl" [copyToClipboardMessage]="'Lien de modification copié'"
-            [copyToClipboardMessageParent]="editLink.parentNode" #editLink>
+            data-cy="copyEditTimesheetLink" [copyToClipboardMessageParent]="editLink.parentNode" #editLink>
             <i class="material-icons">edit</i>
             <span>Copier le lien de modification</span>
           </a>
         </div>
         <div class="timesheet-edit__wrapper__form__icons__item">
           <a href="#" [copyToClipboard]="reviewShortUrl" [copyToClipboardMessage]="'Lien de partage copié'"
-            [copyToClipboardMessageParent]="shareLink.parentNode" #shareLink>
+            [copyToClipboardMessageParent]="shareLink.parentNode" #shareLink data-cy="copyReviewTimesheetLink"
+            [attr.data-cy-link]="reviewShortUrl">
             <i class="material-icons">remove_red_eye</i>
             <span>Copier le lien de partage</span>
           </a>
