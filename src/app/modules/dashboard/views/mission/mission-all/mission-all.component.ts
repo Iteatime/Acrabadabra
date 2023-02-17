@@ -32,7 +32,7 @@ export class MissionAllComponent implements OnInit {
     private _missionService: MissionService,
     private _auth: AuthenticationService,
     public store: StoreService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.ready = false;
@@ -94,8 +94,10 @@ export class MissionAllComponent implements OnInit {
   }
 
   async deleteMission(id: string) {
-    this.ready = false;
-    await this._missionService.deleteMission(id);
-    await this.loadMissions();
+    if (confirm("Êtes-vous sûr(e) de vouloir supprimer la mission?")) {
+      this.ready = false;
+      await this._missionService.deleteMission(id);
+      await this.loadMissions();
+    }
   }
 }
