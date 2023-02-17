@@ -29,3 +29,7 @@ Cypress.Commands.add("urlEndsWith", (value: string) => {
   cy.log("Url should starts with", value);
   cy.url({ log: false }).then((url) => expect(url.endsWith(value)).to.be.true);
 });
+
+Cypress.Commands.add("seed", (seedName = "main") => {
+  cy.exec(`mongorestore --drop --dir ./cypress/seeds/${seedName}`);
+});
