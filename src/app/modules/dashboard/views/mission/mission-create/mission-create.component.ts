@@ -5,7 +5,7 @@ import { set } from "lodash";
 import { Company, Mission } from "../../../../../shared/models";
 import { BankAccount } from "../../../../../shared/models/bank-account.model";
 import { MissionService } from "../../../../../shared/services/missions/missions.service";
-
+import { NotificationService } from "src/app/modules/notification/services/notification.service";
 import { State } from "../../../@type";
 import { CompanyService, StoreService } from "../../../services";
 
@@ -68,12 +68,16 @@ export class MissionCreateComponent implements OnInit {
   public form: FormGroup;
 
   constructor(
+    private notificationService: NotificationService,
     private companies: CompanyService,
     private missions: MissionService,
     public store: StoreService,
     private router: Router,
     private fb: FormBuilder
-  ) {}
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+
+  }
 
   ngOnInit() {
     this.ready = false;
@@ -120,6 +124,37 @@ export class MissionCreateComponent implements OnInit {
         mode: [""],
       }),
     });
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('mission')) {
+      const id = urlParams.get('mission');
+      this.missions.readMission(id).then((mission) => {
+        this.form = this.fb.group({
+          title: [mission.title],
+          startDate: [mission.startDate],
+          endDate: [mission.endDate],
+          unitOfWorkType: [mission.unitOfWorkType],
+          unitOfWorkPrice: [mission.unitOfworkPrice],
+          freelanceUnitOfWorkPrice: [mission.freelanceUnitOfworkPrice],
+          client: this.fb.group({
+            ref: [mission.client.ref],
+            email: [mission.client.email],
+            company: getCompanyForm(this.fb, mission.client.company),
+          }),
+          consultant: this.fb.group({
+            name: [mission.consultant.name],
+            email: [mission.consultant.email],
+            isFreelance: [mission.consultant.isFreelance],
+            unitOfWorkPrice: [mission.consultant.unitOfWorkPrice],
+            company: getCompanyForm(this.fb, mission.consultant.company),
+          }),
+          provider: getCompanyForm(this.fb, mission.provider),
+          paymentDetails: this.fb.group({
+            penalties: [mission.paymentDetails.penalties],
+            mode: [mission.paymentDetails.mode],
+          }),
+        });
+      });
+    }
   }
 
   get isConsultantFreelance() {
@@ -162,9 +197,16 @@ export class MissionCreateComponent implements OnInit {
       getCompanyFromForm(values.provider),
       paymentDetails
     );
-    console.log(mission);
-
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('mission')) {
+      const id = urlParams.get('mission');
+      await this.missions.updateMission(id, mission);
+      this.router.navigate(["dashboard/mission/all"]);
+      this.notificationService.push("Modification effectuée!", "success")
+      return;
+    }
     const res = await this.missions.createMission(mission);
     this.router.navigate(["dashboard/mission/all"]);
+    this.notificationService.push("Mission créée!", "success")
   }
 }
