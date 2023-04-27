@@ -316,7 +316,7 @@
     </fieldset>
 
     <div class="d-flex justify-content-center mb-4">
-      <input type="submit" class="btn btn-primary" value="Créer la mission" />
+      <input type="submit" class="btn btn-primary" value="Enregistrer" [disabled]="!form.dirty" />
     </div>
   </form>
 </div>

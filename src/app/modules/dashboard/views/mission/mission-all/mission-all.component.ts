@@ -5,7 +5,7 @@ import { Mission } from "../../../../../shared/models";
 import { MissionService } from "../../../../../shared/services/missions/missions.service";
 import { FormGroup, FormControl, FormArray, NgForm } from '@angular/forms'
 import { NotificationService } from "src/app/modules/notification/services/notification.service";
-
+import { Router } from "@angular/router";
 import { State } from "../../../@type";
 import { StoreService } from "../../../services";
 
@@ -35,7 +35,8 @@ export class MissionAllComponent implements OnInit {
     private NotificationService: NotificationService,
     private _missionService: MissionService,
     private _auth: AuthenticationService,
-    public store: StoreService
+    public store: StoreService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -107,11 +108,7 @@ export class MissionAllComponent implements OnInit {
     }
   }
   async showUpdateScreen(id: string) {
-    this.updatingMission = id;
-
-  }
-  async cancelUpdateScreen() {
-    this.updatingMission = null;
+    this.router.navigate([`/dashboard/mission/create`], { queryParams: { mission: id } });
   }
 
   async updateMission(id: string, data: NgForm) {
