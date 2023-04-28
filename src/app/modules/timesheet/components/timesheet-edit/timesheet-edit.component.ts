@@ -108,6 +108,11 @@ export class TimesheetEditComponent implements OnInit, AfterViewInit {
       ? this.timesheetService.timesheet?.mission?.consultant?.isFreelance
       : true;
 
+    //Check the invoice checkbox if the user is a freelance consultant
+    if (this.timesheetService.timesheet?.mission?.consultant?.isFreelance) {
+      this.form.controls["invoiceToggle"].setValue(true);
+    }
+
     if (snapshot.queryParams.bill) {
       if (!this.timesheetService.timesheet.invoice)
         this.timesheetService.timesheet.invoice = new Invoice();
