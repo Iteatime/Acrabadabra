@@ -14,6 +14,11 @@ Feature: generate invoice
     When I click on "Generer une facture" checkbox
     Then this form is hidden
 
+  Scenario: The "Générer une facture" checkbox should be pre-checked if the consultant is freelance
+    Given A mission with a freelance consultant is created
+    When I am on timesheet edit page of this mission
+    Then the "Générer une facture" checkbox is pre-checked
+
   Scenario: The invoice's form should be pre-filled with the date of the day
     Given my invoice form is open
     Then I can see the invoice's date pre-filled with today's date
