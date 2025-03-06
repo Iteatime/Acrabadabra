@@ -27,7 +27,7 @@
 
   <div class="calendar__content">
     <div *ngIf="picking" class="calendar__content__tools">
-      <div *ngIf="picking && selectedTimeUnit === 'days'">
+      <div *ngIf="picking">
         <ng-container *ngIf="totalWorkedTime === 0; then thenTemplate; else elseTemplate"></ng-container>
         <ng-template #thenTemplate>
           <div class="calendar__content__tools__selectall" (click)="selectAllBusinessDays()">
