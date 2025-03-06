@@ -21,10 +21,12 @@ export class CalendarService {
     days: {
       label: "journées",
       timeInMinutes: 8 * 60,
+      defaultUnitAmount: 1,
     },
     hours: {
       label: "heures",
       timeInMinutes: 1 * 60,
+      defaultUnitAmount: 8,
     },
   };
   public defaultTimeUnit = "days";

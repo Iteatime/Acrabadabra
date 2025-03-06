@@ -238,10 +238,8 @@ export class CalendarSelectorComponent implements OnInit, OnDestroy {
     date = startOfDay(date);
 
     if (end === undefined) {
-      end = addMinutes(
-        date,
-        this.calendarService.timeUnits[timeUnit].timeInMinutes
-      );
+      const unit = this.calendarService.timeUnits[timeUnit];
+      end = addMinutes(date, unit.timeInMinutes * unit.defaultUnitAmount);
     }
 
     this.timesheet.push({
